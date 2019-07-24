@@ -20,8 +20,8 @@ export default class Statsbox extends Component {
 const boxStyles = StyleSheet.create({
     container: {
         color: '#32CD32',
-        width: '150px',
-        height: '150px',
+        width: 150,
+        height: 150,
         borderColor: '#000000',
         borderWidth: 3,
         borderStyle: 'solid'
