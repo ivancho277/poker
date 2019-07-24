@@ -1,11 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
-
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Home } from './Home';
+import { Game } from './Game';
 const MainNavigator = createStackNavigator({
-  Home: {screen: Home},
+  Home: Home,
   Game: Game
-});
+},
+  {
+    initialRouteName: 'Home',
+  }
+);
 
 const App = createAppContainer(MainNavigator);
 export default App;
