@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 export default class Statsbox extends Component {
+    //will pull saved information about users stats and display them back in the box
+    
+    state = {
+
+    }
     render() {
         return (
             
