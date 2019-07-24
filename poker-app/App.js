@@ -1,19 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { Home } from './Home';
-import { Game } from './Game';
-const MainNavigator = createStackNavigator({
-  Home: Home,
-  Game: Game
-},
-  {
-    initialRouteName: 'Home',
+import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { HomeScreen } from './Home.js';
+import { GameScreen } from './Game.js';
+class App extends React.Component {
+  render() {
+    return <AppContainer />
   }
-);
-
-const App = createAppContainer(MainNavigator);
+}
 export default App;
+
+const AppSwitchNavigator = createSwitchNavigator({
+  Home: { screen: HomeScreen },
+  Game: { screen: GameScreen }
+})
+
+const AppContainer = createAppContainer(AppSwitchNavigator);
 
 const styles = StyleSheet.create({
   container: {

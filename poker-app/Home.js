@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import MainNavigator from './App';
-class Home extends Component {
-    static navigationOptions = {
-        title: "Welcome"
-    };
+
+class HomeScreen extends Component {
     render() {
-        const { navigate } = this.props.navigation;
         return (
-            <Button
-                title="Go to Game Screen"
-                onPress={() => navigate('Game')}
-            />
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Welcome to Poker!</Text>
+            </View>
         )
     }
 }
 
-export default Home;
+export default HomeScreen;

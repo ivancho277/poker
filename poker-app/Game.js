@@ -7,12 +7,11 @@ class Game extends Component {
         title: "Welcome"
     };
     render() {
-        const { navigate } = this.props.navigation;
+        
         return (
-            <Button
-                title="Go to Home Screen"
-                onPress={() => navigate('Home')}
-            />
+            <View style={{ flex: 1, alignItems: 'center', justifyContent:'center'}}>
+                <Text>Game Screen</Text>
+            </View>
         )
     }
 }
