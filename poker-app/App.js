@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, AppRegistry } from 'react-native';
 import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { HomeScreen } from './Home.js';
-import { GameScreen } from './Game.js';
+import  HomeScreen  from './Home';
+import  GameScreen  from './Game';
 class App extends React.Component {
   render() {
     return <AppContainer />

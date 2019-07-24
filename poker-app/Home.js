@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class HomeScreen extends Component {
     render() {
@@ -12,4 +11,4 @@ class HomeScreen extends Component {
     }
 }
 
-export default HomeScreen;
+export default HomeScreen; 
