@@ -10,7 +10,7 @@ export default class Statsbox extends Component {
         return (
 
             <View style={boxStyles.container}>
-                <Text > textInComponent </Text>
+                <Text style={{justifyContent: 'center'}} > textInComponent </Text>
             </View>
 
         )
