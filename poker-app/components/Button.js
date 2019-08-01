@@ -2,9 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 const Button = props => {
-    Button.propTypes = {
-        type: propTypes.string
-    };
+
 
     return (
         <View>
@@ -14,8 +12,12 @@ const Button = props => {
         </View>
     )
 
-  
+
 }
+
+// Button.propTypes = {
+//     type: propTypes.string
+// };
 export default Button;
 const Metrics = {
     containerWidth: width - 30,

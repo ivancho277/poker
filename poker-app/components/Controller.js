@@ -9,9 +9,9 @@ export default class Controller extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button type="raise" />
-        <Button type="call" />
-        <Button type="raise" />
+        <Button type="raise" source="raise" />
+        <Button type="call" source="call" />
+        <Button type="raise" source="raise" />
       </View>
     );
   }
