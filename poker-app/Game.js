@@ -7,10 +7,12 @@ class GameScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent:'center'}}>
                 <Text>Controller will go here</Text>
-                <Button type="call">Call</Button> 
+                <Button title="call" />
+                <Button title="fold" />
+                <Button title="raise" />
             </View>
         )
-    }
+    } 
 }
 
 export default GameScreen;
