@@ -6,7 +6,6 @@ class GameScreen extends Component {
     getDataFromController = async (data) => {
         //console.log(data)
         try {
-
             let jsonData = await AsyncStorage.setItem('key', JSON.stringify(data))
             console.log(`success storing ${jsonData}`);
             return jsonData;
