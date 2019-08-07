@@ -4,15 +4,18 @@ import PBC from './components/PracticeButtonController'
 //import Controller from './components/Controller'
 class GameScreen extends Component {
     getDataFromController = async (data) => {
-        console.log(data)
+        //console.log(data)
         try {
-            await AsyncStorage.setItem('game:key', data)
+            let jsonData = await AsyncStorage.setItem(JSON.stringify(data))
+            console.log(`success storing ${jsonData()}`);
+            return jsonData;
         } catch (error) {
             console.log("error saving data");
         }
     }
     goHome(){
          this.props.navigation.navigate('Home');
+         console.log()
     }
 
     render() {
