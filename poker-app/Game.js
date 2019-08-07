@@ -10,12 +10,17 @@ class GameScreen extends Component {
             console.log("error saving data");
         }
     }
+    goHome(){
+         this.props.navigation.navigate('Home');
+    }
 
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Controller will go here</Text>
                 <PBT props={this.getDataFromController} />
+                <Button title='Go to home screen' onPress={() => this.props.navigation.navigate('Home')} />
+
             </View>
         )
     }
