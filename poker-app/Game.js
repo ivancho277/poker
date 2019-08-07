@@ -6,8 +6,8 @@ class GameScreen extends Component {
     getDataFromController = async (data) => {
         //console.log(data)
         try {
-            let jsonData = await AsyncStorage.setItem(JSON.stringify(data))
-            console.log(`success storing ${jsonData()}`);
+            let jsonData = await AsyncStorage.setItem('key', JSON.stringify(data))
+             console.log(`success storing ${jsonData}`);
             return jsonData;
         } catch (error) {
             console.log("error saving data");
@@ -22,7 +22,7 @@ class GameScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Controller will go here</Text>
-                <PBC getDataFromController={this.getDataFromController} goHome={this.goHome} />
+                <PBC getDataFromController={this.getDataFromController} goHome={this.goHome} /> 
                 <Button title='Go to home screen' onPress={() => this.goHome() }/>
 
             </View>
