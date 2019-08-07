@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
-import PBT from './components/PracticeButtonController'
+import PBC from './components/PracticeButtonController'
 //import Controller from './components/Controller'
 class GameScreen extends Component {
     getDataFromController = async (data) => {
+        console.log(data)
         try {
             await AsyncStorage.setItem('game:key', data)
         } catch (error) {
@@ -18,8 +19,8 @@ class GameScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Controller will go here</Text>
-                <PBT props={this.getDataFromController} />
-                <Button title='Go to home screen' onPress={() => this.props.navigation.navigate('Home')} />
+                <PBC getDataFromController={this.getDataFromController} goHome={this.goHome} />
+                <Button title='Go to home screen' onPress={() => this.goHome() }/>
 
             </View>
         )
