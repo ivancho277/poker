@@ -10,6 +10,9 @@ export default class PracticeButtonController extends Component {
             raises: 0
         };
     }
+    passDataUp(data){
+        this.props.getDataFromController(data);
+    }
 
     render() {
         return (
