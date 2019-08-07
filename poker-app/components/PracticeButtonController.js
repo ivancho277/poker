@@ -14,6 +14,12 @@ export default class PracticeButtonController extends Component {
         this.props.getDataFromController(data);
     }
 
+    toBeSaved(){
+        return {calls: this.state.calls,
+                folds: this.state.folds,
+                raises: this.state.raises}
+    }
+
     render() {
         return (
             <View>
@@ -21,7 +27,7 @@ export default class PracticeButtonController extends Component {
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
-                <Button title='Go to home screen, PBC' onPress={()=> this.props.goHome()} />  
+                <Button title='Save Data. End game.' onPress={()=> this.props.getDataFromController(this.toBeSaved())} />  
 
             </View>
         );
