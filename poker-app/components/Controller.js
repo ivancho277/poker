@@ -3,15 +3,15 @@ import { View, Text , StyleSheet} from 'react-native';
 import Button from './Button'
 export default class Controller extends Component {
   state = {
-
+  
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button type="raise" source="raise" />
-        <Button type="call" source="call" />
-        <Button type="raise" source="raise" />
+        <Button type="fold" source="fold" /> 
+        <Button type="call" source="call" /> 
+        <Button type="raise" source="raise" /> 
       </View>
     );
   }
