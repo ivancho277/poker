@@ -5,6 +5,7 @@ class HomeScreen extends Component {
     retrieveData = async () => {
         let keys = await AsyncStorage.getAllKeys()
         console.log(keys);
+        return keys;
     }
 
     render() {
