@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
 class HomeScreen extends Component {
+    state = {
+        gamesArray : []
+    }
+
+    componentDidMount() {
+        this.setState({
+            gamesArray: this.retrieveData()
+        })
+    }
+
     retrieveData = async () => {
         let keys = await AsyncStorage.getAllKeys()
         console.log(keys);

@@ -10,9 +10,7 @@ export default class PracticeButtonController extends Component {
             raises: 0
         };
     }
-    passDataUp(data){
-        this.props.getDataFromController(data);
-    }
+    
 
     toBeSaved(){
         return {calls: this.state.calls,
