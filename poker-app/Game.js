@@ -14,10 +14,7 @@ class GameScreen extends Component {
         }
     }
 
-    retrieveData = async () => {
-        let keys = await AsyncStorage.getAllKeys()
-        console.log(keys);
-    }
+   
     goHome() {
         this.props.navigation.navigate('Home');
         
@@ -29,9 +26,7 @@ class GameScreen extends Component {
                 <Text>Controller will go here</Text>
                 <PBC getDataFromController={this.getDataFromController} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
-                <TouchableOpacity onPress={this.retrieveData}>
-                    <Text>Get All data from storage</Text>
-                </TouchableOpacity>
+                
             </View>
         )
     }
