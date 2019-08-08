@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
 import PBC from './components/PracticeButtonController'
 //import Controller from './components/Controller'
 class GameScreen extends Component {
-    getDataFromController = async (data) => {
+    getDataFromController = (data) => {
         //console.log(data)
         try {
-            let jsonData = await AsyncStorage.setItem('key', JSON.stringify(data))
-            console.log(`success storing ${jsonData}`);
+            AsyncStorage.setItem('key', JSON.stringify(data))
+            console.log(`success storing ${data.calls}`);
             return jsonData;
         } catch (error) {
             console.log("error saving data");
@@ -15,7 +15,7 @@ class GameScreen extends Component {
     }
     goHome() {
         this.props.navigation.navigate('Home');
-        console.log()
+        
     }
 
     render() {
