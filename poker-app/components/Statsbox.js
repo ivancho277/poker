@@ -4,13 +4,20 @@ import { Text, View, StyleSheet } from 'react-native'
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     state = {
-
+        calls: this.props.games.calls,
+        folds: this.props.games.folds,
+        raises: this.props.games.raises
     }
     render() {
         return (
 
             <View style={boxStyles.container}>
-                <Text style={{justifyContent: 'center'}} > textInComponent </Text>
+                <Text style={{justifyContent: 'center'}} > textInComponent {'\n'}
+                    calls: {this.state.calls} {'\n'}
+                    folds: {this.state.folds} {'\n'}
+                    raises: {this.state.raises} 
+                
+                </Text>
             </View>
 
         )
