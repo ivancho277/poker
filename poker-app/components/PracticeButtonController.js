@@ -8,30 +8,32 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
-            gamesArray : []
+            gamesArray: []
         };
     }
-    
 
-    toBeSaved(){
-        let gameObj =  {calls: this.state.calls,
-                folds: this.state.folds,
-                raises: this.state.raises}
+    testFunction(){
+        console.log('hey');
+    }
+    toBeSaved() {
+        let gameObj = {
+            calls: this.state.calls,
+            folds: this.state.folds,
+            raises: this.state.raises
+        }
         let arr = this.state.gamesArray;
         arr.push(gameObj);
-        return arr; 
-
+        return arr;
     }
 
     render() {
         return (
             <View>
-                <Text> PracticeButtonController </Text> 
-                <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
-                <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
-                <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
-                <Button title='Save Data. End game.' onPress={()=> this.props.getDataFromController(this.toBeSaved())} />  
-
+                <Text> PracticeButtonController </Text>
+                <Button title={`call, #${this.state.calls}`} onPress={() => this.setState({ calls: ++this.state.calls })} />
+                <Button title={`fold, #${this.state.folds}`} onPress={() => this.setState({ folds: ++this.state.folds })} />
+                <Button title={`raise, #${this.state.raises}`} onPress={() => this.setState({ raises: ++this.state.raises })} />
+                <Button title='Save Data. End game.' onPress={() => this.props.getDataFromController(this.toBeSaved())} />
             </View>
         );
     }
