@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
+import Queries from './components/AsyncStorageController'
 class HomeScreen extends Component {
     state = {
         gamesArray : []
