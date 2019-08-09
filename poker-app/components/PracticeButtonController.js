@@ -7,15 +7,20 @@ export default class PracticeButtonController extends Component {
         this.state = {
             calls: 0,
             folds: 0,
-            raises: 0
+            raises: 0,
+            gamesArray : []
         };
     }
     
 
     toBeSaved(){
-        return {calls: this.state.calls,
+        let gameObj =  {calls: this.state.calls,
                 folds: this.state.folds,
                 raises: this.state.raises}
+        let arr = this.state.gamesArray;
+        arr.push(gameObj);
+        return arr; 
+
     }
 
     render() {
