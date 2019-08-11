@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
-const storage = require("./components/AsyncStorageController");
+const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
     state = {
         gamesArray : []

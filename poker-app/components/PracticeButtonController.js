@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
-const storage = require("./components/AsyncStorageController");
+const storage = require("./AsyncStorageController.js");
 export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +10,7 @@ export default class PracticeButtonController extends Component {
             raises: 0,
             gamesArray : []
         };
-    }
+    } 
     
     
     toBeSaved(){

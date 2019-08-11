@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 
  module.export = {
-  
   saveData: function(data){
     try{
         AsyncStorage.setItem('key', JSON.stringify(data));
