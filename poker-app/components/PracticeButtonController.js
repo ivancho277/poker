@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
-const storage = require("./AsyncStorageController.js");
+const storageController = require('./AsyncStorageController.js')
 export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ export default class PracticeButtonController extends Component {
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
-                <Button title='Save Data. End game.' onPress={()=> storage.saveData(this.toBeSaved())} />  
+                <Button title='Save Data. End game.' onPress={()=> storageController.saveData(this.toBeSaved())} />  
 
             </View>
         );
