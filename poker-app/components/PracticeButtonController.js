@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TextInput } from 'react-native';
 const storageController = require('./AsyncStorageController.js')
 export default class PracticeButtonController extends Component {
     constructor(props) {
@@ -8,6 +8,8 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
+            tag: "",
+            tags: [],
             gamesArray : []
         };
     } 
@@ -26,11 +28,17 @@ export default class PracticeButtonController extends Component {
         return (
             <View>
                 <Text> PracticeButtonController </Text> 
+                <TextInput
+                    style={{height: 40}}
+                    placeholder="Type your tags here"
+                    onChangeText={(text)=> this.setState({text})}
+                    value={this.state.text}
+                />
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
                 <Button title='Save Data. End game.' onPress={()=> storageController.saveData(this.toBeSaved())} />  
-
+                
             </View>
         );
     }
