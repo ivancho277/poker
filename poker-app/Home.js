@@ -7,8 +7,6 @@ class HomeScreen extends Component {
         gamesArray : [{calls:0, folds:0, raises: 0}]
     }
 
-    
-
     componentDidMount() {
          storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));                            
