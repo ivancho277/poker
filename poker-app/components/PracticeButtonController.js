@@ -14,6 +14,13 @@ export default class PracticeButtonController extends Component {
         };
     } 
     
+    saveToTags(tag){
+        let tagsArray = this.state.tags;
+        tagsArray.push(tag);
+        this.setState({
+            tags: tagsArray
+        })
+    }
     
     toBeSaved(){
         let gameObj =  {calls: this.state.calls,
@@ -31,9 +38,10 @@ export default class PracticeButtonController extends Component {
                 <TextInput
                     style={{height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid'}}
                     placeholder="Type your tags here"
-                    onChangeText={(text)=> this.setState({text})}
-                    value={this.state.text}
+                    onChangeText={(tag)=> this.setState({tag})}
+                    value={this.state.tag}
                 />
+                <Button title="save tage" onPress={()=> this.saveToTags(this.state.tag)} />
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 

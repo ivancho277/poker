@@ -28,7 +28,8 @@ export default class Statsbox extends Component {
                 <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
                     calls: {this.props.games[0].calls} {'\n'}
                     folds: {this.props.games[0].folds} {'\n'}
-                    raises: {this.props.games[0].raises}
+                    raises: {this.props.games[0].raises} {'\n'}
+                    tags: 
                 </Text>
             </View>
 
