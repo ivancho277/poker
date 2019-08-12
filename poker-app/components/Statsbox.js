@@ -29,7 +29,6 @@ export default class Statsbox extends Component {
                     calls: {this.props.games[0].calls} {'\n'}
                     folds: {this.props.games[0].folds} {'\n'}
                     raises: {this.props.games[0].raises}
-
                 </Text>
             </View>
 

@@ -7,6 +7,8 @@ class HomeScreen extends Component {
         gamesArray : [{calls:0, folds:0, raises: 0}]
     }
 
+    
+
     componentDidMount() {
          storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));                            
@@ -14,16 +16,8 @@ class HomeScreen extends Component {
                 gamesArray: JSON.parse(res)
             })
         })
-        
     }
 
-    // retrieveData = async () => {
-    //     let keys = await AsyncStorage.getAllKeys()
-    //     console.log(keys);
-    //     let games = await AsyncStorage.getItem(keys[0])
-    //     console.log(JSON.parse(games));
-    //     return JSON.parse(games);
-    // }
 
     render() {
         return (
