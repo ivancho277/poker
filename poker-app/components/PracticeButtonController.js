@@ -25,7 +25,8 @@ export default class PracticeButtonController extends Component {
     toBeSaved(){
         let gameObj =  {calls: this.state.calls,
                 folds: this.state.folds,
-                raises: this.state.raises}
+                raises: this.state.raises,
+                tags: this.state.tags}
         let arr = this.state.gamesArray;
         arr.push(gameObj);
         return arr; 
@@ -41,7 +42,7 @@ export default class PracticeButtonController extends Component {
                     onChangeText={(tag)=> this.setState({tag})}
                     value={this.state.tag}
                 />
-                <Button title="save tage" onPress={()=> this.saveToTags(this.state.tag)} />
+                <Button title="save tag" onPress={()=> this.saveToTags(this.state.tag)} />
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
