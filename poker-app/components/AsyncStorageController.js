@@ -17,8 +17,8 @@ module.exports = {
         let keys = await AsyncStorage.getAllKeys();
         console.log(keys);
         let games = await AsyncStorage.getItem(keys[0]);
-        console.log(JSON.parse(games));
-        return JSON.parse(games);
+        console.log(games);
+        return games;
     }
 };
 

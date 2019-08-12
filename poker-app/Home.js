@@ -4,28 +4,24 @@ import StatsBox from './components/Statsbox'
 const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
     state = {
-        gamesArray : []
+        gamesArray : [{calls:0, folds:0, raises: 0}]
     }
 
     componentDidMount() {
-        this.setState({
-            gamesArray: storage.retrieveData
+         storage.retrieveData().then((res) => {
+            console.log(JSON.parse(res));                            
+            this.setState({
+                gamesArray: JSON.parse(res)
+            })
         })
     }
 
-    // retrieveData = async () => {
-    //     let keys = await AsyncStorage.getAllKeys()
-    //     console.log(keys);
-    //     let games = await AsyncStorage.getItem(keys[0])
-    //     console.log(JSON.parse(games));
-    //     return JSON.parse(games);
-    // }
 
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
-                <StatsBox games={storage.retrieveData} />
+                <StatsBox games={this.state.gamesArray} />
                 <Button title="Game" style={{margin: '10px'}} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={storage.retrieveData}>
                     <Text>Get All data from storage</Text>
