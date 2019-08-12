@@ -29,7 +29,7 @@ export default class PracticeButtonController extends Component {
             <View>
                 <Text> PracticeButtonController </Text> 
                 <TextInput
-                    style={{height: 40}}
+                    style={{height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid'}}
                     placeholder="Type your tags here"
                     onChangeText={(text)=> this.setState({text})}
                     value={this.state.text}
