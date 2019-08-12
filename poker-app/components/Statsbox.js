@@ -12,15 +12,15 @@ export default class Statsbox extends Component {
         };
     }
 
-    componentDidMount() {
-        let obj = this.props.games();
-        console.log("HELLO:" , obj) 
-        this.setState({
-            calls: obj.calls,
-            folds: obj.folds,
-            raises: obj.raises
-        }) 
-    }
+    // componentDidMount() {
+    //     let obj = this.props.games();
+    //     console.log("HELLO:" , obj) 
+    //     this.setState({
+    //         calls: obj.calls,
+    //         folds: obj.folds,
+    //         raises: obj.raises
+    //     }) 
+    // }
     render() {
         return (
 

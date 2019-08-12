@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import PBC from './components/PracticeButtonController'
+const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
 class GameScreen extends Component {
     getDataFromController = (data) => {

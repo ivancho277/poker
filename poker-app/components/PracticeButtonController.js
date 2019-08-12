@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Button, AsyncStorage } from 'react-native';
-
+import { View, Text, Button } from 'react-native';
+const storageController = require('./AsyncStorageController.js')
 export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
@@ -10,9 +10,9 @@ export default class PracticeButtonController extends Component {
             raises: 0,
             gamesArray : []
         };
-    }
+    } 
     
-
+    
     toBeSaved(){
         let gameObj =  {calls: this.state.calls,
                 folds: this.state.folds,
@@ -20,8 +20,7 @@ export default class PracticeButtonController extends Component {
         let arr = this.state.gamesArray;
         arr.push(gameObj);
         return arr; 
-
-    }
+    } 
 
     render() {
         return (
@@ -30,7 +29,7 @@ export default class PracticeButtonController extends Component {
                 <Button title={`call, #${this.state.calls}`} onPress={()=> this.setState({calls: ++this.state.calls})}  /> 
                 <Button title={`fold, #${this.state.folds}`} onPress={()=> this.setState({folds: ++this.state.folds})}/> 
                 <Button title={`raise, #${this.state.raises}`} onPress={()=>this.setState({raises: ++this.state.raises})}/> 
-                <Button title='Save Data. End game.' onPress={()=> this.props.getDataFromController(this.toBeSaved())} />  
+                <Button title='Save Data. End game.' onPress={()=> storageController.saveData(this.toBeSaved())} />  
 
             </View>
         );
