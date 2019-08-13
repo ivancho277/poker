@@ -12,7 +12,23 @@ export default class PracticeButtonController extends Component {
             tags: [],
             gamesArray : []
         };
-    } 
+    };
+
+    populateGames(){
+        storageController.retrieveData().then((res)=> {
+            let pastGames = JSON.parse(res);
+            this.setState({
+                gamesArray: pastGames
+            })
+        })
+    }
+
+    componentDidMount(){
+        this.populateGames();
+        console.log("LOOK UNDER");
+        console.log(this.state.gamesArray)
+    }
+
     
     saveToTags(tag){
         let tagsArray = this.state.tags;
@@ -20,7 +36,7 @@ export default class PracticeButtonController extends Component {
         this.setState({
             tags: tagsArray
         })
-    }
+    };
     
     toBeSaved(){
         let gameObj =  {calls: this.state.calls,
@@ -30,7 +46,7 @@ export default class PracticeButtonController extends Component {
         let arr = this.state.gamesArray;
         arr.push(gameObj);
         return arr; 
-    } 
+    };
 
     render() {
         return (

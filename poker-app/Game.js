@@ -4,30 +4,19 @@ import PBC from './components/PracticeButtonController'
 const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
 class GameScreen extends Component {
-    getDataFromController = (data) => {
-        //console.log(data)
-        try {
-            AsyncStorage.setItem('key', JSON.stringify(data))
-            console.log(`success storing ${data.calls}`);
-            return data;
-        } catch (error) {
-            console.log("error saving data");
-        }
-    }
+  
 
    
     goHome() {
         this.props.navigation.navigate('Home');
-        
     }
 
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Controller will go here</Text>
-                <PBC getDataFromController={this.getDataFromController} goHome={this.goHome} />
-                <Button title='Go to home screen' onPress={() => this.goHome()} />
-                
+                <PBC goHome={this.goHome} />
+                <Button title='Go to home screen' onPress={() => this.goHome()} />           
             </View>
         )
     }
