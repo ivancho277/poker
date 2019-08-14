@@ -23,7 +23,7 @@ class HomeScreen extends Component {
                 <Text>Welcome to Poker</Text>
                 <StatsBox games={this.state.gamesArray} />
                 <Button title="Game" style={{margin: '10px'}} onPress={() => this.props.navigation.navigate('Game')} />
-                <TouchableOpacity onPress={storage.retrieveData}>
+                <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>
                 </TouchableOpacity>
             </View>
