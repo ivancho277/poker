@@ -17,18 +17,18 @@ module.exports = {
         try{
         let keys = await AsyncStorage.getAllKeys();
         console.log(keys);
-        let games = await AsyncStorage.getItem(keys[0]);
+        let games = await AsyncStorage.getItem('key');
         console.log(games);
         return games;
         }
         catch {
             console.log('error retrieving data')
         }
-    }
+    },
 
-    // removeData: async function(key){
-    //     await AsyncStorage.removeItem(key);
-    //     console.log("REMOVED")
-    // }
+    removeData: function(){
+        AsyncStorage.setItem('key', {});
+        console.log("REMOVED")
+    }
 };
 
