@@ -14,11 +14,21 @@ module.exports = {
     },
 
     retrieveData: async function() {
+        try{
         let keys = await AsyncStorage.getAllKeys();
         console.log(keys);
-        let games = await AsyncStorage.getItem(keys[0]);
+        let games = await AsyncStorage.getItem('key');
         console.log(games);
         return games;
+        }
+        catch {
+            console.log('error retrieving data')
+        }
+    },
+
+    removeData: function(){
+        AsyncStorage.setItem('key', {});
+        console.log("REMOVED")
     }
 };
 

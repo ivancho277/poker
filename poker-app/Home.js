@@ -26,6 +26,9 @@ class HomeScreen extends Component {
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={()=> alert("YOU PRESS ME")}>
+                    <Text>Delete storage</Text>
+                </TouchableOpacity>
             </View>
         )
     }  
