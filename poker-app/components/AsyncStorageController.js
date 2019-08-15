@@ -27,7 +27,8 @@ module.exports = {
     },
 
     removeData: function(){
-        AsyncStorage.setItem('key', {});
+        let empty = [{}];
+        AsyncStorage.setItem('key', JSON.stringify(empty));
         console.log("REMOVED")
     }
 };
