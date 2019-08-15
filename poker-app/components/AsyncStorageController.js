@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 module.exports = {
     saveData: function (data) {
