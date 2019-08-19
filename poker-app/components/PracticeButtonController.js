@@ -14,23 +14,28 @@ export default class PracticeButtonController extends Component {
         };
     };
 
-    populateGames() {
+    async populateGames() {
         storageController.retrieveData().then((res) => {
             let pastGames = JSON.parse(res);
+            
             console.log("populate function");
             console.log(res)
+            console.log(pastGames)
             if (res.games) {
                 this.setState({
                     gamesArray: pastGames.games
-                })
+                });
             }
         })
     }
 
+
+
     componentDidMount() {
-        this.populateGames();
-        console.log("LOOK UNDER");
-        console.log(this.state.gamesArray)
+        this.populateGames().then(()=> {
+            console.log("LOOK UNDER");
+            console.log(this.state.gamesArray)
+        });
     }
 
 
@@ -42,6 +47,8 @@ export default class PracticeButtonController extends Component {
         })
     };
 
+
+
     toBeSaved() {
         let date = new Date();
         let gamesObj = {
@@ -51,6 +58,8 @@ export default class PracticeButtonController extends Component {
             tags: this.state.tags
         }
         let gamesarr = this.state.gamesArray;
+        console.log("LOOOK")
+        console.log(gamesarr)
         gamesarr.push(gamesObj)
         let saveObj = {
             version: "1.0.0",
