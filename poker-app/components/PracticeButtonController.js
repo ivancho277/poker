@@ -15,14 +15,18 @@ export default class PracticeButtonController extends Component {
     };
 
     async populateGames() {
-        storageController.retrieveData().then((res) => {
+       await  storageController.retrieveData().then((res) => {
             let pastGames = JSON.parse(res);
             console.log("populate function");
+            let arrayOfgames = [];
+            pastGames.games.forEach(game => {
+                arrayOfgames.push(game);
+            })
             console.log(res)
             console.log(pastGames)
             if (res.games) {
                 this.setState({
-                    gamesArray: pastGames.games
+                    gamesArray: arrayOfgames
                 });
             }
         }).catch((error) => {
