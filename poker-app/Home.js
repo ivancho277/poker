@@ -13,6 +13,9 @@ class HomeScreen extends Component {
             this.setState({
                 gamesObj: JSON.parse(res)
             })
+        }).catch((error) => {
+            console.log("HOME SCREEN ERROR");
+            throw error;
         })
     }
 
