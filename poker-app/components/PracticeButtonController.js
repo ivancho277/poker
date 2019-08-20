@@ -21,7 +21,10 @@ export default class PracticeButtonController extends Component {
             let arrayOfgames = [];
             pastGames.games.forEach(game => {
                 arrayOfgames.push(game);
+                console.log(game)
             })
+            console.log("TAKE A LOOK")
+            console.log(arrayOfgames)
             console.log(res)
             console.log(pastGames)
             if (res.games) {
@@ -59,6 +62,8 @@ saveToTags(tag) {
 toBeSaved() {
     let date = new Date();
     let gamesObj = {
+        date: date.getDate(),
+        time: date.getTime(),
         calls: this.state.calls,
         folds: this.state.folds,
         raises: this.state.raises,
@@ -70,7 +75,6 @@ toBeSaved() {
     gamesarr.push(gamesObj)
     let saveObj = {
         version: "1.0.0",
-        date: date.getTime(),
         games: gamesarr
     }
     return saveObj;
