@@ -6,7 +6,7 @@ module.exports = {
     },
 
     calculateTotalStats: function(games){
-
+        return countTotal();
     },
 
     calculateStatsByTag: function(games){

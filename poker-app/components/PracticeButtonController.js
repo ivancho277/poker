@@ -62,7 +62,7 @@ export default class PracticeButtonController extends Component {
     toBeSaved() {
         let date = new Date();
         let gamesObj = {
-            date: date.getDate(),
+            date: date.toDateString(),
             time: date.getTime(),
             calls: this.state.calls,
             folds: this.state.folds,
