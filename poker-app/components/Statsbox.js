@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+const calculation = require('./statscalculation.js');
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
@@ -12,24 +12,26 @@ export default class Statsbox extends Component {
         };
     }
 
-    // componentDidMount() {
-    //     let obj = this.props.games();
-    //     console.log("HELLO:" , obj) 
-    //     this.setState({
-    //         calls: obj.calls,
-    //         folds: obj.folds,
-    //         raises: obj.raises
-    //     }) 
-    // }
+    componentDidMount() {
+        //const allData = calculation.calculateTotalStats(this.props.games((res) => { return res }));
+        
+        // this.setState({
+        //     calls: allData.calls,
+        //     folds: allData.folds,
+        //     raises: allData.raises
+        // }) 
+    }
     render() {
         return (
-
             <View style={boxStyles.container}>
+                <View  style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                    <ActivityIndicator size='small' color='#0000ff' />
+                </View>
                 <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
                     calls: {this.props.games.calls} {'\n'}
                     folds: {this.props.games.folds} {'\n'}
                     raises: {this.props.games.raises} {'\n'}
-                    tags: 
+                    tags:
                 </Text>
             </View>
 
@@ -47,3 +49,16 @@ const boxStyles = StyleSheet.create({
         borderStyle: 'solid'
     }
 })
+
+const spinnerStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 5
+    }
+
+});

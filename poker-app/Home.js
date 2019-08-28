@@ -4,12 +4,16 @@ import StatsBox from './components/Statsbox'
 const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
     state = {
-        gamesObj : {}
+        gamesObj: {
+            calls: 0,
+            folds: 0,
+            riases: 0
+        }
     }
 
     componentDidMount() {
-         storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));                            
+        storage.retrieveData().then((res) => {
+            console.log(JSON.parse(res));
             this.setState({
                 gamesObj: JSON.parse(res)
             })
@@ -20,21 +24,25 @@ class HomeScreen extends Component {
     }
 
 
+
+
+
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
                 <StatsBox games={this.state.gamesObj} />
-                <Button title="Game" style={{margin: '10px'}} onPress={() => this.props.navigation.navigate('Game')} />
+                <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> storage.removeData()}>
+                <TouchableOpacity onPress={() => storage.removeData()}>
                     <Text>Delete storage</Text>
                 </TouchableOpacity>
             </View>
         )
-    }  
+    }
 }
 
 export default HomeScreen; 
