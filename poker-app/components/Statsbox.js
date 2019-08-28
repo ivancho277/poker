@@ -5,34 +5,34 @@ export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
-        this.state = {
-            calls: 0,
-            folds: 0,
-            raises: 0
-        };
+        this.state = {}
     }
 
     componentDidMount() {
         //const allData = calculation.calculateTotalStats(this.props.games((res) => { return res }));
-        
-        // this.setState({
-        //     calls: allData.calls,
-        //     folds: allData.folds,
-        //     raises: allData.raises
-        // }) 
+
+        this.setState({
+            calls: this.props.games.calls,
+            folds: this.props.games.folds,
+            raises: this.props.games.raises
+        })
     }
     render() {
         return (
             <View style={boxStyles.container}>
-                <View  style={[spinnerStyles.container, spinnerStyles.horizontal]}>
-                    <ActivityIndicator size='small' color='#0000ff' />
-                </View>
-                <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
-                    calls: {this.props.games.calls} {'\n'}
-                    folds: {this.props.games.folds} {'\n'}
-                    raises: {this.props.games.raises} {'\n'}
-                    tags:
+                {Object.entries(this.state).length === 0 && this.state.constructor === Object
+                    ?
+                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                        <ActivityIndicator size='small' color='#0000ff' />
+                    </View>
+                    :
+                    <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
+                        calls: {this.state.calls} {'\n'}
+                        folds: {this.state.folds} {'\n'}
+                        raises: {this.state.raises} {'\n'}
+                        tags:
                 </Text>
+                }
             </View>
 
         )
