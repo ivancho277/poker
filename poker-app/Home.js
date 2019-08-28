@@ -4,10 +4,9 @@ import StatsBox from './components/Statsbox'
 const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
     state = {
+        loading: true,
         gamesObj: {
-            calls: 0,
-            folds: 0,
-            riases: 0
+            
         }
     }
 
@@ -15,8 +14,11 @@ class HomeScreen extends Component {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
             this.setState({
-                gamesObj: JSON.parse(res)
+                gamesObj: JSON.parse(res),
+                loading: false
             })
+            
+
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
             throw error;
@@ -32,7 +34,7 @@ class HomeScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
-                <StatsBox games={this.state.gamesObj} />
+                <StatsBox games={this.state.gamesObj} loading={this.state.loading} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>

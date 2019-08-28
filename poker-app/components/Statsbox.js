@@ -5,22 +5,32 @@ export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            
+            loading: true
+        }
+
     }
 
     componentDidMount() {
         //const allData = calculation.calculateTotalStats(this.props.games((res) => { return res }));
-
-        this.setState({
-            calls: this.props.games.calls,
-            folds: this.props.games.folds,
-            raises: this.props.games.raises
-        })
+       
     }
+
+    isDoneLoading(loading){
+        if(!laoding){
+            this.setState({
+                loading: false
+            })
+        }
+    }
+
+   
+
     render() {
         return (
             <View style={boxStyles.container}>
-                {Object.entries(this.state).length === 0 && this.state.constructor === Object
+                {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
                         <ActivityIndicator size='small' color='#0000ff' />
@@ -32,6 +42,7 @@ export default class Statsbox extends Component {
                         raises: {this.state.raises} {'\n'}
                         tags:
                 </Text>
+             
                 }
             </View>
 
