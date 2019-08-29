@@ -3,12 +3,17 @@ import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from '
 import StatsBox from './components/Statsbox'
 const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
-    state = {
-        loading: true,
-        gamesObj: {
-            
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            gamesObj: {
+                
+            }
         }
+
     }
+
 
     componentDidMount() {
         storage.retrieveData().then((res) => {
@@ -17,13 +22,19 @@ class HomeScreen extends Component {
                 gamesObj: JSON.parse(res),
                 loading: false
             })
-            
-
+            console.log("THIS IS ASYNC")
+            console.log(this.state.gamesObj)
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
             throw error;
         })
     }
+
+    renderStatsBox() {
+        if (!this.state.loading)
+            return <StatsBox games={this.state.gamesObj} loading={this.state.loading} />
+    }
+
 
 
 

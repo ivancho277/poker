@@ -6,26 +6,24 @@ export default class Statsbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
-            loading: true
+            loading: true,
+            games: []
         }
 
     }
+
 
     componentDidMount() {
         //const allData = calculation.calculateTotalStats(this.props.games((res) => { return res }));
-       
+        this.setState({
+            games: this.props.games.games,
+            loading: this.props.loading
+        })
+        
     }
 
-    isDoneLoading(loading){
-        if(!laoding){
-            this.setState({
-                loading: false
-            })
-        }
-    }
 
-   
+
 
     render() {
         return (
@@ -42,7 +40,7 @@ export default class Statsbox extends Component {
                         raises: {this.state.raises} {'\n'}
                         tags:
                 </Text>
-             
+
                 }
             </View>
 
