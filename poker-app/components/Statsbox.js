@@ -9,9 +9,7 @@ export default class Statsbox extends Component {
         super(props);
         this.state = {
             loading: true,
-            gamesObj: {
-
-            }
+            gamesObj: {}
 
         }
     }
@@ -34,6 +32,8 @@ export default class Statsbox extends Component {
 
 
 
+
+
     render() {
         return (
             <View style={boxStyles.container}>
@@ -44,9 +44,9 @@ export default class Statsbox extends Component {
                     </View>
                     :
                     <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
-                        {/* calls: {this.state.calls} {'\n'} */}
-                        {/* folds: {this.state.folds} {'\n'} */}
-                        {/* raises: {this.state.raises} {'\n'} */}
+                        calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
+                        folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
+                        raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
                         tags:
                 </Text>
 
