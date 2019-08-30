@@ -15,37 +15,27 @@ class HomeScreen extends Component {
     }
 
 
-    componentDidMount() {
-        storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-            this.setState({
-                gamesObj: JSON.parse(res),
-                loading: false
-            })
-            console.log("THIS IS ASYNC")
-            console.log(this.state.gamesObj)
-        }).catch((error) => {
-            console.log("HOME SCREEN ERROR");
-            throw error;
-        })
-    }
-
-    renderStatsBox() {
-        if (!this.state.loading)
-            return <StatsBox games={this.state.gamesObj} loading={this.state.loading} />
-    }
-
-
-
-
-
+    // componentDidMount() {
+    //     storage.retrieveData().then((res) => {
+    //         console.log(JSON.parse(res));
+    //         this.setState({
+    //             gamesObj: JSON.parse(res),
+    //             loading: false
+    //         })
+    //         console.log("THIS IS ASYNC")
+    //         console.log(this.state.gamesObj)
+    //     }).catch((error) => {
+    //         console.log("HOME SCREEN ERROR");
+    //         throw error;
+    //     })
+    // }
 
 
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
-                <StatsBox games={this.state.gamesObj} loading={this.state.loading} />
+                <StatsBox />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>

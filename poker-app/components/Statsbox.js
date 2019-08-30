@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 const calculation = require('./statscalculation.js');
+const storage = require("./AsyncStorageController.js");
+
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
         this.state = {
             loading: true,
-            games: []
-        }
+            gamesObj: {
 
+            }
+
+        }
     }
 
-
     componentDidMount() {
-        //const allData = calculation.calculateTotalStats(this.props.games((res) => { return res }));
-        this.setState({
-            games: this.props.games.games,
-            loading: this.props.loading
+        storage.retrieveData().then((res) => {
+            console.log(JSON.parse(res));
+            this.setState({
+                gamesObj: JSON.parse(res),
+                loading: false
+            })
+            console.log("THIS IS ASYNC")
+            console.log(this.state.gamesObj)
+        }).catch((error) => {
+            console.log("HOME SCREEN ERROR");
+            throw error;
         })
-        
     }
 
 
@@ -35,9 +44,9 @@ export default class Statsbox extends Component {
                     </View>
                     :
                     <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
-                        calls: {this.state.calls} {'\n'}
-                        folds: {this.state.folds} {'\n'}
-                        raises: {this.state.raises} {'\n'}
+                        {/* calls: {this.state.calls} {'\n'} */}
+                        {/* folds: {this.state.folds} {'\n'} */}
+                        {/* raises: {this.state.raises} {'\n'} */}
                         tags:
                 </Text>
 
