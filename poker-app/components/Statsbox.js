@@ -9,8 +9,7 @@ export default class Statsbox extends Component {
         super(props);
         this.state = {
             loading: true,
-            gamesObj: {}
-
+            gamesObj: {},
         }
     }
 
@@ -36,6 +35,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
+
             <View style={boxStyles.container}>
                 {this.state.loading
                     ?
@@ -47,7 +47,7 @@ export default class Statsbox extends Component {
                         calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
                         folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
                         raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
-                        tags:
+                        tags: 
                 </Text>
 
                 }

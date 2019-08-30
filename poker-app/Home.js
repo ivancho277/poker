@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
+import { TextInput } from 'react-native-gesture-handler';
 const storage = require("./components/AsyncStorageController.js");
 class HomeScreen extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class HomeScreen extends Component {
             loading: true,
             gamesObj: {
                 
-            }
+            },
+            tagsearch: ''
         }
 
     }
@@ -35,6 +37,12 @@ class HomeScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
+                <TextInput
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder="Search by tag"
+                    onChangeText={(tagsearch) => this.setState({ tagsearch })}
+                    value={this.state.tagsearch}
+                />
                 <StatsBox />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
