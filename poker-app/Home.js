@@ -38,11 +38,12 @@ class HomeScreen extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    style={{ float: 'left', height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Search by tag"
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                 />
+                <Button title="search" style={{ float: 'right'}} />
                 <StatsBox />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
