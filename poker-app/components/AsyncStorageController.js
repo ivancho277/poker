@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 module.exports = {
     saveData: function (data) {
@@ -27,7 +27,8 @@ module.exports = {
     },
 
     removeData: function(){
-        AsyncStorage.setItem('key', {});
+        let empty = [{}];
+        AsyncStorage.setItem('key', JSON.stringify(empty));
         console.log("REMOVED")
     }
 };

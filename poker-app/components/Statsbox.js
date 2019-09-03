@@ -1,36 +1,56 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+const calculation = require('./statscalculation.js');
+const storage = require("./AsyncStorageController.js");
 
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
         this.state = {
-            calls: 0,
-            folds: 0,
-            raises: 0
-        };
+            loading: true,
+            gamesObj: {},
+        }
     }
 
-    // componentDidMount() {
-    //     let obj = this.props.games();
-    //     console.log("HELLO:" , obj) 
-    //     this.setState({
-    //         calls: obj.calls,
-    //         folds: obj.folds,
-    //         raises: obj.raises
-    //     }) 
-    // }
+    componentDidMount() {
+        storage.retrieveData().then((res) => {
+            console.log(JSON.parse(res));
+            this.setState({
+                gamesObj: JSON.parse(res),
+                loading: false
+            })
+            console.log("THIS IS ASYNC")
+            console.log(this.state.gamesObj)
+        }).catch((error) => {
+            console.log("HOME SCREEN ERROR");
+            throw error;
+        })
+    }
+
+
+
+
+
+
     render() {
         return (
 
             <View style={boxStyles.container}>
-                <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
-                    calls: {this.props.games[0].calls} {'\n'}
-                    folds: {this.props.games[0].folds} {'\n'}
-                    raises: {this.props.games[0].raises} {'\n'}
-                    tags: 
+                {this.state.loading
+                    ?
+                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                        <ActivityIndicator size='small' color='#0000ff' />
+                    </View>
+                    :
+                    <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
+                        calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
+                        folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
+                        raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
+                        tags: 
                 </Text>
+
+                }
             </View>
 
         )
@@ -47,3 +67,16 @@ const boxStyles = StyleSheet.create({
         borderStyle: 'solid'
     }
 })
+
+const spinnerStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 5
+    }
+
+});
