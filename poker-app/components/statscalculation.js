@@ -2,11 +2,11 @@
 
 module.exports = {
     findTag: function (allGames) {
-        return null;
+        return SearchTag(allGames)
     },
 
-    calculateTotalStats: function (games) {
-        return countTotal(games);
+    calculateTotalStats: function (games, tag) {
+        return countTotal(games, tag);
     },
 
     calculateStatsByTag: function (games) {
@@ -34,16 +34,23 @@ function countTotal(obj) {
     
 }
 
-//   function findTag(obj, tag){
-//      let tagsArr = [];
-//     console.log(obj.games)
-//      for(let i = 0; i < obj.games.length; i++){
-//       if(obj.games[i].tags.includes(tag)){
-//           tagsArr.push(obj.games[i]);
-//       }
-//      }
-//     return tagsArr
-//   }
+  function SearchTag(obj, tag){
+    let tagsArr = [];
+   
+    for(let i = 0; i < obj.games.length; i++){
+      console.log(tag);
+      console.log(obj.games[i].tags.includes(tag));
+     if(obj.games[i].tags.includes(tag)){
+         let temp = {calls: obj.games[i].calls,
+                    folds: obj.games[i].folds,
+                    raises: obj.games[i]. raises,
+                    tags: [...obj.games[i].tags]
+                    }
+         tagsArr.push(temp);
+     }
+    }
+   return tagsArr
+  }
 
 
 

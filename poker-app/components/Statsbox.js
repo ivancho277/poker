@@ -29,10 +29,6 @@ export default class Statsbox extends Component {
     }
 
 
-
-
-
-
     render() {
         return (
 

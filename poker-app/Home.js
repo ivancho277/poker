@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from '
 import StatsBox from './components/Statsbox'
 import { TextInput } from 'react-native-gesture-handler';
 const storage = require("./components/AsyncStorageController.js");
+const calculations = require('./components/statscalculation.js')
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +33,17 @@ class HomeScreen extends Component {
     //     })
     // }
 
+    logTags(tag){
+        const data = storage.retrieveData().then((res) => {
+            console.log("HEY CHECK ME OUT");
+            console.log(JSON.parse(res), tag)
+            
+            const byTag = calculations.findTag(JSON.parse(res), tag);
+            console.log(byTag);
+        })
+
+    }
+
 
     render() {
         return (
@@ -43,7 +55,7 @@ class HomeScreen extends Component {
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                 />
-                <Button title="search" style={{ float: 'right'}} />
+                <Button title="search" onPress={()=> this.logTags(this.state.tagsearch)} style={{ float: 'right'}} />
                 <StatsBox />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
