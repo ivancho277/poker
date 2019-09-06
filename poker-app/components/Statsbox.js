@@ -31,7 +31,6 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-
             <View style={boxStyles.container}>
                 {this.state.loading
                     ?

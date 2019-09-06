@@ -34,11 +34,11 @@ class HomeScreen extends Component {
     // }
 
     logTags(tag){
-        const data = storage.retrieveData().then((res) => {
+        storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
-            console.log(JSON.parse(res), tag)
-            
-            const byTag = calculations.findTag(JSON.parse(res), tag);
+            console.log(JSON.parse(res))
+            const data = JSON.parse(res)
+            let byTag = calculations.findTag(data, tag);
             console.log(byTag);
         })
 
@@ -50,7 +50,7 @@ class HomeScreen extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
                 <TextInput
-                    style={{ float: 'left', height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Search by tag"
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
