@@ -38,7 +38,7 @@ export default class Statsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
+                    <Text style={{ justifyContent: 'center' }} >{'\n'}
                         calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
                         folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
                         raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
