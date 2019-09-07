@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
@@ -44,8 +44,8 @@ export default class Statsbox extends Component {
                         raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
                         tags: 
                 </Text>
-
                 }
+                <Button title="search test"  />
             </View>
 
         )

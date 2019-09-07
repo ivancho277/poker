@@ -16,12 +16,21 @@ module.exports = {
      * @param {object} games 
      * @param {string} tag 
      */
-    calculateTotalStats: function (games, tag) {
-        return countTotal(games, tag);
+    calculateTotalStats: function (games) {
+        return countTotal(games);
     },
 
-    calculateStatsByTag: function (games) {
-        return null;
+    /**
+     * 
+     * @param {object} games 
+     * @param {string} tag 
+     */
+    calculateStatsByTag: function (games,tag) {
+        const gamesArray = SearchTag(games, tag);
+        const gamesObj = {
+            games: gamesArray
+        }
+        return countTotal(gamesObj)
     }
 
 
