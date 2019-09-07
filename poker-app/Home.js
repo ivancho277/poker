@@ -61,7 +61,7 @@ class HomeScreen extends Component {
                     <Text>Get All data from storage</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => storage.removeData()}>
-                    <Text>Delete storage</Text>
+                    <Text style={{color: 'red'}}>Delete storage</Text>
                 </TouchableOpacity>
             </View>
         )
