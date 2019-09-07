@@ -1,10 +1,21 @@
 
 
 module.exports = {
-    findTag: function (allGames) {
-        return SearchTag(allGames)
+
+    /**
+     * 
+     * @param {object} allGames 
+     * @param {string} tag 
+     */
+    findTag: function (allGames, tag) {
+        return SearchTag(allGames, tag)
     },
 
+    /**
+     * 
+     * @param {object} games 
+     * @param {string} tag 
+     */
     calculateTotalStats: function (games, tag) {
         return countTotal(games, tag);
     },
@@ -34,9 +45,15 @@ function countTotal(obj) {
     
 }
 
+/**
+ * 
+ * @param {object} obj 
+ * @param {string} tag 
+ */
   function SearchTag(obj, tag){
     let tagsArr = [];
-   
+   console.log(tag + " LOOOK AT TAG" )
+   console.log(obj)
     for(let i = 0; i < obj.games.length; i++){
       console.log(tag);
       console.log(obj.games[i].tags.includes(tag));
