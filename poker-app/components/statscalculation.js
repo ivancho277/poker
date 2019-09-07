@@ -28,6 +28,49 @@ module.exports = {
 }
 
 function countTotal(obj) {
+    let totalCalls = 0;
+    let totalFolds = 0;
+    let totalRaises = 0;
+    for (let i = 0; i < obj.games.length; i++) {
+        totalCalls += obj.games[i].calls;
+        totalFolds += obj.games[i].folds;
+        totalRaises += obj.games[i].raises;
+    }
+    return {
+        calls: totalCalls,
+        folds: totalFolds,
+        raises: totalRaises
+    }
+
+}
+
+/**
+ * 
+ * @param {object} obj 
+ * @param {string} tag 
+ */
+function SearchTag(obj, tag) {
+    let tagsArr = [];
+    console.log(tag + " LOOOK AT TAG")
+    console.log(obj)
+    for (let i = 0; i < obj.games.length; i++) {
+        console.log(tag);
+        console.log(obj.games[i].tags.includes(tag));
+        if (obj.games[i].tags.includes(tag)) {
+            let temp = {
+                calls: obj.games[i].calls,
+                folds: obj.games[i].folds,
+                raises: obj.games[i].raises,
+                tags: [...obj.games[i].tags]
+            }
+            tagsArr.push(temp);
+        }
+    }
+    return tagsArr
+}
+
+function countTotalfromTag(obj, tag = "all") {
+    if (tag === "all") {
         let totalCalls = 0;
         let totalFolds = 0;
         let totalRaises = 0;
@@ -41,67 +84,26 @@ function countTotal(obj) {
             folds: totalFolds,
             raises: totalRaises
         }
-    
-}
-
-/**
- * 
- * @param {object} obj 
- * @param {string} tag 
- */
-  function SearchTag(obj, tag){
-    let tagsArr = [];
-   console.log(tag + " LOOOK AT TAG" )
-   console.log(obj)
-    for(let i = 0; i < obj.games.length; i++){
-      console.log(tag);
-      console.log(obj.games[i].tags.includes(tag));
-     if(obj.games[i].tags.includes(tag)){
-         let temp = {calls: obj.games[i].calls,
-                    folds: obj.games[i].folds,
-                    raises: obj.games[i]. raises,
-                    tags: [...obj.games[i].tags]
-                    }
-         tagsArr.push(temp);
-     }
-    }
-   return tagsArr
-  }
-
-  function countTotalfromTag(obj, tag="all"){
-    if(tag==="all"){ 
-      let totalCalls = 0;
-      let totalFolds = 0;
-      let totalRaises = 0;
-      for(let i = 0; i < obj.games.length; i++){
-        totalCalls += obj.games[i].calls;
-        totalFolds += obj.games[i].folds;
-        totalRaises += obj.games[i].raises;
-      }
-      return {
-        calls: totalCalls,
-        folds: totalFolds,
-        raises: totalRaises
-      } 
     } else {
-      let tagsArr = [];
-     
-     for(let i = 0; i < obj.games.length; i++){
-       console.log(tag);
-       console.log(obj.games[i].tags.includes(tag));
-      if(obj.games[i].tags.includes(tag)){
-          let temp = {calls: obj.games[i].calls,
-                     folds: obj.games[i].folds,
-                     raises: obj.games[i]. raises,
-                     tags: [...obj.games[i].tags]
-                     }
-          tagsArr.push(temp);
-      }
-     }
-    return tagsArr
-      
+        let tagsArr = [];
+
+        for (let i = 0; i < obj.games.length; i++) {
+            console.log(tag);
+            console.log(obj.games[i].tags.includes(tag));
+            if (obj.games[i].tags.includes(tag)) {
+                let temp = {
+                    calls: obj.games[i].calls,
+                    folds: obj.games[i].folds,
+                    raises: obj.games[i].raises,
+                    tags: [...obj.games[i].tags]
+                }
+                tagsArr.push(temp);
+            }
+        }
+        return tagsArr
+
     }
-  }
+}
 
 
 
