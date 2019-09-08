@@ -28,6 +28,25 @@ export default class Statsbox extends Component {
         })
     }
 
+    logTagsTotals(){
+        let foundtags = this.props.logTags()
+        console.log("FOUND");
+        console.log(foundtags);
+        debugger;
+
+        
+        // let obj = {
+        //     all : foundTags
+        // }
+        // console.log("PLEASE LOOKIE")
+        // console.log(obj.all)
+        // debugger
+        // let totalsByTag = calculation.calculateTotalStats(obj);
+        // console.log("THESE ARE TAGS TOTALS");
+        // console.log(totalsByTag)
+        // return totalsByTag;
+    }
+
 
     render() {
         return (
@@ -45,7 +64,7 @@ export default class Statsbox extends Component {
                         tags: 
                 </Text>
                 }
-                <Button title="search test"  />
+                <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )

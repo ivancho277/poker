@@ -32,8 +32,6 @@ module.exports = {
         }
         return countTotal(gamesObj)
     }
-
-
 }
 
 function countTotal(obj) {
