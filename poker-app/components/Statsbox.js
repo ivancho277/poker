@@ -10,6 +10,7 @@ export default class Statsbox extends Component {
         this.state = {
             loading: true,
             gamesObj: {},
+            searchedTag: {}
         }
     }
 
@@ -29,10 +30,13 @@ export default class Statsbox extends Component {
     }
 
     logTagsTotals(){
-        let foundtags = this.props.logTags()
+        this.props.logTags().then((res) => {
+            console.log("FOUNDDDDD")
+            console.log(res);
+        })
         console.log("FOUND");
-        console.log(foundtags);
-        debugger;
+        
+        
 
         
         // let obj = {

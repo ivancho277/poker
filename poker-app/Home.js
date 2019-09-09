@@ -33,18 +33,17 @@ class HomeScreen extends Component {
     //     })
     // }
 
-    logTags = () => {
-        let tags;
-        storage.retrieveData().then((res) => {
+    logTags = async () => {     
+    
+    let tag = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
             const data = JSON.parse(res)
             let byTag = calculations.findTag(data, this.state.tagsearch);
             console.log(byTag);
-            tags = byTag;
-            return tags;
-        })
-        
+            return byTag;
+        })    
+      return tag;  
     }
 
 
