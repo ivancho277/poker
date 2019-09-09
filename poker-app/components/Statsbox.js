@@ -33,6 +33,13 @@ export default class Statsbox extends Component {
         this.props.logTags().then((res) => {
             console.log("FOUNDDDDD")
             console.log(res);
+            let obj = {
+                games: res
+            }
+            let totals = calculation.calculateTotalStats(obj);
+            console.log("calls " + totals.calls)
+            console.log("folds " + totals.folds)
+            console.log("raises " + totals.raises)
         })
         console.log("FOUND");
         
