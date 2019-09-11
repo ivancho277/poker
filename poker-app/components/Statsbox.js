@@ -14,9 +14,15 @@ export default class Statsbox extends Component {
         }
     }
 
+    calculateStats(){
+        let totals = calculation.calculateTotalStats(this.state.gamesObj);
+        return totals;
+    }
+
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
+
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -40,23 +46,13 @@ export default class Statsbox extends Component {
             console.log("calls " + totals.calls)
             console.log("folds " + totals.folds)
             console.log("raises " + totals.raises)
+            this.setState({
+                gamesObj: totals
+            })
         })
-        console.log("FOUND");
-        
-        
-
-        
-        // let obj = {
-        //     all : foundTags
-        // }
-        // console.log("PLEASE LOOKIE")
-        // console.log(obj.all)
-        // debugger
-        // let totalsByTag = calculation.calculateTotalStats(obj);
-        // console.log("THESE ARE TAGS TOTALS");
-        // console.log(totalsByTag)
-        // return totalsByTag;
+        console.log("FOUND");    
     }
+
 
 
     render() {
