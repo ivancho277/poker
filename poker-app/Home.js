@@ -35,7 +35,7 @@ class HomeScreen extends Component {
 
     logTags = async () => {     
     
-    let tag = await storage.retrieveData().then((res) => {
+    let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
             const data = JSON.parse(res)
@@ -43,7 +43,7 @@ class HomeScreen extends Component {
             console.log(byTag);
             return byTag;
         })    
-      return tag;  
+      return tags;  
     }
 
 
