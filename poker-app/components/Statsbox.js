@@ -47,10 +47,11 @@ export default class Statsbox extends Component {
             console.log("folds " + totals.folds)
             console.log("raises " + totals.raises)
             this.setState({
-                gamesObj: totals
+                gamesObj: obj
             })
         })
-        console.log("FOUND");    
+        console.log("FOUND");  
+        console.log(this.state.gamesObj)  
     }
 
 

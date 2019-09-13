@@ -10,7 +10,7 @@ class HomeScreen extends Component {
         this.state = {
             loading: true,
             gamesObj: {
-                
+
             },
             tagsearch: ''
         }
@@ -33,17 +33,16 @@ class HomeScreen extends Component {
     //     })
     // }
 
-    logTags = async () => {     
-    
-    let tags = await storage.retrieveData().then((res) => {
+    logTags = async () => {
+        let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
             const data = JSON.parse(res)
             let byTag = calculations.findTag(data, this.state.tagsearch);
             console.log(byTag);
             return byTag;
-        })    
-      return tags;  
+        })
+        return tags;
     }
 
 
@@ -57,14 +56,14 @@ class HomeScreen extends Component {
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                 />
-                <Button title="search" onPress={()=> this.logTags()} style={{ float: 'right'}} />
-                <StatsBox logTags={this.logTags}/>
+                <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} />
+                <StatsBox logTags={this.logTags} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => storage.removeData()}>
-                    <Text style={{color: 'red'}}>Delete storage</Text>
+                    <Text style={{ color: 'red' }}>Delete storage</Text>
                 </TouchableOpacity>
             </View>
         )
