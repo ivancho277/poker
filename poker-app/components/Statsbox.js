@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
@@ -10,12 +10,19 @@ export default class Statsbox extends Component {
         this.state = {
             loading: true,
             gamesObj: {},
+            searchedTag: {}
         }
+    }
+
+    calculateStats(){
+        let totals = calculation.calculateTotalStats(this.state.gamesObj);
+        return totals;
     }
 
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
+
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -28,14 +35,29 @@ export default class Statsbox extends Component {
         })
     }
 
-
-
+    logTagsTotals(){
+        this.props.logTags().then((res) => {
+            console.log("FOUNDDDDD")
+            console.log(res);
+            let obj = {
+                games: res
+            }
+            let totals = calculation.calculateTotalStats(obj);
+            console.log("calls " + totals.calls)
+            console.log("folds " + totals.folds)
+            console.log("raises " + totals.raises)
+            this.setState({
+                gamesObj: obj
+            })
+        })
+        console.log("FOUND");  
+        console.log(this.state.gamesObj)  
+    }
 
 
 
     render() {
         return (
-
             <View style={boxStyles.container}>
                 {this.state.loading
                     ?
@@ -43,14 +65,14 @@ export default class Statsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    <Text style={{ justifyContent: 'center' }} > textInComponent {'\n'}
+                    <Text style={{ justifyContent: 'center' }} >{'\n'}
                         calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
                         folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
                         raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
                         tags: 
                 </Text>
-
                 }
+                <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )
