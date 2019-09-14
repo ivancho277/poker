@@ -22,7 +22,6 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
-
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -48,11 +47,11 @@ export default class Statsbox extends Component {
             console.log("raises " + totals.raises);
             this.setState({
                 gamesObj: obj
-            })
-        }).catch(err){
-            console.log("error finding tag");
+            });
+        }).catch(err => {
+            console.log("error searching for tag");
             throw err;
-        } 
+        })
     }
 
 
