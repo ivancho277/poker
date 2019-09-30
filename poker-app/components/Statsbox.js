@@ -54,7 +54,13 @@ export default class Statsbox extends Component {
         })
     }
 
-
+    isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
 
     render() {
         return (
@@ -64,6 +70,10 @@ export default class Statsbox extends Component {
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
+                    :
+                    this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                    ? 
+                    <Text>Nothing here</Text>
                     :
                     <Text style={{ justifyContent: 'center' }} >{'\n'}
                         calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
