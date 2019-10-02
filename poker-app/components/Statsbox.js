@@ -14,10 +14,7 @@ export default class Statsbox extends Component {
         }
     }
 
-    calculateStats(){
-        let totals = calculation.calculateTotalStats(this.state.gamesObj);
-        return totals;
-    }
+    
 
     componentDidMount() {
         storage.retrieveData().then((res) => {
