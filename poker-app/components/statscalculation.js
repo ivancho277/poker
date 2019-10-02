@@ -25,7 +25,7 @@ module.exports = {
      * @param {object} games 
      * @param {string} tag 
      */
-    calculateStatsByTag: function (games,tag) {
+    calculateStatsByTag: function (games, tag) {
         const gamesArray = SearchTag(games, tag);
         const gamesObj = {
             games: gamesArray
@@ -35,18 +35,22 @@ module.exports = {
 }
 
 function countTotal(obj) {
-    let totalCalls = 0;
-    let totalFolds = 0;
-    let totalRaises = 0;
-    for (let i = 0; i < obj.games.length; i++) {
-        totalCalls += obj.games[i].calls;
-        totalFolds += obj.games[i].folds;
-        totalRaises += obj.games[i].raises;
-    }
-    return {
-        calls: totalCalls,
-        folds: totalFolds,
-        raises: totalRaises
+    try {
+        let totalCalls = 0;
+        let totalFolds = 0;
+        let totalRaises = 0;
+        for (let i = 0; i < obj.games.length; i++) {
+            totalCalls += obj.games[i].calls;
+            totalFolds += obj.games[i].folds;
+            totalRaises += obj.games[i].raises;
+        }
+        return {
+            calls: totalCalls,
+            folds: totalFolds,
+            raises: totalRaises
+        }
+    } catch {
+        alert('cant count')
     }
 
 }

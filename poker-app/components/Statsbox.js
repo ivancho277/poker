@@ -22,7 +22,6 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
-
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -37,24 +36,31 @@ export default class Statsbox extends Component {
 
     logTagsTotals(){
         this.props.logTags().then((res) => {
-            console.log("FOUNDDDDD")
+            console.log("FOUNDDDDD");
             console.log(res);
             let obj = {
                 games: res
             }
             let totals = calculation.calculateTotalStats(obj);
-            console.log("calls " + totals.calls)
-            console.log("folds " + totals.folds)
-            console.log("raises " + totals.raises)
+            console.log("calls " + totals.calls);
+            console.log("folds " + totals.folds);
+            console.log("raises " + totals.raises);
             this.setState({
                 gamesObj: obj
-            })
+            });
+        }).catch(err => {
+            console.log("error searching for tag");
+            throw err;
         })
-        console.log("FOUND");  
-        console.log(this.state.gamesObj)  
     }
 
-
+    isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
 
     render() {
         return (
@@ -64,6 +70,10 @@ export default class Statsbox extends Component {
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
+                    :
+                    this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                    ? 
+                    <Text>Nothing here</Text>
                     :
                     <Text style={{ justifyContent: 'center' }} >{'\n'}
                         calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}

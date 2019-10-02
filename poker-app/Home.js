@@ -10,7 +10,9 @@ class HomeScreen extends Component {
         this.state = {
             loading: true,
             gamesObj: {
-
+                calls: 0,
+                folds: 0,
+                raises: 0
             },
             tagsearch: ''
         }
@@ -34,6 +36,7 @@ class HomeScreen extends Component {
     // }
 
     logTags = async () => {
+        
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
@@ -41,6 +44,9 @@ class HomeScreen extends Component {
             let byTag = calculations.findTag(data, this.state.tagsearch);
             console.log(byTag);
             return byTag;
+        }).catch(err => {
+            console.log("nothing here");
+            throw err;
         })
         return tags;
     }
