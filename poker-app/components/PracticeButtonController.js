@@ -27,11 +27,9 @@ export default class PracticeButtonController extends Component {
             console.log(arrayOfgames)
             console.log(res)
             console.log(pastGames)
-
             this.setState({
                 gamesArray: arrayOfgames
             });
-
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -80,7 +78,7 @@ export default class PracticeButtonController extends Component {
         return saveObj;
     };
 
-    clearTags(){
+    clearTags() {
         this.setState({
             tag: ''
         })
@@ -96,10 +94,12 @@ export default class PracticeButtonController extends Component {
                     onChangeText={(tag) => this.setState({ tag })}
                     value={this.state.tag}
                 />
-                <Button style={{borderColor: "#000000", borderStyle: "solid", borderWidth: 1}}title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
-                <Button title={`call, #${this.state.calls}`} onPress={() => this.setState({ calls: ++this.state.calls })} />
-                <Button title={`fold, #${this.state.folds}`} onPress={() => this.setState({ folds: ++this.state.folds })} />
-                <Button title={`raise, #${this.state.raises}`} onPress={() => this.setState({ raises: ++this.state.raises })} />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
+                <View style={{ flexDirection: "row" }}>
+                    <Button title={`call, #${this.state.calls}`} onPress={() => this.setState({ calls: ++this.state.calls })} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => this.setState({ folds: ++this.state.folds })} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => this.setState({ raises: ++this.state.raises })} />
+                </View>
                 <Button title='Save Data. End game.' onPress={() => storageController.saveData(this.toBeSaved())} />
 
             </View>

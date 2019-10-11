@@ -80,6 +80,10 @@ function SearchTag(obj, tag) {
     return tagsArr
 }
 
+function checkversion(currentVer, OldVersion){
+
+}
+
 function countTotalfromTag(obj, tag = "all") {
     if (tag === "all") {
         let totalCalls = 0;
