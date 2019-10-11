@@ -74,7 +74,7 @@ export default class PracticeButtonController extends Component {
         console.log(gamesarr)
         gamesarr.push(gamesObj)
         let saveObj = {
-            version: "1.0.0",
+            version: "1.0.1",
             games: gamesarr
         }
         return saveObj;
