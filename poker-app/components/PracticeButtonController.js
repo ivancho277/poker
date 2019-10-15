@@ -41,7 +41,6 @@ export default class PracticeButtonController extends Component {
                 5: new gameStats,
                 6: new gameStats,
                 7: new gameStats,
-
             }
         };
     };
@@ -118,6 +117,7 @@ export default class PracticeButtonController extends Component {
     }
 
     incrementPositionStats(position, pressedButton) {
+        debugger
         switch (position) {
             case 0:
                 if (pressedButton === "call") {
@@ -226,9 +226,9 @@ export default class PracticeButtonController extends Component {
                 />
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
                 <View style={{ flexDirection: "row" }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => this.setState({ calls: ++this.state.calls }) & this.incrementPositionStats(this.state.position, 'call')} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => this.setState({ folds: ++this.state.folds }) & this.incrementPositionStats(this.state.position, 'fold')} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => this.setState({ raises: ++this.state.raises }) & this.incrementPositionStats(this.state.position, 'raise')} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => {this.setState({ calls: ++this.state.calls }) ; this.incrementPositionStats(this.state.position, 'call')}} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => {this.setState({ folds: ++this.state.folds }) ; this.incrementPositionStats(this.state.position, 'fold')}} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => {this.setState({ raises: ++this.state.raises }) ; this.incrementPositionStats(this.state.position, 'raise')}} />
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <RadioForm

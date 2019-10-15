@@ -62,7 +62,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={boxStyles.container}>
+            <View style={{height: this.props.height,color: '#32CD32', width: 150, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid'}}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -96,7 +96,6 @@ const boxStyles = StyleSheet.create({
     container: {
         color: '#32CD32',
         width: 150,
-        height: 150,
         borderColor: '#000000',
         borderWidth: 3,
         borderStyle: 'solid'
