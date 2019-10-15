@@ -19,7 +19,7 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
-            
+
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -85,6 +85,11 @@ export default class Statsbox extends Component {
 
         )
     }
+
+
+
+
+    
 }
 
 const boxStyles = StyleSheet.create({

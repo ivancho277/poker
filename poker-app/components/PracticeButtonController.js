@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 const storageController = require('./AsyncStorageController.js')
+
+
+let radio_props =[
+    {label: 'Dealer', position: 0},
+    {label: 'D+1', position:1},
+    {label: 'D+2', position: 2},
+    {label: 'D+3', position: 3},
+    {label: 'D+4', position: 4},
+    {label: 'D+5', position: 5}
+]
+
 export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +22,8 @@ export default class PracticeButtonController extends Component {
             raises: 0,
             tag: "",
             tags: [],
-            gamesArray: []
+            gamesArray: [],
+            position: 0
         };
     };
 
@@ -99,6 +112,14 @@ export default class PracticeButtonController extends Component {
                     <Button title={`call, #${this.state.calls}`} onPress={() => this.setState({ calls: ++this.state.calls })} />
                     <Button title={`fold, #${this.state.folds}`} onPress={() => this.setState({ folds: ++this.state.folds })} />
                     <Button title={`raise, #${this.state.raises}`} onPress={() => this.setState({ raises: ++this.state.raises })} />
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                    <RadioForm 
+                    radio_props={radio_props}
+                    initial={0}
+                    formHorizontal={true}
+                    onPress={(position) => this.setState({position:position})}
+                    />
                 </View>
                 <Button title='Save Data. End game.' onPress={() => storageController.saveData(this.toBeSaved())} />
 
