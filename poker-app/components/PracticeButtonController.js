@@ -5,12 +5,14 @@ const storageController = require('./AsyncStorageController.js')
 
 
 let radio_props =[
-    {label: 'Dealer', position: 0},
-    {label: 'D+1', position:1},
-    {label: 'D+2', position: 2},
-    {label: 'D+3', position: 3},
-    {label: 'D+4', position: 4},
-    {label: 'D+5', position: 5}
+    {label: 'Big Blind', position:0},
+    {label: 'Small Blind', position: 1},
+    {label: 'Dealer', position: 2},
+    {label: 'D+1', position: 3},
+    {label: 'D+2', position: 4},
+    {label: 'D+3', position: 5},
+    {label: 'D+4', position: 6},
+    {label: 'D+5', position: 7}
 ]
 
 export default class PracticeButtonController extends Component {
@@ -118,6 +120,9 @@ export default class PracticeButtonController extends Component {
                     radio_props={radio_props}
                     initial={0}
                     formHorizontal={true}
+                    buttonSize={20}
+                    buttonOuterSize={30}
+                    labelHorizontal={false}
                     onPress={(position) => this.setState({position:position})}
                     />
                 </View>
