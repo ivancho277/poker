@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import Radio from './Radio.js'
+
 const storageController = require('./AsyncStorageController.js')
 
 
@@ -20,6 +22,9 @@ function gameStats(calls = 0, folds = 0, raises = 0) {
         this.folds = folds,
         this.raises = raises
 }
+
+
+
 
 export default class PracticeButtonController extends Component {
     constructor(props) {
@@ -226,20 +231,12 @@ export default class PracticeButtonController extends Component {
                 />
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
                 <View style={{ flexDirection: "row" }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => {this.setState({ calls: ++this.state.calls }) ; this.incrementPositionStats(this.state.position, 'call')}} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => {this.setState({ folds: ++this.state.folds }) ; this.incrementPositionStats(this.state.position, 'fold')}} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => {this.setState({ raises: ++this.state.raises }) ; this.incrementPositionStats(this.state.position, 'raise')}} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls }); this.incrementPositionStats(this.state.position, 'call') }} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds }); this.incrementPositionStats(this.state.position, 'fold') }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises }); this.incrementPositionStats(this.state.position, 'raise') }} />
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <RadioForm
-                        radio_props={radio_props}
-                        initial={0}
-                        formHorizontal={true}
-                        buttonSize={20}
-                        buttonOuterSize={30}
-                        labelHorizontal={false}
-                        onPress={(position) => this.setState({ position: position })}
-                    />
+                <View >
+                    <Radio />
                 </View>
                 <Button title='Save Data. End game.' onPress={() => storageController.saveData(this.toBeSaved())} />
 
