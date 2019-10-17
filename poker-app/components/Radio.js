@@ -23,7 +23,7 @@ class Radio extends Component {
     }
 
     positionReturn(){
-        debugger
+        // debugger
         this.props.getPosition(this.state.value);
     }
 

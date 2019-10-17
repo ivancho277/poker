@@ -121,14 +121,14 @@ export default class PracticeButtonController extends Component {
         })
     }
 
-    getPosition(position){
+     getPosition = (position) =>{
         this.setState({
             position: position
         })
     }
 
     incrementPositionStats(position, pressedButton) {
-        debugger
+        //debugger
         switch (position) {
             case 0:
                 if (pressedButton === "call") {
