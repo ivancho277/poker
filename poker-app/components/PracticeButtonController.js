@@ -134,10 +134,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[0].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[0].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[0].raises
                 }
                 break;
@@ -145,10 +145,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[1].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[1].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[1].raises
                 }
                 break;
@@ -156,10 +156,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[2].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[2].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[2].raises
                 }
                 break;
@@ -167,10 +167,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[3].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[3].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[3].raises
                 }
                 break;
@@ -178,10 +178,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[4].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[4].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[4].raises
                 }
                 break;
@@ -189,10 +189,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[5].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[5].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[5].raises
                 }
                 break;
@@ -200,10 +200,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[6].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[6].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[6].raises
                 }
                 break;
@@ -211,10 +211,10 @@ export default class PracticeButtonController extends Component {
                 if (pressedButton === "call") {
                     ++this.state.positionStats[7].calls
                 }
-                else if (pressedButton == "fold") {
+                else if (pressedButton === "fold") {
                     ++this.state.positionStats[7].folds
                 }
-                else if (pressedButton == "raise") {
+                else if (pressedButton === "raise") {
                     ++this.state.positionStats[7].raises
                 }
                 break;
