@@ -22,9 +22,9 @@ class Radio extends Component {
         
     }
 
-    positionReturn(){
+    positionReturn(position){
         // debugger
-        this.props.getPosition(this.state.value);
+        this.props.getPosition(position);
     }
 
 
@@ -38,9 +38,7 @@ class Radio extends Component {
                     buttonSize={10}
                     buttonOuterSize={20}
                     labelHorizontal={false}                   
-                    onPress={(value) => {this.setState({ value: value }); setTimeout(() => {
-                        this.positionReturn()
-                    }, 2000)}}
+                    onPress={(value) => {this.setState({ value: value }); this.positionReturn(value)}}
                 />
             </View>
         );
