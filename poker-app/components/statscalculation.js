@@ -1,5 +1,3 @@
-
-
 module.exports = {
 
     /**
@@ -31,8 +29,26 @@ module.exports = {
             games: gamesArray
         }
         return countTotal(gamesObj)
+    },
+
+    calculateByPosition: function (gamesArr) {
+
+
     }
 }
+
+
+function CountPositions(gamesArr) {
+    //go through games and find totals per position
+    let finalStats = {}
+    for (let i = 0; i < gamesArr.length; i++) {
+        for (position in gamesArr[i].positionStats) {
+
+        }
+    }
+    
+}
+
 
 function countTotal(obj) {
     try {
@@ -80,7 +96,7 @@ function SearchTag(obj, tag) {
     return tagsArr
 }
 
-function checkversion(currentVer, OldVersion){
+function checkversion(currentVer, OldVersion) {
 
 }
 
@@ -124,8 +140,7 @@ function countTotalfromTag(obj, tag = "all") {
 
 let test = {
     version: "1.0.0",
-    games: [
-        {
+    games: [{
             calls: 3,
             folds: 5,
             raises: 1,
@@ -142,11 +157,3 @@ let test = {
 }
 //   console.log(countTotal(test));
 //   console.log(findTag(test, 'home'));
-
-
-
-
-
-
-
-

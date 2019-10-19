@@ -6,19 +6,10 @@ import Radio from './Radio.js'
 const storageController = require('./AsyncStorageController.js')
 
 
-let radio_props = [
-    { label: 'Big Blind', position: 0 },
-    { label: 'Small Blind', position: 1 },
-    { label: 'Dealer', position: 2 },
-    { label: 'D+1', position: 3 },
-    { label: 'D+2', position: 4 },
-    { label: 'D+3', position: 5 },
-    { label: 'D+4', position: 6 },
-    { label: 'D+5', position: 7 }
-]
+
 
 function gameStats(calls = 0, folds = 0, raises = 0) {
-    this.calls = calls,
+        this.calls = calls,
         this.folds = folds,
         this.raises = raises
 }
@@ -72,16 +63,12 @@ export default class PracticeButtonController extends Component {
         })
     }
 
-
-
-
     componentDidMount() {
         this.populateGames().then(() => {
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
         })
     }
-
 
     saveToTags(tag) {
         let tagsArray = this.state.tags;
@@ -90,8 +77,6 @@ export default class PracticeButtonController extends Component {
             tags: tagsArray
         })
     };
-
-
 
     toBeSaved() {
         let date = new Date();
@@ -120,7 +105,7 @@ export default class PracticeButtonController extends Component {
             tag: ''
         })
     }
-
+    
      getPosition = (position) =>{
         this.setState({
             position: position

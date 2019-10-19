@@ -13,7 +13,7 @@ let radio_props = [
     { label: 'D+5', value: 7 }
 ]
 
-class Radio extends Component {
+class AutoRadio extends Component {
     constructor(props) {
         super(props);
             state = {
@@ -42,6 +42,6 @@ class Radio extends Component {
     }
 };
 
-export default Radio;
+export default AutoRadio;
 
 
