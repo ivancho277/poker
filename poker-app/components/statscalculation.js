@@ -40,14 +40,24 @@ module.exports = {
 
 function CountPositions(obj) {
     //go through games and find totals per position
-    let finalStats = {total_calls: 0, total_folds: 0, total_raises: 0}
+    let finalStats = {
+         0: {total_calls: 0, total_folds: 0, total_raises: 0},
+         1: {total_calls: 0, total_folds: 0, total_raises: 0},
+         2: {total_calls: 0, total_folds: 0, total_raises: 0},
+         3: {total_calls: 0, total_folds: 0, total_raises: 0},
+         4: {total_calls: 0, total_folds: 0, total_raises: 0},
+         5: {total_calls: 0, total_folds: 0, total_raises: 0},
+         6: {total_calls: 0, total_folds: 0, total_raises: 0},
+         7: {total_calls: 0, total_folds: 0, total_raises: 0},
+    } 
+    
     for (let i = 0; i < obj.games.length; i++) {
 
         for (position in obj.games[i].positionStats) {
             console.log(obj.games[i].positionStats[position])
-            finalStats.total_calls += obj.games[i].positionStats[position].calls;
-            finalStats.total_folds += obj.games[i].positionStats[position].folds;
-            finalStats.total_raises += obj.games[i].positionStats[position].raises;
+            finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
+            finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
+            finalStats[position].total_raises += obj.games[i].positionStats[position].raises;
         }
     }
     return finalStats;
