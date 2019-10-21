@@ -85,7 +85,7 @@ export default class Statsbox extends Component {
                 </Text>
                 }
                 <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
-                <Button title="search tags" onPress={() => this.logTagsTotals()}  />
+                <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )
