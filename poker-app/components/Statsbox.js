@@ -19,6 +19,7 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
+
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -29,6 +30,10 @@ export default class Statsbox extends Component {
             console.log("HOME SCREEN ERROR");
             throw error;
         })
+    }
+
+    logTotalsByPosition(){
+        console.log(calculation.calculateByPosition(this.state.gamesObj));
     }
 
     logTagsTotals(){
@@ -61,7 +66,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={boxStyles.container}>
+            <View style={{height: this.props.height,color: '#32CD32', width: 150, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid'}}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -79,18 +84,23 @@ export default class Statsbox extends Component {
                         tags: 
                 </Text>
                 }
-                <Button title="search test" onPress={() => this.logTagsTotals()}  />
+                <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
+                <Button title="search tags" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )
     }
+
+
+
+
+    
 }
 
 const boxStyles = StyleSheet.create({
     container: {
         color: '#32CD32',
         width: 150,
-        height: 150,
         borderColor: '#000000',
         borderWidth: 3,
         borderStyle: 'solid'
