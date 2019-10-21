@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
-
 
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
@@ -87,7 +85,7 @@ export default class Statsbox extends Component {
                 </Text>
                 }
                 <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
-                <Button title="search tags" onPress={() => this.logTagsTotals()}  />
+                <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )
