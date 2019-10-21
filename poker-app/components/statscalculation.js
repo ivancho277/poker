@@ -31,22 +31,26 @@ module.exports = {
         return countTotal(gamesObj)
     },
 
-    calculateByPosition: function (gamesArr) {
-
+    calculateByPosition: function (gameObj) {
+        return CountPositions(gameObj)
 
     }
 }
 
 
-function CountPositions(gamesArr) {
+function CountPositions(obj) {
     //go through games and find totals per position
-    let finalStats = {}
-    for (let i = 0; i < gamesArr.length; i++) {
-        for (position in gamesArr[i].positionStats) {
+    let finalStats = {total_calls: 0, total_folds: 0, total_raises: 0}
+    for (let i = 0; i < obj.games.length; i++) {
 
+        for (position in obj.games[i].positionStats) {
+            console.log(obj.games[i].positionStats[position])
+            finalStats.total_calls += obj.games[i].positionStats[position].calls;
+            finalStats.total_folds += obj.games[i].positionStats[position].folds;
+            finalStats.total_raises += obj.games[i].positionStats[position].raises;
         }
     }
-    
+    return finalStats;
 }
 
 

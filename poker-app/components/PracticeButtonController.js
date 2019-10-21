@@ -122,9 +122,7 @@ export default class PracticeButtonController extends Component {
         }
         else if(pressedButton === "raise"){
             ++this.state.positionStats[position].raises;
-        }
-        
-        
+        }   
     }
 
     render() {

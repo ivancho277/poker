@@ -32,6 +32,10 @@ export default class Statsbox extends Component {
         })
     }
 
+    logTotalsByPosition(){
+        console.log(calculation.calculateByPosition(this.state.gamesObj));
+    }
+
     logTagsTotals(){
         this.props.logTags().then((res) => {
             console.log("FOUNDDDDD");
@@ -80,6 +84,7 @@ export default class Statsbox extends Component {
                         tags: 
                 </Text>
                 }
+                <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
                 <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
