@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
@@ -10,11 +11,12 @@ export default class Statsbox extends Component {
         this.state = {
             loading: true,
             gamesObj: {},
-            searchedTag: {}
+            searchedTag: {},
+            isOnPositionStats: false
         }
     }
 
-    
+
 
     componentDidMount() {
         storage.retrieveData().then((res) => {
@@ -32,11 +34,11 @@ export default class Statsbox extends Component {
         })
     }
 
-    logTotalsByPosition(){
+    logTotalsByPosition() {
         console.log(calculation.calculateByPosition(this.state.gamesObj));
     }
 
-    logTagsTotals(){
+    logTagsTotals() {
         this.props.logTags().then((res) => {
             console.log("FOUNDDDDD");
             console.log(res);
@@ -57,16 +59,20 @@ export default class Statsbox extends Component {
     }
 
     isEmpty(obj) {
-        for(var key in obj) {
-            if(obj.hasOwnProperty(key))
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
                 return false;
         }
         return true;
     }
 
+    onToggle(isOn) {
+        console.log("Changed to " + isOn);
+      }
+
     render() {
         return (
-            <View style={{height: this.props.height,color: '#32CD32', width: 150, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid'}}>
+            <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -74,18 +80,29 @@ export default class Statsbox extends Component {
                     </View>
                     :
                     this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
-                    ? 
-                    <Text>Nothing here</Text>
-                    :
-                    <Text style={{ justifyContent: 'center' }} >{'\n'}
-                        calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
-                        folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
-                        raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
-                        tags: 
+                        ?
+                        <Text>Nothing here</Text>
+                        :
+                        <Text style={{ justifyContent: 'center' }} >{'\n'}
+                            calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
+                            folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
+                            raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
+                            tags:
                 </Text>
                 }
-                <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
-                <Button title="search tags" onPress={() => this.logTagsTotals()}  />
+                <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                <Button title="search tags" onPress={() => this.logTagsTotals()} />
+                <ToggleSwitch
+                    isOn={this.state.isOnPositionStats}
+                    onColor="green"
+                    offColor="red"
+                    label="Change View"
+                    labelStyle={{ color: "black", fontWeight: "900" }}
+                    size="mediuim"
+                    onToggle={isOnPositionStats=> {
+                        this.setState({ isOnPositionStats });
+                        this.onToggle(isOnPositionStats);}}
+                />
             </View>
 
         )
@@ -94,7 +111,7 @@ export default class Statsbox extends Component {
 
 
 
-    
+
 }
 
 const boxStyles = StyleSheet.create({
