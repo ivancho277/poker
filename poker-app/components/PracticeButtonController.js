@@ -129,100 +129,16 @@ export default class PracticeButtonController extends Component {
 
     incrementPositionStats(position, pressedButton) {
         //debugger
-        switch (position) {
-            case 0:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[0].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[0].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[0].raises
-                }
-                break;
-            case 1:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[1].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[1].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[1].raises
-                }
-                break;
-            case 2:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[2].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[2].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[2].raises
-                }
-                break;
-            case 3:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[3].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[3].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[3].raises
-                }
-                break;
-            case 4:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[4].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[4].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[4].raises
-                }
-                break;
-            case 5:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[5].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[5].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[5].raises
-                }
-                break;
-            case 6:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[6].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[6].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[6].raises
-                }
-                break;
-            case 7:
-                if (pressedButton === "call") {
-                    ++this.state.positionStats[7].calls
-                }
-                else if (pressedButton === "fold") {
-                    ++this.state.positionStats[7].folds
-                }
-                else if (pressedButton === "raise") {
-                    ++this.state.positionStats[7].raises
-                }
-                break;
-            default:
-
-                break;
-
+        if(pressedButton === "call"){
+            ++this.state.positionStats[position].calls;
         }
+        else if(pressedButton === "fold"){
+            ++this.state.positionStats[position].folds;
+        }
+        else if(pressedButton === "raise"){
+            ++this.state.positionStats[position].raises;
+        }
+        
     }
 
     render() {
