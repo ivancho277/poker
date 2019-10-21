@@ -68,7 +68,7 @@ export default class Statsbox extends Component {
 
     onToggle(isOn) {
         console.log("Changed to " + isOn);
-      }
+    }
 
     render() {
         return (
@@ -99,9 +99,10 @@ export default class Statsbox extends Component {
                     label="Change View"
                     labelStyle={{ color: "black", fontWeight: "900" }}
                     size="mediuim"
-                    onToggle={isOnPositionStats=> {
+                    onToggle={isOnPositionStats => {
                         this.setState({ isOnPositionStats });
-                        this.onToggle(isOnPositionStats);}}
+                        this.onToggle(isOnPositionStats);
+                    }}
                 />
             </View>
 
