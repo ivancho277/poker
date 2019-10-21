@@ -124,6 +124,7 @@ export default class PracticeButtonController extends Component {
             ++this.state.positionStats[position].raises;
         }
         
+        
     }
 
     render() {
