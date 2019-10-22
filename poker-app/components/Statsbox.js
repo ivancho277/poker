@@ -33,7 +33,8 @@ export default class Statsbox extends Component {
     }
 
     logTotalsByPosition() {
-        console.log(calculation.calculateByPosition(this.state.gamesObj));
+        //console.log(calculation.calculateByPosition(this.state.gamesObj));
+        return calculation.calculateByPosition(this.state.gamesObj);
     }
 
     logTagsTotals() {
@@ -83,7 +84,20 @@ export default class Statsbox extends Component {
                         :
                         this.state.isOnPositionStats === true
                         ?
-                        <Text>Stats by position</Text>
+                        <Text>
+                            Stats by position: {'\n'}
+                            Big Blind: C: {this.logTotalsByPosition()[0].total_calls}, F: {this.logTotalsByPosition()[0].total_folds}, R: {this.logTotalsByPosition()[0].total_raises} {'\n'}
+                            Small Blind: C: {this.logTotalsByPosition()[1].total_calls}, F: {this.logTotalsByPosition()[1].total_folds}, R: {this.logTotalsByPosition()[1].total_raises} {'\n'}
+                            Dealer: C: {this.logTotalsByPosition()[2].total_calls}, F: {this.logTotalsByPosition()[2].total_folds}, R: {this.logTotalsByPosition()[2].total_raises} {'\n'}
+                            D+1: C: {this.logTotalsByPosition()[3].total_calls}, F: {this.logTotalsByPosition()[3].total_folds}, R: {this.logTotalsByPosition()[3].total_raises} {'\n'}
+                            D+2: C: {this.logTotalsByPosition()[4].total_calls}, F: {this.logTotalsByPosition()[4].total_folds}, R: {this.logTotalsByPosition()[4].total_raises} {'\n'}
+                            D+3: C: {this.logTotalsByPosition()[5].total_calls}, F: {this.logTotalsByPosition()[5].total_folds}, R: {this.logTotalsByPosition()[5].total_raises} {'\n'}
+                            D+4: C: {this.logTotalsByPosition()[6].total_calls}, F: {this.logTotalsByPosition()[6].total_folds}, R: {this.logTotalsByPosition()[6].total_raises} {'\n'}
+                            D+5: C: {this.logTotalsByPosition()[7].total_calls}, F: {this.logTotalsByPosition()[7].total_folds}, R: {this.logTotalsByPosition()[7].total_raises} {'\n'}
+
+
+
+                        </Text>
                         :
                         <Text style={{ justifyContent: 'center' }} >
                             Total Stats:{'\n'}
