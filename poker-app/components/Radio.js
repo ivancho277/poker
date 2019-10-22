@@ -30,6 +30,7 @@ class Radio extends Component {
         return (
             <View style={{ flexDirection: 'row' }}>
                 <RadioForm
+                    //ref = {ref => this.radioFormClear = ref} 
                     radio_props={radio_props}
                     initial={null}
                     formHorizontal={true}

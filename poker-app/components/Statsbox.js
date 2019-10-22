@@ -94,9 +94,6 @@ export default class Statsbox extends Component {
                             D+3: C: {this.logTotalsByPosition()[5].total_calls}, F: {this.logTotalsByPosition()[5].total_folds}, R: {this.logTotalsByPosition()[5].total_raises} {'\n'}
                             D+4: C: {this.logTotalsByPosition()[6].total_calls}, F: {this.logTotalsByPosition()[6].total_folds}, R: {this.logTotalsByPosition()[6].total_raises} {'\n'}
                             D+5: C: {this.logTotalsByPosition()[7].total_calls}, F: {this.logTotalsByPosition()[7].total_folds}, R: {this.logTotalsByPosition()[7].total_raises} {'\n'}
-
-
-
                         </Text>
                         :
                         <Text style={{ justifyContent: 'center' }} >
