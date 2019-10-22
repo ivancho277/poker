@@ -17,11 +17,9 @@ export default class Statsbox extends Component {
     }
 
 
-
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
-
             this.setState({
                 gamesObj: JSON.parse(res),
                 loading: false
@@ -83,7 +81,12 @@ export default class Statsbox extends Component {
                         ?
                         <Text>Nothing here</Text>
                         :
-                        <Text style={{ justifyContent: 'center' }} >{'\n'}
+                        this.state.isOnPositionStats === true
+                        ?
+                        <Text>Stats by position</Text>
+                        :
+                        <Text style={{ justifyContent: 'center' }} >
+                            Total Stats:{'\n'}
                             calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
                             folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
                             raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}

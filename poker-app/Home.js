@@ -35,8 +35,7 @@ class HomeScreen extends Component {
     //     })
     // }
 
-    logTags = async () => {
-        
+    logTags = async () => {   
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
