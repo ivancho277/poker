@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Button } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 let radio_props = [
@@ -24,13 +24,19 @@ class Radio extends Component {
     positionReturn(position){
         // debugger
         this.props.getPosition(position);
-        
     }
+
+    updateIndex(index){
+        this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
+    }
+
+    
+
     render() {
         return (
             <View style={{ flexDirection: 'row' }}>
                 <RadioForm
-                    //ref = {ref => this.radioFormClear = ref} 
+                    ref = {ref => this.radioFormClear = ref} 
                     radio_props={radio_props}
                     initial={null}
                     formHorizontal={true}
@@ -39,6 +45,7 @@ class Radio extends Component {
                     labelHorizontal={false}                   
                     onPress={(value) => {this.setState({ value: value }) ;this.positionReturn(value); }}
                 />
+                {/* <Button title="test" onPress={() => this.clear()}></Button> */}
             </View>
         );
     }
