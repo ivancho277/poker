@@ -125,7 +125,7 @@ export default class PracticeButtonController extends Component {
         }   
     }
 
-    incrementPositionButton(position, cb){
+    incrementPositionButton(cb){
         cb()
     }
 
@@ -146,7 +146,7 @@ export default class PracticeButtonController extends Component {
                     <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises }); this.incrementPositionStats(this.state.position, 'raise'); }} />
                 </View>
                 <View >
-                    <Radio getPosition={this.getPosition}/>
+                    <Radio getPosition={this.getPosition} />
                 </View>
                 <Button title='Save Data. End game.' onPress={() => storageController.saveData(this.toBeSaved())} />
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import PBC from './components/PracticeButtonController';
-import StatsBox from './components/Statsbox'
+import StatsBox from './components/Statsbox';
+import LiveStatsBox from './components/LiveStatsBox';
 const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
 class GameScreen extends Component {
@@ -29,7 +30,7 @@ class GameScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <StatsBox logTags={this.logTags} height={200} width={170} />
+                <LiveStatsBox logTags={this.logTags} height={100} width={270} />
                 <Text>Controller will go here</Text>
                 <PBC goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
