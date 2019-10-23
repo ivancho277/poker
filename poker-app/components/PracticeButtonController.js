@@ -9,7 +9,7 @@ const storageController = require('./AsyncStorageController.js')
 
 
 function gameStats(calls = 0, folds = 0, raises = 0) {
-        this.calls = calls,
+    this.calls = calls,
         this.folds = folds,
         this.raises = raises
 }
@@ -37,7 +37,10 @@ export default class PracticeButtonController extends Component {
                 5: new gameStats,
                 6: new gameStats,
                 7: new gameStats,
-            }
+            }, 
+                currentTime: new Date(),
+                previousTime: new Date()
+            
         };
     };
 
@@ -105,24 +108,36 @@ export default class PracticeButtonController extends Component {
             tag: ''
         })
     }
-    
-     getPosition = (position) =>{
+
+    getPosition = (position) => {
         this.setState({
             position: position
         })
+
     }
 
     incrementPositionStats(position, pressedButton) {
         //debugger
-        if(pressedButton === "call"){
+        if (pressedButton === "call") {
             ++this.state.positionStats[position].calls;
         }
-        else if(pressedButton === "fold"){
+        else if (pressedButton === "fold") {
             ++this.state.positionStats[position].folds;
         }
-        else if(pressedButton === "raise"){
+        else if (pressedButton === "raise") {
             ++this.state.positionStats[position].raises;
-        }   
+        }
+    }
+
+    
+
+    shouldPositionIncrement = (cb) =>{
+        if(this.state.currentTime.getTime() != this.state.previousTime.getTime()){
+            cb(this.state.position)
+            this.setState({
+                previousTime: this.state.currentTime
+            })
+        }
     }
 
     render() {
@@ -136,13 +151,13 @@ export default class PracticeButtonController extends Component {
                     value={this.state.tag}
                 />
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
-                <View style={{ flexDirection: "row" }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls }); this.incrementPositionStats(this.state.position, 'call') }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds }); this.incrementPositionStats(this.state.position, 'fold') }} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises }); this.incrementPositionStats(this.state.position, 'raise') }} />
+                <View style={{ flexDirection: "row", justifyContent: 'center', }}>
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'call'); }} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'raise'); }} />
                 </View>
-                <View >
-                    <Radio getPosition={this.getPosition}/>
+                <View>
+                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement}/>
                 </View>
                 <Button title='Save Data. End game.' onPress={() => storageController.saveData(this.toBeSaved())} />
 

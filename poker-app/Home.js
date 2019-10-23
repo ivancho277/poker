@@ -35,8 +35,7 @@ class HomeScreen extends Component {
     //     })
     // }
 
-    logTags = async () => {
-        
+    logTags = async () => {   
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
@@ -63,7 +62,7 @@ class HomeScreen extends Component {
                     value={this.state.tagsearch}
                 />
                 <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} />
-                <StatsBox logTags={this.logTags} height={210} />
+                <StatsBox logTags={this.logTags} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
                     <Text>Get All data from storage</Text>
