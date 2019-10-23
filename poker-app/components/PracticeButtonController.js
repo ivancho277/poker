@@ -139,7 +139,7 @@ export default class PracticeButtonController extends Component {
             })
         }
     }
-
+ 
     render() {
         return (
             <View>
@@ -152,9 +152,9 @@ export default class PracticeButtonController extends Component {
                 />
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
                 <View style={{ flexDirection: "row", justifyContent: 'center', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'call'); }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); }} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'raise'); }} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position)}} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position)}} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position)}} />
                 </View>
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement}/>

@@ -8,7 +8,7 @@ const storage = require("./components/AsyncStorageController.js");
 class GameScreen extends Component {
     constructor(props){
         super(props);
-        state ={
+        this.state = {
             position: 0
         }
     }
@@ -31,6 +31,7 @@ class GameScreen extends Component {
         })
         return tags;
     }
+    
 
     setPosition = (position) => {
         console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
@@ -42,7 +43,8 @@ class GameScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <LiveStatsBox logTags={this.logTags} height={100} width={270} />
+                <LiveStatsBox position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                <Button title="log State" onPress={() => console.log(this.state.position)} />
                 <Text>Controller will go here</Text>
                 <PBC setPosition={this.setPosition} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
