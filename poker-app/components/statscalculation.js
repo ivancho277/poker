@@ -54,7 +54,6 @@ function CountPositions(obj) {
     for (let i = 0; i < obj.games.length; i++) {
 
         for (position in obj.games[i].positionStats) {
-            console.log(obj.games[i].positionStats[position])
             finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
             finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
             finalStats[position].total_raises += obj.games[i].positionStats[position].raises;

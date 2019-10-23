@@ -12,6 +12,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
+            totals: {},
             isOnPositionStats: false
         }
     }
@@ -20,9 +21,11 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
+            let temp = calculation.calculateByPosition(JSON.parse(res))
             this.setState({
                 gamesObj: JSON.parse(res),
-                loading: false
+                loading: false,
+                totals: temp
             })
             console.log("THIS IS ASYNC")
             console.log(this.state.gamesObj)
@@ -86,14 +89,14 @@ export default class Statsbox extends Component {
                         ?
                         <Text>
                             Stats by position: {'\n'}
-                            Big Blind: C: {this.logTotalsByPosition()[0].total_calls}, F: {this.logTotalsByPosition()[0].total_folds}, R: {this.logTotalsByPosition()[0].total_raises} {'\n'}
-                            Small Blind: C: {this.logTotalsByPosition()[1].total_calls}, F: {this.logTotalsByPosition()[1].total_folds}, R: {this.logTotalsByPosition()[1].total_raises} {'\n'}
-                            Dealer: C: {this.logTotalsByPosition()[2].total_calls}, F: {this.logTotalsByPosition()[2].total_folds}, R: {this.logTotalsByPosition()[2].total_raises} {'\n'}
-                            D+1: C: {this.logTotalsByPosition()[3].total_calls}, F: {this.logTotalsByPosition()[3].total_folds}, R: {this.logTotalsByPosition()[3].total_raises} {'\n'}
-                            D+2: C: {this.logTotalsByPosition()[4].total_calls}, F: {this.logTotalsByPosition()[4].total_folds}, R: {this.logTotalsByPosition()[4].total_raises} {'\n'}
-                            D+3: C: {this.logTotalsByPosition()[5].total_calls}, F: {this.logTotalsByPosition()[5].total_folds}, R: {this.logTotalsByPosition()[5].total_raises} {'\n'}
-                            D+4: C: {this.logTotalsByPosition()[6].total_calls}, F: {this.logTotalsByPosition()[6].total_folds}, R: {this.logTotalsByPosition()[6].total_raises} {'\n'}
-                            D+5: C: {this.logTotalsByPosition()[7].total_calls}, F: {this.logTotalsByPosition()[7].total_folds}, R: {this.logTotalsByPosition()[7].total_raises} {'\n'}
+                            BB: C: {this.state.totals[0].total_calls}, F: {this.state.totals[0].total_folds}, R: {this.state.totals[0].total_raises} {'\n'}
+                            SB: C: {this.state.totals[1].total_calls}, F: {this.state.totals[1].total_folds}, R: {this.state.totals[1].total_raises} {'\n'}
+                            D: C: {this.state.totals[2].total_calls}, F: {this.state.totals[2].total_folds}, R: {this.state.totals[2].total_raises} {'\n'}
+                            D+1: C: {this.state.totals[3].total_calls}, F: {this.state.totals[3].total_folds}, R: {this.state.totals[3].total_raises} {'\n'}
+                            D+2: C: {this.state.totals[4].total_calls}, F: {this.state.totals[4].total_folds}, R: {this.state.totals[4].total_raises} {'\n'}
+                            D+3: C: {this.state.totals[5].total_calls}, F: {this.state.totals[5].total_folds}, R: {this.state.totals[5].total_raises} {'\n'}
+                            D+4: C: {this.state.totals[6].total_calls}, F: {this.state.totals[6].total_folds}, R: {this.state.totals[6].total_raises} {'\n'}
+                            D+5: C: {this.state.totals[7].total_calls}, F: {this.state.totals[7].total_folds}, R: {this.state.totals[7].total_raises} {'\n'}
                         </Text>
                         :
                         <Text style={{ justifyContent: 'center' }} >
