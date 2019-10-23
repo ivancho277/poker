@@ -6,7 +6,12 @@ import LiveStatsBox from './components/LiveStatsBox';
 const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
 class GameScreen extends Component {
-
+    constructor(props){
+        super(props);
+        state ={
+            position: 0
+        }
+    }
 
 
     goHome() {
@@ -27,12 +32,19 @@ class GameScreen extends Component {
         return tags;
     }
 
+    setPosition = (position) => {
+        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
+        this.setState({
+            position: position
+        })
+    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <LiveStatsBox logTags={this.logTags} height={100} width={270} />
                 <Text>Controller will go here</Text>
-                <PBC goHome={this.goHome} />
+                <PBC setPosition={this.setPosition} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )
