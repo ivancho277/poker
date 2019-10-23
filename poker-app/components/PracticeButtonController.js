@@ -37,10 +37,10 @@ export default class PracticeButtonController extends Component {
                 5: new gameStats,
                 6: new gameStats,
                 7: new gameStats,
-            }, 
-                currentTime: new Date(),
-                previousTime: new Date()
-            
+            },
+            currentTime: new Date(),
+            previousTime: new Date(),
+            tagInputOpen: false
         };
     };
 
@@ -130,39 +130,45 @@ export default class PracticeButtonController extends Component {
         }
     }
 
-    
 
-    shouldPositionIncrement = (cb) =>{
-        if(this.state.currentTime.getTime() != this.state.previousTime.getTime()){
+
+    shouldPositionIncrement = (cb) => {
+        if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
             this.setState({
                 previousTime: this.state.currentTime
             })
         }
     }
- 
+
     render() {
         return (
             <View>
                 <Text> PracticeButtonController </Text>
-                <TextInput
-                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                    placeholder="Type your tags here"
-                    onChangeText={(tag) => this.setState({ tag })}
-                    value={this.state.tag}
-                />
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
-                 <Text>{'\n'}</Text> 
+                {this.state.tagInputOpen ?
+                    <View>
+                        <TextInput
+                            style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                            placeholder="Type your tags here"
+                            onChangeText={(tag) => this.setState({ tag })}
+                            value={this.state.tag}
+                        />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => {this.saveToTags(this.state.tag) ; this.clearTags(); this.setState({ tagInputOpen: false})}} />
+                    </View>
+                    :
+                    <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
+                }
+                <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position)}} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position)}} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date()}); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position)}} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position) }} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position) }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position) }} />
                 </View>
-                <Text>{'\n'}</Text> 
+                <Text>{'\n'}</Text>
                 <View>
-                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement}/>
+                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => {storageController.saveData(this.toBeSaved()); this.props.goHome()}}/>
+                <Button title='Save Data. End game.' onPress={() => { storageController.saveData(this.toBeSaved()); this.props.goHome() }} />
 
             </View>
         );
