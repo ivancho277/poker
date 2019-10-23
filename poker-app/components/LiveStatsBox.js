@@ -12,7 +12,6 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
-            isOnPositionStats: false
         }
     }
 
@@ -33,8 +32,15 @@ export default class Statsbox extends Component {
     }
 
     logTotalsByPosition() {
-        console.log(calculation.calculateByPosition(this.state.gamesObj));
+        //console.log(calculation.calculateByPosition(this.state.gamesObj));
         return calculation.calculateByPosition(this.state.gamesObj);
+    }
+
+    currentPositionDisplay(position){
+        let allGames = this.logTotalsByPosition();
+        return <Text>
+            Position: {position}, Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
+        </Text>
     }
 
     logTagsTotals() {
@@ -65,10 +71,6 @@ export default class Statsbox extends Component {
         return true;
     }
 
-    onToggle(isOn) {
-        console.log("Changed to " + isOn);
-    }
-
     render() {
         return (
             <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
@@ -82,44 +84,15 @@ export default class Statsbox extends Component {
                         ?
                         <Text>Nothing here</Text>
                         :
-                        this.state.isOnPositionStats === true
-                        ?
                         <Text>
                             Stats by position: {'\n'}
-                            Big Blind: C: {this.logTotalsByPosition()[0].total_calls}, F: {this.logTotalsByPosition()[0].total_folds}, R: {this.logTotalsByPosition()[0].total_raises} {'\n'}
-                            Small Blind: C: {this.logTotalsByPosition()[1].total_calls}, F: {this.logTotalsByPosition()[1].total_folds}, R: {this.logTotalsByPosition()[1].total_raises} {'\n'}
-                            Dealer: C: {this.logTotalsByPosition()[2].total_calls}, F: {this.logTotalsByPosition()[2].total_folds}, R: {this.logTotalsByPosition()[2].total_raises} {'\n'}
-                            D+1: C: {this.logTotalsByPosition()[3].total_calls}, F: {this.logTotalsByPosition()[3].total_folds}, R: {this.logTotalsByPosition()[3].total_raises} {'\n'}
-                            D+2: C: {this.logTotalsByPosition()[4].total_calls}, F: {this.logTotalsByPosition()[4].total_folds}, R: {this.logTotalsByPosition()[4].total_raises} {'\n'}
-                            D+3: C: {this.logTotalsByPosition()[5].total_calls}, F: {this.logTotalsByPosition()[5].total_folds}, R: {this.logTotalsByPosition()[5].total_raises} {'\n'}
-                            D+4: C: {this.logTotalsByPosition()[6].total_calls}, F: {this.logTotalsByPosition()[6].total_folds}, R: {this.logTotalsByPosition()[6].total_raises} {'\n'}
-                            D+5: C: {this.logTotalsByPosition()[7].total_calls}, F: {this.logTotalsByPosition()[7].total_folds}, R: {this.logTotalsByPosition()[7].total_raises} {'\n'}
+                            {this.currentPositionDisplay(0)} {'\n'}
+                            {this.currentPositionDisplay(1)} {'\n'}
+                            {this.currentPositionDisplay(2)} {'\n'}
                         </Text>
-                        :
-                        <Text style={{ justifyContent: 'center' }} >
-                            Total Stats:{'\n'}
-                            calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
-                            folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
-                            raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
-                            tags:
-                </Text>
                 }
- 
-                <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
-                <Button title="search tags" onPress={() => this.logTagsTotals()} />
-                <ToggleSwitch
-                    isOn={this.state.isOnPositionStats}
-                    onColor="green"
-                    offColor="red"
-                    label="Change View"
-                    labelStyle={{ color: "black", fontWeight: "900" }}
-                    size="mediuim"
-                    onToggle={isOnPositionStats => {
-                        this.setState({ isOnPositionStats });
-                        this.onToggle(isOnPositionStats);
-                    }}
-                />
-                
+                {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>
 
         )

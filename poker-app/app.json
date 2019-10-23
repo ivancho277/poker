@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "An app to track you poker playing statistics."
   }
 }
