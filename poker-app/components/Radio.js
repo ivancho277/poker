@@ -32,11 +32,13 @@ class Radio extends Component {
             this.setState({
                 value: index
             })
+            this.positionReturn(index);
         } else {
             this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
             this.setState({
                 value: 0
             })
+            this.positionReturn(0);
         }
     }
 
