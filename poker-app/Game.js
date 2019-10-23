@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import PBC from './components/PracticeButtonController';
-import StatsBox from './components/Statsbox';
 import LiveStatsBox from './components/LiveStatsBox';
 const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
@@ -14,7 +13,7 @@ class GameScreen extends Component {
     }
 
 
-    goHome() {
+    goHome = () => {
         this.props.navigation.navigate('Home');
     }
     logTags = async () => {   
@@ -49,7 +48,7 @@ class GameScreen extends Component {
                 <LiveStatsBox position={this.state.position} logTags={this.logTags} height={100} width={270} />
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
-                <PBC setPosition={this.setPosition} goHome={this.goHome} />
+                <PBC goHome={this.goHome} setPosition={this.setPosition} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )

@@ -66,7 +66,7 @@ class Radio extends Component {
                 </View>
 
                 <View>
-                    <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} />
+                    {/* <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} /> */}
                 </View>
             </View>
         );
