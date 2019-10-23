@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+  import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
