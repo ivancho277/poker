@@ -104,6 +104,7 @@ export default class Statsbox extends Component {
                             tags:
                 </Text>
                 }
+ 
                 <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} />
                 <ToggleSwitch
@@ -118,6 +119,8 @@ export default class Statsbox extends Component {
                         this.onToggle(isOnPositionStats);
                     }}
                 />
+                <Button title="log position stats" onPress={()=> this.logTotalsByPosition()}></Button>
+                <Button title="search test" onPress={() => this.logTagsTotals()}  />
             </View>
 
         )
