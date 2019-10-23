@@ -16,36 +16,51 @@ let radio_props = [
 class Radio extends Component {
     constructor(props) {
         super(props);
-            state = {
-                value: 0
-            }
-        
+        state = {
+            value: 0
+        }
+
     }
-    positionReturn(position){
+    positionReturn(position) {
         // debugger
         this.props.getPosition(position);
     }
 
-    updateIndex(index){
-        this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
+    updateIndex(index) {
+        if (index < radio_props.length - 1) {
+            this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
+            this.setState({
+                value: index
+            })
+        } else {
+            this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
+            this.setState({
+                value: 0
+            })
+        }
     }
 
-    
+
 
     render() {
         return (
-            <View style={{ flexDirection: 'row' }}>
-                <RadioForm
-                    ref = {ref => this.radioFormClear = ref} 
-                    radio_props={radio_props}
-                    initial={null}
-                    formHorizontal={true}
-                    buttonSize={10}
-                    buttonOuterSize={20}
-                    labelHorizontal={false}                   
-                    onPress={(value) => {this.setState({ value: value }) ;this.positionReturn(value); }}
-                />
-                {/* <Button title="test" onPress={() => this.clear()}></Button> */}
+            <View>
+                <View style={{ flexDirection: 'row' }}>
+                    <RadioForm
+                        ref={ref => this.radioFormClear = ref}
+                        radio_props={radio_props}
+                        initial={null}
+                        formHorizontal={true}
+                        buttonSize={10}
+                        buttonOuterSize={20}
+                        labelHorizontal={false}
+                        onPress={(value) => { this.setState({ value: value }); this.positionReturn(value); }}
+                    />
+                </View>
+
+                <View>
+                    <Button title="test increment" onPress={() => this.updateIndex(this.state.value)} />
+                </View>
             </View>
         );
     }

@@ -125,8 +125,8 @@ export default class PracticeButtonController extends Component {
         }   
     }
 
-    incrementPositionButton(position){
-        
+    incrementPositionButton(position, cb){
+        cb()
     }
 
     render() {
@@ -141,9 +141,9 @@ export default class PracticeButtonController extends Component {
                 />
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => this.saveToTags(this.state.tag) & this.clearTags()} />
                 <View style={{ flexDirection: "row" }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls }); this.incrementPositionStats(this.state.position, 'call') }} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls }); this.incrementPositionStats(this.state.position, 'call'); }} />
                     <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds }); this.incrementPositionStats(this.state.position, 'fold');  }} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises }); this.incrementPositionStats(this.state.position, 'raise') }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises }); this.incrementPositionStats(this.state.position, 'raise'); }} />
                 </View>
                 <View >
                     <Radio getPosition={this.getPosition}/>
