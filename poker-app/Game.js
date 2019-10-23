@@ -33,8 +33,11 @@ class GameScreen extends Component {
     }
     
 
+    componentDidUpdate(){
+        // console.log("GAME SCREEN", this.state.position)
+    }
     setPosition = (position) => {
-        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
+        // console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
         this.setState({
             position: position
         })

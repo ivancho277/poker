@@ -11,7 +11,6 @@ export default class Statsbox extends Component {
         this.state = {
             loading: true,
             gamesObj: {},
-            position: this.props.position,
             searchedTag: {},
         }
     }
@@ -22,8 +21,7 @@ export default class Statsbox extends Component {
             console.log(JSON.parse(res));
             this.setState({
                 gamesObj: JSON.parse(res),
-                loading: false,
-                
+                loading: false,               
             })
             console.log("THIS IS ASYNC")
             console.log(this.state.gamesObj)
@@ -72,6 +70,10 @@ export default class Statsbox extends Component {
         }
         return true;
     }
+    componentDidUpdate(){
+        // console.log(this.state.position)
+        // console.log("WHAT ARE PROPS", this.props.position)
+    }
 
     render() {
         return (
@@ -88,7 +90,7 @@ export default class Statsbox extends Component {
                         :
                         <Text>
                             Current by position: {'\n'}
-                            {this.currentPositionDisplay(0)} {'\n'}
+                            {this.currentPositionDisplay(this.props.position)} {'\n'}
                             
                         </Text>
                 }

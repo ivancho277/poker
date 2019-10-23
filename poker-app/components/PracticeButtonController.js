@@ -113,6 +113,7 @@ export default class PracticeButtonController extends Component {
         this.setState({
             position: position
         })
+        this.props.setPosition(position);
 
     }
 
