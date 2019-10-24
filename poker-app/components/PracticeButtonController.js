@@ -144,7 +144,7 @@ export default class PracticeButtonController extends Component {
     render() {
         return (
             <View>
-                <Text> PracticeButtonController </Text>
+                {/* <Text> PracticeButtonController </Text> */}
                 {this.state.tagInputOpen ?
                     <View>
                         <TextInput

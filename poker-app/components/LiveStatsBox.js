@@ -38,6 +38,7 @@ export default class Statsbox extends Component {
 
     currentPositionDisplay(position){
         let allGames = this.logTotalsByPosition();
+        console.log(position)
         return <Text>
             Position: {position}, Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
         </Text>
@@ -72,7 +73,7 @@ export default class Statsbox extends Component {
     }
     componentDidUpdate(){
         // console.log(this.state.position)
-        // console.log("WHAT ARE PROPS", this.props.position)
+        //  console.log("WHAT ARE PROPS", this.props.position)
     }
 
     render() {
