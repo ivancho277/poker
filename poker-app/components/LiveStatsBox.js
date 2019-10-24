@@ -12,6 +12,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
+            currentGame: this.props.currentGame
         }
     }
 
@@ -72,7 +73,8 @@ export default class Statsbox extends Component {
         return true;
     }
     componentDidUpdate(){
-        // console.log(this.state.position)
+        console.log("MOOOO")
+         console.log(this.props.currentGame)
         //  console.log("WHAT ARE PROPS", this.props.position)
     }
 
@@ -90,7 +92,7 @@ export default class Statsbox extends Component {
                         <Text>Nothing here</Text>
                         :
                         <Text>
-                            Current position stats: {'\n'}
+                            Current Overall Stats: {'\n'}
                             {this.currentPositionDisplay(this.props.position)} {'\n'}
                             
                         </Text>

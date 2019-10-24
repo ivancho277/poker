@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
+
+
+
 module.exports = {
     saveData: function (data) {
         try {
@@ -19,7 +22,8 @@ module.exports = {
         console.log(keys);
         let games = await AsyncStorage.getItem('key');
         console.log(games);
-        return games;
+        if(!isEmpty(games))    
+            return games;
         }
         catch {
             console.log('error retrieving data')
@@ -32,4 +36,12 @@ module.exports = {
         console.log("REMOVED")
     }
 };
+
+function isEmpty(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 

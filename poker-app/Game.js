@@ -8,7 +8,8 @@ class GameScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
-            position: 0
+            position: 0,
+            currentGame: {}
         }
     }
 
@@ -33,7 +34,7 @@ class GameScreen extends Component {
     
 
     componentDidUpdate(){
-        // console.log("GAME SCREEN", this.state.position)
+        // console.log("GAME SCREEN"); console.log(this.state.currentGame);
     }
     setPosition = (position) => {
         //  console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
@@ -42,13 +43,19 @@ class GameScreen extends Component {
         })
     }
 
+    setLiveGamePosition = (games) => {
+        this.setState({
+            currentGame: games
+        })
+    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <LiveStatsBox position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
-                <PBC goHome={this.goHome} setPosition={this.setPosition} goHome={this.goHome} />
+                <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )
