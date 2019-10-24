@@ -24,6 +24,7 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
+
             tag: "",
             tags: [],
             gamesArray: [],
@@ -41,6 +42,7 @@ export default class PracticeButtonController extends Component {
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false
+
         };
     };
 
@@ -65,6 +67,7 @@ export default class PracticeButtonController extends Component {
             throw error;
         })
     }
+
 
     componentDidMount() {
         this.populateGames().then(() => {
@@ -139,11 +142,13 @@ export default class PracticeButtonController extends Component {
                 previousTime: this.state.currentTime
             })
         }
+
     }
 
     render() {
         return (
             <View>
+
                 {/* <Text> PracticeButtonController </Text> */}
                 {this.state.tagInputOpen ?
                     <View>
@@ -163,6 +168,7 @@ export default class PracticeButtonController extends Component {
                     <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position) }} />
                     <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position) }} />
                     <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position) }} />
+
                 </View>
                 <Text>{'\n'}</Text>
                 <View>
