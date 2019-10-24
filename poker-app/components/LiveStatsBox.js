@@ -12,7 +12,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
-            currentGame: this.props.currentGame
+            displayChange: false
         }
     }
 
@@ -22,7 +22,7 @@ export default class Statsbox extends Component {
             console.log(JSON.parse(res));
             this.setState({
                 gamesObj: JSON.parse(res),
-                loading: false,               
+                loading: false,
             })
             console.log("THIS IS ASYNC")
             console.log(this.state.gamesObj)
@@ -37,7 +37,9 @@ export default class Statsbox extends Component {
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
-    currentPositionDisplay(position){
+
+
+    currentPositionDisplay(position) {
         let allGames = this.logTotalsByPosition();
         console.log(position)
         return <Text>
@@ -72,10 +74,22 @@ export default class Statsbox extends Component {
         }
         return true;
     }
-    componentDidUpdate(){
+    componentDidUpdate() {
         console.log("MOOOO")
-         console.log(this.props.currentGame)
+        console.log(this.props.currentGame)
         //  console.log("WHAT ARE PROPS", this.props.position)
+    }
+
+    currentGameDisplay(position) {
+        if (!this.isEmpty(this.props.currentGame)) {
+            return <Text>
+                Position: {position}, Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
+            </Text>
+
+        } else return <Text>New Game</Text>
+    }
+    onToggle(isOn) {
+        console.log("Changed to " + isOn);
     }
 
     render() {
@@ -91,12 +105,32 @@ export default class Statsbox extends Component {
                         ?
                         <Text>Nothing here</Text>
                         :
-                        <Text>
-                            Current Overall Stats: {'\n'}
-                            {this.currentPositionDisplay(this.props.position)} {'\n'}
-                            
-                        </Text>
+                        this.state.displayChange ?
+                            <Text>
+                                Current Overall Stats: {'\n'}
+                                {this.currentPositionDisplay(this.props.position)} {'\n'}
+
+                            </Text>
+                            :
+                            <Text>
+                                Current Game Stats: {'\n'}
+                                {this.currentGameDisplay(this.props.position)}
+                            </Text>
+
                 }
+                <ToggleSwitch
+                    isOn={this.state.displayChange}
+                    onColor="green"
+                    offColor="red"
+                    label="Change View"
+                    labelStyle={{ color: "black", fontWeight: "900" }}
+                    size="mediuim"
+                    onToggle={displayChange => {
+                        this.setState({ displayChange });
+                        this.onToggle(displayChange);
+                    }}
+                />
+
                 {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>
