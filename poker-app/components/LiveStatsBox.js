@@ -4,6 +4,18 @@ import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
+
+let table = {
+    "0": "Big Blind",
+    "1": "Small Blind",
+    "2": "Dealer",
+    "3": "D+1",
+    "4": "D+2",
+    "5": "D+3",
+    "6": "D+4",
+    "7": "D+5"
+}
+
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
@@ -43,7 +55,7 @@ export default class Statsbox extends Component {
         let allGames = this.logTotalsByPosition();
         console.log(position)
         return <Text>
-            Position: {position}, Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
+            {table[position]}: Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
         </Text>
     }
 
@@ -83,7 +95,7 @@ export default class Statsbox extends Component {
     currentGameDisplay(position) {
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
-                Position: {position}, Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
+                {table[position]}: Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
             </Text>
 
         } else return <Text>New Game</Text>
