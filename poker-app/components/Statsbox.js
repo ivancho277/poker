@@ -121,6 +121,8 @@ export default class Statsbox extends Component {
                         this.onToggle(isOnPositionStats);
                     }}
                 />
+
+
             </View>
 
         )

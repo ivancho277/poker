@@ -24,6 +24,7 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
+
             tag: "",
             tags: [],
             gamesArray: [],
@@ -41,6 +42,7 @@ export default class PracticeButtonController extends Component {
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false
+
         };
     };
 
@@ -65,6 +67,7 @@ export default class PracticeButtonController extends Component {
             throw error;
         })
     }
+
 
     componentDidMount() {
         this.populateGames().then(() => {
@@ -138,11 +141,13 @@ export default class PracticeButtonController extends Component {
                 previousTime: this.state.currentTime
             })
         }
+
     }
 
     render() {
         return (
             <View>
+
                 {/* <Text> PracticeButtonController </Text> */}
                 {this.state.tagInputOpen ?
                     <View>
