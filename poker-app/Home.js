@@ -61,7 +61,7 @@ class HomeScreen extends Component {
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                 />
-                <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} />
+                {/* <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} /> */}
                 <StatsBox logTags={this.logTags} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <TouchableOpacity onPress={this.componentDidMount}>
