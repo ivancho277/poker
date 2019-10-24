@@ -89,7 +89,7 @@ export default class Statsbox extends Component {
                         <Text>Nothing here</Text>
                         :
                         <Text>
-                            Current by position: {'\n'}
+                            Current position stats: {'\n'}
                             {this.currentPositionDisplay(this.props.position)} {'\n'}
                             
                         </Text>
