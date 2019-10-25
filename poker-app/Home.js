@@ -16,7 +16,6 @@ class HomeScreen extends Component {
             },
             tagsearch: ''
         }
-
     }
 
 

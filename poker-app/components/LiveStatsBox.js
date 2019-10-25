@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
@@ -106,46 +106,49 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
-                {this.state.loading
-                    ?
-                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
-                        <ActivityIndicator size='small' color='#0000ff' />
-                    </View>
-                    :
-                    this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+
+
+                <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+                    {this.state.loading
                         ?
-                        <Text>Nothing here</Text>
+                        <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                            <ActivityIndicator size='small' color='#0000ff' />
+                        </View>
                         :
-                        this.state.displayChange ?
-                            <Text>
-                                Current Overall Stats: {'\n'}
-                                {this.currentPositionDisplay(this.props.position)} {'\n'}
-
-                            </Text>
+                        this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                            ?
+                            <Text>Nothing here</Text>
                             :
-                            <Text>
-                                Current Game Stats: {'\n'}
-                                {this.currentGameDisplay(this.props.position)}
-                            </Text>
+                            this.state.displayChange ?
+                                <Text>
+                                    Current Overall Stats: {'\n'}
+                                    {this.currentPositionDisplay(this.props.position)} {'\n'}
 
-                }
-                <ToggleSwitch
-                    isOn={this.state.displayChange}
-                    onColor="green"
-                    offColor="red"
-                    label="Change View"
-                    labelStyle={{ color: "black", fontWeight: "900" }}
-                    size="mediuim"
-                    onToggle={displayChange => {
-                        this.setState({ displayChange });
-                        this.onToggle(displayChange);
-                    }}
-                />
+                                </Text>
+                                :
+                                <Text>
+                                    Current Game Stats: {'\n'}
+                                    {this.currentGameDisplay(this.props.position)}
+                                </Text>
 
-                {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                    }
+                    <ToggleSwitch
+                        isOn={this.state.displayChange}
+                        onColor="green"
+                        offColor="red"
+                        label="Change View"
+                        labelStyle={{ color: "black", fontWeight: "900" }}
+                        size="mediuim"
+                        onToggle={displayChange => {
+                            this.setState({ displayChange });
+                            this.onToggle(displayChange);
+                        }}
+                    />
+
+
+                    {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
-            </View>
+                </View>
 
         )
     }

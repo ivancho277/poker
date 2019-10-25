@@ -51,7 +51,7 @@ class GameScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
