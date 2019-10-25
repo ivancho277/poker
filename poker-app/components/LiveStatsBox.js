@@ -93,6 +93,8 @@ export default class Statsbox extends Component {
     }
 
     currentGameDisplay(position) {
+        console.log("SEE HERE")
+        console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
                 {table[position]}: Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
@@ -115,7 +117,7 @@ export default class Statsbox extends Component {
                             <ActivityIndicator size='small' color='#0000ff' />
                         </View>
                         :
-                        this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                        this.isEmpty(this.props.currentGame) || this.state.gamesObj === [{}]
                             ?
                             <Text>Nothing here</Text>
                             :

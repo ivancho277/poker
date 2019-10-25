@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } fr
 import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
-const cardImg = require('../images/card.png');
+const cardImg = require('../images/ace_diamond.jpg');
 
 
 export default class Statsbox extends Component {
