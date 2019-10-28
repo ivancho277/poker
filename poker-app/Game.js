@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import PBC from './components/PracticeButtonController';
-import StatsBox from './components/Statsbox';
 import LiveStatsBox from './components/LiveStatsBox';
 const storage = require("./components/AsyncStorageController.js");
 //import Controller from './components/Controller'
 class GameScreen extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            position: 0,
+            currentGame: {}
+        }
+    }
 
 
-
-    goHome() {
+    goHome = () => {
         this.props.navigation.navigate('Home');
     }
     logTags = async () => {   
@@ -26,13 +31,31 @@ class GameScreen extends Component {
         })
         return tags;
     }
+    
+
+    componentDidUpdate(){
+        // console.log("GAME SCREEN"); console.log(this.state.currentGame);
+    }
+    setPosition = (position) => {
+        //  console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
+        this.setState({
+            position: position
+        })
+    }
+
+    setLiveGamePosition = (games) => {
+        this.setState({
+            currentGame: games
+        })
+    }
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <LiveStatsBox logTags={this.logTags} height={100} width={270} />
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
+                <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
-                <PBC goHome={this.goHome} />
+                <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} goHome={this.goHome} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )

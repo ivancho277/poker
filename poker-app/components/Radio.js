@@ -3,9 +3,9 @@ import { Text, View, Button } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 let radio_props = [
-    { label: 'Big Blind', value: 0 },
-    { label: 'Small Blind', value: 1 },
-    { label: 'Dealer', value: 2 },
+    { label: 'BB', value: 0 },
+    { label: 'SB', value: 1 },
+    { label: 'D', value: 2 },
     { label: 'D+1', value: 3 },
     { label: 'D+2', value: 4 },
     { label: 'D+3', value: 5 },
@@ -66,7 +66,7 @@ class Radio extends Component {
                 </View>
 
                 <View>
-                    <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} />
+                    {/* <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} /> */}
                 </View>
             </View>
         );

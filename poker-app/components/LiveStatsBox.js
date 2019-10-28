@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
+
+
+let table = {
+    "0": "Big Blind",
+    "1": "Small Blind",
+    "2": "Dealer",
+    "3": "D+1",
+    "4": "D+2",
+    "5": "D+3",
+    "6": "D+4",
+    "7": "D+5"
+}
 
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
@@ -12,6 +24,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
+            displayChange: false
         }
     }
 
@@ -21,7 +34,7 @@ export default class Statsbox extends Component {
             console.log(JSON.parse(res));
             this.setState({
                 gamesObj: JSON.parse(res),
-                loading: false
+                loading: false,
             })
             console.log("THIS IS ASYNC")
             console.log(this.state.gamesObj)
@@ -36,10 +49,13 @@ export default class Statsbox extends Component {
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
-    currentPositionDisplay(position){
+
+
+    currentPositionDisplay(position) {
         let allGames = this.logTotalsByPosition();
+        console.log(position)
         return <Text>
-            Position: {position}, Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
+            {table[position]}: Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
         </Text>
     }
 
@@ -70,30 +86,69 @@ export default class Statsbox extends Component {
         }
         return true;
     }
+    componentDidUpdate() {
+        console.log("MOOOO")
+        console.log(this.props.currentGame)
+        //  console.log("WHAT ARE PROPS", this.props.position)
+    }
+
+    currentGameDisplay(position) {
+        console.log("SEE HERE")
+        console.log(this.props.currentGame)
+        if (!this.isEmpty(this.props.currentGame)) {
+            return <Text>
+                {table[position]}: Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
+            </Text>
+
+        } else return <Text>New Game</Text>
+    }
+    onToggle(isOn) {
+        console.log("Changed to " + isOn);
+    }
 
     render() {
         return (
-            <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
-                {this.state.loading
-                    ?
-                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
-                        <ActivityIndicator size='small' color='#0000ff' />
-                    </View>
-                    :
-                    this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+                    {this.state.loading
                         ?
-                        <Text>Nothing here</Text>
+                        <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                            <ActivityIndicator size='small' color='#0000ff' />
+                        </View>
                         :
-                        <Text>
-                            Stats by position: {'\n'}
-                            {this.currentPositionDisplay(0)} {'\n'}
-                            {this.currentPositionDisplay(1)} {'\n'}
-                            {this.currentPositionDisplay(2)} {'\n'}
-                        </Text>
-                }
-                {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                        this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
+                            ?
+                            <Text>Nothing here</Text>
+                            :
+                            this.state.displayChange ?
+                                <Text>
+                                    Current Overall Stats: {'\n'}
+                                    {this.currentPositionDisplay(this.props.position)} {'\n'}
+
+                                </Text>
+                                :
+                                <Text>
+                                    Current Game Stats: {'\n'}
+                                    {this.currentGameDisplay(this.props.position)}
+                                </Text>
+
+                    }
+                    <ToggleSwitch
+                        isOn={this.state.displayChange}
+                        onColor="green"
+                        offColor="red"
+                        label="Change View"
+                        labelStyle={{ color: "black", fontWeight: "900" }}
+                        size="mediuim"
+                        onToggle={displayChange => {
+                            this.setState({ displayChange });
+                            this.onToggle(displayChange);
+                        }}
+                    />
+
+
+                    {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
-            </View>
+                </View>
 
         )
     }

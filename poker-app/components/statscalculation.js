@@ -34,33 +34,58 @@ module.exports = {
     calculateByPosition: function (gameObj) {
         return CountPositions(gameObj)
 
+    },
+
+    getPercentages: function (gameObj) {
+        return calculatePercentages(gameObj);
     }
 }
 
 
 function CountPositions(obj) {
     //go through games and find totals per position
-    let finalStats = {
-         0: {total_calls: 0, total_folds: 0, total_raises: 0},
-         1: {total_calls: 0, total_folds: 0, total_raises: 0},
-         2: {total_calls: 0, total_folds: 0, total_raises: 0},
-         3: {total_calls: 0, total_folds: 0, total_raises: 0},
-         4: {total_calls: 0, total_folds: 0, total_raises: 0},
-         5: {total_calls: 0, total_folds: 0, total_raises: 0},
-         6: {total_calls: 0, total_folds: 0, total_raises: 0},
-         7: {total_calls: 0, total_folds: 0, total_raises: 0},
-    } 
-    
-    for (let i = 0; i < obj.games.length; i++) {
-
-        for (position in obj.games[i].positionStats) {
-            console.log(obj.games[i].positionStats[position])
-            finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
-            finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
-            finalStats[position].total_raises += obj.games[i].positionStats[position].raises;
+    try {
+        let finalStats = {
+            0: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            1: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            2: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            3: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            4: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            5: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            6: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            7: { total_calls: 0, total_folds: 0, total_raises: 0 },
         }
+
+        for (let i = 0; i < obj.games.length; i++) {
+            for (position in obj.games[i].positionStats) {
+                finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
+                finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
+                finalStats[position].total_raises += obj.games[i].positionStats[position].raises;
+            }
+        }
+        return finalStats;
+    } catch {
+        alert("nothing in storage")
     }
-    return finalStats;
+
+}
+
+function calculatePercentages(obj) {
+    try {
+        // debugger;
+        let seperateTotals = countTotal(obj);
+        let totalActions = seperateTotals.calls + seperateTotals.raises + seperateTotals.folds;
+        let percentCalls = Math.round(seperateTotals.calls / totalActions * 100);
+        let percentFolds = Math.round(seperateTotals.folds / totalActions * 100);
+        let percentRaises = Math.round(seperateTotals.raises / totalActions * 100);
+        return {
+            percentCalls: percentCalls,
+            percentFolds: percentFolds,
+            percentRaises: percentRaises
+        }
+    }catch{
+        return console.log("nothing to calculate")
+    }
 }
 
 
@@ -155,17 +180,17 @@ function countTotalfromTag(obj, tag = "all") {
 let test = {
     version: "1.0.0",
     games: [{
-            calls: 3,
-            folds: 5,
-            raises: 1,
-            tags: ['home', 'vegas', 'holdem']
-        },
-        {
-            calls: 4,
-            folds: 1,
-            raises: 2,
-            tags: ['vegas', 'virtual']
-        }
+        calls: 3,
+        folds: 5,
+        raises: 1,
+        tags: ['home', 'vegas', 'holdem']
+    },
+    {
+        calls: 4,
+        folds: 1,
+        raises: 2,
+        tags: ['vegas', 'virtual']
+    }
     ]
 
 }

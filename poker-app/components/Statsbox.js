@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native'
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
+const cardImg = require('../images/ace_diamond.jpg');
+
 
 export default class Statsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
@@ -12,6 +14,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
+            totals: {},
             isOnPositionStats: false
         }
     }
@@ -20,9 +23,11 @@ export default class Statsbox extends Component {
     componentDidMount() {
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
+            let temp = calculation.calculateByPosition(JSON.parse(res))
             this.setState({
                 gamesObj: JSON.parse(res),
-                loading: false
+                loading: false,
+                totals: temp
             })
             console.log("THIS IS ASYNC")
             console.log(this.state.gamesObj)
@@ -72,54 +77,61 @@ export default class Statsbox extends Component {
     render() {
         return (
             <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
-                {this.state.loading
-                    ?
-                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
-                        <ActivityIndicator size='small' color='#0000ff' />
-                    </View>
-                    :
-                    this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+
+                <ImageBackground style={{ flex: 1, height: '100%', width: '100%' }} source={cardImg}>
+                    {this.state.loading
                         ?
-                        <Text>Nothing here</Text>
+                        <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                            <ActivityIndicator size='small' color='#0000ff' />
+                        </View>
                         :
-                        this.state.isOnPositionStats === true
-                        ?
-                        <Text>
-                            Stats by position: {'\n'}
-                            Big Blind: C: {this.logTotalsByPosition()[0].total_calls}, F: {this.logTotalsByPosition()[0].total_folds}, R: {this.logTotalsByPosition()[0].total_raises} {'\n'}
-                            Small Blind: C: {this.logTotalsByPosition()[1].total_calls}, F: {this.logTotalsByPosition()[1].total_folds}, R: {this.logTotalsByPosition()[1].total_raises} {'\n'}
-                            Dealer: C: {this.logTotalsByPosition()[2].total_calls}, F: {this.logTotalsByPosition()[2].total_folds}, R: {this.logTotalsByPosition()[2].total_raises} {'\n'}
-                            D+1: C: {this.logTotalsByPosition()[3].total_calls}, F: {this.logTotalsByPosition()[3].total_folds}, R: {this.logTotalsByPosition()[3].total_raises} {'\n'}
-                            D+2: C: {this.logTotalsByPosition()[4].total_calls}, F: {this.logTotalsByPosition()[4].total_folds}, R: {this.logTotalsByPosition()[4].total_raises} {'\n'}
-                            D+3: C: {this.logTotalsByPosition()[5].total_calls}, F: {this.logTotalsByPosition()[5].total_folds}, R: {this.logTotalsByPosition()[5].total_raises} {'\n'}
-                            D+4: C: {this.logTotalsByPosition()[6].total_calls}, F: {this.logTotalsByPosition()[6].total_folds}, R: {this.logTotalsByPosition()[6].total_raises} {'\n'}
-                            D+5: C: {this.logTotalsByPosition()[7].total_calls}, F: {this.logTotalsByPosition()[7].total_folds}, R: {this.logTotalsByPosition()[7].total_raises} {'\n'}
-                        </Text>
-                        :
-                        <Text style={{ justifyContent: 'center' }} >
-                            Total Stats:{'\n'}
-                            calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
-                            folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
-                            raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
-                            tags:
+                        this.isEmpty(this.state.gamesObj) || this.state.gamesObj === [{}]
+                            ?
+                            <Text>Nothing here</Text>
+                            :
+                            this.state.isOnPositionStats === true
+                                ?
+                                <Text>
+                                    Stats by position: {'\n'}
+                                    {/* BB: C: {this.state.totals[0].total_calls}, F: {this.state.totals[0].total_folds}, R: {this.state.totals[0].total_raises} {'\n'}
+                                    SB: C: {this.state.totals[1].total_calls}, F: {this.state.totals[1].total_folds}, R: {this.state.totals[1].total_raises} {'\n'}
+                                    D: C: {this.state.totals[2].total_calls}, F: {this.state.totals[2].total_folds}, R: {this.state.totals[2].total_raises} {'\n'}
+                                    D+1: C: {this.state.totals[3].total_calls}, F: {this.state.totals[3].total_folds}, R: {this.state.totals[3].total_raises} {'\n'}
+                                    D+2: C: {this.state.totals[4].total_calls}, F: {this.state.totals[4].total_folds}, R: {this.state.totals[4].total_raises} {'\n'}
+                                    D+3: C: {this.state.totals[5].total_calls}, F: {this.state.totals[5].total_folds}, R: {this.state.totals[5].total_raises} {'\n'}
+                                    D+4: C: {this.state.totals[6].total_calls}, F: {this.state.totals[6].total_folds}, R: {this.state.totals[6].total_raises} {'\n'}
+                                    D+5: C: {this.state.totals[7].total_calls}, F: {this.state.totals[7].total_folds}, R: {this.state.totals[7].total_raises} {'\n'} */}
+                                    Calls: {calculation.getPercentages(this.state.gamesObj).percentCalls}% {'\n'}
+                                    Raises: {calculation.getPercentages(this.state.gamesObj).percentRaises}% {'\n'}
+                                    Folds: {calculation.getPercentages(this.state.gamesObj).percentFolds}% {'\n'}
+
+                                </Text>
+                                :
+                                <Text style={{ justifyContent: 'center' }} >
+                                    Total Stats:{'\n'}
+                                    calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
+                                    folds: {calculation.calculateTotalStats(this.state.gamesObj).folds}  {'\n'}
+                                    raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
+                                    tags:
                 </Text>
-                }
- 
-                <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
-                <Button title="search tags" onPress={() => this.logTagsTotals()} />
-                <ToggleSwitch
-                    isOn={this.state.isOnPositionStats}
-                    onColor="green"
-                    offColor="red"
-                    label="Change View"
-                    labelStyle={{ color: "black", fontWeight: "900" }}
-                    size="mediuim"
-                    onToggle={isOnPositionStats => {
-                        this.setState({ isOnPositionStats });
-                        this.onToggle(isOnPositionStats);
-                    }}
-                />
-                
+                    }
+                    <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                    <Button title="search tags" onPress={() => this.logTagsTotals()} />
+                    <ToggleSwitch
+                        isOn={this.state.isOnPositionStats}
+                        onColor="green"
+                        offColor="red"
+                        label="Change View"
+                        labelStyle={{ color: "black", fontWeight: "900" }}
+                        size="mediuim"
+                        onToggle={isOnPositionStats => {
+                            this.setState({ isOnPositionStats });
+                            this.onToggle(isOnPositionStats);
+                        }}
+                    />
+                </ ImageBackground>
+
+
             </View>
 
         )
