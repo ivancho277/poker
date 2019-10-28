@@ -93,20 +93,24 @@ export default class Statsbox extends Component {
                                 ?
                                 <Text>
                                     Stats by position: {'\n'}
-                                    BB: C: {this.state.totals[0].total_calls}, F: {this.state.totals[0].total_folds}, R: {this.state.totals[0].total_raises} {'\n'}
+                                    {/* BB: C: {this.state.totals[0].total_calls}, F: {this.state.totals[0].total_folds}, R: {this.state.totals[0].total_raises} {'\n'}
                                     SB: C: {this.state.totals[1].total_calls}, F: {this.state.totals[1].total_folds}, R: {this.state.totals[1].total_raises} {'\n'}
                                     D: C: {this.state.totals[2].total_calls}, F: {this.state.totals[2].total_folds}, R: {this.state.totals[2].total_raises} {'\n'}
                                     D+1: C: {this.state.totals[3].total_calls}, F: {this.state.totals[3].total_folds}, R: {this.state.totals[3].total_raises} {'\n'}
                                     D+2: C: {this.state.totals[4].total_calls}, F: {this.state.totals[4].total_folds}, R: {this.state.totals[4].total_raises} {'\n'}
                                     D+3: C: {this.state.totals[5].total_calls}, F: {this.state.totals[5].total_folds}, R: {this.state.totals[5].total_raises} {'\n'}
                                     D+4: C: {this.state.totals[6].total_calls}, F: {this.state.totals[6].total_folds}, R: {this.state.totals[6].total_raises} {'\n'}
-                                    D+5: C: {this.state.totals[7].total_calls}, F: {this.state.totals[7].total_folds}, R: {this.state.totals[7].total_raises} {'\n'}
+                                    D+5: C: {this.state.totals[7].total_calls}, F: {this.state.totals[7].total_folds}, R: {this.state.totals[7].total_raises} {'\n'} */}
+                                    Calls: {calculation.getPercentages(this.state.gamesObj).percentCalls}% {'\n'}
+                                    Raises: {calculation.getPercentages(this.state.gamesObj).percentRaises}% {'\n'}
+                                    Folds: {calculation.getPercentages(this.state.gamesObj).percentFolds}% {'\n'}
+
                                 </Text>
                                 :
                                 <Text style={{ justifyContent: 'center' }} >
                                     Total Stats:{'\n'}
                                     calls: {calculation.calculateTotalStats(this.state.gamesObj).calls} {'\n'}
-                                    folds: {calculation.calculateTotalStats(this.state.gamesObj).folds} {'\n'}
+                                    folds: {calculation.calculateTotalStats(this.state.gamesObj).folds}  {'\n'}
                                     raises: {calculation.calculateTotalStats(this.state.gamesObj).raises} {'\n'}
                                     tags:
                 </Text>

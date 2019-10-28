@@ -34,6 +34,10 @@ module.exports = {
     calculateByPosition: function (gameObj) {
         return CountPositions(gameObj)
 
+    },
+
+    getPercentages: function (gameObj) {
+        return calculatePercentages(gameObj);
     }
 }
 
@@ -53,7 +57,6 @@ function CountPositions(obj) {
         }
 
         for (let i = 0; i < obj.games.length; i++) {
-
             for (position in obj.games[i].positionStats) {
                 finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
                 finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
@@ -65,39 +68,95 @@ function CountPositions(obj) {
         alert("nothing in storage")
     }
 
+}
+
+function calculatePercentages(obj) {
+    try {
+        // debugger;
+        let seperateTotals = countTotal(obj);
+        let totalActions = seperateTotals.calls + seperateTotals.raises + seperateTotals.folds;
+        let percentCalls = Math.round(seperateTotals.calls / totalActions * 100);
+        let percentFolds = Math.round(seperateTotals.folds / totalActions * 100);
+        let percentRaises = Math.round(seperateTotals.raises / totalActions * 100);
+        return {
+            percentCalls: percentCalls,
+            percentFolds: percentFolds,
+            percentRaises: percentRaises
+        }
+    }catch{
+        return console.log("nothing to calculate")
     }
+}
 
 
 function countTotal(obj) {
-        try {
-            let totalCalls = 0;
-            let totalFolds = 0;
-            let totalRaises = 0;
-            for (let i = 0; i < obj.games.length; i++) {
-                totalCalls += obj.games[i].calls;
-                totalFolds += obj.games[i].folds;
-                totalRaises += obj.games[i].raises;
-            }
-            return {
-                calls: totalCalls,
-                folds: totalFolds,
-                raises: totalRaises
-            }
-        } catch {
-            alert('cant count')
+    try {
+        let totalCalls = 0;
+        let totalFolds = 0;
+        let totalRaises = 0;
+        for (let i = 0; i < obj.games.length; i++) {
+            totalCalls += obj.games[i].calls;
+            totalFolds += obj.games[i].folds;
+            totalRaises += obj.games[i].raises;
         }
-
+        return {
+            calls: totalCalls,
+            folds: totalFolds,
+            raises: totalRaises
+        }
+    } catch {
+        alert('cant count')
     }
 
-    /**
-     * 
-     * @param {object} obj 
-     * @param {string} tag 
-     */
-    function SearchTag(obj, tag) {
+}
+
+/**
+ * 
+ * @param {object} obj 
+ * @param {string} tag 
+ */
+function SearchTag(obj, tag) {
+    let tagsArr = [];
+    console.log(tag + " LOOOK AT TAG")
+    console.log(obj)
+    for (let i = 0; i < obj.games.length; i++) {
+        console.log(tag);
+        console.log(obj.games[i].tags.includes(tag));
+        if (obj.games[i].tags.includes(tag)) {
+            let temp = {
+                calls: obj.games[i].calls,
+                folds: obj.games[i].folds,
+                raises: obj.games[i].raises,
+                tags: [...obj.games[i].tags]
+            }
+            tagsArr.push(temp);
+        }
+    }
+    return tagsArr
+}
+
+function checkversion(currentVer, OldVersion) {
+
+}
+
+function countTotalfromTag(obj, tag = "all") {
+    if (tag === "all") {
+        let totalCalls = 0;
+        let totalFolds = 0;
+        let totalRaises = 0;
+        for (let i = 0; i < obj.games.length; i++) {
+            totalCalls += obj.games[i].calls;
+            totalFolds += obj.games[i].folds;
+            totalRaises += obj.games[i].raises;
+        }
+        return {
+            calls: totalCalls,
+            folds: totalFolds,
+            raises: totalRaises
+        }
+    } else {
         let tagsArr = [];
-        console.log(tag + " LOOOK AT TAG")
-        console.log(obj)
+
         for (let i = 0; i < obj.games.length; i++) {
             console.log(tag);
             console.log(obj.games[i].tags.includes(tag));
@@ -112,66 +171,28 @@ function countTotal(obj) {
             }
         }
         return tagsArr
-    }
-
-    function checkversion(currentVer, OldVersion) {
 
     }
+}
 
-    function countTotalfromTag(obj, tag = "all") {
-        if (tag === "all") {
-            let totalCalls = 0;
-            let totalFolds = 0;
-            let totalRaises = 0;
-            for (let i = 0; i < obj.games.length; i++) {
-                totalCalls += obj.games[i].calls;
-                totalFolds += obj.games[i].folds;
-                totalRaises += obj.games[i].raises;
-            }
-            return {
-                calls: totalCalls,
-                folds: totalFolds,
-                raises: totalRaises
-            }
-        } else {
-            let tagsArr = [];
 
-            for (let i = 0; i < obj.games.length; i++) {
-                console.log(tag);
-                console.log(obj.games[i].tags.includes(tag));
-                if (obj.games[i].tags.includes(tag)) {
-                    let temp = {
-                        calls: obj.games[i].calls,
-                        folds: obj.games[i].folds,
-                        raises: obj.games[i].raises,
-                        tags: [...obj.games[i].tags]
-                    }
-                    tagsArr.push(temp);
-                }
-            }
-            return tagsArr
 
-        }
+let test = {
+    version: "1.0.0",
+    games: [{
+        calls: 3,
+        folds: 5,
+        raises: 1,
+        tags: ['home', 'vegas', 'holdem']
+    },
+    {
+        calls: 4,
+        folds: 1,
+        raises: 2,
+        tags: ['vegas', 'virtual']
     }
+    ]
 
-
-
-    let test = {
-        version: "1.0.0",
-        games: [{
-            calls: 3,
-            folds: 5,
-            raises: 1,
-            tags: ['home', 'vegas', 'holdem']
-        },
-        {
-            calls: 4,
-            folds: 1,
-            raises: 2,
-            tags: ['vegas', 'virtual']
-        }
-        ]
-
-    }
+}
 //   console.log(countTotal(test));
 //   console.log(findTag(test, 'home'));

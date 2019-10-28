@@ -117,7 +117,7 @@ export default class Statsbox extends Component {
                             <ActivityIndicator size='small' color='#0000ff' />
                         </View>
                         :
-                        this.isEmpty(this.props.currentGame) || this.state.gamesObj === [{}]
+                        this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
                             ?
                             <Text>Nothing here</Text>
                             :
