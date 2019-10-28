@@ -13,6 +13,7 @@ class GameScreen extends Component {
         }
     }
 
+    
 
     goHome = () => {
         this.props.navigation.navigate('Home');
