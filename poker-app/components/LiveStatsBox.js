@@ -108,8 +108,6 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-
-
                 <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
                     {this.state.loading
                         ?
