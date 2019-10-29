@@ -34,9 +34,19 @@ export class GlobalState extends Component {
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
+    incrementPosition(){
+        this.setState({
+            position: this.state.position + 1
+        })
+    }
+
     render(){
         return(
-            <MyContext.Provider value={this.state}>
+            <MyContext.Provider value={{
+                state: this.state,
+                incrementPosition: () => this.incrementPosition()
+            
+            }}>
                 {this.props.children}
             </MyContext.Provider>
         )

@@ -91,7 +91,7 @@ class HomeScreen extends Component {
 
                 <MyContext.Consumer>
                     {(context) => <TouchableOpacity
-                        onPress={() => console.log("CONTEXT", context)}>
+                        onPress={() => {context.incrementPosition(); console.log('AhAHA', context.state.position) }}>
                             <Text>Press me</Text>
                     </TouchableOpacity>}
                 </MyContext.Consumer>
