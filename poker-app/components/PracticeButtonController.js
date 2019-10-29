@@ -9,7 +9,7 @@ const storageController = require('./AsyncStorageController.js')
 
 
 function gameStats(calls = 0, folds = 0, raises = 0) {
-    this.calls = calls,
+        this.calls = calls,
         this.folds = folds,
         this.raises = raises
 }
@@ -24,7 +24,6 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
-
             tag: "",
             tags: [],
             gamesArray: [],

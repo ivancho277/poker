@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier" : "com.pokerstats.poker"
+    },
+    "android": {
+      "package": "com.pokerstats.poker"
     },
     "description": "An app to track you poker playing statistics."
   }
