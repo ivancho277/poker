@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
 import { TextInput } from 'react-native-gesture-handler';
+import {MyContext} from './stateContext/GlobalState'
 const storage = require("./components/AsyncStorageController.js");
 const calculation = require('./components/statscalculation.js')
 class HomeScreen extends Component {
@@ -31,7 +32,7 @@ class HomeScreen extends Component {
             throw error;
         })
     }
-    logTotalsByPosition = () =>{
+    logTotalsByPosition = () => {
         console.log(calculation.calculateByPosition(this.state.gamesObj));
         return calculation.calculateByPosition(this.state.gamesObj);
     }
@@ -75,6 +76,7 @@ class HomeScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
                 <Text>Welcome to Poker</Text>
                 <TextInput
                     style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
@@ -85,12 +87,18 @@ class HomeScreen extends Component {
                 {/* <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} /> */}
                 <StatsBox logTags={this.logTags} gamesObj={this.state.gamesObj} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} totals={this.state.totals} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
-                <TouchableOpacity onPress={this.componentDidMount}>
-                    <Text>Get All data from storage</Text>
-                </TouchableOpacity>
+                <Text>Test global state</Text>
+
+                <MyContext.Consumer>
+                    {(context) => <TouchableOpacity
+                        onPress={() => console.log("CONTEXT", context)}>
+                            <Text>Press me</Text>
+                    </TouchableOpacity>}
+                </MyContext.Consumer>
                 <TouchableOpacity onPress={() => storage.removeData()}>
                     <Text style={{ color: 'red' }}>Delete storage</Text>
                 </TouchableOpacity>
+
             </View>
         )
     }

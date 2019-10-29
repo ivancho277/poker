@@ -1,10 +1,11 @@
 import React, { useState, useContext, Component } from 'react';
 const storage = require('../components/AsyncStorageController.js')
+const calculation = require('../components/statscalculation.js')
 
-const myContext = React.createContext();
+export const MyContext = React.createContext();
 
 
-class GlobalState extends Component {
+export class GlobalState extends Component {
     state = {
         allgames: {},
         currentGame: {},
@@ -35,12 +36,11 @@ class GlobalState extends Component {
 
     render(){
         return(
-            <myContext>
+            <MyContext.Provider value={this.state}>
                 {this.props.children}
-            </myContext>
+            </MyContext.Provider>
         )
     }
 
 }
 
-export default GlobalState;
