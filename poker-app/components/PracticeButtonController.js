@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { MyContext } from '../stateContext/GlobalState'
 import Radio from './Radio.js'
 
 const storageController = require('./AsyncStorageController.js')
@@ -9,7 +9,7 @@ const storageController = require('./AsyncStorageController.js')
 
 
 function gameStats(calls = 0, folds = 0, raises = 0) {
-        this.calls = calls,
+    this.calls = calls,
         this.folds = folds,
         this.raises = raises
 }
@@ -157,24 +157,26 @@ export default class PracticeButtonController extends Component {
                             onChangeText={(tag) => this.setState({ tag })}
                             value={this.state.tag}
                         />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => {this.saveToTags(this.state.tag) ; this.clearTags(); this.setState({ tagInputOpen: false})}} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
                     </View>
                     :
                     <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
                 }
                 <Text>{'\n'}</Text>
-                <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position) ; this.props.setLiveGamePosition(this.state.positionStats) }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position) ;this.props.setLiveGamePosition(this.state.positionStats)}} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.positionStats) }} />
-                </View>
+                <MyContext.Consumer>
+                    {(context) => <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
+                        <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
+                        <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
+                        <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
+                    </View>}
+                </MyContext.Consumer>
                 <Text>{'\n'}</Text>
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
                 <Button title='Save Data. End game.' onPress={() => { storageController.saveData(this.toBeSaved()); this.props.goHome() }} />
 
-            </View>
+            </View >
         );
     }
 }

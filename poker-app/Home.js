@@ -2,7 +2,7 @@ import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
 import { TextInput } from 'react-native-gesture-handler';
-import {MyContext} from './stateContext/GlobalState'
+import { MyContext } from './stateContext/GlobalState'
 const storage = require("./components/AsyncStorageController.js");
 const calculation = require('./components/statscalculation.js')
 class HomeScreen extends Component {
@@ -75,8 +75,8 @@ class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
                 <TextInput
                     style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
@@ -90,9 +90,8 @@ class HomeScreen extends Component {
                 <Text>Test global state</Text>
 
                 <MyContext.Consumer>
-                    {(context) => <TouchableOpacity
-                        onPress={() => {context.incrementPosition(); console.log('AhAHA', context.state.position) }}>
-                            <Text>Press me</Text>
+                    {(context) => <TouchableOpacity onPress={() => { context.incrementPosition(); console.log('AhAHA', context.state.position) }}>
+                        <Text>Press me</Text>
                     </TouchableOpacity>}
                 </MyContext.Consumer>
                 <TouchableOpacity onPress={() => storage.removeData()}>
