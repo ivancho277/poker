@@ -57,6 +57,10 @@ class HomeScreen extends Component {
         })
     }
 
+    conextRender = (cb) => {
+        cb()
+    } 
+
     logTags = async () => {
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
@@ -84,9 +88,9 @@ class HomeScreen extends Component {
                     value={this.state.tagsearch}
                 />
                 {/* <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} /> */}
-                <StatsBox logTags={this.logTags} gamesObj={this.state.gamesObj} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} totals={this.state.totals} height={300} width={170} />
+                <StatsBox logTags={this.logTags} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
-                <Text>Test global state</Text>
+                <Text>ReRender global state</Text>
 
                 <MyContext.Consumer>
                     {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
