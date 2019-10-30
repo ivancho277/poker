@@ -16,26 +16,26 @@ class HomeScreen extends Component {
         }
     }
 
-    componentDidMount() {
-        storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-            let temp = calculation.calculateByPosition(JSON.parse(res))
-            this.setState({
-                gamesObj: JSON.parse(res),
-                loading: false,
-                totals: temp
-            })
-            console.log("THIS IS ASYNC")
-            console.log(this.state.gamesObj)
-        }).catch((error) => {
-            console.log("HOME SCREEN ERROR");
-            throw error;
-        })
-    }
-    logTotalsByPosition = () => {
-        console.log(calculation.calculateByPosition(this.state.gamesObj));
-        return calculation.calculateByPosition(this.state.gamesObj);
-    }
+    // componentDidMount() {
+    //     storage.retrieveData().then((res) => {
+    //         console.log(JSON.parse(res));
+    //         let temp = calculation.calculateByPosition(JSON.parse(res))
+    //         this.setState({
+    //             gamesObj: JSON.parse(res),
+    //             loading: false,
+    //             totals: temp
+    //         })
+    //         console.log("THIS IS ASYNC")
+    //         console.log(this.state.gamesObj)
+    //     }).catch((error) => {
+    //         console.log("HOME SCREEN ERROR");
+    //         throw error;
+    //     })
+    // }
+    // logTotalsByPosition = () => {
+    //     console.log(calculation.calculateByPosition(this.state.gamesObj));
+    //     return calculation.calculateByPosition(this.state.gamesObj);
+    // }
 
     logTagsTotals = () => {
         this.logTags().then((res) => {
