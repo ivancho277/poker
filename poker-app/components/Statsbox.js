@@ -41,7 +41,7 @@ export default class Statsbox extends Component {
                                 <ActivityIndicator size='small' color='#0000ff' />
                             </View>
                             :
-                            this.isEmpty(this.props.gamesObj) || this.props.gamesObj === [{}]
+                            this.isEmpty(context.state.gamesObj) || context.state.gamesObj === [{}]
                                 ?
                                 <Text>Nothing here</Text>
                                 :
@@ -49,14 +49,14 @@ export default class Statsbox extends Component {
                                     ?
                                     <Text>
                                         Stats by position: {'\n'}
-                                        {/* BB: C: {this.props.totals[0].total_calls}, F: {this.props.totals[0].total_folds}, R: {this.props.totals[0].total_raises} {'\n'}
-                                    SB: C: {this.props.totals[1].total_calls}, F: {this.props.totals[1].total_folds}, R: {this.props.totals[1].total_raises} {'\n'}
-                                    D: C: {this.props.totals[2].total_calls}, F: {this.props.totals[2].total_folds}, R: {this.props.totals[2].total_raises} {'\n'}
-                                    D+1: C: {this.props.totals[3].total_calls}, F: {this.props.totals[3].total_folds}, R: {this.props.totals[3].total_raises} {'\n'}
-                                    D+2: C: {this.props.totals[4].total_calls}, F: {this.props.totals[4].total_folds}, R: {this.props.totals[4].total_raises} {'\n'}
-                                    D+3: C: {this.props.totals[5].total_calls}, F: {this.props.totals[5].total_folds}, R: {this.props.totals[5].total_raises} {'\n'}
-                                    D+4: C: {this.props.totals[6].total_calls}, F: {this.props.totals[6].total_folds}, R: {this.props.totals[6].total_raises} {'\n'}
-                                    D+5: C: {this.props.totals[7].total_calls}, F: {this.props.totals[7].total_folds}, R: {this.props.totals[7].total_raises} {'\n'} */}
+                                        {/* BB: C: {context.state.totals[0].total_calls}, F: {context.state.totals[0].total_folds}, R: {context.state.totals[0].total_raises} {'\n'}
+                                    SB: C: {context.state.totals[1].total_calls}, F: {context.state.totals[1].total_folds}, R: {context.state.totals[1].total_raises} {'\n'}
+                                    D: C: {context.state.totals[2].total_calls}, F: {context.state.totals[2].total_folds}, R: {context.state.totals[2].total_raises} {'\n'}
+                                    D+1: C: {context.state.totals[3].total_calls}, F: {context.state.totals[3].total_folds}, R: {context.state.totals[3].total_raises} {'\n'}
+                                    D+2: C: {context.state.totals[4].total_calls}, F: {context.state.totals[4].total_folds}, R: {context.state.totals[4].total_raises} {'\n'}
+                                    D+3: C: {context.state.totals[5].total_calls}, F: {context.state.totals[5].total_folds}, R: {context.state.totals[5].total_raises} {'\n'}
+                                    D+4: C: {context.state.totals[6].total_calls}, F: {context.state.totals[6].total_folds}, R: {context.state.totals[6].total_raises} {'\n'}
+                                    D+5: C: {context.state.totals[7].total_calls}, F: {context.state.totals[7].total_folds}, R: {context.state.totals[7].total_raises} {'\n'} */}
                                         Calls: {calculation.getPercentages(context.state.gamesObj).percentCalls}% {'\n'}
                                         Raises: {calculation.getPercentages(context.state.gamesObj).percentRaises}% {'\n'}
                                         Folds: {calculation.getPercentages(context.state.gamesObj).percentFolds}% {'\n'}
@@ -65,9 +65,9 @@ export default class Statsbox extends Component {
                                     :
                                     <Text style={{ justifyContent: 'center' }} >
                                         Total Stats:{'\n'}
-                                        calls: {calculation.calculateTotalStats(this.props.gamesObj).calls} {'\n'}
-                                        folds: {calculation.calculateTotalStats(this.props.gamesObj).folds}  {'\n'}
-                                        raises: {calculation.calculateTotalStats(this.props.gamesObj).raises} {'\n'}
+                                        calls: {calculation.calculateTotalStats(context.state.gamesObj).calls} {'\n'}
+                                        folds: {calculation.calculateTotalStats(context.state.gamesObj).folds}  {'\n'}
+                                        raises: {calculation.calculateTotalStats(context.state.gamesObj).raises} {'\n'}
                                         tags:
                 </Text>
                         }

@@ -75,7 +75,6 @@ class HomeScreen extends Component {
 
     render() {
         return (
-
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Welcome to Poker</Text>
                 <TextInput
@@ -90,14 +89,13 @@ class HomeScreen extends Component {
                 <Text>Test global state</Text>
 
                 <MyContext.Consumer>
-                    {(context) => <TouchableOpacity onPress={() => { context.incrementPosition(); console.log('AhAHA', context.state.position) }}>
+                    {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
                         <Text>Press me</Text>
                     </TouchableOpacity>}
                 </MyContext.Consumer>
                 <TouchableOpacity onPress={() => storage.removeData()}>
                     <Text style={{ color: 'red' }}>Delete storage</Text>
                 </TouchableOpacity>
-
             </View>
         )
     }

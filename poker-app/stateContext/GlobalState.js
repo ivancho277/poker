@@ -51,8 +51,8 @@ export class GlobalState extends Component {
             <MyContext.Provider value={{
                 state: this.state,
                 incrementPosition: () => this.incrementPosition(),
-                setPosition: (position) => this.setPosition(position)
-            
+                setPosition: (position) => this.setPosition(position),
+                remount: () => this.componentDidMount()
             }}>
                 {this.props.children}
             </MyContext.Provider>
