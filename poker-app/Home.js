@@ -5,7 +5,12 @@ import { TextInput } from 'react-native-gesture-handler';
 import { MyContext } from './stateContext/GlobalState'
 const storage = require("./components/AsyncStorageController.js");
 const calculation = require('./components/statscalculation.js')
+
+//  const context = useContext(MyContext)
+
+
 class HomeScreen extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -15,6 +20,10 @@ class HomeScreen extends Component {
             tagsearch: ''
         }
     }
+
+    // componentWillMount() {
+    //     context.remount();
+    // }
 
     // componentDidMount() {
     //     storage.retrieveData().then((res) => {

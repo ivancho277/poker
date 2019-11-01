@@ -13,7 +13,7 @@ class GameScreen extends Component {
         }
     }
 
-    
+
 
     goHome = () => {
         this.props.navigation.navigate('Home');
@@ -56,7 +56,7 @@ class GameScreen extends Component {
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
-                <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} goHome={this.goHome} />
+                <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )

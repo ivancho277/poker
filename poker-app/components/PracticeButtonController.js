@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useReducer, useState, useEffect } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import { MyContext } from '../stateContext/GlobalState'
 import Radio from './Radio.js'
@@ -18,35 +18,66 @@ function gameStats(calls = 0, folds = 0, raises = 0) {
 
 
 
-export default class PracticeButtonController extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            calls: 0,
-            folds: 0,
-            raises: 0,
-            tag: "",
-            tags: [],
-            gamesArray: [],
-            position: 0,
-            positionStats: {
-                0: new gameStats,
-                1: new gameStats,
-                2: new gameStats,
-                3: new gameStats,
-                4: new gameStats,
-                5: new gameStats,
-                6: new gameStats,
-                7: new gameStats,
-            },
-            currentTime: new Date(),
-            previousTime: new Date(),
-            tagInputOpen: false
+export default function PracticeButtonController(props) {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         calls: 0,
+    //         folds: 0,
+    //         raises: 0,
+    //         tag: "",
+    //         tags: [],
+    //         gamesArray: [],
+    //         position: 0,
+    //         positionStats: {
+    //             0: new gameStats,
+    //             1: new gameStats,
+    //             2: new gameStats,
+    //             3: new gameStats,
+    //             4: new gameStats,
+    //             5: new gameStats,
+    //             6: new gameStats,
+    //             7: new gameStats,
+    //         },
+    //         currentTime: new Date(),
+    //         previousTime: new Date(),
+    //         tagInputOpen: false
 
-        };
-    };
+    //     };
+    // };
 
-    async populateGames() {
+    const [calls, setCalls] = useState(0);
+    const [folds, setFolds] = useState(0);
+    const [raises, setRaises] = useState(0);
+    const [tag, setTag] = useState("");
+    const [tags, setTags] = useState([]);
+    const [gamesArray, setGamesArray] = useState([]);
+    const [position, setPosition] = useState(0);
+    const [positionStats, setPositionStats] = useState({
+        0: new gameStats,
+        1: new gameStats,
+        2: new gameStats,
+        3: new gameStats,
+        4: new gameStats,
+        5: new gameStats,
+        6: new gameStats,
+        7: new gameStats
+    });
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [previousTime, setPreviousTime] = useState(new Date());
+    const [tagInputOpen, setTagInputOpen] = useState(false);
+
+    useEffect(() => {
+        populateGames().then(() => {
+            console.log("LOOK UNDER");
+            console.log(gamesArray)
+        })
+    }, [])
+
+
+
+
+    const populateGames = async () => {
         await storageController.retrieveData().then((res) => {
             let pastGames = JSON.parse(res);
             console.log("populate function");
@@ -59,9 +90,9 @@ export default class PracticeButtonController extends Component {
             console.log(arrayOfgames)
             console.log(res)
             console.log(pastGames)
-            this.setState({
-                gamesArray: arrayOfgames
-            });
+            setGamesArray(
+                arrayOfgames
+            )
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -69,114 +100,125 @@ export default class PracticeButtonController extends Component {
     }
 
 
-    componentDidMount() {
-        this.populateGames().then(() => {
-            console.log("LOOK UNDER");
-            console.log(this.state.gamesArray)
+
+
+    const saveToTags = (tag) => {
+        let tagsArray = tags;
+        tagsArray.push(tag);
+        setTags({
+            tags: tagsArray
         })
     }
 
-    saveToTags(tag) {
-        let tagsArray = this.state.tags;
-        tagsArray.push(tag);
-        this.setState({
-            tags: tagsArray
-        })
-    };
-
-    toBeSaved() {
+    const toBeSaved = () => {
         let date = new Date();
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
-            calls: this.state.calls,
-            folds: this.state.folds,
-            raises: this.state.raises,
-            tags: this.state.tags,
-            positionStats: this.state.positionStats
+            calls: calls,
+            folds: folds,
+            raises: raises,
+            tags: tags,
+            positionStats: positionStats
         }
-        let gamesarr = this.state.gamesArray;
+        console.log("))))))))))))))))))))))))))", gamesArray)
+        debugger;
+        
         console.log("LOOOK")
-        console.log(gamesarr)
-        gamesarr.push(gamesObj)
+        
+
+        gamesArray.push(gamesObj);
+        
+        
         let saveObj = {
             version: "1.0.2",
-            games: gamesarr
+            games: gamesArray
         }
         return saveObj;
-    };
-
-    clearTags() {
-        this.setState({
-            tag: ''
-        })
     }
 
-    getPosition = (position) => {
-        this.setState({
-            position: position
-        })
-        this.props.setPosition(position);
+    const clearTags = () => {
+        setTag('')
     }
 
-    incrementPositionStats(position, pressedButton) {
+    const getPosition = (position) => {
+        setPosition(position)
+        props.setPosition(position);
+    }
+
+    const incrementPositionStats = (position, pressedButton) => {
         //debugger
         if (pressedButton === "call") {
-            ++this.state.positionStats[position].calls;
+            //++this.state.positionStats[position].calls;
+            setPositionStats({
+                ...positionStats,
+                position: calls + 1
+            })
+
         }
         else if (pressedButton === "fold") {
-            ++this.state.positionStats[position].folds;
-        }
-        else if (pressedButton === "raise") {
-            ++this.state.positionStats[position].raises;
-        }
-    }
-
-
-
-    shouldPositionIncrement = (cb) => {
-        if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
-            cb(this.state.position)
-            this.setState({
-                previousTime: this.state.currentTime
+            // ++this.state.positionStats[position].folds;
+            setPositionStats({
+                ...positionStats,
+                position: folds + 1
             })
         }
+        else if (pressedButton === "raise") {
+            // ++this.state.positionStats[position].raises;
+            setPositionStats({
+                ...positionStats,
+                position: raises + 1
+            })
+        }
+    }
+
+
+
+     function shouldPositionIncrement (cb) {
+        if (currentTime.getTime() != previousTime.getTime()) {
+            cb(position)
+            setPreviousTime(currentTime)
+            // this.setState({
+            //     previousTime: this.state.currentTime
+            // })
+        }
 
     }
 
-    render() {
-        return (
-            <View>
 
-                {/* <Text> PracticeButtonController </Text> */}
-                {this.state.tagInputOpen ?
-                    <View>
-                        <TextInput
-                            style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                            placeholder="Type your tags here"
-                            onChangeText={(tag) => this.setState({ tag })}
-                            value={this.state.tag}
-                        />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
-                    </View>
-                    :
-                    <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
-                }
-                <Text>{'\n'}</Text>
-                <MyContext.Consumer>
-                    {(context) => <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                        <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
-                        <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
-                        <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.positionStats) }} />
-                    </View>}
-                </MyContext.Consumer>
-                <Text>{'\n'}</Text>
+
+    return (
+        <View>
+
+            {/* <Text> PracticeButtonController </Text> */}
+            {tagInputOpen ?
                 <View>
-                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                    <TextInput
+                        style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                        placeholder="Type your tags here"
+                        onChangeText={(tag) => setTag(tag)}
+                        value={tag}
+                    />
+                    <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { saveToTags(tag); clearTags(); setTagInputOpen(false) }} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => { storageController.saveData(this.toBeSaved()); this.props.goHome() }} />
+                :
+                <Button title="add tag" onPress={() => setTagInputOpen(true)} />
+            }
+            <Text>{'\n'}</Text>
+            <MyContext.Consumer>
+                {(context) => <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
+                    <Button title={`call, #${calls}`} onPress={() => { setCalls(calls + 1); setCurrentTime(new Date()); incrementPositionStats(position, 'call'); props.setPosition(position); props.setLiveGamePosition(positionStats) }} />
+                    <Button title={`fold, #${folds}`} onPress={() => { setFolds(folds + 1); setCurrentTime(new Date()); incrementPositionStats(position, 'fold'); props.setPosition(position); props.setLiveGamePosition(positionStats) }} />
+                    <Button title={`raise, #${raises}`} onPress={() => { setRaises(raises + 1); setCurrentTime(new Date()); incrementPositionStats(position, 'raise'); props.setPosition(position); props.setLiveGamePosition(positionStats) }} />
+                </View>}
+            </MyContext.Consumer>
+            <Text>{'\n'}</Text>
+            <View>
+                <Radio getPosition={getPosition} shouldPositionIncrement={shouldPositionIncrement} />
+            </View>
+            <Button title='Save Data. End game.' onPress={() => { storageController.saveData(toBeSaved()); props.goHome() }} />
 
-            </View >
-        );
-    }
+        </View >
+    );
+
 }

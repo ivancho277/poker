@@ -7,8 +7,7 @@ export const MyContext = React.createContext();
 
 export class GlobalState extends Component {
     state = {
-        allgames: {},
-        currentGame: {},
+        allgames: {},     
         position: 0,
         totalsByPosition: {},
         totals: {}
@@ -28,6 +27,10 @@ export class GlobalState extends Component {
             console.log("HOME SCREEN ERROR");
             throw error;
         })
+    }
+
+    componentDidUpdate(){
+        
     }
     logTotalsByPosition = () => {
         console.log(calculation.calculateByPosition(this.state.gamesObj));
