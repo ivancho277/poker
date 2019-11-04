@@ -44,6 +44,7 @@ module.exports = {
 
 function CountPositions(obj) {
     //go through games and find totals per position
+    
     try {
         let finalStats = {
             0: { total_calls: 0, total_folds: 0, total_raises: 0 },
