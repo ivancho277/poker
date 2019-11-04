@@ -29,7 +29,7 @@ export default class PracticeButtonController extends Component {
             tags: [],
             gamesArray: [],
             position: 0,
-            positionStats: {
+            currentGame: {
                 0: new gameStats,
                 1: new gameStats,
                 2: new gameStats,
@@ -93,7 +93,7 @@ export default class PracticeButtonController extends Component {
             folds: this.state.folds,
             raises: this.state.raises,
             tags: this.state.tags,
-            positionStats: this.state.positionStats
+            currentGame: this.state.currentGame
         }
         let gamesarr = this.state.gamesArray;
         console.log("LOOOK")
@@ -119,16 +119,16 @@ export default class PracticeButtonController extends Component {
         this.props.setPosition(position);
     }
 
-    incrementPositionStats(position, pressedButton) {
+    incrementcurrentGame(position, pressedButton) {
         //debugger
         if (pressedButton === "call") {
-            ++this.state.positionStats[position].calls;
+            ++this.state.currentGame[position].calls;
         }
         else if (pressedButton === "fold") {
-            ++this.state.positionStats[position].folds;
+            ++this.state.currentGame[position].folds;
         }
         else if (pressedButton === "raise") {
-            ++this.state.positionStats[position].raises;
+            ++this.state.currentGame[position].raises;
         }
     }
 
@@ -164,9 +164,9 @@ export default class PracticeButtonController extends Component {
                 }
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'call'); this.props.setPosition(this.state.position) ; this.props.setLiveGamePosition(this.state.positionStats) }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'fold'); this.props.setPosition(this.state.position) ;this.props.setLiveGamePosition(this.state.positionStats)}} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementPositionStats(this.state.position, 'raise'); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.positionStats) }} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position) ; this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'fold'); this.props.setPosition(this.state.position) ;this.props.setLiveGamePosition(this.state.currentGame)}} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.currentGame) }} />
                 </View>
                 <Text>{'\n'}</Text>
                 <View>
