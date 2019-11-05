@@ -41,7 +41,8 @@ export default class PracticeButtonController extends Component {
             inGame: true,
             currentTime: new Date(),
             previousTime: new Date(),
-            tagInputOpen: false
+            tagInputOpen: false,
+            numberOfPastGames: 0
 
         };
     };
@@ -62,8 +63,11 @@ export default class PracticeButtonController extends Component {
             console.log(pastGames)
             this.setState({
                 gamesArray: arrayOfgames,
-                inGame: pastGames.inGame
+                numberOfPastGames: arrayOfgames.length,
+                inGame: arrayOfgames[arrayOfgames.length - 1].inGame
             });
+            console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
+            console.log(this.state.numberOfPastGames)
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -109,31 +113,53 @@ export default class PracticeButtonController extends Component {
         }
         //debugger;
 
-        let gamesarr = this.state.gamesArray.concat(gamesObj);
-        console.log("LOOOK")
-        console.log(gamesarr)
-        if(shouldUpdate){
-            
-            let updatedCurrentGame = this.state.gamesArray.map((game, i) => {
-                if(i = this.state.gamesArray.length - 1){
-                    return gamesObj;
-                }
-            })
-            this.setState({
-                gamesArray: updatedCurrentGame
-            })
-        }
-        if (!shouldUpdate) {
-
-            let saveObj = {
-                version: "1.0.2",
-                games: gamesarr
+        // let gamesarr = this.state.gamesArray.concat(gamesObj);
+        // let saveObj = {
+        //     version: "1.0.2",
+        //     games: gamesarr
+        // }
+        //console.log("LOOOK")
+        //console.log(gamesarr)
+        //debugger
+        if (shouldUpdate) {
+            if (this.state.numberOfPastGames == this.state.gamesArray.length) {
+                let gamesarr = this.state.gamesArray.concat(gamesObj);
+                this.setState({
+                    gamesArray: gamesarr
+                })
+                storageController.saveData({games: gamesarr, version: '1.0.2'})
+            } else {
+                let updatedCurrentGame = this.state.gamesArray.map((game, i) => {
+                    if (i = this.state.gamesArray.length - 1) {
+                        return gamesObj;
+                    }
+                })
+                this.setState({
+                    gamesArray: updatedCurrentGame
+                })
+                storageController.saveData({games: updatedCurrentGame, version:'1.0.2'});
             }
-            return saveObj;
+        }
+        else {
+            if (this.state.numberOfPastGames == this.state.gamesArray.length) {
+                let gamesarr = this.state.gamesArray.concat(gamesObj);
+                let saveObj = {
+                    version: "1.0.2",
+                    games: gamesarr
+                }
+                storageController.saveData(saveObj);
+            } else {
+                //let gamesarr = this.state.gamesArray.concat(gamesObj);
+                let saveObj = {
+                    version: "1.0.2",
+                    games: this.state.gamesArray
+                }
+                storageController.saveData(saveObj);
+            }
         }
     };
 
-   
+
 
     clearTags() {
         this.setState({
@@ -166,6 +192,7 @@ export default class PracticeButtonController extends Component {
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
+            this.toBeSavedOrUpdated(true);
             this.setState({
                 previousTime: this.state.currentTime
             })
@@ -202,7 +229,7 @@ export default class PracticeButtonController extends Component {
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { storageController.saveData(this.toBeSavedOrUpdated()) & this.props.goHome() }) }} />
+                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSavedOrUpdated() & this.props.goHome() }) }} />
 
             </View>
         );
