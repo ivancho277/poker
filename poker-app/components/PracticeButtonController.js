@@ -24,7 +24,6 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
-
             tag: "",
             tags: [],
             gamesArray: [],
@@ -39,6 +38,7 @@ export default class PracticeButtonController extends Component {
                 6: new gameStats,
                 7: new gameStats,
             },
+            inGame: true,
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false
@@ -55,12 +55,14 @@ export default class PracticeButtonController extends Component {
                 arrayOfgames.push(game);
                 console.log(game)
             })
+
             console.log("TAKE A LOOK")
             console.log(arrayOfgames)
             console.log(res)
             console.log(pastGames)
             this.setState({
-                gamesArray: arrayOfgames
+                gamesArray: arrayOfgames,
+                inGame: pastGames.inGame
             });
         }).catch((error) => {
             alert("populate error");
@@ -73,6 +75,15 @@ export default class PracticeButtonController extends Component {
         this.populateGames().then(() => {
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
+            if (this.state.gamesArray[this.state.gamesArray.length - 1].inGame) {
+                this.setState({
+                    currentGame: this.state.gamesArray[this.state.gamesArray.length - 1].currentGame,
+                    calls: this.state.gamesArray[this.state.gamesArray.length - 1].calls,
+                    folds: this.state.gamesArray[this.state.gamesArray.length - 1].folds,
+                    raises: this.state.gamesArray[this.state.gamesArray.length - 1].raises
+
+                })
+            }
         })
     }
 
@@ -84,7 +95,7 @@ export default class PracticeButtonController extends Component {
         })
     };
 
-    toBeSaved() {
+    toBeSavedOrUpdated = (shouldUpdate = false) => {
         let date = new Date();
         let gamesObj = {
             date: date.toDateString(),
@@ -93,18 +104,36 @@ export default class PracticeButtonController extends Component {
             folds: this.state.folds,
             raises: this.state.raises,
             tags: this.state.tags,
-            currentGame: this.state.currentGame
+            currentGame: this.state.currentGame,
+            inGame: this.state.inGame
         }
-        let gamesarr = this.state.gamesArray;
+        //debugger;
+
+        let gamesarr = this.state.gamesArray.concat(gamesObj);
         console.log("LOOOK")
         console.log(gamesarr)
-        gamesarr.push(gamesObj)
-        let saveObj = {
-            version: "1.0.2",
-            games: gamesarr
+        if(shouldUpdate){
+            
+            let updatedCurrentGame = this.state.gamesArray.map((game, i) => {
+                if(i = this.state.gamesArray.length - 1){
+                    return gamesObj;
+                }
+            })
+            this.setState({
+                gamesArray: updatedCurrentGame
+            })
         }
-        return saveObj;
+        if (!shouldUpdate) {
+
+            let saveObj = {
+                version: "1.0.2",
+                games: gamesarr
+            }
+            return saveObj;
+        }
     };
+
+   
 
     clearTags() {
         this.setState({
@@ -141,8 +170,9 @@ export default class PracticeButtonController extends Component {
                 previousTime: this.state.currentTime
             })
         }
-
     }
+
+
 
     render() {
         return (
@@ -157,22 +187,22 @@ export default class PracticeButtonController extends Component {
                             onChangeText={(tag) => this.setState({ tag })}
                             value={this.state.tag}
                         />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => {this.saveToTags(this.state.tag) ; this.clearTags(); this.setState({ tagInputOpen: false})}} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
                     </View>
                     :
                     <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
                 }
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position) ; this.props.setLiveGamePosition(this.state.currentGame) }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'fold'); this.props.setPosition(this.state.position) ;this.props.setLiveGamePosition(this.state.currentGame)}} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'fold'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
                 </View>
                 <Text>{'\n'}</Text>
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => { storageController.saveData(this.toBeSaved()); this.props.goHome() }} />
+                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { storageController.saveData(this.toBeSavedOrUpdated()) & this.props.goHome() }) }} />
 
             </View>
         );

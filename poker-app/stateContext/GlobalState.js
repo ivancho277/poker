@@ -13,6 +13,7 @@ export class GlobalState extends Component {
         totals: {}
     }
     componentDidMount() {
+      // storage.removeData()
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
             let temp = calculation.calculateByPosition(JSON.parse(res))
@@ -30,6 +31,16 @@ export class GlobalState extends Component {
     }
 
     componentDidUpdate(){
+        let checkStorageVsState;
+        storage.retrieveData().then((res) => {
+            checkStorageVsState = JSON.parse(res);
+            console.log("POOOOOOOOOO", checkStorageVsState)
+            if(checkStorageVsState.calls != this.state.gamesObj.calls ||
+                checkStorageVsState.folds != this.state.gamesObj.folds ||
+                checkStorageVsState.raises != this.state.gamesObj.raises){
+                    this.componentDidMount();
+                }
+        })
         
     }
     logTotalsByPosition = () => {
