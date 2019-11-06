@@ -62,7 +62,6 @@ export default class PracticeButtonController extends Component {
                 console.log(pastGames)
                 this.setState({
                     gamesArray: arrayOfgames,
-
                 }, () => {
                     if (arrayOfgames[arrayOfgames.length - 1].inGame) {
                         this.setState({
