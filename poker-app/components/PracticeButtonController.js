@@ -42,7 +42,7 @@ export default class PracticeButtonController extends Component {
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false,
-            numberOfPastGames: 0
+            
 
         };
     };
@@ -64,7 +64,7 @@ export default class PracticeButtonController extends Component {
                 console.log(pastGames)
                 this.setState({
                     gamesArray: arrayOfgames,
-                    numberOfPastGames: arrayOfgames.length,
+                   
                 }, () => {
                     if (arrayOfgames[arrayOfgames.length - 1].inGame) {
                         this.setState({
@@ -78,7 +78,7 @@ export default class PracticeButtonController extends Component {
                 });
             }
             // console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
-            console.log(this.state.numberOfPastGames)
+            
         }).catch((error) => {
             alert("populate error");
             throw error;
