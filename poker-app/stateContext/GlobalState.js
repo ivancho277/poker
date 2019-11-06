@@ -13,7 +13,7 @@ export class GlobalState extends Component {
         totals: {}
     }
     componentDidMount() {
-      // storage.removeData()
+       // storage.removeData()
         storage.retrieveData().then((res) => {
             console.log(JSON.parse(res));
             let temp = calculation.calculateByPosition(JSON.parse(res))

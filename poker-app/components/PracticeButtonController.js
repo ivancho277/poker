@@ -52,21 +52,32 @@ export default class PracticeButtonController extends Component {
             let pastGames = JSON.parse(res);
             console.log("populate function");
             let arrayOfgames = [];
-            pastGames.games.forEach(game => {
-                arrayOfgames.push(game);
-                console.log(game)
-            })
+            if (pastGames.games) {
+                pastGames.games.forEach(game => {
+                    arrayOfgames.push(game);
+                    console.log(game)
+                })
 
-            console.log("TAKE A LOOK")
-            console.log(arrayOfgames)
-            console.log(res)
-            console.log(pastGames)
-            this.setState({
-                gamesArray: arrayOfgames,
-                numberOfPastGames: arrayOfgames.length,
-                inGame: arrayOfgames[arrayOfgames.length - 1].inGame
-            });
-            console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
+                console.log("TAKE A LOOK")
+                console.log(arrayOfgames)
+                console.log(res)
+                console.log(pastGames)
+                this.setState({
+                    gamesArray: arrayOfgames,
+                    numberOfPastGames: arrayOfgames.length,
+                }, () => {
+                    if (arrayOfgames[arrayOfgames.length - 1].inGame) {
+                        this.setState({
+                            currentGame: arrayOfgames[arrayOfgames.length - 1].currentGame,
+                            calls: arrayOfgames[arrayOfgames.length - 1].calls,
+                            folds: arrayOfgames[arrayOfgames.length - 1].folds,
+                            raises: arrayOfgames[arrayOfgames.length - 1].raises,
+                            gamesArray: arrayOfgames.slice(0, arrayOfgames.length - 1)
+                        })
+                    }
+                });
+            }
+            // console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
             console.log(this.state.numberOfPastGames)
         }).catch((error) => {
             alert("populate error");
@@ -79,15 +90,7 @@ export default class PracticeButtonController extends Component {
         this.populateGames().then(() => {
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
-            if (this.state.gamesArray[this.state.gamesArray.length - 1].inGame) {
-                this.setState({
-                    currentGame: this.state.gamesArray[this.state.gamesArray.length - 1].currentGame,
-                    calls: this.state.gamesArray[this.state.gamesArray.length - 1].calls,
-                    folds: this.state.gamesArray[this.state.gamesArray.length - 1].folds,
-                    raises: this.state.gamesArray[this.state.gamesArray.length - 1].raises
 
-                })
-            }
         })
     }
 
@@ -99,7 +102,7 @@ export default class PracticeButtonController extends Component {
         })
     };
 
-    toBeSavedOrUpdated = (shouldUpdate = false) => {
+    toBeSavedOrUpdated = () => {
         let date = new Date();
         let gamesObj = {
             date: date.toDateString(),
@@ -113,50 +116,15 @@ export default class PracticeButtonController extends Component {
         }
         //debugger;
 
-        // let gamesarr = this.state.gamesArray.concat(gamesObj);
-        // let saveObj = {
-        //     version: "1.0.2",
-        //     games: gamesarr
-        // }
-        //console.log("LOOOK")
-        //console.log(gamesarr)
+        let gamesarr = this.state.gamesArray.concat(gamesObj);
+        let saveObj = {
+            version: "1.0.2",
+            games: gamesarr
+        }
+        console.log("LOOOK")
+        console.log(gamesarr)
+        storageController.saveData(saveObj);
         //debugger
-        if (shouldUpdate) {
-            if (this.state.numberOfPastGames == this.state.gamesArray.length) {
-                let gamesarr = this.state.gamesArray.concat(gamesObj);
-                this.setState({
-                    gamesArray: gamesarr
-                })
-                storageController.saveData({games: gamesarr, version: '1.0.2'})
-            } else {
-                let updatedCurrentGame = this.state.gamesArray.map((game, i) => {
-                    if (i = this.state.gamesArray.length - 1) {
-                        return gamesObj;
-                    }
-                })
-                this.setState({
-                    gamesArray: updatedCurrentGame
-                })
-                storageController.saveData({games: updatedCurrentGame, version:'1.0.2'});
-            }
-        }
-        else {
-            if (this.state.numberOfPastGames == this.state.gamesArray.length) {
-                let gamesarr = this.state.gamesArray.concat(gamesObj);
-                let saveObj = {
-                    version: "1.0.2",
-                    games: gamesarr
-                }
-                storageController.saveData(saveObj);
-            } else {
-                //let gamesarr = this.state.gamesArray.concat(gamesObj);
-                let saveObj = {
-                    version: "1.0.2",
-                    games: this.state.gamesArray
-                }
-                storageController.saveData(saveObj);
-            }
-        }
     };
 
 
@@ -192,7 +160,7 @@ export default class PracticeButtonController extends Component {
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
-            this.toBeSavedOrUpdated(true);
+            this.toBeSavedOrUpdated();
             this.setState({
                 previousTime: this.state.currentTime
             })
