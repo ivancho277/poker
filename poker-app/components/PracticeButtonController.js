@@ -42,8 +42,6 @@ export default class PracticeButtonController extends Component {
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false,
-            
-
         };
     };
 
@@ -57,7 +55,6 @@ export default class PracticeButtonController extends Component {
                     arrayOfgames.push(game);
                     console.log(game)
                 })
-
                 console.log("TAKE A LOOK")
                 console.log(arrayOfgames)
                 console.log(res)
@@ -102,7 +99,7 @@ export default class PracticeButtonController extends Component {
         })
     };
 
-    toBeSavedOrUpdated = () => {
+    toBeSaved = () => {
         let date = new Date();
         let gamesObj = {
             date: date.toDateString(),
@@ -160,7 +157,7 @@ export default class PracticeButtonController extends Component {
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
-            this.toBeSavedOrUpdated();
+            this.toBeSaved();
             this.setState({
                 previousTime: this.state.currentTime
             })
@@ -197,7 +194,7 @@ export default class PracticeButtonController extends Component {
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSavedOrUpdated() & this.props.goHome() }) }} />
+                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSaved() & this.props.goHome() }) }} />
 
             </View>
         );
