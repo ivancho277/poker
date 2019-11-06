@@ -44,6 +44,7 @@ module.exports = {
 
 function CountPositions(obj) {
     //go through games and find totals per position
+    
     try {
         let finalStats = {
             0: { total_calls: 0, total_folds: 0, total_raises: 0 },
@@ -57,10 +58,10 @@ function CountPositions(obj) {
         }
 
         for (let i = 0; i < obj.games.length; i++) {
-            for (position in obj.games[i].positionStats) {
-                finalStats[position].total_calls += obj.games[i].positionStats[position].calls;
-                finalStats[position].total_folds += obj.games[i].positionStats[position].folds;
-                finalStats[position].total_raises += obj.games[i].positionStats[position].raises;
+            for (position in obj.games[i].currentGame) {
+                finalStats[position].total_calls += obj.games[i].currentGame[position].calls;
+                finalStats[position].total_folds += obj.games[i].currentGame[position].folds;
+                finalStats[position].total_raises += obj.games[i].currentGame[position].raises;
             }
         }
         return finalStats;

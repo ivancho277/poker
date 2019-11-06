@@ -27,8 +27,7 @@ class Radio extends Component {
     }
 
     
-    updateIndex = (index) =>{
-        
+    updateIndex = (index) =>{    
         if (index < radio_props.length - 1) {
             this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
             this.setState({
