@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import Radio from './Radio.js'
+import {MyContext} from '../stateContext/GlobalState'
 
 const storageController = require('./AsyncStorageController.js')
 
@@ -61,7 +62,7 @@ export default class PracticeButtonController extends Component {
                 console.log(pastGames)
                 this.setState({
                     gamesArray: arrayOfgames,
-                   
+
                 }, () => {
                     if (arrayOfgames[arrayOfgames.length - 1].inGame) {
                         this.setState({
@@ -75,7 +76,7 @@ export default class PracticeButtonController extends Component {
                 });
             }
             // console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
-            
+
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -99,7 +100,7 @@ export default class PracticeButtonController extends Component {
         })
     };
 
-    toBeSaved = () => {
+    toBeSaved = (shouldReturn = false) => {
         let date = new Date();
         let gamesObj = {
             date: date.toDateString(),
@@ -120,7 +121,12 @@ export default class PracticeButtonController extends Component {
         }
         console.log("LOOOK")
         console.log(gamesarr)
-        storageController.saveData(saveObj);
+        if (shouldReturn) {
+            return saveObj;
+        } else {
+            storageController.saveData(saveObj);
+
+        }
         //debugger
     };
 
@@ -194,8 +200,9 @@ export default class PracticeButtonController extends Component {
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
-                <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSaved() & this.props.goHome() }) }} />
-
+                <MyContext.Consumer >
+                    {(context) => <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSaved() & context.updateGames(this.toBeSaved(true)) & this.props.goHome() }) }} />}
+                </MyContext.Consumer>
             </View>
         );
     }

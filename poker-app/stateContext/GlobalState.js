@@ -10,7 +10,8 @@ export class GlobalState extends Component {
         allgames: {},     
         position: 0,
         totalsByPosition: {},
-        totals: {}
+        totals: {},
+        gamesObj: {}
     }
     componentDidMount() {
        // storage.removeData()
@@ -31,16 +32,16 @@ export class GlobalState extends Component {
     }
 
     componentDidUpdate(){
-        let checkStorageVsState;
-        storage.retrieveData().then((res) => {
-            checkStorageVsState = JSON.parse(res);
-            console.log("POOOOOOOOOO", checkStorageVsState)
-            if(checkStorageVsState.calls != this.state.gamesObj.calls ||
-                checkStorageVsState.folds != this.state.gamesObj.folds ||
-                checkStorageVsState.raises != this.state.gamesObj.raises){
-                    this.componentDidMount();
-                }
-        })
+        // let checkStorageVsState;
+        // storage.retrieveData().then((res) => {
+        //     checkStorageVsState = JSON.parse(res);
+        //     console.log("POOOOOOOOOO", checkStorageVsState)
+        //     if(checkStorageVsState.calls != this.state.gamesObj.calls ||
+        //         checkStorageVsState.folds != this.state.gamesObj.folds ||
+        //         checkStorageVsState.raises != this.state.gamesObj.raises){
+        //             this.componentDidMount();
+        //         }
+        // })
         
     }
     logTotalsByPosition = () => {
@@ -51,6 +52,12 @@ export class GlobalState extends Component {
     incrementPosition(){
         this.setState({
             position: this.state.position + 1
+        })
+    }
+
+    updateGames(newGamesObj){
+        this.setState({
+            gamesObj: newGamesObj
         })
     }
 
@@ -66,7 +73,8 @@ export class GlobalState extends Component {
                 state: this.state,
                 incrementPosition: () => this.incrementPosition(),
                 setPosition: (position) => this.setPosition(position),
-                remount: () => this.componentDidMount()
+                remount: () => this.componentDidMount(),
+                updateGames: (gamesObj) => {this.updateGames(gamesObj)}
             }}>
                 {this.props.children}
             </MyContext.Provider>
