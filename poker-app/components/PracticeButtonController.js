@@ -76,8 +76,6 @@ export default class PracticeButtonController extends Component {
                         })
                     }
                 });
-              
-
             }
         }).catch((error) => {
             alert("populate error");
