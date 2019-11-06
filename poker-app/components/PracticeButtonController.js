@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import Radio from './Radio.js'
-import {MyContext} from '../stateContext/GlobalState'
+import { MyContext } from '../stateContext/GlobalState'
 
 const storageController = require('./AsyncStorageController.js')
 
@@ -62,20 +62,23 @@ export default class PracticeButtonController extends Component {
                 console.log(pastGames)
                 this.setState({
                     gamesArray: arrayOfgames,
-                }, () => {
-                    if (arrayOfgames[arrayOfgames.length - 1].inGame) {
+                });
+                storageController.retrieveCurrentGame().then((res) => {
+                    let currentgame = JSON.parse(res);
+                    console.log("LOOOOOOGGGGGG")
+                    console.log(JSON.parse(res))
+                    if(currentgame){
                         this.setState({
-                            currentGame: arrayOfgames[arrayOfgames.length - 1].currentGame,
-                            calls: arrayOfgames[arrayOfgames.length - 1].calls,
-                            folds: arrayOfgames[arrayOfgames.length - 1].folds,
-                            raises: arrayOfgames[arrayOfgames.length - 1].raises,
-                            gamesArray: arrayOfgames.slice(0, arrayOfgames.length - 1)
+                            currentGame: currentgame.currentGame,
+                            calls: currentgame.calls,
+                            folds: currentgame.folds,
+                            raises: currentgame.raises
                         })
                     }
                 });
-            }
-            // console.log(arrayOfgames[arrayOfgames.length - 1].inGame)
+              
 
+            }
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -129,6 +132,21 @@ export default class PracticeButtonController extends Component {
         //debugger
     };
 
+    saveCurrentGame() {
+        let date = new Date();
+        let gamesObj = {
+            date: date.toDateString(),
+            time: date.getTime(),
+            calls: this.state.calls,
+            folds: this.state.folds,
+            raises: this.state.raises,
+            tags: this.state.tags,
+            currentGame: this.state.currentGame,
+            inGame: this.state.inGame
+        }
+        storageController.saveCurrentGame(gamesObj)
+    }
+
 
 
     clearTags() {
@@ -162,7 +180,8 @@ export default class PracticeButtonController extends Component {
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
-            this.toBeSaved();
+            //this.toBeSaved();
+            this.saveCurrentGame();
             this.setState({
                 previousTime: this.state.currentTime
             })
@@ -200,7 +219,7 @@ export default class PracticeButtonController extends Component {
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
                 <MyContext.Consumer >
-                    {(context) => <Button title='Save Data. End game.' onPress={() => { this.setState({ inGame: false }, () => { this.toBeSaved() & context.updateGames(this.toBeSaved(true)) & this.props.goHome() }) }} />}
+                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.setState({ inGame: false }, () => { this.toBeSaved() & context.updateGames(this.toBeSaved(true)) & this.props.goHome() }) }} />}
                 </MyContext.Consumer>
             </View>
         );
