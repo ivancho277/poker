@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import Radio from './Radio.js'
-import { MyContext } from '../stateContext/GlobalState'
-
+import Radio from './Radio.js';
+import { MyContext } from '../stateContext/GlobalState';
+import TagsModal from './TagsModal.js';
 const storageController = require('./AsyncStorageController.js')
 
 
@@ -43,6 +43,7 @@ export default class PracticeButtonController extends Component {
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false,
+            showModal: false,
         };
     };
 
@@ -187,6 +188,11 @@ export default class PracticeButtonController extends Component {
             })
         }
     }
+    renderModal(){
+        return(
+            <TagsModal isModalVisible={this.state.showModal} />
+        )
+    }
 
 
 
@@ -206,8 +212,10 @@ export default class PracticeButtonController extends Component {
                         <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
                     </View>
                     :
-                    <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
+                    <Button title="add tag" onPress={() => this.setState({showModal: true})} ></Button>
+                    
                 }
+                
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
                     <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
