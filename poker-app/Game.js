@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Modal } from 'react-native';
 import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
+import TagsModal from './components/TagsModal';
 const storage = require("./components/AsyncStorageController.js");
+
 //import Controller from './components/Controller'
 class GameScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
             position: 0,
-            currentGame: {}
+            currentGame: {},
+            showModal: false
         }
     }
 
@@ -50,10 +53,19 @@ class GameScreen extends Component {
         })
     }
 
+    renderModal(){
+        return(
+            <TagsModal isModalVisible={this.state.showModal}></TagsModal>
+        )
+    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                
+                <Button title='show modal' onPress={()=> {this.setState({showModal: true}) }} />
+                <TagsModal></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
                 <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
