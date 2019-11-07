@@ -13,9 +13,13 @@ class GameScreen extends Component {
             position: 0,
             currentGame: {},
             showModal: false,
-            tag: ''
+            tag: '',
+            tags: [],
+            allTags: []
         }
     }
+
+    
 
 
 
@@ -54,16 +58,30 @@ class GameScreen extends Component {
         })
     }
 
+    clearTags = () => {
+        this.setState({
+            tag: ''
+        })
+    }
+
+    saveToTags(tag) {
+        let tagsArray = this.state.tags;
+        tagsArray.push(tag);
+        this.setState({
+            tags: tagsArray
+        })
+    };
+
     renderTagInput = () => {
         return (
             <View>
                 <TextInput
-                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Type your tags here"
                     onChangeText={(tag) => this.setState({ tag })}
                     value={this.state.tag}
                 />
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); }} />
             </View>
         )
     }
@@ -73,11 +91,11 @@ class GameScreen extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
 
-                <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} />
+                {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                 <TagsModal renderTagInput={this.renderTagInput}></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
-                <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                <PBC tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
             </View>
         )

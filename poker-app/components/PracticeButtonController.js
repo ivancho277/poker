@@ -26,7 +26,7 @@ export default class PracticeButtonController extends Component {
             folds: 0,
             raises: 0,
             tag: "",
-            tags: [],
+            tags: this.props.tags,
             gamesArray: [],
             position: 0,
             currentGame: {

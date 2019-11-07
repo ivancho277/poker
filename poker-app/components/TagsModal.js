@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, Modal, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Modal, TextInput, KeyboardAvoidingView } from 'react-native';
 import ScrollPicker from "react-native-fen-wheel-scroll-picker";
 
 
 export default class TagsModal extends Component {
     state = {
         isVisible: false, //state of modal default false  
-        tag:''
+        tag: ''
     }
 
 
@@ -14,7 +14,7 @@ export default class TagsModal extends Component {
         return (
             <View>
                 <TextInput
-                    style={{ backgroundColor: 'white',height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    style={{ backgroundColor: 'white', height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Type your tags here"
                     onChangeText={(tag) => this.setState({ tag })}
                     value={this.state.tag}
@@ -26,7 +26,9 @@ export default class TagsModal extends Component {
 
     render() {
         return (
+
             <View>
+
                 <Modal
                     animationType={"fade"}
                     transparent={false}
@@ -34,36 +36,38 @@ export default class TagsModal extends Component {
                     onRequestClose={() => { console.log("Modal has been closed.") }}>
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
-                    {this.renderTagInput()}
-                        <Text style={styles.text}>Modal is open!</Text>
-                        <View style={{height: 200}}>
-                            <ScrollPicker
-                                dataSource={["a", "b", "c", "d", "e"]}
-                                selectedIndex={4}
-                                renderItem={(data, index, isSelected) => {
-                                    //
-                                }}
-                                onValueChange={(data, selectedIndex) => {
-                                    //
-                                }}
-                                wrapperHeight={200}
-                                wrapperWidth={150}
-                                wrapperBackground={"#FFFFFF"}
-                                itemHeight={60}
-                                highlightColor={"#d8d8d8"}
-                                highlightBorderWidth={2}
-                                activeItemColor={"#222121"}
-                                itemColor={"#B4B4B4"}
-                            />
-                        </View>
-                        <Button title="Click To Close Modal" onPress={() => {
+                            {this.props.renderTagInput()}
+                            <Text style={styles.text}>Modal is open!</Text>
+                            <View style={{ height: 200 }}>
+                                <ScrollPicker
+                                    dataSource={["a", "b", "c", "d", "e"]}
+                                    selectedIndex={4}
+                                    renderItem={(data, index, isSelected) => {
+                                        //
+                                    }}
+                                    onValueChange={(data, selectedIndex) => {
+                                        //
+                                    }}
+                                    wrapperHeight={200}
+                                    wrapperWidth={150}
+                                    wrapperBackground={"#FFFFFF"}
+                                    itemHeight={60}
+                                    highlightColor={"#d8d8d8"}
+                                    highlightBorderWidth={2}
+                                    activeItemColor={"#222121"}
+                                    itemColor={"#B4B4B4"}
+                                />
+                            </View>
+                        
+                        <Button title="Close" onPress={() => {
                             this.setState({ isVisible: !this.state.isVisible })
                         }} />
                     </View>
                 </Modal>
+
                 {/*Button will change state to true and view will re-render*/}
                 <Button
-                    title="Click To Open Modal"
+                    title="Add Tag to Game"
                     onPress={() => { this.setState({ isVisible: true }) }}
                 />
             </View>
