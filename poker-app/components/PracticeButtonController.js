@@ -68,7 +68,7 @@ export default class PracticeButtonController extends Component {
                     let currentgame = JSON.parse(res);
                     console.log("LOOOOOOGGGGGG")
                     console.log(JSON.parse(res))
-                    if(currentgame){
+                    if (currentgame) {
                         this.setState({
                             currentGame: currentgame.currentGame,
                             calls: currentgame.calls,
@@ -77,7 +77,7 @@ export default class PracticeButtonController extends Component {
                         })
                     }
                 });
-              
+
 
             }
         }).catch((error) => {
@@ -188,9 +188,17 @@ export default class PracticeButtonController extends Component {
             })
         }
     }
-    renderModal(){
-        return(
-            <TagsModal isModalVisible={this.state.showModal} />
+    renderTagInput() {
+        return (
+            <View>
+                <TextInput
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder="Type your tags here"
+                    onChangeText={(tag) => this.setState({ tag })}
+                    value={this.state.tag}
+                />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
+            </View>
         )
     }
 
@@ -212,10 +220,10 @@ export default class PracticeButtonController extends Component {
                         <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
                     </View>
                     :
-                    <Button title="add tag" onPress={() => this.setState({showModal: true})} ></Button>
-                    
+                    <Button title="add tag" onPress={() => this.setState({ showModal: true })} ></Button>
+
                 }
-                
+
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
                     <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />

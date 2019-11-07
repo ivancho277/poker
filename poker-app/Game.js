@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Modal,TextInput } from 'react-native';
 import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
@@ -7,12 +7,13 @@ const storage = require("./components/AsyncStorageController.js");
 
 //import Controller from './components/Controller'
 class GameScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             position: 0,
             currentGame: {},
-            showModal: false
+            showModal: false,
+            tag: ''
         }
     }
 
@@ -21,7 +22,7 @@ class GameScreen extends Component {
     goHome = () => {
         this.props.navigation.navigate('Home');
     }
-    logTags = async () => {   
+    logTags = async () => {
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
             console.log(JSON.parse(res), this.state.tagsearch)
@@ -35,9 +36,9 @@ class GameScreen extends Component {
         })
         return tags;
     }
-    
 
-    componentDidUpdate(){
+
+    componentDidUpdate() {
         // console.log("GAME SCREEN"); console.log(this.state.currentGame);
     }
     setPosition = (position) => {
@@ -53,9 +54,17 @@ class GameScreen extends Component {
         })
     }
 
-    renderModal(){
-        return(
-            <TagsModal isModalVisible={this.state.showModal}></TagsModal>
+    renderTagInput = () => {
+        return (
+            <View>
+                <TextInput
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder="Type your tags here"
+                    onChangeText={(tag) => this.setState({ tag })}
+                    value={this.state.tag}
+                />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
+            </View>
         )
     }
 
@@ -63,9 +72,9 @@ class GameScreen extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
-                
-                <Button title='show modal' onPress={()=> {this.setState({showModal: true}) }} />
-                <TagsModal></TagsModal>
+
+                <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} />
+                <TagsModal renderTagInput={this.renderTagInput}></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
                 <PBC setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
