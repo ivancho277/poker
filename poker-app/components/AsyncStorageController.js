@@ -66,12 +66,21 @@ module.exports = {
         console.log("REMOVED")
     },
 
-    saveTag: function (data) {
+    saveTags: function (data) {
         try {
             AsyncStorage.setItem('tags', JSON.stringify(data));
             console.log("SUCCESS STORING TAGS")
         } catch {
             console.log("ERROR SAVING TAGS")
+        }
+    },
+
+    retrieveTags: async function(){
+        try{
+        let allTags = await AsyncStorage.getItem('tags');
+        return allTags;
+        } catch {
+            console.log("No Tags")
         }
     },
 
