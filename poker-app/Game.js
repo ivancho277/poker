@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Modal,TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
 import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
@@ -20,7 +20,7 @@ class GameScreen extends Component {
         }
     }
 
-    
+
 
 
 
@@ -42,10 +42,10 @@ class GameScreen extends Component {
         return tags;
     }
 
-    componentDidMount(){
-        storage.retrieveTags().then(res =>  {
+    componentDidMount() {
+        storage.retrieveTags().then(res => {
             let tagsArr = JSON.parse(res);
-            if(tagsArr){
+            if (tagsArr) {
                 this.setState({
                     allTags: tagsArr
                 })
@@ -53,8 +53,8 @@ class GameScreen extends Component {
         })
     }
 
-    saveToAllTags(){
-        if(!this.state.allTags.includes(this.state.tag)){
+    saveToAllTags() {
+        if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {
             let updatedTags = this.state.allTags.concat(this.state.tag);
             this.setState({
                 allTags: updatedTags
@@ -88,11 +88,20 @@ class GameScreen extends Component {
     }
 
     saveToTags(tag) {
-        let tagsArray = this.state.tags;
-        tagsArray.push(tag);
-        this.setState({
-            tags: tagsArray
-        })
+        if (tag == "") {
+            let tagsArray = this.state.tags
+            tagsArray.push(this.state.selected);
+            this.setState({
+                tags: tagsArray
+            })
+        }
+        else {
+            let tagsArray = this.state.tags;
+            tagsArray.push(tag);
+            this.setState({
+                tags: tagsArray
+            })
+        }
     };
 
     renderTagInput = () => {
