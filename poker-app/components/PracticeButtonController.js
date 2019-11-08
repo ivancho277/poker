@@ -209,7 +209,7 @@ export default class PracticeButtonController extends Component {
             <View>
 
                 {/* <Text> PracticeButtonController </Text> */}
-                {this.state.tagInputOpen ?
+                {/* {this.state.tagInputOpen ?
                     <View>
                         <TextInput
                             style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
@@ -222,7 +222,7 @@ export default class PracticeButtonController extends Component {
                     :
                     <Button title="add tag" onPress={() => this.setState({ showModal: true })} ></Button>
 
-                }
+                } */}
 
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>

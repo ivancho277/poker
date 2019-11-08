@@ -15,7 +15,8 @@ class GameScreen extends Component {
             showModal: false,
             tag: '',
             tags: [],
-            allTags: []
+            allTags: [],
+            selected: ""
         }
     }
 
@@ -39,6 +40,28 @@ class GameScreen extends Component {
             throw err;
         })
         return tags;
+    }
+
+    componentDidMount(){
+        storage.retrieveTags().then(res =>  {
+            let tagsArr = JSON.parse(res);
+            if(tagsArr){
+                this.setState({
+                    allTags: tagsArr
+                })
+            }
+        })
+    }
+
+    saveToAllTags(){
+        if(!this.state.allTags.includes(this.state.tag)){
+            let updatedTags = this.state.allTags.concat(this.state.tag);
+            this.setState({
+                allTags: updatedTags
+            }, () => {
+                storage.saveTags(this.state.allTags)
+            })
+        }
     }
 
 
@@ -77,13 +100,19 @@ class GameScreen extends Component {
             <View>
                 <TextInput
                     style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                    placeholder="Type your tags here"
+                    placeholder={this.state.selected}
                     onChangeText={(tag) => this.setState({ tag })}
                     value={this.state.tag}
                 />
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); }} />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} />
             </View>
         )
+    }
+
+    showSelectedTag = (selected) => {
+        this.setState({
+            selected: selected
+        })
     }
 
     render() {
@@ -92,11 +121,12 @@ class GameScreen extends Component {
                 <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
 
                 {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
-                <TagsModal renderTagInput={this.renderTagInput}></TagsModal>
+                <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                 <Text>Controller will go here</Text>
                 <PBC tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
+                <Button title='Delete all tags' onPress={() => storage.removeTags()} />
             </View>
         )
     }

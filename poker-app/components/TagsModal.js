@@ -37,16 +37,16 @@ export default class TagsModal extends Component {
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
                             {this.props.renderTagInput()}
-                            <Text style={styles.text}>Modal is open!</Text>
+                            <Text style={styles.text}>Select a Tag</Text>
                             <View style={{ height: 200 }}>
                                 <ScrollPicker
-                                    dataSource={["a", "b", "c", "d", "e"]}
-                                    selectedIndex={4}
+                                    dataSource={this.props.allTags}
+                                    selectedIndex={0}
                                     renderItem={(data, index, isSelected) => {
                                         //
                                     }}
                                     onValueChange={(data, selectedIndex) => {
-                                        //
+                                        this.props.showSelectedTag(data)
                                     }}
                                     wrapperHeight={200}
                                     wrapperWidth={150}
