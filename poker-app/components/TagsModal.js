@@ -28,7 +28,6 @@ export default class TagsModal extends Component {
         return (
 
             <View>
-
                 <Modal
                     animationType={"fade"}
                     transparent={false}
@@ -36,30 +35,32 @@ export default class TagsModal extends Component {
                     onRequestClose={() => { console.log("Modal has been closed.") }}>
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
-                            {this.props.renderTagInput()}
-                            <Text style={styles.text}>Select a Tag</Text>
-                            <View style={{ height: 200 }}>
-                                <ScrollPicker
-                                    dataSource={this.props.allTags}
-                                    selectedIndex={0}
-                                    renderItem={(data, index, isSelected) => {
-                                        //
-                                    }}
-                                    onValueChange={(data, selectedIndex) => {
-                                        this.props.showSelectedTag(data)
-                                    }}
-                                    wrapperHeight={200}
-                                    wrapperWidth={150}
-                                    wrapperBackground={"#FFFFFF"}
-                                    itemHeight={60}
-                                    highlightColor={"#d8d8d8"}
-                                    highlightBorderWidth={2}
-                                    activeItemColor={"#222121"}
-                                    itemColor={"#B4B4B4"}
-                                />
-                            </View>
-                        
-                        <Button title="Close" onPress={() => {
+                        <Text style={{ fontSize: 16 }}>Add a new Tag or select a previous one.</Text>
+
+                        {this.props.renderTagInput()}
+                        <Text style={styles.text}>Select a Tag</Text>
+                        <View style={{ height: 200 }}>
+                            <ScrollPicker
+                                dataSource={this.props.allTags}
+                                selectedIndex={0}
+                                renderItem={(data, index, isSelected) => {
+                                    //
+                                }}
+                                onValueChange={(data, selectedIndex) => {
+                                    this.props.showSelectedTag(data)
+                                }}
+                                wrapperHeight={200}
+                                wrapperWidth={150}
+                                wrapperBackground={"#FFFFFF"}
+                                itemHeight={60}
+                                highlightColor={"#d8d8d8"}
+                                highlightBorderWidth={2}
+                                activeItemColor={"#222121"}
+                                itemColor={"#B4B4B4"}
+                            />
+                        </View>
+
+                        <Button title="Done" onPress={() => {
                             this.setState({ isVisible: !this.state.isVisible })
                         }} />
                     </View>
