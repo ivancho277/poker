@@ -38,6 +38,7 @@ export default class PracticeButtonController extends Component {
                 5: new gameStats,
                 6: new gameStats,
                 7: new gameStats,
+                8: new gameStats
             },
             currentTime: new Date(),
             previousTime: new Date(),

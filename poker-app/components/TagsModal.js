@@ -36,7 +36,6 @@ export default class TagsModal extends Component {
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
                         <Text style={{ fontSize: 16 }}>Add a new Tag or select a previous one.</Text>
-
                         {this.props.renderTagInput()}
                         <Text style={styles.text}>Select a Tag</Text>
                         <View style={{ height: 200 }}>
@@ -45,6 +44,7 @@ export default class TagsModal extends Component {
                                 selectedIndex={0}
                                 renderItem={(data, index, isSelected) => {
                                     //
+                                   
                                 }}
                                 onValueChange={(data, selectedIndex) => {
                                     this.props.showSelectedTag(data)
