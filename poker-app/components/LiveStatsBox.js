@@ -13,7 +13,8 @@ let table = {
     "4": "D+2",
     "5": "D+3",
     "6": "D+4",
-    "7": "D+5"
+    "7": "D+5",
+    "8": "D+6"
 }
 
 export default class Statsbox extends Component {

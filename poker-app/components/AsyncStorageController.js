@@ -64,7 +64,36 @@ module.exports = {
         let empty = {};
         AsyncStorage.setItem('key', JSON.stringify(empty));
         console.log("REMOVED")
+    },
+
+    saveTags: function (data) {
+        try {
+            AsyncStorage.setItem('tags', JSON.stringify(data));
+            console.log("SUCCESS STORING TAGS")
+        } catch {
+            console.log("ERROR SAVING TAGS")
+        }
+    },
+
+    retrieveTags: async function(){
+        try{
+        let allTags = await AsyncStorage.getItem('tags');
+        return allTags;
+        } catch {
+            console.log("No Tags")
+        }
+    },
+
+    removeTags: function () {
+        try {
+            AsyncStorage.removeItem('tags', () => {
+                console.log('Tags Removed')
+            })
+        } catch {
+            console.log("Unable to remove tags")
+        }
     }
+
 };
 
 function isEmpty(obj) {

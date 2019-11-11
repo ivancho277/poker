@@ -10,12 +10,13 @@ let radio_props = [
     { label: 'D+2', value: 4 },
     { label: 'D+3', value: 5 },
     { label: 'D+4', value: 6 },
-    { label: 'D+5', value: 7 }
+    { label: 'D+5', value: 7 },
+    { label: 'D+6', value: 8 }
 ]
 
 class Radio extends Component {
     constructor(props) {
-        super(props);      
+        super(props);
         state = {
             value: 0
         }
@@ -26,8 +27,8 @@ class Radio extends Component {
         this.props.getPosition(position);
     }
 
-    
-    updateIndex = (index) =>{    
+
+    updateIndex = (index) => {
         if (index < radio_props.length - 1) {
             this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
             this.setState({
@@ -43,7 +44,7 @@ class Radio extends Component {
         }
     }
 
-    componentWillUpdate(){
+    componentWillUpdate() {
         this.props.shouldPositionIncrement(this.updateIndex)
     }
 
@@ -60,7 +61,7 @@ class Radio extends Component {
                         buttonOuterSize={20}
                         labelHorizontal={false}
                         onPress={(value) => { this.setState({ value: value }); this.positionReturn(value); }}
-                        
+
                     />
                 </View>
 

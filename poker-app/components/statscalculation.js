@@ -44,7 +44,7 @@ module.exports = {
 
 function CountPositions(obj) {
     //go through games and find totals per position
-    
+
     try {
         let finalStats = {
             0: { total_calls: 0, total_folds: 0, total_raises: 0 },
@@ -55,6 +55,7 @@ function CountPositions(obj) {
             5: { total_calls: 0, total_folds: 0, total_raises: 0 },
             6: { total_calls: 0, total_folds: 0, total_raises: 0 },
             7: { total_calls: 0, total_folds: 0, total_raises: 0 },
+            8: { total_calls: 0, total_folds: 0, toatal_raises: 0 }
         }
 
         for (let i = 0; i < obj.games.length; i++) {
@@ -84,7 +85,7 @@ function calculatePercentages(obj) {
             percentFolds: percentFolds,
             percentRaises: percentRaises
         }
-    }catch{
+    } catch{
         return console.log("nothing to calculate")
     }
 }

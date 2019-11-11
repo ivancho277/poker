@@ -11,7 +11,8 @@ export class GlobalState extends Component {
         position: 0,
         totalsByPosition: {},
         totals: {},
-        gamesObj: {}
+        gamesObj: {},
+        allTags: []
     }
     componentDidMount() {
        // storage.removeData()

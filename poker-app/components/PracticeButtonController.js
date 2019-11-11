@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import Radio from './Radio.js'
-import { MyContext } from '../stateContext/GlobalState'
-
+import Radio from './Radio.js';
+import { MyContext } from '../stateContext/GlobalState';
+import TagsModal from './TagsModal.js';
 const storageController = require('./AsyncStorageController.js')
 
 
@@ -26,7 +26,7 @@ export default class PracticeButtonController extends Component {
             folds: 0,
             raises: 0,
             tag: "",
-            tags: [],
+            tags: this.props.tags,
             gamesArray: [],
             position: 0,
             currentGame: {
@@ -38,11 +38,12 @@ export default class PracticeButtonController extends Component {
                 5: new gameStats,
                 6: new gameStats,
                 7: new gameStats,
+                8: new gameStats
             },
-            inGame: true,
             currentTime: new Date(),
             previousTime: new Date(),
             tagInputOpen: false,
+            showModal: false,
         };
     };
 
@@ -67,7 +68,7 @@ export default class PracticeButtonController extends Component {
                     let currentgame = JSON.parse(res);
                     console.log("LOOOOOOGGGGGG")
                     console.log(JSON.parse(res))
-                    if(currentgame){
+                    if (currentgame) {
                         this.setState({
                             currentGame: currentgame.currentGame,
                             calls: currentgame.calls,
@@ -76,7 +77,7 @@ export default class PracticeButtonController extends Component {
                         })
                     }
                 });
-              
+
 
             }
         }).catch((error) => {
@@ -112,7 +113,6 @@ export default class PracticeButtonController extends Component {
             raises: this.state.raises,
             tags: this.state.tags,
             currentGame: this.state.currentGame,
-            inGame: this.state.inGame
         }
         //debugger;
 
@@ -142,7 +142,7 @@ export default class PracticeButtonController extends Component {
             raises: this.state.raises,
             tags: this.state.tags,
             currentGame: this.state.currentGame,
-            inGame: this.state.inGame
+            
         }
         storageController.saveCurrentGame(gamesObj)
     }
@@ -187,7 +187,7 @@ export default class PracticeButtonController extends Component {
             })
         }
     }
-
+    
 
 
     render() {
@@ -195,19 +195,6 @@ export default class PracticeButtonController extends Component {
             <View>
 
                 {/* <Text> PracticeButtonController </Text> */}
-                {this.state.tagInputOpen ?
-                    <View>
-                        <TextInput
-                            style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                            placeholder="Type your tags here"
-                            onChangeText={(tag) => this.setState({ tag })}
-                            value={this.state.tag}
-                        />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.setState({ tagInputOpen: false }) }} />
-                    </View>
-                    :
-                    <Button title="add tag" onPress={() => this.setState({ tagInputOpen: true })} />
-                }
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
                     <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
@@ -219,7 +206,7 @@ export default class PracticeButtonController extends Component {
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
                 <MyContext.Consumer >
-                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.setState({ inGame: false }, () => { this.toBeSaved() & context.updateGames(this.toBeSaved(true)) & this.props.goHome() }) }} />}
+                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved() ; context.updateGames(this.toBeSaved(true)) ; this.props.goHome() }} />}
                 </MyContext.Consumer>
             </View>
         );
