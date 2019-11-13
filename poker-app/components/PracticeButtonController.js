@@ -3,7 +3,7 @@ import { View, Text, Button, TextInput } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import Radio from './Radio.js';
 import { MyContext } from '../stateContext/GlobalState';
-import ActionCarousel from './ActionsCarousel';
+import ActionCarousel from './components/ActionsCarousel';
 
 const storageController = require('./AsyncStorageController.js')
 
