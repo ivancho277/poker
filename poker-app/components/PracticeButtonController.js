@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import Radio from './Radio.js';
 import { MyContext } from '../stateContext/GlobalState';
 import TagsModal from './TagsModal.js';
@@ -9,10 +8,25 @@ const storageController = require('./AsyncStorageController.js')
 
 
 
-function gameStats(calls = 0, folds = 0, raises = 0) {
-    this.calls = calls,
+function gameStats(calls = 0, folds=0, raises=0,) {
+
+        this.calls = calls,
         this.folds = folds,
         this.raises = raises
+}
+
+
+
+function Action(actionName, count = 0){
+    this.actionName = actionName,
+    this.count = count;
+    this.countPerPosition = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0}
+
+    this.incrementActionAtPosition = function(position){
+        this.countPerPosition[position] = ++this.countPerPosition[position];
+        this.count++;
+    }
+
 }
 
 
@@ -25,6 +39,7 @@ export default class PracticeButtonController extends Component {
             calls: 0,
             folds: 0,
             raises: 0,
+            actions: [new Action('call'), new Action('fold'), new Action('raise')],
             tag: "",
             tags: this.props.tags,
             gamesArray: [],
@@ -42,8 +57,9 @@ export default class PracticeButtonController extends Component {
             },
             currentTime: new Date(),
             previousTime: new Date(),
-            tagInputOpen: false,
+            actionInputOpen: false,
             showModal: false,
+            actionToAdd : ''
         };
     };
 
@@ -187,6 +203,11 @@ export default class PracticeButtonController extends Component {
             })
         }
     }
+
+
+    onActionClick(action){
+
+    }
     
 
 
@@ -197,10 +218,31 @@ export default class PracticeButtonController extends Component {
                 {/* <Text> PracticeButtonController </Text> */}
                 <Text>{'\n'}</Text>
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
-                    <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    {this.state.actions.map((action, index) => {
+                        return(
+                            <Button key={index} title={action.actionName} onPress={()=> {console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({currentTime: new Date()}); this.props.setPosition(this.state.position); console.log(action)   }} />
+                        )
+                    })}
+
+
+                    {/* <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
                     <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'fold'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
+                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} /> */}
                 </View>
+                <Text>{'\n'}</Text>
+                {this.state.actionInputOpen ?
+                <View>
+                    <TextInput
+                    style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder='Add a new game Action'
+                    onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
+                    value={this.state.actionToAdd}
+                />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => this.setState({actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)),actionToAdd: ''})} />
+                </View>
+                :
+                <Button title='Add new Action' onPress={() => {this.setState({actionInputOpen : true}); }} />
+                }
                 <Text>{'\n'}</Text>
                 <View>
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
