@@ -75,10 +75,10 @@ module.exports = {
         }
     },
 
-    retrieveTags: async function(){
-        try{
-        let allTags = await AsyncStorage.getItem('tags');
-        return allTags;
+    retrieveTags: async function () {
+        try {
+            let allTags = await AsyncStorage.getItem('tags');
+            return allTags;
         } catch {
             console.log("No Tags")
         }
@@ -91,6 +91,34 @@ module.exports = {
             })
         } catch {
             console.log("Unable to remove tags")
+        }
+    },
+
+    saveActions: function (data) {
+        try {
+            AsyncStorage.setItem('actions', JSON.stringify(data));
+            console.log('success storing actions');
+        } catch {
+            console.log('unable to store actions')
+        }
+    },
+
+    retrieveActions: async function () {
+        try {
+            let actions = await AsyncStorage.getItem('actions');
+            return actions;
+        } catch {
+            console.log('could not retrieve actions')
+        }
+    },
+
+    resetActions: function () {
+        try {
+            const originalAction = ['call', 'fold', 'raise'];
+            AsyncStorage.setItem('actions', JSON.stringify(originalAction))
+            console.log('actions reset')
+        } catch{
+            console.log('Couldnt reset actions')
         }
     }
 
