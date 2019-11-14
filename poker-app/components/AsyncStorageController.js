@@ -40,6 +40,7 @@ module.exports = {
         try {
             AsyncStorage.removeItem('currentGame', () => {
                 console.log("game removed")
+                return null;
             })
         } catch {
             (console.log('nothing to remove'))
