@@ -8,12 +8,28 @@ const storageController = require('./AsyncStorageController.js')
 
 
 
-function gameStats(calls = 0, folds = 0, raises = 0, ) {
+function gameStats(actions) {
+    this.currentStats = {}
+    this.actions = actions;
+    console.log(actions)
+    this.getCurrentStats = function () {
+        //debugger;
+        this.actions.forEach(action => {
+            //console.log(action)
+            this.currentStats[action.actionName] = {}
+            for (countPerPosition in action) {
+                this.currentStats[action.actionName.countPerPosition] = countPerPosition.action;
+                for (count in countPerPosition) {
+                    this.currentStats[action.actionName.countPerPosition.count] = count.countPerPosition
+                }
+            }
+        })
+        return this.currentStats;
+    }
 
-    this.calls = calls,
-        this.folds = folds,
-        this.raises = raises
 }
+    
+
 
 
 
@@ -52,17 +68,7 @@ export default class PracticeButtonController extends Component {
             tags: this.props.tags,
             gamesArray: [],
             position: 0,
-            currentGame: {
-                0: new gameStats,
-                1: new gameStats,
-                2: new gameStats,
-                3: new gameStats,
-                4: new gameStats,
-                5: new gameStats,
-                6: new gameStats,
-                7: new gameStats,
-                8: new gameStats
-            },
+            currentGame: {},
             currentTime: new Date(),
             previousTime: new Date(),
             actionInputOpen: false,
@@ -159,7 +165,7 @@ export default class PracticeButtonController extends Component {
 
         let gamesarr = this.state.gamesArray.concat(gamesObj);
         let saveObj = {
-            version: "1.0.2",
+            version: "1.0.3",
             games: gamesarr
         }
         console.log("LOOOK")
@@ -175,6 +181,8 @@ export default class PracticeButtonController extends Component {
 
     saveCurrentGame() {
         let date = new Date();
+        let temp = new gameStats(this.state.actions);
+
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
@@ -182,10 +190,13 @@ export default class PracticeButtonController extends Component {
             folds: this.state.folds,
             raises: this.state.raises,
             tags: this.state.tags,
-            currentGame: this.state.currentGame,
+            currentGame: temp.getCurrentStats()
 
         }
-        storageController.saveCurrentGame(gamesObj)
+        console.log("HOLLLY MOLLY")
+        console.log(temp.getCurrentStats())
+        console.log(gamesObj.currentGame)
+        //storageController.saveCurrentGame(gamesObj)
     }
 
 
@@ -245,7 +256,7 @@ export default class PracticeButtonController extends Component {
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
                     {this.state.actions.map((action, index) => {
                         return (
-                            <Button key={index} title={action.actionName} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); console.log(action) }} />
+                            <Button key={index} title={`${action.actionName} #${action.count}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); console.log(action) }} />
                         )
                     })}
 
