@@ -17,18 +17,17 @@ function gameStats(actions) {
         this.actions.forEach(action => {
             //console.log(action)
             this.currentStats[action.actionName] = {}
-            for (countPerPosition in action) {
-                this.currentStats[action.actionName.countPerPosition] = countPerPosition.action;
-                for (count in countPerPosition) {
-                    this.currentStats[action.actionName.countPerPosition.count] = count.countPerPosition
-                }
+            console.log(this.currentStats[action.actionName])
+            for (count in action.countPerPosition) {
+                this.currentStats[action.actionName][count] = action.countPerPosition[count];
+
             }
         })
         return this.currentStats;
     }
 
 }
-    
+
 
 
 
