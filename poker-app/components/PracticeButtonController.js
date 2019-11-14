@@ -17,6 +17,7 @@ function gameStats(actions) {
         this.actions.forEach(action => {
             //console.log(action)
             this.currentStats[action.actionName] = {}
+            this.currentStats[action.actionName].total = action.count;
             console.log(this.currentStats[action.actionName])
             for (count in action.countPerPosition) {
                 this.currentStats[action.actionName][count] = action.countPerPosition[count];
@@ -59,9 +60,9 @@ export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            calls: 0,
-            folds: 0,
-            raises: 0,
+            call: 0,
+            fold: 0,
+            raise: 0,
             actions: [],
             tag: "",
             tags: this.props.tags,
@@ -86,29 +87,27 @@ export default class PracticeButtonController extends Component {
                     arrayOfgames.push(game);
                     console.log(game)
                 })
-                console.log("TAKE A LOOK")
-                console.log(arrayOfgames)
-                console.log(res)
-                console.log(pastGames)
-                this.setState({
-                    gamesArray: arrayOfgames,
-                });
-                storageController.retrieveCurrentGame().then((res) => {
-                    let currentgame = JSON.parse(res);
-                    console.log("LOOOOOOGGGGGG")
-                    console.log(JSON.parse(res))
-                    if (currentgame) {
-                        this.setState({
-                            currentGame: currentgame.currentGame,
-                            calls: currentgame.calls,
-                            folds: currentgame.folds,
-                            raises: currentgame.raises
-                        })
-                    }
-                });
-
-
             }
+            console.log("TAKE A LOOK")
+            console.log(arrayOfgames)
+            console.log(res)
+            console.log(pastGames)
+            this.setState({
+                gamesArray: arrayOfgames,
+            });
+            storageController.retrieveCurrentGame().then((res) => {
+                let currentgame = JSON.parse(res);
+                console.log("LOOOOOOGGGGGG")
+                console.log(JSON.parse(res))
+                if (currentgame) {
+                    this.setState({
+                        currentGame: currentgame,
+                        call: currentgame.currentGame.call.total,
+                        fold: currentgame.currentGame.fold.total,
+                        raise: currentgame.currentGame.raise.total
+                    })
+                }
+            });
         }).catch((error) => {
             alert("populate error");
             throw error;
@@ -193,9 +192,9 @@ export default class PracticeButtonController extends Component {
 
         }
         console.log("HOLLLY MOLLY")
-        console.log(temp.getCurrentStats())
+        //console.log(temp.getCurrentStats())
         console.log(gamesObj.currentGame)
-        //storageController.saveCurrentGame(gamesObj)
+        storageController.saveCurrentGame(gamesObj)
     }
 
 
@@ -244,7 +243,13 @@ export default class PracticeButtonController extends Component {
 
     }
 
-
+     isEmpty = (obj) => {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
 
     render() {
         return (
@@ -255,7 +260,7 @@ export default class PracticeButtonController extends Component {
                 <View style={{ flexDirection: "row", justifyContent: 'space-evenly', }}>
                     {this.state.actions.map((action, index) => {
                         return (
-                            <Button key={index} title={`${action.actionName} #${action.count}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); console.log(action) }} />
+                            <Button key={index} title={`${action.actionName} #${this.isEmpty(this.state.currentGame) ? action.count : this.state[action.actionName]}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); console.log(action) }} />
                         )
                     })}
 
