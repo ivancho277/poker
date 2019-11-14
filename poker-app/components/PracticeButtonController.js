@@ -71,6 +71,7 @@ export default class PracticeButtonController extends Component {
             fold: 0,
             raise: 0,
             actions: [],
+            actionStrings: [],
             tag: "",
             tags: this.props.tags,
             gamesArray: [],
@@ -122,9 +123,6 @@ export default class PracticeButtonController extends Component {
                 
                 this.setState({
                     currentGame: currentgame,
-                    call: currentgame.currentGame.call.total,
-                    fold: currentgame.currentGame.fold.total,
-                    raise: currentgame.currentGame.raise.total,
                     actions: pastactions
                 }) 
             }
@@ -150,7 +148,8 @@ export default class PracticeButtonController extends Component {
                     return new Action(action)
                 });
                 this.setState({
-                    actions: actions
+                    actions: actions,
+                    actionStrings: JSON.parse(res)
                 })
             }
         })
@@ -182,6 +181,10 @@ export default class PracticeButtonController extends Component {
 
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
+        let temp = new gameStats(this.state.actions);
+        let totals = this.state.actions.map((action) => {
+            return { [action.actionName]: action.getTotalCount()}
+        })
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
@@ -189,8 +192,12 @@ export default class PracticeButtonController extends Component {
             folds: this.state.folds,
             raises: this.state.raises,
             tags: this.state.tags,
-            currentGame: this.state.currentGame,
+            game: temp.getCurrentStats(),
+            totals: totals
+            
         }
+        //debugger;
+        console.log(temp.getCurrentStats())
         //debugger;
 
         let gamesarr = this.state.gamesArray.concat(gamesObj);
@@ -284,6 +291,13 @@ export default class PracticeButtonController extends Component {
         return true;
     }
 
+    saveActions(action){
+        let newActions = this.state.actionStrings.concat(action);
+        this.setState({ actionStrings: newActions});
+        storageController.saveActions(newActions);
+        
+    }
+
     render() {
         return (
             <View>
@@ -315,7 +329,7 @@ export default class PracticeButtonController extends Component {
                             onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
                             value={this.state.actionToAdd}
                         />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' })} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => {this.saveActions(this.state.actionToAdd); this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: ''  })}} />
                     </View>
                     :
                     <Button title='Add new Action' onPress={() => { this.setState({ actionInputOpen: true }); }} />

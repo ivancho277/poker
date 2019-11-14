@@ -106,7 +106,7 @@ class HomeScreen extends Component {
                         <Text>Press me</Text>
                     </TouchableOpacity>}
                 </MyContext.Consumer>
-                <TouchableOpacity onPress={() => storage.removeData()}>
+                <TouchableOpacity onPress={() => {storage.removeData(); storage.removeCurrentGame()}}>
                     <Text style={{ color: 'red' }}>Delete storage</Text>
                 </TouchableOpacity>
             </View>

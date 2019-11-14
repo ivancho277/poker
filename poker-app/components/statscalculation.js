@@ -46,23 +46,18 @@ function CountPositions(obj) {
     //go through games and find totals per position
 
     try {
-        let finalStats = {
-            0: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            1: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            2: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            3: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            4: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            5: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            6: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            7: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            8: { total_calls: 0, total_folds: 0, toatal_raises: 0 }
-        }
+        let finalStats = {}
 
         for (let i = 0; i < obj.games.length; i++) {
-            for (position in obj.games[i].currentGame) {
-                finalStats[position].total_calls += obj.games[i].currentGame[position].calls;
-                finalStats[position].total_folds += obj.games[i].currentGame[position].folds;
-                finalStats[position].total_raises += obj.games[i].currentGame[position].raises;
+            for (action in obj.games[i].game) {
+                for (position in obj.games[i].game[action]){
+                    if(finalStats[action]){
+                        finalStats[action] += obj.games[i].game[action][position];
+                    }
+                    else{
+                        finalStats[action] = obj.game[i].game[action][position]
+                    }
+                }
             }
         }
         return finalStats;
@@ -96,16 +91,17 @@ function countTotal(obj) {
         let totalCalls = 0;
         let totalFolds = 0;
         let totalRaises = 0;
-        for (let i = 0; i < obj.games.length; i++) {
-            totalCalls += obj.games[i].calls;
-            totalFolds += obj.games[i].folds;
-            totalRaises += obj.games[i].raises;
-        }
-        return {
-            calls: totalCalls,
-            folds: totalFolds,
-            raises: totalRaises
-        }
+        const totals = obj.games.map((game) => {
+            if(totals[game.game]){
+                return totals[game.game] = totals[game.game] += game.game[total]
+            }
+            else{
+                {totals[game.game] = game.game[total]}
+            }
+        })
+        return totals
+
+        
     } catch {
         alert('cant count')
     }
