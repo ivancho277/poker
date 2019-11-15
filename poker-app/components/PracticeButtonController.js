@@ -161,7 +161,7 @@ export default class PracticeButtonController extends Component {
             console.log(this.state.gamesArray)
             this.retrieveCurrentGame().then(res => {
                 console.log("MY RESPONSE", res)
-                if(res){
+                if(!!res){
                     this.retrieveActions().then((res) => {
                         console.log('actions')
                     })
@@ -252,21 +252,6 @@ export default class PracticeButtonController extends Component {
         this.props.setPosition(position);
     }
 
-    incrementcurrentGame(position, pressedButton) {
-        //debugger
-        if (pressedButton === "call") {
-            ++this.state.currentGame[position].calls;
-        }
-        else if (pressedButton === "fold") {
-            ++this.state.currentGame[position].folds;
-        }
-        else if (pressedButton === "raise") {
-            ++this.state.currentGame[position].raises;
-        }
-    }
-
-
-
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
@@ -314,11 +299,7 @@ export default class PracticeButtonController extends Component {
                     }) :
                     <Text>Loading....</Text>
                 }
-                    
-
-                    {/* <Button title={`call, #${this.state.calls}`} onPress={() => { this.setState({ calls: ++this.state.calls, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'call'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
-                    <Button title={`fold, #${this.state.folds}`} onPress={() => { this.setState({ folds: ++this.state.folds, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'fold'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} />
-                    <Button title={`raise, #${this.state.raises}`} onPress={() => { this.setState({ raises: ++this.state.raises, currentTime: new Date() }); this.incrementcurrentGame(this.state.position, 'raise'); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.currentGame) }} /> */}
+                                        
                 </View>
                 <Text>{'\n'}</Text>
                 {this.state.actionInputOpen ?
