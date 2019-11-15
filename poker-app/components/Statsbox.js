@@ -24,6 +24,16 @@ export default function Statsbox(props) {
         console.log("Changed to " + isOn);
     }
 
+    const objToArray = (obj) => {
+       // let values = Object.values(obj);
+        let objArray = [];
+        for(key in obj){
+            objArray.push({[key] : obj[key]})
+        }
+        console.log('OBJECT ARRAY', objArray)
+        return objArray
+    } 
+
 
     return (
         <View style={{ height: props.height, color: '#32CD32', width: props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
@@ -43,16 +53,7 @@ export default function Statsbox(props) {
                             isOnPositionStats === true
                                 ?
                                 <Text>
-                                    Stats by position: {'\n'}
-                                    {/* BB: C: {context.state.totals[0].total_calls}, F: {context.state.totals[0].total_folds}, R: {context.state.totals[0].total_raises} {'\n'}
-                                    SB: C: {context.state.totals[1].total_calls}, F: {context.state.totals[1].total_folds}, R: {context.state.totals[1].total_raises} {'\n'}
-                                    D: C: {context.state.totals[2].total_calls}, F: {context.state.totals[2].total_folds}, R: {context.state.totals[2].total_raises} {'\n'}
-                                    D+1: C: {context.state.totals[3].total_calls}, F: {context.state.totals[3].total_folds}, R: {context.state.totals[3].total_raises} {'\n'}
-                                    D+2: C: {context.state.totals[4].total_calls}, F: {context.state.totals[4].total_folds}, R: {context.state.totals[4].total_raises} {'\n'}
-                                    D+3: C: {context.state.totals[5].total_calls}, F: {context.state.totals[5].total_folds}, R: {context.state.totals[5].total_raises} {'\n'}
-                                    D+4: C: {context.state.totals[6].total_calls}, F: {context.state.totals[6].total_folds}, R: {context.state.totals[6].total_raises} {'\n'}
-                                    D+5: C: {context.state.totals[7].total_calls}, F: {context.state.totals[7].total_folds}, R: {context.state.totals[7].total_raises} {'\n'} */}
-                                    
+                                    Stats by position: {'\n'} 
                                     {calculation.getPercentages(context.state.gamesObj).map(action => { 
                                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
                                     })}
@@ -61,10 +62,9 @@ export default function Statsbox(props) {
                                 :
                                 <Text style={{ justifyContent: 'center' }} >
                                     Total Stats:{'\n'}
-                                    calls: {calculation.calculateTotalStats(context.state.gamesObj).call} {'\n'}
-                                    folds: {calculation.calculateTotalStats(context.state.gamesObj).fold}  {'\n'}
-                                    raises: {calculation.calculateTotalStats(context.state.gamesObj).raise} {'\n'}
-                                    tags:
+                                    {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
+                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
+                                    })}
                 </Text>
                     }
                     <Button title="log position stats" onPress={() => props.logTotalsByPosition()}></Button>

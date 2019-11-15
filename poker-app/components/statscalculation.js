@@ -55,13 +55,11 @@ function CountPositions(obj) {
                 if(!finalStats[action]){
                     finalStats[action] = {}
                 }
-                
                 for (position in game.game[action]){
                 //console.log(position + " "  + "    " + action)
                 //nsole.log("POSISH " + position)
                     if (finalStats[action][position]) {
-                        finalStats[action][position] = finalStats[action][position] += game.game[action][position];
-                        
+                        finalStats[action][position] = finalStats[action][position] += game.game[action][position]; 
                     }
                     else {
                         finalStats[action][position] = game.game[action][position]
@@ -118,7 +116,7 @@ function countTotal(obj) {
             }
 
         })
-        //console.log('STATS', totals)
+        console.log('STATS', totals)
         return totals
 
 
