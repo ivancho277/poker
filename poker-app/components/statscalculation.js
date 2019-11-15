@@ -47,19 +47,32 @@ function CountPositions(obj) {
 
     try {
         let finalStats = {}
+        //debugger;
 
-        for (let i = 0; i < obj.games.length; i++) {
-            for (action in obj.games[i].game) {
-                for (position in obj.games[i].game[action]) {
-                    if (finalStats[action]) {
-                        finalStats[action] += obj.games[i].game[action][position];
+        obj.games.forEach(game => {
+            for (action in game.game) {
+                //console.log(action + " " + game.game)
+                if(!finalStats[action]){
+                    finalStats[action] = {}
+                }
+                
+                for (position in game.game[action]){
+                //console.log(position + " "  + "    " + action)
+                //nsole.log("POSISH " + position)
+                    if (finalStats[action][position]) {
+                        finalStats[action][position] = finalStats[action][position] += game.game[action][position];
+                        
                     }
                     else {
-                        finalStats[action] = obj.game[i].game[action][position]
+                        finalStats[action][position] = game.game[action][position]
                     }
                 }
             }
-        }
+
+        })
+
+
+        console.log("STATS", finalStats)
         return finalStats;
     } catch {
         alert("nothing in storage")
@@ -74,12 +87,12 @@ function calculatePercentages(obj) {
         let totalActions = Object.values(seperateTotals).reduce((a, i) => a + i);
         console.log(totalActions)
         const totalsArray = []
-        for(action in seperateTotals){
-            totalsArray.push({[action]: Math.round(seperateTotals[action] / totalActions * 100)})
+        for (action in seperateTotals) {
+            totalsArray.push({ [action]: Math.round(seperateTotals[action] / totalActions * 100) })
         }
         console.log(totalsArray)
         return totalsArray;
-            
+
     } catch{
         return console.log("nothing to calculate")
     }

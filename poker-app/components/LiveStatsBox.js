@@ -54,6 +54,8 @@ export default class Statsbox extends Component {
 
     currentPositionDisplay(position) {
         let allGames = this.logTotalsByPosition();
+        console.log("POSITION")
+        console.log(allGames)
         console.log(position)
         return <Text>
             {table[position]}: Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
