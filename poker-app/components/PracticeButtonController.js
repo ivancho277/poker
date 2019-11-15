@@ -309,7 +309,7 @@ export default class PracticeButtonController extends Component {
                     {this.state.actions ?
                         this.state.actions.map((action, index) => {
                         return (
-                            <Button key={index} title={`${action.actionName} #${action.count}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.currentGame) ;console.log(action) }} />
+                            <Button key={index} title={`${action.actionName} #${action.count}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position);this.props.setLiveGamePosition(this.state.actions) ;console.log(action) }} />
                         )
                     }) :
                     <Text>Loading....</Text>
@@ -329,7 +329,7 @@ export default class PracticeButtonController extends Component {
                             onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
                             value={this.state.actionToAdd}
                         />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => {this.saveActions(this.state.actionToAdd); this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: ''  })}} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => {this.saveActions(this.state.actionToAdd.toLowerCase().trim()); this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: ''  })}} />
                     </View>
                     :
                     <Button title='Add new Action' onPress={() => { this.setState({ actionInputOpen: true }); }} />

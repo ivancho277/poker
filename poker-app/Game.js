@@ -136,6 +136,7 @@ class GameScreen extends Component {
                 <PBC tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
                 <Button title='Delete all tags' onPress={() => storage.removeTags()} />
+                <Button title='Reset Actions' onPress={() => storage.resetActions()} />
             </View>
         )
     }
