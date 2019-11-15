@@ -50,11 +50,11 @@ function CountPositions(obj) {
 
         for (let i = 0; i < obj.games.length; i++) {
             for (action in obj.games[i].game) {
-                for (position in obj.games[i].game[action]){
-                    if(finalStats[action]){
+                for (position in obj.games[i].game[action]) {
+                    if (finalStats[action]) {
                         finalStats[action] += obj.games[i].game[action][position];
                     }
-                    else{
+                    else {
                         finalStats[action] = obj.game[i].game[action][position]
                     }
                 }
@@ -91,17 +91,24 @@ function countTotal(obj) {
         let totalCalls = 0;
         let totalFolds = 0;
         let totalRaises = 0;
-        const totals = obj.games.map((game) => {
-            if(totals[game.game]){
-                return totals[game.game] = totals[game.game] += game.game[total]
+        //debugger;
+        let totals = {}
+        obj.games.forEach(game => {
+            for (action in game.game) {
+                //console.log(action + " " + game.game[action].total)
+                if (!totals[action]) {
+                    totals[action] = game.game[action].total
+                }
+                else {
+                    totals[action] = totals[action] += game.game[action].total
+                }
             }
-            else{
-                {totals[game.game] = game.game[total]}
-            }
+
         })
+        console.log('STATS', totals)
         return totals
 
-        
+
     } catch {
         alert('cant count')
     }

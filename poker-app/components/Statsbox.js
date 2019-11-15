@@ -60,9 +60,9 @@ export default function Statsbox(props) {
                                 :
                                 <Text style={{ justifyContent: 'center' }} >
                                     Total Stats:{'\n'}
-                                    calls: {calculation.calculateTotalStats(context.state.gamesObj)} {'\n'}
-                                    folds: {calculation.calculateTotalStats(context.state.gamesObj)}  {'\n'}
-                                    raises: {calculation.calculateTotalStats(context.state.gamesObj)} {'\n'}
+                                    calls: {calculation.calculateTotalStats(context.state.gamesObj).call} {'\n'}
+                                    folds: {calculation.calculateTotalStats(context.state.gamesObj).fold}  {'\n'}
+                                    raises: {calculation.calculateTotalStats(context.state.gamesObj).raise} {'\n'}
                                     tags:
                 </Text>
                     }
