@@ -14,7 +14,7 @@ let table = {
     "5": "D+3",
     "6": "D+4",
     "7": "D+5",
-    "8": "D+6"
+    "8": "D+6",
 }
 
 export default class Statsbox extends Component {
@@ -58,7 +58,7 @@ export default class Statsbox extends Component {
         console.log(allGames)
         console.log(position)
         return <Text>
-            {table[position]}: Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
+            {table[position]}: Calls: {allGames.call[position]}, Folds: {allGames.fold[position]}, Raises: {allGames.raise[position]}
         </Text>
     }
 
@@ -100,7 +100,7 @@ export default class Statsbox extends Component {
         console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
-                {table[position]}: Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
+                {table[position]}: Calls: {this.props.currentGame.currentGame.call[position]}, Folds: {this.props.currentGame.fold[position]}, Raises: {this.props.currentGame.raise[position]}
             </Text>
 
         } else return <Text>New Game</Text>
