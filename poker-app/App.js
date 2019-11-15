@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, AppRegistry } from 'react-native';
-import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
 import HomeScreen from './Home';
 import GameScreen from './Game';
+import SettingsScreen from './Settings'
 import { GlobalState } from './stateContext/GlobalState'
 class App extends React.Component {
   render() {
@@ -15,12 +16,22 @@ class App extends React.Component {
 }
 export default App;
 
+
 const AppSwitchNavigator = createSwitchNavigator({
   Home: { screen: HomeScreen },
-  Game: { screen: GameScreen }
+  Game: { screen: GameScreen },
+  
 })
 
-const AppContainer = createAppContainer(AppSwitchNavigator);
+const AppDrawerNavigator = createDrawerNavigator({
+  Home: AppSwitchNavigator,
+  Settings: {screen: SettingsScreen}
+
+})
+
+const AppContainer = createAppContainer(AppDrawerNavigator);
+
+
 
 const styles = StyleSheet.create({
   container: {
