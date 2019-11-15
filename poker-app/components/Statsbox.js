@@ -52,9 +52,10 @@ export default function Statsbox(props) {
                                     D+3: C: {context.state.totals[5].total_calls}, F: {context.state.totals[5].total_folds}, R: {context.state.totals[5].total_raises} {'\n'}
                                     D+4: C: {context.state.totals[6].total_calls}, F: {context.state.totals[6].total_folds}, R: {context.state.totals[6].total_raises} {'\n'}
                                     D+5: C: {context.state.totals[7].total_calls}, F: {context.state.totals[7].total_folds}, R: {context.state.totals[7].total_raises} {'\n'} */}
-                                    Calls: {calculation.getPercentages(context.state.gamesObj).percentCalls}% {'\n'}
-                                    Folds: {calculation.getPercentages(context.state.gamesObj).percentFolds}% {'\n'}
-                                    Raises: {calculation.getPercentages(context.state.gamesObj).percentRaises}% {'\n'}
+                                    
+                                    {calculation.getPercentages(context.state.gamesObj).map(action => { 
+                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
+                                    })}
 
                                 </Text>
                                 :

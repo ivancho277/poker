@@ -71,15 +71,15 @@ function calculatePercentages(obj) {
     try {
         // debugger;
         let seperateTotals = countTotal(obj);
-        let totalActions = seperateTotals.calls + seperateTotals.raises + seperateTotals.folds;
-        let percentCalls = Math.round(seperateTotals.calls / totalActions * 100);
-        let percentFolds = Math.round(seperateTotals.folds / totalActions * 100);
-        let percentRaises = Math.round(seperateTotals.raises / totalActions * 100);
-        return {
-            percentCalls: percentCalls,
-            percentFolds: percentFolds,
-            percentRaises: percentRaises
+        let totalActions = Object.values(seperateTotals).reduce((a, i) => a + i);
+        console.log(totalActions)
+        const totalsArray = []
+        for(action in seperateTotals){
+            totalsArray.push({[action]: Math.round(seperateTotals[action] / totalActions * 100)})
         }
+        console.log(totalsArray)
+        return totalsArray;
+            
     } catch{
         return console.log("nothing to calculate")
     }
@@ -105,7 +105,7 @@ function countTotal(obj) {
             }
 
         })
-        console.log('STATS', totals)
+        //console.log('STATS', totals)
         return totals
 
 
