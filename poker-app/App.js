@@ -16,18 +16,23 @@ class App extends React.Component {
 }
 export default App;
 
-
 const AppSwitchNavigator = createSwitchNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen : HomeScreen},
   Game: { screen: GameScreen },
+  
   
 })
 
+
 const AppDrawerNavigator = createDrawerNavigator({
   Home: AppSwitchNavigator,
+  Home: {screen: HomeScreen},
+  Game: {screen : GameScreen},
   Settings: {screen: SettingsScreen}
 
 })
+
+
 
 const AppContainer = createAppContainer(AppDrawerNavigator);
 
