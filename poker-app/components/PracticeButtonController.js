@@ -296,7 +296,7 @@ export default class PracticeButtonController extends Component {
                         this.state.actions.map((action, index) => {
                             return (
                                 <View key={index} style={{alignContent:'space-around', justifyContent: 'space-evenly', width: 80}}>
-                                   <Button title={`${action.actionName} #${action.count}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions); console.log(action) }} />
+                                   <Button title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions); console.log(action) }} />
                                 </View>
                             )
                         }) :

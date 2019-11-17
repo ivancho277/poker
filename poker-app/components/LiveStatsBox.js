@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native'
+import ToggleSwitch from 'toggle-switch-react-native';
+import Divider from 'react-native-divider';
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
@@ -70,6 +71,7 @@ export default class Statsbox extends Component {
                 return `${game.key}s: ${game[position]}  `
             })
             }
+
         </Text>
     }
 
@@ -125,7 +127,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+            <View style={{ height: 180, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -136,24 +138,25 @@ export default class Statsbox extends Component {
                         ?
                         <Text>Nothing here</Text>
                         :
-                        this.state.displayChange ?
+                        <View>
+                            <Divider>Overall Stats:</Divider>
                             <Text>
-                                Current Overall Stats: {'\n'}
                                 {this.currentPositionDisplay(this.props.position)} {'\n'}
 
                             </Text>
-                            :
+                            <Divider>Current Game {'\n'}</Divider>
                             <Text>
-                                Current Game Stats: {'\n'}
+                                
                                 {this.currentGameDisplay(this.props.position)}
                             </Text>
+                        </View>
 
                 }
                 <ToggleSwitch
                     isOn={this.state.displayChange}
                     onColor="green"
                     offColor="red"
-                    label="Change View"
+                    label="View current tags"
                     labelStyle={{ color: "black", fontWeight: "900" }}
                     size="mediuim"
                     onToggle={displayChange => {

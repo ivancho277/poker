@@ -1,7 +1,8 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native'
-import { MyContext } from '../stateContext/GlobalState'
+import ToggleSwitch from 'toggle-switch-react-native';
+import { MyContext } from '../stateContext/GlobalState';
+import Divider from "react-native-divider";
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 const cardImg = require('../images/ace_diamond.jpg');
@@ -57,7 +58,7 @@ export default function Statsbox(props) {
                                     {calculation.getPercentages(context.state.gamesObj).map(action => { 
                                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
                                     })}
-
+                    
                                 </Text>
                                 :
                                 <Text style={{ justifyContent: 'center' }} >
