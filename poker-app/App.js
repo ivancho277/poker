@@ -21,13 +21,12 @@ const AppSwitchNavigator = createSwitchNavigator({
   Game: { screen: GameScreen },
   
   
+  
 })
 
 
 const AppDrawerNavigator = createDrawerNavigator({
   Home: AppSwitchNavigator,
-  Home: {screen: HomeScreen},
-  Game: {screen : GameScreen},
   Settings: {screen: SettingsScreen}
 
 })
