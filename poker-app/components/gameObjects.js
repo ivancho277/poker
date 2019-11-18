@@ -1,6 +1,7 @@
 module.exports = {
-    gameStats: function gameStats(actions) {
-        this.currentStats = {}
+    gameStats: function gameStats(actions, tags) {
+        this.currentStats = {};
+        this.tags = tags;
         this.actions = actions;
         console.log(actions)
     
@@ -18,6 +19,10 @@ module.exports = {
             })
             return this.currentStats;
         };
+
+        this.getTags = function(){
+            return this.tags;
+        }
     
         this.addGameStats = function (gameStats) {
     

@@ -73,7 +73,7 @@ function CountPositions(obj) {
         console.log("STATS", finalStats)
         return finalStats;
     } catch {
-        alert("nothing in storage")
+        console.log("Cant calculate positions") 
     }
 
 }

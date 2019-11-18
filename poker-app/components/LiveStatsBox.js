@@ -55,24 +55,29 @@ export default class Statsbox extends Component {
 
     currentPositionDisplay(position) {
         let allGames = this.logTotalsByPosition();
-        console.log("POSITION")
-        console.log(allGames)
-        console.log(position)
-        let allGamesArray = Object.keys(allGames).map(key => {
-            let newkey = String(key)
-            console.log(newkey)
-            newkey = { key: key }
-            return Object.assign(newkey, allGames[key]);
-        })
-        console.log("HAHAHAHAA")
-        console.log(allGamesArray)
-        return <Text>
-            {allGamesArray.map(game => {
-                return `${game.key}s: ${game[position]}  `
+        if (this.isEmpty(allGames)) {
+            return <Text>No Saved Games</Text>
+        }
+        else {
+            console.log("POSITION")
+            console.log(allGames)
+            console.log(position)
+            let allGamesArray = Object.keys(allGames).map(key => {
+                let newkey = String(key)
+                console.log(newkey)
+                newkey = { key: key }
+                return Object.assign(newkey, allGames[key]);
             })
-            }
+            console.log("HAHAHAHAA")
+            console.log(allGamesArray)
+            return <Text>
+                {allGamesArray.map(game => {
+                    return `${game.key}s: ${game[position]}  `
+                })
+                }
 
-        </Text>
+            </Text>
+        }
     }
 
     logTagsTotals() {
@@ -146,7 +151,7 @@ export default class Statsbox extends Component {
                             </Text>
                             <Divider>Current Game {'\n'}</Divider>
                             <Text>
-                                
+
                                 {this.currentGameDisplay(this.props.position)}
                             </Text>
                         </View>

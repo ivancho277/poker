@@ -117,12 +117,14 @@ export default class PracticeButtonController extends Component {
                 let pastactions = currentgame.actions.map((action) => {
                     return new Action(action.actionName, action.count, action.countPerPosition)
                 })
+                
 
-
+                
                 this.setState({
                     currentGame: currentgame,
-                    actions: pastactions
-                })
+                    actions: pastactions,
+                    tags: currentgame.tags
+                }, ()=> {this.props.setLiveGamePosition(this.state.actions, this.state.tags)})
             }
             return res;
         }).catch(err => {
@@ -179,7 +181,7 @@ export default class PracticeButtonController extends Component {
 
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
-        let temp = new gameStats(this.state.actions);
+        let temp = new gameStats(this.state.actions, this.state.tags);
         let totals = this.state.actions.map((action) => {
             return { [action.actionName]: action.getTotalCount() }
         })
@@ -216,7 +218,7 @@ export default class PracticeButtonController extends Component {
 
     saveCurrentGame() {
         let date = new Date();
-        let temp = new gameStats(this.state.actions);
+        let temp = new gameStats(this.state.actions, this.state.tags);
 
         let gamesObj = {
             date: date.toDateString(),
@@ -227,7 +229,6 @@ export default class PracticeButtonController extends Component {
             tags: this.state.tags,
             currentGame: temp.getCurrentStats(),
             actions: this.state.actions
-
         }
         console.log("HOLLLY MOLLY")
         //console.log(temp.getCurrentStats())
@@ -294,7 +295,7 @@ export default class PracticeButtonController extends Component {
                         this.state.actions.map((action, index) => {
                             return (
                                 <View key={index} style={{alignContent:'space-around', justifyContent: 'space-evenly', width: 80}}>
-                                   <Button title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions); console.log(action) }} />
+                                   <Button title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
                                 </View>
                             )
                         }) :
