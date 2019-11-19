@@ -241,10 +241,10 @@ export default class PracticeButtonController extends Component {
 
                 <View>
                     {this.state.actions ?
-                        <View style={{ flexDirection:"row", justifyContent: 'space-between', alignItems:'center', flexWrap: 'wrap' }}>
+                        <View style={{ display:"flex", flexDirection: 'row', justifyContent:'space-evenly', alignItems:'flex-start', alignItems:'center', flexWrap: 'wrap',height: 'auto', width: '90%'  }}>
                             {this.state.actions.map((action, index) => {
                                 return (
-                                    <Button key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
+                                    <Button style={{width: 30}} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
                                 )
                             })}
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onPress={() => { console.log("pressed") }}></AntDesign.Button>
