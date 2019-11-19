@@ -135,27 +135,16 @@ function countTotal(obj) {
 
 /**
  * 
- * @param {object} obj 
+ * @param {object} allgames 
  * @param {string} tag 
  */
-function SearchTag(obj, tag) {
-    let tagsArr = [];
-    console.log(tag + " LOOOK AT TAG")
-    console.log(obj)
-    for (let i = 0; i < obj.games.length; i++) {
-        console.log(tag);
-        console.log(obj.games[i].tags.includes(tag));
-        if (obj.games[i].tags.includes(tag)) {
-            let temp = {
-                calls: obj.games[i].calls,
-                folds: obj.games[i].folds,
-                raises: obj.games[i].raises,
-                tags: [...obj.games[i].tags]
-            }
-            tagsArr.push(temp);
+function SearchTag(allgames, tag) {
+    let foundGamesWithTag = allgames.games.filter((game => {
+        if(game.tags.includes(tag)){
+            return game;
         }
-    }
-    return tagsArr
+    }));
+    return foundGamesWithTag;
 }
 
 function checkversion(currentVer, OldVersion) {

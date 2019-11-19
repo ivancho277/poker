@@ -6,8 +6,7 @@ export const MyContext = React.createContext();
 
 
 export class GlobalState extends Component {
-    state = {
-        allgames: {},     
+    state = {     
         position: 0,
         totalsByPosition: {},
         totals: {},

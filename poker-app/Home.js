@@ -49,6 +49,10 @@ class HomeScreen extends Component {
         cb()
     }
 
+    newTagsLog = (allGames, tag) => {
+        return calculation.findTag(allGames, tag);
+    }
+
     logTags = async () => {
         let tags = await storage.retrieveData().then((res) => {
             console.log("HEY CHECK ME OUT");
@@ -77,7 +81,9 @@ class HomeScreen extends Component {
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                 />
-                {/* <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} /> */}
+                <MyContext.Consumer>
+                    {(context) => <Button title="search" onPress={() => console.log(this.newTagsLog(context.state.gamesObj, this.state.tagsearch))} style={{ float: 'right' }} />}
+                </MyContext.Consumer>
                 <StatsBox logTags={this.logTags} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <Text>ReRender global state</Text>
