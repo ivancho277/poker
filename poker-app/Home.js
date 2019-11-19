@@ -24,50 +24,13 @@ class HomeScreen extends Component {
         }
     }
 
-
-    logTagsTotals = () => {
-        this.logTags().then((res) => {
-            console.log("FOUNDDDDD");
-            console.log(res);
-            let obj = {
-                games: res
-            }
-            let totals = calculation.calculateTotalStats(obj);
-            console.log("calls " + totals.calls);
-            console.log("folds " + totals.folds);
-            console.log("raises " + totals.raises);
-            this.setState({
-                gamesObj: obj
-            });
-        }).catch(err => {
-            console.log("error searching for tag");
-            throw err;
-        })
-    }
-
     conextRender = (cb) => {
         cb()
     }
 
-    newTagsLog = (allGames, tag) => {
+    logTags = (allGames, tag) => {
         return calculation.findTag(allGames, tag);
-    }
-
-    logTags = async () => {
-        let tags = await storage.retrieveData().then((res) => {
-            console.log("HEY CHECK ME OUT");
-            console.log(JSON.parse(res), this.state.tagsearch)
-            const data = JSON.parse(res)
-            let byTag = calculation.findTag(data, this.state.tagsearch);
-            console.log(byTag);
-            return byTag;
-        }).catch(err => {
-            console.log("nothing here");
-            throw err;
-        })
-        return tags;
-    }
-
+    }    
 
     render() {
         return (
@@ -82,9 +45,9 @@ class HomeScreen extends Component {
                     value={this.state.tagsearch}
                 />
                 <MyContext.Consumer>
-                    {(context) => <Button title="search" onPress={() => console.log(this.newTagsLog(context.state.gamesObj, this.state.tagsearch))} style={{ float: 'right' }} />}
+                    {(context) => <Button title="search tags" onPress={() => console.log(this.logTags(context.state.gamesObj, this.state.tagsearch))} style={{ float: 'right' }} />}
                 </MyContext.Consumer>
-                <StatsBox logTags={this.logTags} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} height={300} width={170} />
+                <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={300} width={170} />
                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                 <Text>ReRender global state</Text>
 

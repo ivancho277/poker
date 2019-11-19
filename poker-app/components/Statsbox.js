@@ -68,8 +68,6 @@ export default function Statsbox(props) {
                                     })}
                 </Text>
                     }
-                    <Button title="log position stats" onPress={() => props.logTotalsByPosition()}></Button>
-                    <Button title="search tags" onPress={() => props.logTagsTotals()} />
                     <ToggleSwitch
                         isOn={isOnPositionStats}
                         onColor="green"
