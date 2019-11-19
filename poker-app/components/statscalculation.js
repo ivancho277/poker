@@ -31,11 +31,18 @@ module.exports = {
         return countTotal(gamesObj)
     },
 
+    /**
+     * 
+     * @param {object} gameObj 
+     */
     calculateByPosition: function (gameObj) {
         return CountPositions(gameObj)
 
     },
-
+    /**
+     * 
+     * @param {object} gameObj 
+     */
     getPercentages: function (gameObj) {
         return calculatePercentages(gameObj);
     }
