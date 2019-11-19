@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native'
+import ToggleSwitch from 'toggle-switch-react-native';
+import Divider from 'react-native-divider';
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 
@@ -14,7 +15,7 @@ let table = {
     "5": "D+3",
     "6": "D+4",
     "7": "D+5",
-    "8": "D+6"
+    "8": "D+6",
 }
 
 export default class Statsbox extends Component {
@@ -54,10 +55,29 @@ export default class Statsbox extends Component {
 
     currentPositionDisplay(position) {
         let allGames = this.logTotalsByPosition();
-        console.log(position)
-        return <Text>
-            {table[position]}: Calls: {allGames[position].total_calls}, Folds: {allGames[position].total_folds}, Raises: {allGames[position].total_raises}
-        </Text>
+        if (this.isEmpty(allGames)) {
+            return <Text>No Saved Games</Text>
+        }
+        else {
+            console.log("POSITION")
+            console.log(allGames)
+            console.log(position)
+            let allGamesArray = Object.keys(allGames).map(key => {
+                let newkey = String(key)
+                console.log(newkey)
+                newkey = { key: key }
+                return Object.assign(newkey, allGames[key]);
+            })
+            console.log("HAHAHAHAA")
+            console.log(allGamesArray)
+            return <Text>
+                {allGamesArray.map(game => {
+                    return `${game.key}s: ${game[position]}  `
+                })
+                }
+
+            </Text>
+        }
     }
 
     logTagsTotals() {
@@ -98,7 +118,10 @@ export default class Statsbox extends Component {
         console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
-                {table[position]}: Calls: {this.props.currentGame[position].calls}, Folds: {this.props.currentGame[position].folds}, Raises: {this.props.currentGame[position].raises}
+                {this.props.currentGame.map(game => {
+                    return `${game.actionName}: ${game.countPerPosition[position]}   `
+                })}
+
             </Text>
 
         } else return <Text>New Game</Text>
@@ -109,47 +132,72 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-                <View style={{ height: this.props.height, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
-                    {this.state.loading
+            <View style={{ height: 180, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+                {this.state.loading
+                    ?
+                    <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
+                        <ActivityIndicator size='small' color='#0000ff' />
+                    </View>
+                    :
+                    this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
                         ?
-                        <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
-                            <ActivityIndicator size='small' color='#0000ff' />
-                        </View>
+                        <Text>Nothing here</Text>
                         :
-                        this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
-                            ?
-                            <Text>Nothing here</Text>
+                        this.state.displayChange ?
+
+                            this.props.tags.length > 0 ?
+                                <View>
+                                    <Divider>Current Tags {'\n'}</Divider>
+                                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                                        {this.props.tags.map((tag, i) => {
+                                            if (i == this.props.tags.length - 1) {
+                                                return <Text key={tag}>{tag}</Text>
+                                            } else {
+                                                return <Text key={tag}>{tag}, </Text>
+                                            }
+                                        })}
+
+                                    </View>
+                                </View>
+
+                                :
+                                <Text>NO TAGS</Text>
+
+
                             :
-                            this.state.displayChange ?
+
+                            <View>
+                                <Divider>Overall Stats:</Divider>
                                 <Text>
-                                    Current Overall Stats: {'\n'}
                                     {this.currentPositionDisplay(this.props.position)} {'\n'}
 
                                 </Text>
-                                :
+                                <Divider>Current Game {'\n'}</Divider>
                                 <Text>
-                                    Current Game Stats: {'\n'}
+
                                     {this.currentGameDisplay(this.props.position)}
                                 </Text>
-
-                    }
-                    <ToggleSwitch
-                        isOn={this.state.displayChange}
-                        onColor="green"
-                        offColor="red"
-                        label="Change View"
-                        labelStyle={{ color: "black", fontWeight: "900" }}
-                        size="mediuim"
-                        onToggle={displayChange => {
-                            this.setState({ displayChange });
-                            this.onToggle(displayChange);
-                        }}
-                    />
+                            </View>
 
 
-                    {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
+                }
+                <ToggleSwitch
+                    isOn={this.state.displayChange}
+                    onColor="green"
+                    offColor="red"
+                    label="View current tags"
+                    labelStyle={{ color: "black", fontWeight: "900" }}
+                    size="mediuim"
+                    onToggle={displayChange => {
+                        this.setState({ displayChange });
+                        this.onToggle(displayChange);
+                    }}
+                />
+
+
+                {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
-                </View>
+            </View>
 
         )
     }

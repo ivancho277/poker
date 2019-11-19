@@ -46,28 +46,34 @@ function CountPositions(obj) {
     //go through games and find totals per position
 
     try {
-        let finalStats = {
-            0: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            1: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            2: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            3: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            4: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            5: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            6: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            7: { total_calls: 0, total_folds: 0, total_raises: 0 },
-            8: { total_calls: 0, total_folds: 0, toatal_raises: 0 }
-        }
+        let finalStats = {}
+        //debugger;
 
-        for (let i = 0; i < obj.games.length; i++) {
-            for (position in obj.games[i].currentGame) {
-                finalStats[position].total_calls += obj.games[i].currentGame[position].calls;
-                finalStats[position].total_folds += obj.games[i].currentGame[position].folds;
-                finalStats[position].total_raises += obj.games[i].currentGame[position].raises;
+        obj.games.forEach(game => {
+            for (action in game.game) {
+                //console.log(action + " " + game.game)
+                if(!finalStats[action]){
+                    finalStats[action] = {}
+                }
+                for (position in game.game[action]){
+                //console.log(position + " "  + "    " + action)
+                //nsole.log("POSISH " + position)
+                    if (finalStats[action][position]) {
+                        finalStats[action][position] = finalStats[action][position] += game.game[action][position]; 
+                    }
+                    else {
+                        finalStats[action][position] = game.game[action][position]
+                    }
+                }
             }
-        }
+
+        })
+
+
+        console.log("STATS", finalStats)
         return finalStats;
     } catch {
-        alert("nothing in storage")
+        console.log("Cant calculate positions") 
     }
 
 }
@@ -76,15 +82,15 @@ function calculatePercentages(obj) {
     try {
         // debugger;
         let seperateTotals = countTotal(obj);
-        let totalActions = seperateTotals.calls + seperateTotals.raises + seperateTotals.folds;
-        let percentCalls = Math.round(seperateTotals.calls / totalActions * 100);
-        let percentFolds = Math.round(seperateTotals.folds / totalActions * 100);
-        let percentRaises = Math.round(seperateTotals.raises / totalActions * 100);
-        return {
-            percentCalls: percentCalls,
-            percentFolds: percentFolds,
-            percentRaises: percentRaises
+        let totalActions = Object.values(seperateTotals).reduce((a, i) => a + i);
+        console.log(totalActions)
+        const totalsArray = []
+        for (action in seperateTotals) {
+            totalsArray.push({ [action]: Math.round(seperateTotals[action] / totalActions * 100) })
         }
+        console.log(totalsArray)
+        return totalsArray;
+
     } catch{
         return console.log("nothing to calculate")
     }
@@ -96,16 +102,24 @@ function countTotal(obj) {
         let totalCalls = 0;
         let totalFolds = 0;
         let totalRaises = 0;
-        for (let i = 0; i < obj.games.length; i++) {
-            totalCalls += obj.games[i].calls;
-            totalFolds += obj.games[i].folds;
-            totalRaises += obj.games[i].raises;
-        }
-        return {
-            calls: totalCalls,
-            folds: totalFolds,
-            raises: totalRaises
-        }
+        //debugger;
+        let totals = {}
+        obj.games.forEach(game => {
+            for (action in game.game) {
+                //console.log(action + " " + game.game[action].total)
+                if (!totals[action]) {
+                    totals[action] = game.game[action].total
+                }
+                else {
+                    totals[action] = totals[action] += game.game[action].total
+                }
+            }
+
+        })
+        console.log('STATS', totals)
+        return totals
+
+
     } catch {
         alert('cant count')
     }

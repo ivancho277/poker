@@ -2,15 +2,18 @@ import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import StatsBox from './components/Statsbox'
 import { TextInput } from 'react-native-gesture-handler';
-import { MyContext } from './stateContext/GlobalState'
+import { MyContext } from './stateContext/GlobalState';
+import { AntDesign } from '@expo/vector-icons';
+
 const storage = require("./components/AsyncStorageController.js");
 const calculation = require('./components/statscalculation.js')
 
 //  const context = useContext(MyContext)
 
 
+
 class HomeScreen extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -21,30 +24,6 @@ class HomeScreen extends Component {
         }
     }
 
-    // componentWillMount() {
-    //     context.remount();
-    // }
-
-    // componentDidMount() {
-    //     storage.retrieveData().then((res) => {
-    //         console.log(JSON.parse(res));
-    //         let temp = calculation.calculateByPosition(JSON.parse(res))
-    //         this.setState({
-    //             gamesObj: JSON.parse(res),
-    //             loading: false,
-    //             totals: temp
-    //         })
-    //         console.log("THIS IS ASYNC")
-    //         console.log(this.state.gamesObj)
-    //     }).catch((error) => {
-    //         console.log("HOME SCREEN ERROR");
-    //         throw error;
-    //     })
-    // }
-    // logTotalsByPosition = () => {
-    //     console.log(calculation.calculateByPosition(this.state.gamesObj));
-    //     return calculation.calculateByPosition(this.state.gamesObj);
-    // }
 
     logTagsTotals = () => {
         this.logTags().then((res) => {
@@ -68,7 +47,7 @@ class HomeScreen extends Component {
 
     conextRender = (cb) => {
         cb()
-    } 
+    }
 
     logTags = async () => {
         let tags = await storage.retrieveData().then((res) => {
@@ -89,7 +68,9 @@ class HomeScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Welcome to Poker</Text>
+                <AntDesign name="doubleright" size={32} color="green"> </AntDesign>
+
+                <Text>POKER TRACKER</Text>
                 <TextInput
                     style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Search by tag"
@@ -106,7 +87,7 @@ class HomeScreen extends Component {
                         <Text>Press me</Text>
                     </TouchableOpacity>}
                 </MyContext.Consumer>
-                <TouchableOpacity onPress={() => storage.removeData()}>
+                <TouchableOpacity onPress={() => { storage.removeData(); storage.removeCurrentGame() }}>
                     <Text style={{ color: 'red' }}>Delete storage</Text>
                 </TouchableOpacity>
             </View>

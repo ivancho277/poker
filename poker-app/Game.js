@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } fr
 import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
+
 const storage = require("./components/AsyncStorageController.js");
 
 //import Controller from './components/Controller'
@@ -75,9 +76,10 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (games) => {
+    setLiveGamePosition = (games, tags) => {
         this.setState({
-            currentGame: games
+            currentGame: games,
+            tags: tags
         })
     }
 
@@ -127,15 +129,15 @@ class GameScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                <LiveStatsBox currentGame={this.state.currentGame} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                <LiveStatsBox currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
 
                 {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                 <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                <Text>Controller will go here</Text>
                 <PBC tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
-                <Button title='Delete all tags' onPress={() => storage.removeTags()} />
+                {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
+                <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
             </View>
         )
     }
