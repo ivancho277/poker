@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, AppRegistry } from 'react-native';
-import { createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator, DrawerActions } from 'react-navigation';
 import HomeScreen from './Home';
 import GameScreen from './Game';
 import SettingsScreen from './Settings'
@@ -23,7 +23,7 @@ const AppSwitchNavigator = createStackNavigator({
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Home',  // Title to appear in status bar
-      headerLeft: <AntDesign name="menu-fold" size={35} onPress={() => navigation.navigate('DrawerOpen')} />
+      headerLeft: <AntDesign name="menu-fold" size={35} onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />
     })
 
 
@@ -40,9 +40,6 @@ const AppSwitchNavigator = createStackNavigator({
       title: "Settings"
     })
   }
- 
-
-
 
 })
 
@@ -52,14 +49,10 @@ const AppDrawerNavigator = createDrawerNavigator({
     screen: AppSwitchNavigator,
     navigationOptions: ({ navigation }) => ({
       title: 'Home',  // Title to appear in status bar
-      headerLeft: <AntDesign name="menu-fold" size={35} onPress={() => navigation.navigate('DrawerOpen')} />
     })
   },
   Settings: {
-    screen: SettingsScreen,
-    
-  
-    
+    screen: SettingsScreen, 
     
   }
 

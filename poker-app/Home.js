@@ -70,7 +70,7 @@ class HomeScreen extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <AntDesign name="doubleright" size={32} color="green"> </AntDesign>
 
-                <Text>Welcome to Poker</Text>
+                <Text>POKER TRACKER</Text>
                 <TextInput
                     style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Search by tag"
