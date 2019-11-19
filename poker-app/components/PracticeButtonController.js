@@ -2,61 +2,17 @@ import React, { Component } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import Radio from './Radio.js';
 import { MyContext } from '../stateContext/GlobalState';
-import TagsModal from './TagsModal.js';
+import { AntDesign } from '@expo/vector-icons';
 const storageController = require('./AsyncStorageController.js')
 const gameConstructors = require('./gameObjects.js');
-const {gameStats, Action} = gameConstructors;
+const { gameStats, Action } = gameConstructors;
 
 
 
-// function gameStats(actions) {
-//     this.currentStats = {}
-//     this.actions = actions;
-//     console.log(actions)
+// const AddAction =  <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onPress={() => { console.log("pressed") }}>
+//         Add Action
+//     </AntDesign.Button>
 
-//     this.getCurrentStats = function () {
-//         //debugger;
-//         this.actions.forEach(action => {
-//             //console.log(action)
-//             this.currentStats[action.actionName] = {}
-//             this.currentStats[action.actionName].total = action.count;
-//             console.log(this.currentStats[action.actionName])
-//             for (count in action.countPerPosition) {
-//                 this.currentStats[action.actionName][count] = action.countPerPosition[count];
-
-//             }
-//         })
-//         return this.currentStats;
-//     };
-
-//     this.addGameStats = function (gameStats) {
-
-//     }
-// }
-
-
-
-
-
-// function Action(actionName, count = 0, countPerPosition = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }) {
-//     this.actionName = actionName,
-//         this.count = count;
-//     this.countPerPosition = countPerPosition;
-
-//     this.incrementActionAtPosition = function (position) {
-//         this.countPerPosition[position] = ++this.countPerPosition[position];
-//         this.count++;
-//     }
-
-//     this.getPositionCount = function () {
-//         return Object.assign({}, this.countPerPosition)
-//     }
-
-//     this.getTotalCount = function () {
-//         return this.count;
-//     }
-
-// }
 
 
 
@@ -117,12 +73,12 @@ export default class PracticeButtonController extends Component {
                 let pastactions = currentgame.actions.map((action) => {
                     return new Action(action.actionName, action.count, action.countPerPosition)
                 })
-                
+
                 this.setState({
                     currentGame: currentgame,
                     actions: pastactions,
                     tags: currentgame.tags
-                }, () => {this.props.setLiveGamePosition(this.state.actions, this.state.tags)})
+                }, () => { this.props.setLiveGamePosition(this.state.actions, this.state.tags) })
             }
             return res;
         }).catch(err => {
@@ -267,9 +223,11 @@ export default class PracticeButtonController extends Component {
     }
 
     saveActions(action) {
-        let newActions = this.state.actionStrings.concat(action);
-        this.setState({ actionStrings: newActions });
-        storageController.saveActions(newActions);
+        if (action != "") {
+            let newActions = this.state.actionStrings.concat(action);
+            this.setState({ actionStrings: newActions });
+            storageController.saveActions(newActions);
+        }
 
     }
 
@@ -281,20 +239,21 @@ export default class PracticeButtonController extends Component {
                 <Text>{'\n'}</Text>
                 {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
 
-                <View style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', maxHeight: 200, maxWidth: 300, alignItems: 'center', alignContent: 'center', justifyContent: 'space-evenly'}}>
+                <View>
                     {this.state.actions ?
-                        this.state.actions.map((action, index) => {
-                            return (
-                                <View key={index} style={{alignContent:'space-around', justifyContent: 'space-evenly', width: 80}}>
-                                   <Button title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
-                                </View>
-                            )
-                        }) :
+                        <View style={{ flexDirection:"row", justifyContent: 'space-between', alignItems:'center' }}>
+                            {this.state.actions.map((action, index) => {
+                                return (
+                                    <Button key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
+                                )
+                            })}
+                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                        </View>
+
+                        :
                         <Text>Loading....</Text>
                     }
-                
-
-                 </View>
+                </View>
                 <Text>{'\n'}</Text>
                 {this.state.actionInputOpen ?
                     <View>
@@ -304,9 +263,10 @@ export default class PracticeButtonController extends Component {
                             onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
                             value={this.state.actionToAdd}
                         />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.saveActions(this.state.actionToAdd.toLowerCase().trim()); this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) }} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.state.actionToAdd != "" ? this.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} />
                     </View>
                     :
+                    // <ActionsModal></ActionsModal>
                     <Button title='Add new Action' onPress={() => { this.setState({ actionInputOpen: true }); }} />
                 }
                 <Text>{'\n'}</Text>
