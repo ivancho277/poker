@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TextInput } from 'react-native';
+import { View, Text, Button, TextInput, onLongPress } from 'react-native';
 import Radio from './Radio.js';
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
@@ -21,9 +21,9 @@ export default class PracticeButtonController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            call: 0,
-            fold: 0,
-            raise: 0,
+            //call: 0,
+            //fold: 0,
+            //raise: 0,
             actions: [],
             actionStrings: [],
             tag: "",
@@ -142,9 +142,6 @@ export default class PracticeButtonController extends Component {
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
-            calls: this.state.calls,
-            folds: this.state.folds,
-            raises: this.state.raises,
             tags: this.state.tags,
             game: temp.getCurrentStats(),
             totals: totals
@@ -177,9 +174,6 @@ export default class PracticeButtonController extends Component {
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
-            calls: this.state.calls,
-            folds: this.state.folds,
-            raises: this.state.raises,
             tags: temp.getTags(),
             currentGame: temp.getCurrentStats(),
             actions: this.state.actions
@@ -244,10 +238,12 @@ export default class PracticeButtonController extends Component {
                         <View style={{ display:"flex", flexDirection: 'row', justifyContent:'space-evenly', alignItems:'flex-start', alignItems:'center', flexWrap: 'wrap',height: 'auto', width: '90%'  }}>
                             {this.state.actions.map((action, index) => {
                                 return (
+                                    <View key={index}>
                                     <Button style={{width: 30}} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
+                                    </View>
                                 )
                             })}
-                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={()=> {this.setState({actionInputOpen: true})}} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
 
                         :
@@ -266,8 +262,8 @@ export default class PracticeButtonController extends Component {
                         <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.state.actionToAdd != "" ? this.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} />
                     </View>
                     :
-                    // <ActionsModal></ActionsModal>
-                    <Button title='Add new Action' onPress={() => { this.setState({ actionInputOpen: true }); }} />
+                    <Text></Text>
+                    
                 }
                 <Text>{'\n'}</Text>
                 <View>
