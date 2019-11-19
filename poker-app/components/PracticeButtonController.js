@@ -118,13 +118,11 @@ export default class PracticeButtonController extends Component {
                     return new Action(action.actionName, action.count, action.countPerPosition)
                 })
                 
-
-                
                 this.setState({
                     currentGame: currentgame,
                     actions: pastactions,
                     tags: currentgame.tags
-                }, ()=> {this.props.setLiveGamePosition(this.state.actions, this.state.tags)})
+                }, () => {this.props.setLiveGamePosition(this.state.actions, this.state.tags)})
             }
             return res;
         }).catch(err => {
@@ -226,23 +224,16 @@ export default class PracticeButtonController extends Component {
             calls: this.state.calls,
             folds: this.state.folds,
             raises: this.state.raises,
-            tags: this.state.tags,
+            tags: temp.getTags(),
             currentGame: temp.getCurrentStats(),
             actions: this.state.actions
         }
         console.log("HOLLLY MOLLY")
         //console.log(temp.getCurrentStats())
-        console.log(gamesObj.currentGame)
+        console.log(gamesObj)
         storageController.saveCurrentGame(gamesObj)
     }
 
-
-
-    clearTags() {
-        this.setState({
-            tag: ''
-        })
-    }
 
     getPosition = (position) => {
         this.setState({

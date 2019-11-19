@@ -143,18 +143,42 @@ export default class Statsbox extends Component {
                         ?
                         <Text>Nothing here</Text>
                         :
-                        <View>
-                            <Divider>Overall Stats:</Divider>
-                            <Text>
-                                {this.currentPositionDisplay(this.props.position)} {'\n'}
+                        this.state.displayChange ?
 
-                            </Text>
-                            <Divider>Current Game {'\n'}</Divider>
-                            <Text>
+                            this.props.tags.length > 0 ?
+                                <View>
+                                    <Divider>Current Tags {'\n'}</Divider>
+                                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                                        {this.props.tags.map((tag, i) => {
+                                            if (i == this.props.tags.length - 1) {
+                                                return <Text key={tag}>{tag}</Text>
+                                            } else {
+                                                return <Text key={tag}>{tag}, </Text>
+                                            }
+                                        })}
 
-                                {this.currentGameDisplay(this.props.position)}
-                            </Text>
-                        </View>
+                                    </View>
+                                </View>
+
+                                :
+                                <Text>NO TAGS</Text>
+
+
+                            :
+
+                            <View>
+                                <Divider>Overall Stats:</Divider>
+                                <Text>
+                                    {this.currentPositionDisplay(this.props.position)} {'\n'}
+
+                                </Text>
+                                <Divider>Current Game {'\n'}</Divider>
+                                <Text>
+
+                                    {this.currentGameDisplay(this.props.position)}
+                                </Text>
+                            </View>
+
 
                 }
                 <ToggleSwitch
