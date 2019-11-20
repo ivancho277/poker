@@ -139,6 +139,7 @@ function countTotal(obj) {
  * @param {string} tag 
  */
 function SearchTag(allgames, tag) {
+    console.log("FUNCTION",allgames, "TAGwE: ", tag)
     let foundGamesWithTag = allgames.games.filter((game => {
         if(game.tags.includes(tag)){
             return game;
