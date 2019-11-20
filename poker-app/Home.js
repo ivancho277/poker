@@ -39,42 +39,34 @@ class HomeScreen extends Component {
         }
     }
 
-    // renderSearchInput = () => {
-    //     return (
-    //         <View>
-    //             <TextInput
-    //                 style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-    //                 placeholder="Search by tag"
-    //                 onChangeText={(tagsearch) => this.setState({ tagsearch })}
-    //                 value={this.state.tagsearch}
-    //             />
-    //             <MyContext.Consumer>
-    //                 {(context) => <Button title="search tags" onPress={() => { this.logTags(context.state.gamesObj, this.state.tagsearch) }} />}
-    //             </MyContext.Consumer>
-    //         </View>
-    //     )
-    // }
+    renderSearchInput = () => {
+        return (
+            <View style={{position: 'absolute', top: 15}}>
+                <TextInput
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder="Search by tag"
+                    onChangeText={(tagsearch) => this.setState({ tagsearch })}
+                    value={this.state.tagsearch}
+                    style={{backgroundColor: 'white'}}
+                />
+                <MyContext.Consumer>
+                    {(context) => <Button title="search tags" onPress={() => { console.log(this.logTags(context.state.gamesObj, this.state.tagsearch)) }} />}
+                </MyContext.Consumer>
+            </View>
+        )
+    }
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
                 <View>
                     <AntDesign name="doubleright" size={32} color="green"> </AntDesign>
                     <Text>POKER TRACKER</Text>
-                    {/* <SearchModal searchInput={this.renderSearchInput}></SearchModal> */}
-                   
-                    <TextInput
-                        style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                        placeholder="Search by tag"
-                        onChangeText={(tagsearch) => this.setState({ tagsearch })}
-                        value={this.state.tagsearch}
-                    />
-                     <MyContext.Consumer>
-                        {(context) => <Button title="search tags" onPress={() => { console.log(this.logTags(context.state.gamesObj, this.state.tagsearch)); }} />}
-                    </MyContext.Consumer>
+                    <SearchModal searchInput={this.renderSearchInput}></SearchModal>
+        
                 </View>
 
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <View>
 
                     <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={300} width={170} />
                     <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />

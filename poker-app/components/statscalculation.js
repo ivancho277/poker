@@ -45,6 +45,15 @@ module.exports = {
      */
     getPercentages: function (gameObj) {
         return calculatePercentages(gameObj);
+    },
+
+    /**
+     * 
+     * @param {object} gamesObj 
+     * @param {Array} tagsArr 
+     */
+    includesAllTags: function(gamesObj, tagsArr){
+        return findManytags(gamesObj, tagsArr)
     }
 }
 
@@ -106,9 +115,6 @@ function calculatePercentages(obj) {
 
 function countTotal(obj) {
     try {
-        let totalCalls = 0;
-        let totalFolds = 0;
-        let totalRaises = 0;
         //debugger;
         let totals = {}
         obj.games.forEach(game => {
@@ -121,12 +127,9 @@ function countTotal(obj) {
                     totals[action] = totals[action] += game.game[action].total
                 }
             }
-
         })
         console.log('STATS', totals)
         return totals
-
-
     } catch {
         alert('cant count')
     }
@@ -139,7 +142,7 @@ function countTotal(obj) {
  * @param {string} tag 
  */
 function SearchTag(allgames, tag) {
-    console.log("FUNCTION",allgames, "TAGwE: ", tag)
+    //console.log("FUNCTION",allgames, "TAGwE: ", tag)
     let foundGamesWithTag = allgames.games.filter((game => {
         if(game.tags.includes(tag)){
             return game;
@@ -148,45 +151,20 @@ function SearchTag(allgames, tag) {
     return foundGamesWithTag;
 }
 
-function checkversion(currentVer, OldVersion) {
+function checkversion( OldVersion) {
+    let currentVersion = '1.0.3';
 
 }
 
-function countTotalfromTag(obj, tag = "all") {
-    if (tag === "all") {
-        let totalCalls = 0;
-        let totalFolds = 0;
-        let totalRaises = 0;
-        for (let i = 0; i < obj.games.length; i++) {
-            totalCalls += obj.games[i].calls;
-            totalFolds += obj.games[i].folds;
-            totalRaises += obj.games[i].raises;
+function findManytags(allgames, tagarr){
+    let foundgames = allgames.games.filter(game => {
+        if(tagarr.every(value => {return (game.tags.indexOf(value) >= 0) })){
+            return game;
         }
-        return {
-            calls: totalCalls,
-            folds: totalFolds,
-            raises: totalRaises
-        }
-    } else {
-        let tagsArr = [];
-
-        for (let i = 0; i < obj.games.length; i++) {
-            console.log(tag);
-            console.log(obj.games[i].tags.includes(tag));
-            if (obj.games[i].tags.includes(tag)) {
-                let temp = {
-                    calls: obj.games[i].calls,
-                    folds: obj.games[i].folds,
-                    raises: obj.games[i].raises,
-                    tags: [...obj.games[i].tags]
-                }
-                tagsArr.push(temp);
-            }
-        }
-        return tagsArr
-
-    }
+    })
+    return foundgames;
 }
+
 
 
 

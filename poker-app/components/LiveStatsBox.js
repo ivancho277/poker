@@ -81,23 +81,7 @@ export default class Statsbox extends Component {
     }
 
     logTagsTotals() {
-        this.props.logTags().then((res) => {
-            console.log("FOUNDDDDD");
-            console.log(res);
-            let obj = {
-                games: res
-            }
-            let totals = calculation.calculateTotalStats(obj);
-            console.log("calls " + totals.calls);
-            console.log("folds " + totals.folds);
-            console.log("raises " + totals.raises);
-            this.setState({
-                gamesObj: obj
-            });
-        }).catch(err => {
-            console.log("error searching for tag");
-            throw err;
-        })
+        return calculation.includesAllTags(this.state.gamesObj, this.props.tags)
     }
 
     isEmpty(obj) {
@@ -194,7 +178,7 @@ export default class Statsbox extends Component {
                     }}
                 />
 
-
+                    <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button>
                 {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>

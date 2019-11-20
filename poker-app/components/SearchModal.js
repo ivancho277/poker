@@ -13,6 +13,8 @@ export default class SearchModal extends Component {
 
     };
 
+    
+
 
 
     render() {
@@ -27,13 +29,14 @@ export default class SearchModal extends Component {
                             Alert.alert('Modal has been closed.');
                         }}>
                         <View style={styles.modal}>
-                            <View>
-                                {this.props.searchInput()}
-                                <TouchableHighlight
+                        {this.props.searchInput()}  
+                            <View style={styles.closeButton}>
+                              
+                                <TouchableHighlight style = {{borderStyle: 'solid', borderWidth: 2, borderColor: 'black'}}
                                     onPress={() => {
                                         this.setState({ modalVisible: !this.state.modalVisible });
                                     }}>
-                                    <Text style={{fontSize: 20}}>Hide Modal</Text>
+                                    <Text style={styles.text}>Hide Modal</Text>
                                 </TouchableHighlight>
                             </View>
                         </View>
@@ -60,6 +63,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',
     },
+
+    closeButton:{
+        position: 'absolute',
+        bottom: 50
+    },
     modal: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -71,10 +79,12 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         marginTop: 80,
         marginLeft: 40,
+        position: 'relative'
 
     },
     text: {
         color: '#3f2949',
-        marginTop: 10
+        fontSize: 20,
+        padding: 20
     }
 });  
