@@ -35,35 +35,31 @@ class HomeScreen extends Component {
         if (tag === "") {
             return calculation.findTag(allGames, 'default');
         } else {
-        return calculation.findTag(allGames, tag);
+            return calculation.findTag(allGames, tag);
         }
     }
 
-    renderSearchInput = () => {
-        return (
-            <View style={{position: 'absolute', top: 15}}>
-                <TextInput
-                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                    placeholder="Search by tag"
-                    onChangeText={(tagsearch) => this.setState({ tagsearch })}
-                    value={this.state.tagsearch}
-                    style={{backgroundColor: 'white'}}
-                />
-                <MyContext.Consumer>
-                    {(context) => <Button title="search tags" onPress={() => { console.log(this.logTags(context.state.gamesObj, this.state.tagsearch)) }} />}
-                </MyContext.Consumer>
-            </View>
-        )
+    objToArray = (obj) => {
+        // let values = Object.values(obj);
+        let objArray = [];
+        for (key in obj) {
+            objArray.push({ [key]: obj[key] })
+        }
+        console.log('OBJECT ARRAY', objArray)
+        return objArray
     }
 
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
                 <View>
-                    <AntDesign name="doubleright" size={32} color="green"> </AntDesign>
+                    {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
+                    <MyContext.Consumer>
+                        {(context) => <Button title="test" onPress={() => { calculation.totalPercentPerPosition(context.state.gamesObj) }} />}
+                    </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
-                    <SearchModal searchInput={this.renderSearchInput}></SearchModal>
-        
+                    <SearchModal searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
+
                 </View>
 
                 <View>

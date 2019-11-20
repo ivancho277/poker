@@ -3,17 +3,61 @@ import { MyContext } from '../stateContext/GlobalState'
 
 import { Text, View, Button, TouchableHighlight, TextInput, StyleSheet, Modal } from 'react-native'
 
-
+const calculation = require('./statscalculation')
 
 
 export default class SearchModal extends Component {
 
     state = {
         modalVisible: false,
+        tagsearch: '',
+        shouldDisplay: false
 
     };
 
-    
+    renderFoundGames = (allGames, tag) => {
+        let foundgames = this.props.logTags(allGames, tag);
+        if (foundgames.length >= 1) {
+            return (
+                <Text style={{ justifyContent: 'center' }} >
+                    Total Stats:{'\n'}
+                    {this.objToArray(calculation.calculateTotalStats({games: foundgames})).map(action => {
+                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
+                    })}
+                </Text>
+            )
+        }
+        else return <Text>No found Games</Text>
+
+    }
+    objToArray = (obj) => {
+        // let values = Object.values(obj);
+        let objArray = [];
+        for (key in obj) {
+            objArray.push({ [key]: obj[key] })
+        }
+        console.log('OBJECT ARRAY', objArray)
+        return objArray
+    }
+
+    renderSearchInput = () => {
+        return (
+            <View style={{ position: 'absolute', top: 15 }}>
+                <TextInput
+                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                    placeholder="Search by tag"
+                    onChangeText={(tagsearch) => this.setState({ tagsearch })}
+                    value={this.state.tagsearch}
+                    style={{ backgroundColor: 'white' }}
+                />
+                <MyContext.Consumer>
+                    {(context) => <Button title="search tags" onPress={() => {this.setState({shouldDisplay: true})} } />}
+                </MyContext.Consumer>
+            </View>
+        )
+    }
+
+
 
 
 
@@ -29,10 +73,19 @@ export default class SearchModal extends Component {
                             Alert.alert('Modal has been closed.');
                         }}>
                         <View style={styles.modal}>
-                        {this.props.searchInput()}  
+                            {this.renderSearchInput()}
+                            <View style={styles.displayBox}>
+                                {this.state.shouldDisplay ?
+                                <MyContext.Consumer>
+                                    {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagsearch)}
+                                </MyContext.Consumer>
+                                :
+                                <Text>Stats Will Show here.</Text>
+                                }
+                            </View>
                             <View style={styles.closeButton}>
-                              
-                                <TouchableHighlight style = {{borderStyle: 'solid', borderWidth: 2, borderColor: 'black'}}
+
+                                <TouchableHighlight style={{ borderStyle: 'solid', borderWidth: 2, borderColor: 'black' }}
                                     onPress={() => {
                                         this.setState({ modalVisible: !this.state.modalVisible });
                                     }}>
@@ -64,7 +117,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
     },
 
-    closeButton:{
+    displayBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        width: '80%',
+        height: '30%',
+        borderColor: 'black',
+        borderWidth: 2,
+        borderStyle: 'solid',
+        overflow: "scroll"
+
+    },
+
+    closeButton: {
         position: 'absolute',
         bottom: 50
     },

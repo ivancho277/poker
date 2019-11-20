@@ -26,14 +26,14 @@ export default function Statsbox(props) {
     }
 
     const objToArray = (obj) => {
-       // let values = Object.values(obj);
+        // let values = Object.values(obj);
         let objArray = [];
-        for(key in obj){
-            objArray.push({[key] : obj[key]})
+        for (key in obj) {
+            objArray.push({ [key]: obj[key] })
         }
         console.log('OBJECT ARRAY', objArray)
         return objArray
-    } 
+    }
 
 
     return (
@@ -54,11 +54,11 @@ export default function Statsbox(props) {
                             isOnPositionStats === true
                                 ?
                                 <Text>
-                                    Stats by position: {'\n'} 
-                                    {calculation.getPercentages(context.state.gamesObj).map(action => { 
+                                    Stats by position: {'\n'}
+                                    {calculation.getPercentages(context.state.gamesObj).map(action => {
                                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
                                     })}
-                    
+
                                 </Text>
                                 :
                                 <Text style={{ justifyContent: 'center' }} >
@@ -66,7 +66,7 @@ export default function Statsbox(props) {
                                     {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
                                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
                                     })}
-                </Text>
+                                </Text>
                     }
                     <ToggleSwitch
                         isOn={isOnPositionStats}

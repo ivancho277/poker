@@ -52,8 +52,13 @@ module.exports = {
      * @param {object} gamesObj 
      * @param {Array} tagsArr 
      */
-    includesAllTags: function(gamesObj, tagsArr){
+    includesAllTags: function (gamesObj, tagsArr) {
         return findManytags(gamesObj, tagsArr)
+    },
+
+
+    totalsPerPosition: function (gameObj) {
+        return totalsPerPosition(gameObj);
     }
 }
 
@@ -68,14 +73,14 @@ function CountPositions(obj) {
         obj.games.forEach(game => {
             for (action in game.game) {
                 //console.log(action + " " + game.game)
-                if(!finalStats[action]){
+                if (!finalStats[action]) {
                     finalStats[action] = {}
                 }
-                for (position in game.game[action]){
-                //console.log(position + " "  + "    " + action)
-                //nsole.log("POSISH " + position)
+                for (position in game.game[action]) {
+                    //console.log(position + " "  + "    " + action)
+                    //nsole.log("POSISH " + position)
                     if (finalStats[action][position]) {
-                        finalStats[action][position] = finalStats[action][position] += game.game[action][position]; 
+                        finalStats[action][position] = finalStats[action][position] += game.game[action][position];
                     }
                     else {
                         finalStats[action][position] = game.game[action][position]
@@ -89,7 +94,7 @@ function CountPositions(obj) {
         console.log("STATS", finalStats)
         return finalStats;
     } catch {
-        console.log("Cant calculate positions") 
+        console.log("Cant calculate positions")
     }
 
 }
@@ -144,27 +149,62 @@ function countTotal(obj) {
 function SearchTag(allgames, tag) {
     //console.log("FUNCTION",allgames, "TAGwE: ", tag)
     let foundGamesWithTag = allgames.games.filter((game => {
-        if(game.tags.includes(tag)){
+        if (game.tags.includes(tag)) {
             return game;
         }
     }));
     return foundGamesWithTag;
 }
 
-function checkversion( OldVersion) {
+function checkversion(OldVersion) {
     let currentVersion = '1.0.3';
 
 }
 
-function findManytags(allgames, tagarr){
+function findManytags(allgames, tagarr) {
     let foundgames = allgames.games.filter(game => {
-        if(tagarr.every(value => {return (game.tags.indexOf(value) >= 0) })){
+        if (tagarr.every(value => { return (game.tags.indexOf(value) >= 0) })) {
             return game;
         }
     })
     return foundgames;
 }
 
+function totalsPerPosition(allgames) {
+    try {
+        //debugger;
+        let totals = {}
+        console.log("FUNCTION", allgames)
+        allgames.games.forEach(game => {
+            console.log(game)
+            for (action in game.game) {
+                console.log(action + " " + game.game[action].total)
+                if ([action] != 'total') {
+                    if (!totals[action]) {
+                        totals[action] = game.game[action]
+                    }
+                    else {
+                        for (position in game.game[action]) {
+                            totals[action][position] = totals[action][position] += game.game[action][position]
+                        }
+                    }
+                }
+            }
+        })
+        console.log('PERCENT', totals)
+        return totals
+    } catch {
+        alert('cant count')
+    }
+}
+
+function overallPercentagePerPosition(allgames){
+
+}
+
+function percentagePerPositionByTags(allgames, tagsArr) {
+
+}
 
 
 
