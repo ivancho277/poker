@@ -125,11 +125,11 @@ export default class PracticeButtonController extends Component {
         })
     }
 
+    
+
     saveToTags(tag) {
-        let tagsArray = this.state.tags;
-        tagsArray.push(tag);
         this.setState({
-            tags: tagsArray
+            tags: this.state.tags.concat(tag)
         })
     };
 
@@ -168,11 +168,11 @@ export default class PracticeButtonController extends Component {
     saveCurrentGame() {
         let date = new Date();
         let temp = new gameStats(this.state.actions, this.state.tags);
-
+        console.log("TAGS: ", temp.getTags())
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
-            tags: temp.getTags(),
+            tags: this.props.tags,
             currentGame: temp.getCurrentStats(),
             actions: this.state.actions
         }
@@ -237,7 +237,7 @@ export default class PracticeButtonController extends Component {
                             {this.state.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                    <Button style={{width: 30}} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.state.tags); console.log(action) }} />
+                                    <Button style={{width: 30}} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.props.tags); console.log(action) }} />
                                     </View>
                                 )
                             })}

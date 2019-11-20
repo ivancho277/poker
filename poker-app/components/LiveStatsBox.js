@@ -26,7 +26,7 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
-            displayChange: false
+            displayChange: false,
         }
     }
 
@@ -81,7 +81,12 @@ export default class Statsbox extends Component {
     }
 
     logTagsTotals() {
+        if(this.props.tags.length >= 0){
         return calculation.includesAllTags(this.state.gamesObj, this.props.tags)
+        } else {
+            return calculation.includesAllTags(this.state.gamesObj, ['default'])
+
+        }
     }
 
     isEmpty(obj) {

@@ -58,7 +58,7 @@ class HomeScreen extends Component {
                         {(context) => <Button title="test" onPress={() => { calculation.totalPercentPerPosition(context.state.gamesObj) }} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
-                    <SearchModal searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
+                    <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
 
                 </View>
 

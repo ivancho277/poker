@@ -21,7 +21,7 @@ export default class SearchModal extends Component {
             return (
                 <Text style={{ justifyContent: 'center' }} >
                     Total Stats:{'\n'}
-                    {this.objToArray(calculation.calculateTotalStats({games: foundgames})).map(action => {
+                    {this.props.objToArray(calculation.calculateTotalStats({games: foundgames})).map(action => {
                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
                     })}
                 </Text>
@@ -30,15 +30,7 @@ export default class SearchModal extends Component {
         else return <Text>No found Games</Text>
 
     }
-    objToArray = (obj) => {
-        // let values = Object.values(obj);
-        let objArray = [];
-        for (key in obj) {
-            objArray.push({ [key]: obj[key] })
-        }
-        console.log('OBJECT ARRAY', objArray)
-        return objArray
-    }
+  
 
     renderSearchInput = () => {
         return (

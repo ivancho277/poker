@@ -28,19 +28,14 @@ class GameScreen extends Component {
     goHome = () => {
         this.props.navigation.navigate('Home');
     }
-    logTags = async () => {
-        let tags = await storage.retrieveData().then((res) => {
-            console.log("HEY CHECK ME OUT");
-            console.log(JSON.parse(res), this.state.tagsearch)
-            const data = JSON.parse(res)
-            let byTag = calculations.findTag(data, this.state.tagsearch);
-            console.log(byTag);
-            return byTag;
-        }).catch(err => {
-            console.log("nothing here");
-            throw err;
+
+    retriveCurrentGame = async () => {
+        return currentTags = await storage.retrieveCurrentGame().then(res => {
+            if(res){
+            return JSON.parse(res);
+            }
+            else return res;     
         })
-        return tags;
     }
 
     componentDidMount() {
@@ -50,6 +45,12 @@ class GameScreen extends Component {
                 this.setState({
                     allTags: tagsArr
                 })
+            }
+        })
+        this.retriveCurrentGame().then(res => {
+            console.log("tag: ", res)
+            if(res != null){
+                this.setState({tags: res.tags})
             }
         })
     }
@@ -77,6 +78,7 @@ class GameScreen extends Component {
     }
 
     setLiveGamePosition = (games, tags) => {
+        
         this.setState({
             currentGame: games,
             tags: tags
@@ -91,15 +93,13 @@ class GameScreen extends Component {
 
     saveToTags(tag) {
         if (tag == "") {
-            let tagsArray = this.state.tags
-            tagsArray.push(this.state.selected);
+            let tagsArray = this.state.tags.concat(this.state.selected)
             this.setState({
                 tags: tagsArray
             })
         }
         else {
-            let tagsArray = this.state.tags;
-            tagsArray.push(tag);
+            let tagsArray = this.state.tags.concat(this.state.tag)
             this.setState({
                 tags: tagsArray
             })
