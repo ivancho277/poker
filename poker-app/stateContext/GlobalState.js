@@ -27,6 +27,13 @@ export class GlobalState extends Component {
                 console.log("THIS IS ASYNC")
                 console.log(this.state.gamesObj)
             }
+            storage.retrieveTags().then(res => {
+                if (res != undefined && res != null) {
+                    this.setState({ allTags: JSON.parse(res) })
+                }
+            }).catch(err => {
+                console.log('NO TAGS IN STORAGE');
+            })
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
             storage.resetActions();

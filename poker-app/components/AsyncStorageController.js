@@ -82,6 +82,7 @@ module.exports = {
             let allTags = await AsyncStorage.getItem('tags');
             return allTags;
         } catch {
+            return null;
             console.log("No Tags")
         }
     },

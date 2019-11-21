@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MyContext } from '../stateContext/GlobalState'
-
-import { Text, View, Button, TouchableHighlight, TextInput, StyleSheet, Modal } from 'react-native'
+import { Text, View, Button, TouchableHighlight, TextInput, StyleSheet, Modal, Picker } from 'react-native'
+import { Dropdown } from 'react-native-material-dropdown'
 
 const calculation = require('./statscalculation')
 
@@ -11,9 +11,11 @@ export default class SearchModal extends Component {
     state = {
         modalVisible: false,
         tagsearch: '',
-        shouldDisplay: false
+        shouldDisplay: false,
+        tagpicker: ''
 
     };
+
 
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.props.logTags(allGames, tag);
@@ -22,30 +24,60 @@ export default class SearchModal extends Component {
             return (
                 <Text style={{ justifyContent: 'center' }} >
                     Total Stats:{'\n'}
-                    {this.props.objToArray(calculation.calculateTotalStats({games: foundgames})).map(action => {
+                    {this.props.objToArray(calculation.calculateTotalStats({ games: foundgames })).map(action => {
                         return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
                     })}
                 </Text>
             )
         }
         else return <Text>No found Games</Text>
-
     }
-  
 
-    renderSearchInput = () => {
+    renderPicker() {
         return (
-            <View style={{ position: 'absolute', top: 15 }}>
-                <TextInput
+            <MyContext.Consumer>
+                {(context) => <Picker
+                    selectedValue={this.state.tagpicker}
+                    style={{ height: 40, width: 110, backgroundColor: 'white' }}
+
+                    prompt={"select tag"}
+                    onValueChange={(itemValue, itemIndex) => {
+                        this.setState({ tagpicker: itemValue })
+                    }}
+                >
+                    {context.state.allTags.map((tag, i) => {
+                        return <Picker.Item label={tag} value={tag} key={i} />
+                    })}
+                </Picker>}
+            </MyContext.Consumer>
+        )
+    }
+
+
+    renderSearchInput = (tags) => {
+
+        
+        return (
+            <View style={{ position: 'absolute', top: 15, width: 120 }}>
+                {/* <TextInput
                     style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
                     placeholder="Search by tag"
                     onChangeText={(tagsearch) => this.setState({ tagsearch })}
                     value={this.state.tagsearch}
                     style={{ backgroundColor: 'white' }}
-                />
+                /> */}
                 <MyContext.Consumer>
-                    {(context) => <Button title="search tags" onPress={() => {this.setState({shouldDisplay: true})} } />}
+                    {(context) => <Dropdown
+                        label='Search Tags'
+                        data={context.state.allTags.map((tag)=> {return {value: tag}})}
+                        onChangeText={(text) => this.setState({tagsearch: text, shouldDisplay: true})}
+                    />
+                    }
                 </MyContext.Consumer>
+
+                {/* <MyContext.Consumer>
+                    {(context) => <Button title="search tags" onPress={() => { this.setState({ shouldDisplay: true }) }} />}
+                </MyContext.Consumer> */}
             </View>
         )
     }
@@ -69,11 +101,11 @@ export default class SearchModal extends Component {
                             {this.renderSearchInput()}
                             <View style={styles.displayBox}>
                                 {this.state.shouldDisplay ?
-                                <MyContext.Consumer>
-                                    {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagsearch)}
-                                </MyContext.Consumer>
-                                :
-                                <Text>Stats Will Show here.</Text>
+                                    <MyContext.Consumer>
+                                        {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagsearch)}
+                                    </MyContext.Consumer>
+                                    :
+                                    <Text>Stats Will Show here.</Text>
                                 }
                             </View>
                             <View style={styles.closeButton}>
