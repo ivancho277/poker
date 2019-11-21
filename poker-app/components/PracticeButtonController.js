@@ -132,12 +132,6 @@ export default class PracticeButtonController extends Component {
 
 
 
-    saveToTags(tag) {
-        this.setState({
-            tags: this.state.tags.concat(tag)
-        })
-    };
-
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
         let temp = new gameStats(this.state.actions, this.state.tags);
