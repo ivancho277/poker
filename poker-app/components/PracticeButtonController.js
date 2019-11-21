@@ -144,7 +144,7 @@ export default class PracticeButtonController extends Component {
         let totals = this.state.actions.map((action) => {
             return { [action.actionName]: action.getTotalCount() }
         })
-        let tagsToSave = this.state.tags.length === 0 ? this.state.tags.concat('default') : this.state.tags
+        let tagsToSave = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags
 
         let gamesObj = {
             date: date.toDateString(),

@@ -17,6 +17,7 @@ export default class SearchModal extends Component {
 
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.props.logTags(allGames, tag);
+        console.log(foundgames)
         if (foundgames.length >= 1) {
             return (
                 <Text style={{ justifyContent: 'center' }} >
