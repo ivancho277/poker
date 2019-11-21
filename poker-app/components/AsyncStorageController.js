@@ -57,6 +57,7 @@ module.exports = {
                 return games;
         }
         catch {
+            throw error
             console.log('error retrieving data')
         }
     },

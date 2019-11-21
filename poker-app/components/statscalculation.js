@@ -62,7 +62,7 @@ module.exports = {
     },
 
     totalsPerAction: function(gamesObj){
-        return overallPercentagePerPosition(gamesObj);
+        return totalsPerAction(gamesObj);
     }
 }
 
@@ -174,7 +174,7 @@ function findManytags(allgames, tagarr) {
     return foundgames;
 }
 
-function totalsPerPosition(allgames) {
+function totalsPerAction(allgames) {
     try {
         //debugger;
         let totals = {}
@@ -202,8 +202,8 @@ function totalsPerPosition(allgames) {
     }
 }
 
-function overallPercentagePerPosition(allgames){
-    let totalsPerAction = totalsPerPosition(allgames);
+function totalsPerPosition(allgames){
+    let totalsPerAction = totalsPerAction(allgames);
     let positionTotals = {}
     for(action in totalsPerAction){
         for(position in totalsPerAction[action]){
@@ -215,7 +215,7 @@ function overallPercentagePerPosition(allgames){
             }
         }
     }
-    console.log('POS TOTS: ', positionTotals)
+    console.log('POS TOT: ', positionTotals)
     return positionTotals;
 }
 

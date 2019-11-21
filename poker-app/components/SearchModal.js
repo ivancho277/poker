@@ -79,7 +79,7 @@ export default class SearchModal extends Component {
 
                                 <TouchableHighlight style={{ borderStyle: 'solid', borderWidth: 2, borderColor: 'black' }}
                                     onPress={() => {
-                                        this.setState({ modalVisible: !this.state.modalVisible });
+                                        this.setState({ modalVisible: !this.state.modalVisible, tagsearch: '', shouldDisplay: false });
                                     }}>
                                     <Text style={styles.text}>Hide Modal</Text>
                                 </TouchableHighlight>

@@ -41,24 +41,29 @@ export default class PracticeButtonController extends Component {
 
     async populateGames() {
         await storageController.retrieveData().then((res) => {
-            let pastGames = JSON.parse(res);
-            console.log("populate function");
-            let arrayOfgames = [];
-            if (pastGames.games) {
-                pastGames.games.forEach(game => {
-                    arrayOfgames.push(game);
-                    console.log(game)
-                })
+            if (res != undefined) {
+                let pastGames = JSON.parse(res);
+                console.log("populate function");
+                let arrayOfgames = [];
+                if (pastGames.games) {
+                    pastGames.games.forEach(game => {
+                        arrayOfgames.push(game);
+                        console.log(game)
+                    })
+                }
+                console.log("TAKE A LOOK")
+                console.log(arrayOfgames)
+                console.log(res)
+                console.log(pastGames)
+                this.setState({
+                    gamesArray: arrayOfgames,
+                });
             }
-            console.log("TAKE A LOOK")
-            console.log(arrayOfgames)
-            console.log(res)
-            console.log(pastGames)
-            this.setState({
-                gamesArray: arrayOfgames,
-            });
         }).catch((error) => {
             alert("populate error");
+            if (this.state.actions.length <= 3) {
+                this.retrieveActions();
+            }
             throw error;
         })
     }
@@ -125,7 +130,7 @@ export default class PracticeButtonController extends Component {
         })
     }
 
-    
+
 
     saveToTags(tag) {
         this.setState({
@@ -140,7 +145,7 @@ export default class PracticeButtonController extends Component {
             return { [action.actionName]: action.getTotalCount() }
         })
         let tagsToSave = this.state.tags.length === 0 ? this.state.tags.concat('default') : this.state.tags
-        
+
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
@@ -233,15 +238,15 @@ export default class PracticeButtonController extends Component {
 
                 <View>
                     {this.state.actions ?
-                        <View style={{ display:"flex", flexDirection: 'row', justifyContent:'space-evenly', alignItems:'flex-start', alignItems:'center', flexWrap: 'wrap',height: 'auto', width: '90%'  }}>
+                        <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                             {this.state.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                    <Button style={{width: 30}} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.props.tags); console.log(action) }} />
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.props.tags); console.log(action) }} />
                                     </View>
                                 )
                             })}
-                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={()=> {this.setState({actionInputOpen: true})}} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
 
                         :
@@ -261,7 +266,7 @@ export default class PracticeButtonController extends Component {
                     </View>
                     :
                     <Text></Text>
-                    
+
                 }
                 <Text>{'\n'}</Text>
                 <View>

@@ -33,13 +33,17 @@ export default class Statsbox extends Component {
 
     componentDidMount() {
         storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-            this.setState({
-                gamesObj: JSON.parse(res),
-                loading: false,
-            })
-            console.log("THIS IS ASYNC")
-            console.log(this.state.gamesObj)
+            if (res != undefined) {
+                console.log(JSON.parse(res));
+                this.setState({
+                    gamesObj: JSON.parse(res),
+                    loading: false,
+                })
+                console.log("THIS IS ASYNC")
+                console.log(this.state.gamesObj)
+            } else {
+                this.setState({loading: false})
+            }
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
             throw error;
@@ -81,8 +85,8 @@ export default class Statsbox extends Component {
     }
 
     logTagsTotals() {
-        if(this.props.tags.length >= 0){
-        return calculation.includesAllTags(this.state.gamesObj, this.props.tags)
+        if (this.props.tags.length >= 0) {
+            return calculation.includesAllTags(this.state.gamesObj, this.props.tags)
         } else {
             return calculation.includesAllTags(this.state.gamesObj, ['default'])
 
@@ -107,7 +111,7 @@ export default class Statsbox extends Component {
         console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
-                 
+
                 {this.props.currentGame.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
@@ -131,7 +135,7 @@ export default class Statsbox extends Component {
                     :
                     this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
                         ?
-                        <Text>Nothing here</Text>
+                        <Text>Nothing in storage</Text>
                         :
                         this.state.displayChange ?
 
@@ -184,7 +188,7 @@ export default class Statsbox extends Component {
                     }}
                 />
 
-                    {/* <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button> */}
+                {/* <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button> */}
                 {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>
