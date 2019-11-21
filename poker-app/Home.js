@@ -55,7 +55,7 @@ class HomeScreen extends Component {
                 <View>
                     {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
                     <MyContext.Consumer>
-                        {(context) => <Button title="test" onPress={() => { calculation.totalPercentPerPosition(context.state.gamesObj) }} />}
+                        {(context) => <Button title="test" onPress={() => { calculation.totalsPerAction(context.state.gamesObj) }} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
                     <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>

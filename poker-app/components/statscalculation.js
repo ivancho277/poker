@@ -59,6 +59,10 @@ module.exports = {
 
     totalsPerPosition: function (gameObj) {
         return totalsPerPosition(gameObj);
+    },
+
+    totalsPerAction: function(gamesObj){
+        return overallPercentagePerPosition(gamesObj);
     }
 }
 
@@ -199,7 +203,20 @@ function totalsPerPosition(allgames) {
 }
 
 function overallPercentagePerPosition(allgames){
-
+    let totalsPerAction = totalsPerPosition(allgames);
+    let positionTotals = {}
+    for(action in totalsPerAction){
+        for(position in totalsPerAction[action]){
+            if(!positionTotals[position]){
+                positionTotals[position] = totalsPerAction[action][position]
+            }
+            else{
+                positionTotals[position] = positionTotals[position] + totalsPerAction[action][position]
+            }
+        }
+    }
+    console.log('POS TOTS: ', positionTotals)
+    return positionTotals;
 }
 
 function percentagePerPositionByTags(allgames, tagsArr) {

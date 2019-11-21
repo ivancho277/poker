@@ -107,6 +107,7 @@ export default class Statsbox extends Component {
         console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
+                 
                 {this.props.currentGame.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
@@ -156,12 +157,12 @@ export default class Statsbox extends Component {
                             :
 
                             <View>
-                                <Divider>Overall Stats:</Divider>
+                                <Divider>Overall Stats: {table[this.props.position]}</Divider>
                                 <Text>
                                     {this.currentPositionDisplay(this.props.position)} {'\n'}
 
                                 </Text>
-                                <Divider>Current Game {'\n'}</Divider>
+                                <Divider>Current Game: {table[this.props.position]}{'\n'}</Divider>
                                 <Text>
 
                                     {this.currentGameDisplay(this.props.position)}
@@ -183,7 +184,7 @@ export default class Statsbox extends Component {
                     }}
                 />
 
-                    <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button>
+                    {/* <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button> */}
                 {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>
