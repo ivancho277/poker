@@ -27,7 +27,7 @@ class HomeScreen extends Component {
     }
 
     componentDidMount(){
-        
+
     }
 
     conextRender = (cb) => {
@@ -59,7 +59,7 @@ class HomeScreen extends Component {
                 <View>
                     {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
                     <MyContext.Consumer>
-                        {(context) => <Button title="test" onPress={() => {  calculation.totalsPerPosition(context.state.gamesObj) }} />}
+                        {(context) => <Button title="test" onPress={() => {  calculation.calcPercentByPosition(context.state.gamesObj) }} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
                     <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
