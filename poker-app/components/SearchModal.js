@@ -55,8 +55,6 @@ export default class SearchModal extends Component {
 
 
     renderSearchInput = (tags) => {
-
-        
         return (
             <View style={{ position: 'absolute', top: 15, width: 120 }}>
                 {/* <TextInput
@@ -81,9 +79,6 @@ export default class SearchModal extends Component {
             </View>
         )
     }
-
-
-
 
 
     render() {

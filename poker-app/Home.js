@@ -63,11 +63,9 @@ class HomeScreen extends Component {
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
                     <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
-
                 </View>
 
                 <View>
-
                     <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={300} width={170} />
                     <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                     <Text>ReRender global state</Text>

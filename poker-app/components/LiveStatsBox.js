@@ -42,7 +42,7 @@ export default class Statsbox extends Component {
                 console.log("THIS IS ASYNC")
                 console.log(this.state.gamesObj)
             } else {
-                this.setState({loading: false})
+                this.setState({ loading: false })
             }
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
@@ -55,10 +55,15 @@ export default class Statsbox extends Component {
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
+    logPercentagesByPosition() {
+        return calculation.calcPercentByPosition(this.state.gamesObj);
+    }
+
 
 
     currentPositionDisplay(position) {
-        let allGames = this.logTotalsByPosition();
+        //let allGames = this.logTotalsByPosition();
+        let allGames = this.logPercentagesByPosition();
         if (this.isEmpty(allGames)) {
             return <Text>No Saved Games</Text>
         }
@@ -76,7 +81,7 @@ export default class Statsbox extends Component {
             console.log(allGamesArray)
             return <Text>
                 {allGamesArray.map(game => {
-                    return `${game.key}s: ${game[position]}  `
+                    return `${game.key}s: ${game[position]}%  `
                 })
                 }
 
