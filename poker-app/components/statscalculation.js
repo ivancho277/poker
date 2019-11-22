@@ -234,7 +234,7 @@ function percentagesByPostion(allgames) {
             //console.log("too: ", percentages[action], action)
         
         for (position in perAction[action]) {
-            percentages[action][position] = Math.round(perAction[action][position] / array[position] * 100)
+            percentages[action][position] = Math.round(perAction[action][position] / perPosition[position] * 100)
         }
     }
 

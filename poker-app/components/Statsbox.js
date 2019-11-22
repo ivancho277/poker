@@ -53,20 +53,24 @@ export default function Statsbox(props) {
                             :
                             isOnPositionStats === true
                                 ?
-                                <Text>
-                                    Stats by position: {'\n'}
-                                    {calculation.getPercentages(context.state.gamesObj).map(action => {
-                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
-                                    })}
+                                <View>
+                                    <Divider> By percentage: {'\n'} </Divider>
+                                    <Text>
+                                        {calculation.getPercentages(context.state.gamesObj).map(action => {
+                                            return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
+                                        })}
 
-                                </Text>
+                                    </Text>
+                                </View>
                                 :
-                                <Text style={{ justifyContent: 'center' }} >
-                                    Total Stats:{'\n'}
-                                    {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
-                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
-                                    })}
-                                </Text>
+                                <View>
+                                    <Divider>Total Stats:{'\n'}</Divider>
+                                    <Text style={{ justifyContent: 'center' }} >
+                                        {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
+                                            return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
+                                        })}
+                                    </Text>
+                                </View>
                     }
                     <ToggleSwitch
                         isOn={isOnPositionStats}
@@ -84,7 +88,7 @@ export default function Statsbox(props) {
                 }
             </MyContext.Consumer>
 
-        </View>
+        </View >
 
     )
 

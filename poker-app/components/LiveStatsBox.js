@@ -140,7 +140,7 @@ export default class Statsbox extends Component {
                     :
                     this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
                         ?
-                        <Text>Nothing in storage</Text>
+                        <Divider>Nothing in storage</Divider>
                         :
                         this.state.displayChange ?
 
@@ -160,7 +160,7 @@ export default class Statsbox extends Component {
                                 </View>
 
                                 :
-                                <Text>NO TAGS</Text>
+                                <Divider>NO TAGS</Divider>
 
 
                             :
