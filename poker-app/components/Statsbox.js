@@ -37,7 +37,7 @@ export default function Statsbox(props) {
 
 
     return (
-        <View style={{ height: props.height, color: '#32CD32', width: props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+        <View style={{ height: props.height, color: '#32CD32', width: props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', marginBottom: 10, padding: 10 }}>
 
             <MyContext.Consumer>
                 {(context) => <ImageBackground style={{ flex: 1, height: '100%', width: '100%' }} source={cardImg}>
@@ -55,7 +55,7 @@ export default function Statsbox(props) {
                                 ?
                                 <View>
                                     <Divider> By percentage: {'\n'} </Divider>
-                                    <Text>
+                                    <Text style={{fontSize: 16, opacity: 1, textAlign: 'center'}}>
                                         {calculation.getPercentages(context.state.gamesObj).map(action => {
                                             return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
                                         })}
@@ -65,7 +65,7 @@ export default function Statsbox(props) {
                                 :
                                 <View>
                                     <Divider>Total Stats:{'\n'}</Divider>
-                                    <Text style={{ justifyContent: 'center' }} >
+                                    <Text style={{opacity: 1, textAlign: 'center', fontSize: 16 }} >
                                         {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
                                             return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
                                         })}
