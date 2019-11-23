@@ -45,7 +45,7 @@ export default class PracticeButtonController extends Component {
                 let pastGames = JSON.parse(res);
                 console.log("populate function");
                 let arrayOfgames = [];
-                
+
                 if (pastGames.games) {
                     pastGames.games.forEach(game => {
                         arrayOfgames.push(game);
@@ -117,7 +117,7 @@ export default class PracticeButtonController extends Component {
 
     componentDidMount() {
         // this.populateGames().then(() => {
-            this.setState({gamesArray: this.props.getGames}, () => { 
+        this.setState({ gamesArray: this.props.getGames }, () => {
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
             this.retrieveCurrentGame().then(res => {
@@ -128,8 +128,8 @@ export default class PracticeButtonController extends Component {
                     })
                 }
             })
-         })
-        
+        })
+
     }
 
 
@@ -205,7 +205,12 @@ export default class PracticeButtonController extends Component {
 
 
     onActionClick(action) {
-
+        console.log(`you clicked ${action.actionName}`);
+        action.incrementActionAtPosition(this.state.position);
+        this.setState({ currentTime: new Date() });
+        this.props.setPosition(this.state.position);
+        this.props.setLiveGamePosition(this.state.actions, this.props.tags);
+        console.log(action)
     }
 
     isEmpty = (obj) => {
@@ -239,7 +244,7 @@ export default class PracticeButtonController extends Component {
                             {this.state.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { console.log(`you clicked ${action.actionName}`); action.incrementActionAtPosition(this.state.position); this.setState({ currentTime: new Date() }); this.props.setPosition(this.state.position); this.props.setLiveGamePosition(this.state.actions, this.props.tags); console.log(action) }} />
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action) }} />
                                     </View>
                                 )
                             })}
