@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } fr
 import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
+import { MyContext } from './stateContext/GlobalState';
 
 const storage = require("./components/AsyncStorageController.js");
 
@@ -128,17 +129,21 @@ class GameScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                <LiveStatsBox currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+            <MyContext.Consumer>
+            {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
+                <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
 
                 {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                 <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
                 {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                <PBC tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                <PBC getGames={context.state.gamesArray} updateGames={context.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                 <Button title='Go to home screen' onPress={() => this.goHome()} />
                 {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
             </View>
+            }
+            </MyContext.Consumer>
+            
         )
     }
 }

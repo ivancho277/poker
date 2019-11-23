@@ -11,20 +11,33 @@ export class GlobalState extends Component {
         totalsByPosition: {},
         totals: {},
         gamesObj: {},
+        gamesArray: [],
         allTags: []
     }
     componentDidMount() {
         // storage.removeData()
         storage.retrieveData().then((res) => {
             //console.log(JSON.parse(res));
+            //debugger;
             if (res != undefined) {
-                let temp = calculation.calculateByPosition(JSON.parse(res))
+                let pastGames = JSON.parse(res)
+                console.log("SYNCC " , pastGames)
+                let temp = calculation.calculateByPosition(pastGames)
+                let allGamesArray = [];
+                if (pastGames.games) {
+                    pastGames.games.forEach(game => {
+                        allGamesArray.push(game)
+                    })
+                }
+
                 this.setState({
                     gamesObj: JSON.parse(res),
                     loading: false,
-                    totals: temp
+                    totals: temp,
+                    gamesArray: allGamesArray
                 })
                 console.log("THIS IS ASYNC")
+                console.log(pastGames)
                 console.log(this.state.gamesObj)
             }
             storage.retrieveTags().then(res => {
@@ -58,7 +71,8 @@ export class GlobalState extends Component {
 
     updateGames(newGamesObj) {
         this.setState({
-            gamesObj: newGamesObj
+            gamesObj: newGamesObj,
+            gamesArray: newGamesObj.games
         })
     }
 
@@ -68,6 +82,14 @@ export class GlobalState extends Component {
         })
     }
 
+    getGames() {
+        return this.state.gamesObj;
+    }
+
+    getGamesArray() {
+        return this.state.gamesArray;
+    }
+
     render() {
         return (
             <MyContext.Provider value={{
@@ -75,8 +97,11 @@ export class GlobalState extends Component {
                 incrementPosition: () => this.incrementPosition(),
                 setPosition: (position) => this.setPosition(position),
                 remount: () => this.componentDidMount(),
-                updateGames: (gamesObj) => { this.updateGames(gamesObj) }
-            }}>
+                updateGames: (gamesObj) => { this.updateGames(gamesObj) },
+                getGames: () => this.getGames(),
+                getGamesArray: () => this.getGamesArray()
+            }
+            }>
                 {this.props.children}
             </MyContext.Provider>
         )

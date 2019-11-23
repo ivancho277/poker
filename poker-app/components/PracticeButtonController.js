@@ -45,6 +45,7 @@ export default class PracticeButtonController extends Component {
                 let pastGames = JSON.parse(res);
                 console.log("populate function");
                 let arrayOfgames = [];
+                
                 if (pastGames.games) {
                     pastGames.games.forEach(game => {
                         arrayOfgames.push(game);
@@ -115,7 +116,8 @@ export default class PracticeButtonController extends Component {
     }
 
     componentDidMount() {
-        this.populateGames().then(() => {
+        // this.populateGames().then(() => {
+            this.setState({gamesArray: this.props.getGames}, () => { 
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
             this.retrieveCurrentGame().then(res => {
@@ -126,8 +128,8 @@ export default class PracticeButtonController extends Component {
                     })
                 }
             })
-
-        })
+         })
+        
     }
 
 
@@ -139,7 +141,7 @@ export default class PracticeButtonController extends Component {
             return { [action.actionName]: action.getTotalCount() }
         })
         let tagsToSave = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags
-
+        console.log("RAWR", temp.getCurrentStats())
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
@@ -158,6 +160,7 @@ export default class PracticeButtonController extends Component {
         if (shouldReturn) {
             return saveObj;
         } else {
+            this.props.updateGames(saveObj);
             storageController.saveData(saveObj);
 
         }
@@ -267,7 +270,7 @@ export default class PracticeButtonController extends Component {
                     <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                 </View>
                 <MyContext.Consumer >
-                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); context.updateGames(this.toBeSaved(true)); this.props.goHome() }} />}
+                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
                 </MyContext.Consumer>
             </View>
         );

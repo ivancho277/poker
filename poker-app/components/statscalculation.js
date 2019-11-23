@@ -143,6 +143,8 @@ function countTotal(obj) {
         console.log('STATS', totals)
         return totals
     } catch {
+        throw console.error('cant count');
+        
         alert('cant count')
     }
 
@@ -186,22 +188,34 @@ function totalsPerAction(allgames) {
             console.log(game)
             for (action in game.game) {
                 console.log(action + " " + game.game[action].total)
-                if ([action] != 'total') {
-                    if (!totals[action]) {
-                        totals[action] = game.game[action]
-                    }
-                    else {
-                        for (position in game.game[action]) {
-                            totals[action][position] = totals[action][position] += game.game[action][position]
+
+                if (!totals[action]) {
+                    console.log("YOU", game.game[action])
+                    totals[action] = {}
+                }
+
+                for (position in game.game[action]) {
+                    //console.log("MEEEE", game.game[action][position])
+                    if ([position] != 'total') {
+                        if (!totals[action][position]) {
+                            totals[action][position] = game.game[action][position]
+                        }
+                        else {
+                            totals[action][position] = totals[action][position] + game.game[action][position]
+
                         }
                     }
                 }
+
+
             }
         })
         console.log('PERCENT', totals)
         return totals
     } catch {
-        alert('cant count')
+        console.log('cant count')
+        
+       // alert('cant count')
     }
 }
 
@@ -225,21 +239,21 @@ function totalsPerPosition(allgames) {
 function percentagesByPostion(allgames) {
     let perAction = totalsPerAction(allgames);
     let perPosition = totalsPerPosition(allgames);
-   // console.log('me: ', perPosition)
+    // console.log('me: ', perPosition)
     let array = Object.values(perPosition);
     let percentages = {};
     for (action in perAction) {
-        
-            percentages[action] = perAction[action];
-            //console.log("too: ", percentages[action], action)
-        
+
+        percentages[action] = perAction[action];
+        //console.log("too: ", percentages[action], action)
+
         for (position in perAction[action]) {
             percentages[action][position] = Math.round(perAction[action][position] / perPosition[position] * 100)
         }
     }
 
-console.log("look at me", percentages)
-return percentages;
+    console.log("look at me", percentages)
+    return percentages;
 }
 
 function percentagePerPositionByTags(allgames, tagsArr) {

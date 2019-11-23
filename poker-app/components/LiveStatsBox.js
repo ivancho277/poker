@@ -32,22 +32,24 @@ export default class Statsbox extends Component {
 
 
     componentDidMount() {
-        storage.retrieveData().then((res) => {
-            if (res != undefined) {
-                console.log(JSON.parse(res));
-                this.setState({
-                    gamesObj: JSON.parse(res),
-                    loading: false,
-                })
-                console.log("THIS IS ASYNC")
-                console.log(this.state.gamesObj)
-            } else {
-                this.setState({ loading: false })
-            }
-        }).catch((error) => {
-            console.log("HOME SCREEN ERROR");
-            throw error;
-        })
+        this.setState({gamesObj: this.props.getGamesObj, loading: false})
+        // storage.retrieveData().then((res) => {
+        //     if (res != undefined) {
+        //         console.log(JSON.parse(res));
+        //         this.setState({
+        //             gamesObj: JSON.parse(res),
+        //             loading: false,
+        //         })
+        //         console.log("THIS IS ASYNC")
+        //         console.log(this.state.gamesObj)
+        //     } else {
+        //         this.setState({ loading: false })
+        //     }
+        // }).catch((error) => {
+        //     console.log("HOME SCREEN ERROR");
+        //     throw error;
+        // })
+
     }
 
     logTotalsByPosition() {
