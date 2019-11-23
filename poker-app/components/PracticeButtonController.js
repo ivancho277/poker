@@ -35,7 +35,8 @@ export default class PracticeButtonController extends Component {
             previousTime: new Date(),
             actionInputOpen: false,
             showModal: false,
-            actionToAdd: ''
+            actionToAdd: '',
+            doneLoading: false
         };
     };
 
@@ -125,6 +126,7 @@ export default class PracticeButtonController extends Component {
                 if (!!res) {
                     this.retrieveActions().then((res) => {
                         console.log('actions')
+                        this.setState({doneLoading: true})
                     })
                 }
             })
@@ -232,14 +234,14 @@ export default class PracticeButtonController extends Component {
 
     render() {
         return (
+            this.state.doneLoading ?
             <View>
-
                 {/* <Text> PracticeButtonController </Text> */}
                 <Text>{'\n'}</Text>
                 {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
 
                 <View>
-                    {this.state.actions ?
+                    {this.state.actions.length > 0 ?
                         <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                             {this.state.actions.map((action, index) => {
                                 return (
@@ -278,6 +280,8 @@ export default class PracticeButtonController extends Component {
                     {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
                 </MyContext.Consumer>
             </View>
+            :
+            <Text> Loading ...</Text>
         );
     }
 }
