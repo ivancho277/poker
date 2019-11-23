@@ -83,6 +83,7 @@ export default class PracticeButtonController extends Component {
 
                 this.setState({
                     currentGame: currentgame,
+                    doneLoading: true,
                     actions: pastactions,
                     tags: currentgame.tags
                 }, () => { this.props.setLiveGamePosition(this.state.actions, this.state.tags) })
@@ -239,7 +240,6 @@ export default class PracticeButtonController extends Component {
                 {/* <Text> PracticeButtonController </Text> */}
                 <Text>{'\n'}</Text>
                 {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
-
                 <View>
                     {this.state.actions.length > 0 ?
                         <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>

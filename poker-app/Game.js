@@ -22,10 +22,6 @@ class GameScreen extends Component {
         }
     }
 
-
-
-
-
     goHome = () => {
         this.props.navigation.navigate('Home');
     }
@@ -78,8 +74,7 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (games, tags) => {
-        
+    setLiveGamePosition = (games, tags) => {   
         this.setState({
             currentGame: games,
             tags: tags
