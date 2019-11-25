@@ -4,6 +4,7 @@ import Radio from './Radio.js';
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 const storageController = require('./AsyncStorageController.js')
+const calculations = require('./statscalculation.js')
 const gameConstructors = require('./gameObjects.js');
 const { gameStats, Action } = gameConstructors;
 
@@ -127,12 +128,18 @@ export default class PracticeButtonController extends Component {
                 if (!!res) {
                     this.retrieveActions().then((res) => {
                         console.log('actions')
-                        this.setState({doneLoading: true})
+                        this.setState({ doneLoading: true })
                     })
                 }
             })
         })
 
+    }
+
+    componentDidUpdate() {
+        if (this.state.actionInputOpen !== this.props.actionInputOpen) {
+            this.setState({ actionInputOpen: this.props.actionInputOpen })
+        }
     }
 
 
@@ -181,6 +188,7 @@ export default class PracticeButtonController extends Component {
             currentGame: temp.getCurrentStats(),
             actions: this.state.actions
         }
+        this.currentGameStats(this.props.gamesObj, gamesObj)
         console.log("HOLLLY MOLLY")
         //console.log(temp.getCurrentStats())
         console.log(gamesObj)
@@ -216,6 +224,11 @@ export default class PracticeButtonController extends Component {
         console.log(action)
     }
 
+    currentGameStats(gamesObj, currentGame) {
+        calculations.calcCurrentGamePercentages(gamesObj, currentGame);
+
+    }
+
     isEmpty = (obj) => {
         for (var key in obj) {
             if (obj.hasOwnProperty(key))
@@ -236,52 +249,54 @@ export default class PracticeButtonController extends Component {
     render() {
         return (
             this.state.doneLoading ?
-            <View>
-                {/* <Text> PracticeButtonController </Text> */}
-                <Text>{'\n'}</Text>
-                {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                 <View>
-                    {this.state.actions.length > 0 ?
-                        <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
-                            {this.state.actions.map((action, index) => {
-                                return (
-                                    <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action) }} />
-                                    </View>
-                                )
-                            })}
-                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
-                        </View>
-
-                        :
-                        <Text>Loading....</Text>
-                    }
-                </View>
-                <Text>{'\n'}</Text>
-                {this.state.actionInputOpen ?
+                    {/* <Text> PracticeButtonController </Text> */}
+                    <Text>{'\n'}</Text>
+                    {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
-                        <TextInput
-                            style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                            placeholder='Add a new game Action'
-                            onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
-                            value={this.state.actionToAdd}
-                        />
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.state.actionToAdd != "" ? this.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} />
-                    </View>
-                    :
-                    <Text></Text>
+                        {this.state.actions.length > 0 ?
+                            <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                {this.state.actions.map((action, index) => {
+                                    return (
+                                        <View key={index}>
+                                            <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action) }} />
+                                        </View>
+                                    )
+                                })}
+                                <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            </View>
 
-                }
-                <Text>{'\n'}</Text>
-                <View>
-                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                            :
+                            <Text>Loading....</Text>
+                        }
+                    </View>
+                    <Text>{'\n'}</Text>
+                    {this.state.actionInputOpen ?
+                        <View >
+                            <TextInput
+                                style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                                placeholder='Add a new game Action'
+                                onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
+                                value={this.state.actionToAdd}
+                            />
+                            <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.state.actionToAdd != "" ? this.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} />
+                        </View>
+                        :
+                        <Text></Text>
+
+                    }
+                    <Text>{'\n'}</Text>
+                    <View>
+                        <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                    </View>
+                    <View style={{ width: 130, display: 'flex', justifyContent: 'center', alignSelf: 'auto' }}>
+                        <MyContext.Consumer >
+                            {(context) => <Button title='Save, End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
+                        </MyContext.Consumer>
+                    </View>
                 </View>
-                <MyContext.Consumer >
-                    {(context) => <Button title='Save Data. End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
-                </MyContext.Consumer>
-            </View>
-            :
-            <Text> Loading ...</Text>
+                :
+                <Text> Loading ...</Text>
         );
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, Modal, TextInput, KeyboardAvoidingView } from 'react-native';
 import ScrollPicker from "react-native-fen-wheel-scroll-picker";
+import { AntDesign } from '@expo/vector-icons';
 
 
 export default class TagsModal extends Component {
@@ -54,10 +55,12 @@ export default class TagsModal extends Component {
                 </Modal>
 
                 {/*Button will change state to true and view will re-render*/}
-                <Button
+                {/* <Button
                     title="Add Tag to Game"
                     onPress={() => { this.setState({ isVisible: true }) }}
-                />
+                /> */}
+                <AntDesign size={18}name='tags'onPress={() => { this.setState({ isVisible: true }) }} />
+
             </View>
         );
     }

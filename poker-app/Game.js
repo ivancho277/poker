@@ -4,6 +4,9 @@ import PBC from './components/PracticeButtonController';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
 import { MyContext } from './stateContext/GlobalState';
+import ActionButton from 'react-native-action-button';
+import ActionModal from './components/ActionsModal'
+import { AntDesign } from '@expo/vector-icons';
 
 const storage = require("./components/AsyncStorageController.js");
 
@@ -18,7 +21,8 @@ class GameScreen extends Component {
             tag: '',
             tags: [],
             allTags: [],
-            selected: ""
+            selected: "",
+            actionInputOpen: false
         }
     }
 
@@ -28,10 +32,10 @@ class GameScreen extends Component {
 
     retriveCurrentGame = async () => {
         return currentTags = await storage.retrieveCurrentGame().then(res => {
-            if(res){
-            return JSON.parse(res);
+            if (res) {
+                return JSON.parse(res);
             }
-            else return res;     
+            else return res;
         })
     }
 
@@ -46,8 +50,8 @@ class GameScreen extends Component {
         })
         this.retriveCurrentGame().then(res => {
             console.log("tag: ", res)
-            if(res != null){
-                this.setState({tags: res.tags})
+            if (res != null) {
+                this.setState({ tags: res.tags })
             }
         })
     }
@@ -74,7 +78,7 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (games, tags) => {   
+    setLiveGamePosition = (games, tags) => {
         this.setState({
             currentGame: games,
             tags: tags
@@ -125,22 +129,38 @@ class GameScreen extends Component {
     render() {
         return (
             <MyContext.Consumer>
-            {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
+                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
 
-                {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
-                <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
-                {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                <PBC getGames={context.state.gamesArray} updateGames={context.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
-                <Button title='Go to home screen' onPress={() => this.goHome()} />
-                {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
+                    {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
+                    {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
+                    {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
+                    <PBC actionInputOpen={this.state.actionInputOpen} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                    <Button title='Go to home screen' onPress={() => this.goHome()} />
+                    {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-            </View>
-            }
+                    <ActionButton style={{ position: 'absolute' }}>
+                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => console.log("notes tapped!")}>
+                            <TagsModal style={styles.actionButtonIcon} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => {this.setState({actionInputOpen: !this.state.actionInputOpen}) }}>
+                            <AntDesign name="plus" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                    </ActionButton>
+
+                </View>
+                }
             </MyContext.Consumer>
-            
+
         )
     }
 }
 
 export default GameScreen;
+const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
+});

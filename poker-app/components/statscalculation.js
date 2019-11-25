@@ -66,6 +66,10 @@ module.exports = {
 
     calcPercentByPosition: function (gamesObj) {
         return percentagesByPostion(gamesObj);
+    },
+
+    calcCurrentGamePercentages: function(gamesObj, currentGame){
+        return percentagePerPositionByTags(gamesObj, currentGame)
     }
 }
 
@@ -183,14 +187,14 @@ function totalsPerAction(allgames) {
     try {
         //debugger;
         let totals = {}
-        console.log("FUNCTION", allgames)
+        //console.log("FUNCTION", allgames)
         allgames.games.forEach(game => {
-            console.log(game)
+            //console.log(game)
             for (action in game.game) {
-                console.log(action + " " + game.game[action].total)
+               // console.log(action + " " + game.game[action].total)
 
                 if (!totals[action]) {
-                    console.log("YOU", game.game[action])
+                    //console.log("YOU", game.game[action])
                     totals[action] = {}
                 }
 
@@ -210,7 +214,7 @@ function totalsPerAction(allgames) {
 
             }
         })
-        console.log('PERCENT', totals)
+       // console.log('PERCENT', totals)
         return totals
     } catch {
         console.log('cant count')
@@ -252,11 +256,23 @@ function percentagesByPostion(allgames) {
         }
     }
 
-    console.log("look at me", percentages)
+   // console.log("look at me", percentages)
     return percentages;
 }
 
-function percentagePerPositionByTags(allgames, tagsArr) {
+function percentagePerPositionByTags(allgames, currentGame) {
+    let foundGames = [];
+    foundGames = findManytags(allgames, currentGame.tags);
+    let percentages = {};
+    percentages = currentGame.actions.map(action => {
+        let name = action.actionName
+        let total = action.count
+        return {[name]: total}
+    })
+    console.log("NEW TEST: ", percentages)
+    let totals = countTotal({games: foundGames});
+    console.log("Test 2: ", totals);
+  
 
 }
 
