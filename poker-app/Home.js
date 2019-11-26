@@ -59,7 +59,7 @@ class HomeScreen extends Component {
                 <View>
                     {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
                     <MyContext.Consumer>
-                        {(context) => <Button title="test" onPress={() => {  calculation.calcPercentByPosition(context.state.gamesObj) }} />}
+                        {(context) => <Button title="test" onPress={() => {  console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"]) )}} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
                     <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>

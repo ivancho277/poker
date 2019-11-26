@@ -8,6 +8,10 @@ module.exports = {
         return SearchTag(allGames, tag)
     },
 
+    findManyTags(allgames, tags){
+        return findManytags(allgames, tags)
+    },
+
     /**
      * 
      * @param {object} games 
@@ -68,7 +72,7 @@ module.exports = {
         return percentagesByPostion(gamesObj);
     },
 
-    calcCurrentGamePercentages: function(gamesObj, currentGame){
+    calcCurrentGamePercentages: function (gamesObj, currentGame) {
         return percentagePerPositionByTags(gamesObj, currentGame)
     }
 }
@@ -148,7 +152,7 @@ function countTotal(obj) {
         return totals
     } catch {
         throw console.error('cant count');
-        
+
         alert('cant count')
     }
 
@@ -175,6 +179,8 @@ function checkversion(OldVersion) {
 }
 
 function findManytags(allgames, tagarr) {
+    //console.log("inside: ", allgames);
+    //console.log("more inside: ", tagarr)
     let foundgames = allgames.games.filter(game => {
         if (tagarr.every(value => { return (game.tags.indexOf(value) >= 0) })) {
             return game;
@@ -191,7 +197,7 @@ function totalsPerAction(allgames) {
         allgames.games.forEach(game => {
             //console.log(game)
             for (action in game.game) {
-               // console.log(action + " " + game.game[action].total)
+                // console.log(action + " " + game.game[action].total)
 
                 if (!totals[action]) {
                     //console.log("YOU", game.game[action])
@@ -214,12 +220,12 @@ function totalsPerAction(allgames) {
 
             }
         })
-       // console.log('PERCENT', totals)
+        // console.log('PERCENT', totals)
         return totals
     } catch {
         console.log('cant count')
-        
-       // alert('cant count')
+
+        // alert('cant count')
     }
 }
 
@@ -256,23 +262,31 @@ function percentagesByPostion(allgames) {
         }
     }
 
-   // console.log("look at me", percentages)
+    // console.log("look at me", percentages)
     return percentages;
 }
 
 function percentagePerPositionByTags(allgames, currentGame) {
-    let foundGames = [];
-    foundGames = findManytags(allgames, currentGame.tags);
-    let percentages = {};
-    percentages = currentGame.actions.map(action => {
-        let name = action.actionName
-        let total = action.count
-        return {[name]: total}
-    })
-    console.log("NEW TEST: ", percentages)
-    let totals = countTotal({games: foundGames});
-    console.log("Test 2: ", totals);
-  
+    try {
+        let currentTags = [...currentGame.tags];
+        console.log(findManytags(allgames, ['Moon', "France"]))
+        let foundGames = findManytags(allgames,currentTags);
+        console.log("array: ", currentTags)
+        let percentages = {};
+        percentages = currentGame.actions.map(action => {
+            let name = action.actionName
+            let total = action.count
+            return { [name]: total }
+        })
+        console.log("NEW TEST: ", foundGames)
+        console.log()
+        let totals = countTotal({ games: foundGames });
+        console.log("Test 2: ", totals);
+
+    } catch {
+        return Error('Cant calculate current game stats')
+    }
+
 
 }
 
