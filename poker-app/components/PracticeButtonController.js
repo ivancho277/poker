@@ -249,13 +249,13 @@ export default class PracticeButtonController extends Component {
     render() {
         return (
             this.state.doneLoading ?
-                <View>
+                <View style={{justifyContent: 'center', alignContent: 'center',display: 'flex' ,margin: 10}}>
                     {/* <Text> PracticeButtonController </Text> */}
                     <Text>{'\n'}</Text>
                     {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
                         {this.state.actions.length > 0 ?
-                            <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                            <View style={{ display: "flex", flexDirection: 'row',zIndex: -1 ,justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {this.state.actions.map((action, index) => {
                                     return (
                                         <View key={index}>
@@ -272,9 +272,9 @@ export default class PracticeButtonController extends Component {
                     </View>
                     <Text>{'\n'}</Text>
                     {this.state.actionInputOpen ?
-                        <View >
+                        <View style={{position: "relative", zIndex: -1}}>
                             <TextInput
-                                style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                                style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid',}}
                                 placeholder='Add a new game Action'
                                 onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
                                 value={this.state.actionToAdd}
@@ -289,7 +289,7 @@ export default class PracticeButtonController extends Component {
                     <View>
                         <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                     </View>
-                    <View style={{ width: 130, display: 'flex', justifyContent: 'center', alignSelf: 'auto' }}>
+                    <View style={{ width: 150 ,marginLeft:80 ,borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black' , justifyContent: 'center', position: 'relative' }}>
                         <MyContext.Consumer >
                             {(context) => <Button title='Save, End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
                         </MyContext.Consumer>

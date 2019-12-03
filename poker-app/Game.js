@@ -136,15 +136,18 @@ class GameScreen extends Component {
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
                     <PBC actionInputOpen={this.state.actionInputOpen} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
-                    <Button title='Go to home screen' onPress={() => this.goHome()} />
+                    {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                    <ActionButton style={{ position: 'absolute' }}>
+                    <ActionButton style={{position: 'absolute', zIndex: 1 }}>
                         <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => console.log("notes tapped!")}>
                             <TagsModal style={styles.actionButtonIcon} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => {this.setState({actionInputOpen: !this.state.actionInputOpen}) }}>
                             <AntDesign name="plus" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#228B22' title="Go Home" onPress={() => {this.goHome() }}>
+                            <AntDesign name="home" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                     </ActionButton>
 
