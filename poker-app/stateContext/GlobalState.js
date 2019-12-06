@@ -17,7 +17,13 @@ export class GlobalState extends Component {
     }
     componentDidMount() {
         // storage.removeData()
-        storage.retrieveData().then((res) => {
+        this.getDataFromStorage().then((res) => {
+            console.log('global state populated')
+        })
+    }
+
+    async getDataFromStorage(){
+        await storage.retrieveData().then((res) => {
             //console.log(JSON.parse(res));
             //debugger;
             if (res != undefined) {
@@ -83,7 +89,9 @@ export class GlobalState extends Component {
                     })
                 }
                 if (allGamesArray.length !== this.state.totalGames) {
-                    this.componentDidMount();
+                   this.getDataFromStorage().then((res) => {
+                       console.log('Update global storage')
+                   })
                 }
             }
         })

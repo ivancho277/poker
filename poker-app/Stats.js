@@ -88,7 +88,7 @@ export default class StatsScreen extends Component {
                 <Card title='Search By Tag'
                     containerStyle={{ width: '80%' }}
                 >
-                    <Text>search</Text>
+                    
                     {this.renderPicker()}
                     <MyContext.Consumer>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
