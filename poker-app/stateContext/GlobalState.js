@@ -67,34 +67,34 @@ export class GlobalState extends Component {
         storage.retrieveTags().then(res => {
             if (res != undefined && res != null) {
                 if (this.state.allTags.length >= 1) {
-                    if (this.state.allTags.every(tag => {
-                        return (JSON.parse(res).indexOf(tag) === 0)
-                    })) {
+                    //debugger;
+                    if ( this.state.allTags.length !== JSON.parse(res).length) {
                         this.setState({ allTags: JSON.parse(res) })
                     }
                 }
             }
         })
-        storage.retrieveData().then((res) => {
-            //console.log(JSON.parse(res));
-            //debugger;
-            if (res != undefined) {
-                let pastGames = JSON.parse(res)
-                console.log("SYNCC ", pastGames)
-                //let temp = calculation.calculateByPosition(pastGames)
-                let allGamesArray = [];
-                if (pastGames.games) {
-                    pastGames.games.forEach(game => {
-                        allGamesArray.push(game)
-                    })
-                }
-                if (allGamesArray.length !== this.state.totalGames) {
-                   this.getDataFromStorage().then((res) => {
-                       console.log('Update global storage')
-                   })
-                }
-            }
-        })
+        // storage.retrieveData().then((res) => {
+        //     //console.log(JSON.parse(res));
+        //     //debugger;
+        //     if (res != undefined) {
+        //         let pastGames = JSON.parse(res)
+        //         console.log("SYNCC ", pastGames)
+        //         //let temp = calculation.calculateByPosition(pastGames)
+        //         let allGamesArray = [];
+        //         if (pastGames.games) {
+        //             pastGames.games.forEach(game => {
+        //                 allGamesArray.push(game)
+        //             })
+        //         }
+        //         debugger;
+                // if (allGamesArray.length !== this.state.totalGames) {
+                //    this.getDataFromStorage().then((res) => {
+                //        console.log('Update global storage')
+                //    })
+                // }
+            // }
+        
 
     }
     logTotalsByPosition = () => {
