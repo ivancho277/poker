@@ -33,10 +33,15 @@ export default class StatsScreen extends Component {
 
     logTags = (allGames, tag) => {
         console.log('MY TAG', tag)
-        if (tag === "") {
-            return calculation.findTag(allGames, 'default');
-        } else {
-            return calculation.findTag(allGames, tag);
+        if (allGames != undefined) {
+            if (tag === "") {
+                return calculation.findTag(allGames, 'default');
+            } else {
+                return calculation.findTag(allGames, tag);
+            }
+        }
+        else {
+            return null;
         }
     }
 
@@ -64,7 +69,7 @@ export default class StatsScreen extends Component {
                         this.setState({ tagpicker: itemValue });
 
                     }}
-                    items={context.state.allTags.map((tag, i) => { return { label: tag, value: tag } })}
+                    items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
 
 
                 >

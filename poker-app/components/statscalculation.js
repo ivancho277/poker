@@ -5,10 +5,14 @@ module.exports = {
      * @param {string} tag 
      */
     findTag: function (allGames, tag) {
-        return SearchTag(allGames, tag)
+        if (allGames != undefined && !isEmpty(allGames)) {
+            return SearchTag(allGames, tag)
+        } else {
+            return null
+        }
     },
 
-    findManyTags(allgames, tags){
+    findManyTags(allgames, tags) {
         return findManytags(allgames, tags)
     },
 
@@ -77,6 +81,13 @@ module.exports = {
     }
 }
 
+function isEmpty(obj){
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 function CountPositions(obj) {
     //go through games and find totals per position
@@ -270,7 +281,7 @@ function percentagePerPositionByTags(allgames, currentGame) {
     try {
         let currentTags = [...currentGame.tags];
         console.log(findManytags(allgames, ['Moon', "France"]))
-        let foundGames = findManytags(allgames,currentTags);
+        let foundGames = findManytags(allgames, currentTags);
         console.log("array: ", currentTags)
         let percentages = {};
         percentages = currentGame.actions.map(action => {

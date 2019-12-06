@@ -12,7 +12,8 @@ export class GlobalState extends Component {
         totals: {},
         gamesObj: {},
         gamesArray: [],
-        allTags: []
+        allTags: [],
+        totalGames: 0
     }
     componentDidMount() {
         // storage.removeData()
@@ -21,7 +22,7 @@ export class GlobalState extends Component {
             //debugger;
             if (res != undefined) {
                 let pastGames = JSON.parse(res)
-                console.log("SYNCC " , pastGames)
+                console.log("SYNCC ", pastGames)
                 let temp = calculation.calculateByPosition(pastGames)
                 let allGamesArray = [];
                 if (pastGames.games) {
@@ -34,7 +35,8 @@ export class GlobalState extends Component {
                     gamesObj: JSON.parse(res),
                     loading: false,
                     totals: temp,
-                    gamesArray: allGamesArray
+                    gamesArray: allGamesArray,
+                    totalGames: allGamesArray.length
                 })
                 console.log("THIS IS ASYNC")
                 console.log(pastGames)
@@ -55,7 +57,36 @@ export class GlobalState extends Component {
     }
 
     componentDidUpdate() {
-
+        //checks to see if any new tags are added to our list of overall tags, and updates state if so.
+        storage.retrieveTags().then(res => {
+            if (res != undefined && res != null) {
+                if (this.state.allTags.length >= 1) {
+                    if (this.state.allTags.every(tag => {
+                        return (JSON.parse(res).indexOf(tag) === 0)
+                    })) {
+                        this.setState({ allTags: JSON.parse(res) })
+                    }
+                }
+            }
+        })
+        storage.retrieveData().then((res) => {
+            //console.log(JSON.parse(res));
+            //debugger;
+            if (res != undefined) {
+                let pastGames = JSON.parse(res)
+                console.log("SYNCC ", pastGames)
+                //let temp = calculation.calculateByPosition(pastGames)
+                let allGamesArray = [];
+                if (pastGames.games) {
+                    pastGames.games.forEach(game => {
+                        allGamesArray.push(game)
+                    })
+                }
+                if (allGamesArray.length !== this.state.totalGames) {
+                    this.componentDidMount();
+                }
+            }
+        })
 
     }
     logTotalsByPosition = () => {
