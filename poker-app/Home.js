@@ -62,7 +62,7 @@ class HomeScreen extends Component {
                         {(context) => <Button title="test" onPress={() => {  console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"]) )}} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
-                    <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal>
+                    {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
                 </View>
 
                 <View>

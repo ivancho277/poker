@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, AppRegistry } from 'react-native';
 import { createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator, DrawerActions } from 'react-navigation';
 import HomeScreen from './Home';
 import GameScreen from './Game';
-import SettingsScreen from './Settings'
+import SettingsScreen from './Settings';
+import StatsScreen from './Stats'
 import { GlobalState } from './stateContext/GlobalState'
 import { AntDesign } from '@expo/vector-icons';
 
@@ -39,7 +40,14 @@ const AppSwitchNavigator = createStackNavigator({
     navigationOptions: ({navigation}) => ({
       title: "Settings"
     })
+  },
+
+  Statistics: {
+    screen: StatsScreen,
+    navigationOptions: {title: 'Statistics'}
   }
+
+
 
 })
 
@@ -52,8 +60,10 @@ const AppDrawerNavigator = createDrawerNavigator({
     })
   },
   Settings: {
-    screen: SettingsScreen, 
-    
+    screen: SettingsScreen,  
+  },
+  Statistics: {
+    screen: StatsScreen
   }
 
 })
