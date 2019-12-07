@@ -43,7 +43,7 @@ export default function Statsbox(props) {
         <View >
 
             <MyContext.Consumer>
-                {(context) => <View style={{ display: 'flex', justifyContent: "center" }}>
+                {(context) => <View style={{ display: 'flex', justifyContent: "center", position: 'relative' }}>
                     {props.loading
                         ?
                         <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -51,10 +51,12 @@ export default function Statsbox(props) {
                         </View>
                         :
                         isEmpty(context.state.gamesObj)
+                            
                             ?
-                            <View style={{alignContent: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 2}}> 
-                                <Text style={{fontStyle: 'italic', fontSize: 20}}>Nothing here</Text>
+                            <View style={{ borderStyle: 'solid', borderColor: 'black', borderWidth: 2, position: 'absolute', bottom: props.height / 2,}}>
+                                <Text style={{ fontStyle: 'italic', fontSize: 20, padding: 10,}}>No Data</Text>
                             </View>
+                            
                             :
                             isOnPositionStats === true
                                 ?
@@ -65,8 +67,9 @@ export default function Statsbox(props) {
                                         <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
                                                 {calculation.getPercentages(context.state.gamesObj).map((action, i) => {
-                                                    return <ListItem key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`} />
+                                                    return <ListItem key={i} bottomDivider title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% `} />
                                                 })}
+                                                <Text>{'\n'}</Text>
                                                 <ToggleSwitch
 
                                                     isOn={isOnPositionStats}
@@ -94,8 +97,9 @@ export default function Statsbox(props) {
                                         <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
                                                 {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map((action, i) => {
-                                                    return <ListItem key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`} />
+                                                    return <ListItem bottomDivider key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} />
                                                 })}
+                                                <Text>{'\n'}</Text>
                                                 <ToggleSwitch
 
                                                     isOn={isOnPositionStats}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput } from 'react-native';
 import PBC from './components/PracticeButtonController';
+import {Button} from 'react-native-elements';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
 import { MyContext } from './stateContext/GlobalState';

@@ -1,5 +1,6 @@
 import React, { Component, useContext } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {Button} from 'react-native-elements';
 import StatsBox from './components/Statsbox'
 import SearchModal from './components/SearchModal'
 import { TextInput } from 'react-native-gesture-handler';
@@ -26,7 +27,7 @@ class HomeScreen extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
@@ -59,14 +60,16 @@ class HomeScreen extends Component {
                 <View>
                     {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
                     <MyContext.Consumer>
-                        {(context) => <Button title="test" onPress={() => {  console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"]) )}} />}
+                        {(context) => <Button title="test" onPress={() => { console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"])) }} />}
                     </MyContext.Consumer>
                     <Text>POKER TRACKER</Text>
                     {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
                 </View>
 
                 <View>
-                    <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={320} width={200}   />
+                    <View>
+                        <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+                    </View>
                     <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                     <Text>ReRender global state</Text>
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet , Button,TouchableOpacity, Alert} from 'react-native'
+import { Text, View, StyleSheet ,TouchableOpacity, Alert} from 'react-native'
+import { Button } from 'react-native-elements'
 const storage = require('./components/AsyncStorageController.js')
 export default class SettingsScreen extends Component {
 

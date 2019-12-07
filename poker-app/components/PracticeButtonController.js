@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TextInput, onLongPress } from 'react-native';
+import { View, Text, TextInput, onLongPress } from 'react-native';
 import Radio from './Radio.js';
+import {Button} from 'react-native-elements';
+
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 const storageController = require('./AsyncStorageController.js')
