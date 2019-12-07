@@ -64,7 +64,7 @@ export default class TagsModal extends Component {
                     onPress={() => { this.setState({ isVisible: true }) }}
                 /> */}
                  
-                <AntDesign size={18}name='tags'onPress={() => {console.log(this.state.isVisible)  ;this.setState({ isVisible: true }); }} />
+                <AntDesign size={24}name='tags'onPress={() => {console.log(this.state.isVisible)  ;this.setState({ isVisible: true }); }} />
 
             </View>
         );
