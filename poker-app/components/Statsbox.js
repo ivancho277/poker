@@ -50,9 +50,11 @@ export default function Statsbox(props) {
                             <ActivityIndicator size='small' color='#0000ff' />
                         </View>
                         :
-                        isEmpty(context.state.gamesObj) || context.state.gamesObj === [{}]
+                        isEmpty(context.state.gamesObj)
                             ?
-                            <Text>Nothing here</Text>
+                            <View style={{alignContent: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 2}}> 
+                                <Text style={{fontStyle: 'italic', fontSize: 20}}>Nothing here</Text>
+                            </View>
                             :
                             isOnPositionStats === true
                                 ?
@@ -60,7 +62,7 @@ export default function Statsbox(props) {
                                     <Card title='By percentge: ' containerStyle={{ width: props.width, marginBottom: 10, padding: 10 }}>
                                         {/* <Divider> By percentage: {'\n'} </Divider> */}
                                         {/* <Text style={{fontSize: 16, opacity: 1, textAlign: 'center'}}> */}
-                                        <SafeAreaView style={{height: props.height}}>
+                                        <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
                                                 {calculation.getPercentages(context.state.gamesObj).map((action, i) => {
                                                     return <ListItem key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`} />
@@ -89,7 +91,7 @@ export default function Statsbox(props) {
                                     <Card title='Totals: ' containerStyle={{ width: props.width, marginBottom: 10, padding: 10 }}>
                                         {/* <Divider>Total Stats:{'\n'}</Divider> */}
                                         {/* <Text style={{opacity: 1, textAlign: 'center', fontSize: 16 }} > */}
-                                        <SafeAreaView style={{height: props.height}}>
+                                        <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
                                                 {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map((action, i) => {
                                                     return <ListItem key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`} />
