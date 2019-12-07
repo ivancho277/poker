@@ -139,17 +139,18 @@ class GameScreen extends Component {
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                    <ActionButton style={{position: 'absolute', zIndex: 1 }}>
-                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => console.log("notes tapped!")}>
-                            <TagsModal style={styles.actionButtonIcon} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal>
+                    <ActionButton style={{ position: 'absolute', zIndex: 1 }}>
+                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => {console.log('open modal')}}>
+                            <TagsModal style={styles.actionButtonIcon} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => {this.setState({actionInputOpen: !this.state.actionInputOpen}) }}>
+                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({ actionInputOpen: !this.state.actionInputOpen }) }}>
                             <AntDesign name="plus" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#228B22' title="Go Home" onPress={() => {this.goHome() }}>
+                        <ActionButton.Item buttonColor='#228B22' title="Go Home" onPress={() => { this.goHome() }}>
                             <AntDesign name="home" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                     </ActionButton>
+
 
                 </View>
                 }
