@@ -146,7 +146,7 @@ class GameScreen extends Component {
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                    <ActionButton style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={()=> this.setState({activeActionMenu: true})}>
+                    <ActionButton style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false}>
                         <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => {console.log('open modal'); this.setState({ showTagsModal: true})}}>
                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>
