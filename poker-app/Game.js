@@ -23,7 +23,9 @@ class GameScreen extends Component {
             tags: [],
             allTags: [],
             selected: "",
-            actionInputOpen: false
+            actionInputOpen: false,
+            showTagsModal: false,
+            activeActionMenu: false
         }
     }
 
@@ -127,6 +129,10 @@ class GameScreen extends Component {
         })
     }
 
+    closeTagModal = () => {
+        this.setState({showTagsModal: false});
+    }
+
     render() {
         return (
             <MyContext.Consumer>
@@ -140,12 +146,12 @@ class GameScreen extends Component {
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                    <ActionButton style={{ position: 'absolute', zIndex: 1 }}>
-                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => {console.log('open modal')}}>
-                            <TagsModal style={styles.actionButtonIcon} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
+                    <ActionButton style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={()=> this.setState({activeActionMenu: true})}>
+                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => {console.log('open modal'); this.setState({ showTagsModal: true})}}>
+                            <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({ actionInputOpen: !this.state.actionInputOpen }) }}>
-                            <AntDesign name="plus" style={styles.actionButtonIcon} />
+                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({activeActionMenu: !this.state.activeActionMenu, actionInputOpen: !this.state.actionInputOpen }); console.log('ACTION: ' ,this.state.activeActionMenu);  }}>
+                            <AntDesign name="plus"  style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor='#228B22' title="Go Home" onPress={() => { this.goHome() }}>
                             <AntDesign name="home" style={styles.actionButtonIcon} />

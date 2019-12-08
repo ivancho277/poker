@@ -7,9 +7,11 @@ import ActionButton from 'react-native-action-button';
 
 export default class TagsModal extends Component {
     state = {
-        isVisible: false, //state of modal default false  
+       // isVisible: false, //state of modal default false  
         tag: ''
     }
+
+
 
   
 
@@ -23,7 +25,7 @@ export default class TagsModal extends Component {
                 <Modal
                     animationType={"fade"}
                     transparent={false}
-                    visible={this.state.isVisible}
+                    visible={this.props.showModal}
                     onRequestClose={() => { console.log("Modal has been closed.") }}>
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
@@ -53,7 +55,7 @@ export default class TagsModal extends Component {
                         </View>
 
                         <Button title="Done" onPress={() => {
-                            this.setState({ isVisible: !this.state.isVisible })
+                            this.props.closeModal()
                         }} />
                     </View>
                 </Modal>
@@ -64,7 +66,7 @@ export default class TagsModal extends Component {
                     onPress={() => { this.setState({ isVisible: true }) }}
                 /> */}
                  
-                <AntDesign size={24}name='tags'onPress={() => {console.log(this.state.isVisible)  ;this.setState({ isVisible: true }); }} />
+                <AntDesign size={22} name='tags' />
 
             </View>
         );
