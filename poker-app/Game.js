@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, onLongPress } from 'react-native';
 import PBC from './components/PracticeButtonController';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
 import { MyContext } from './stateContext/GlobalState';
@@ -130,10 +130,12 @@ class GameScreen extends Component {
     }
 
     closeTagModal = () => {
-        this.setState({showTagsModal: false});
+        this.setState({ showTagsModal: false });
     }
 
     render() {
+        let showOtherButtons = false;
+        let showButtons = true;
         return (
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
@@ -146,15 +148,23 @@ class GameScreen extends Component {
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                    <ActionButton style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false}>
-                        <ActionButton.Item buttonColor='#9b59b6' title="Add Tag" onPress={() => {console.log('open modal'); this.setState({ showTagsModal: true})}}>
+                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => {showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>
+                        <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>
                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({activeActionMenu: !this.state.activeActionMenu, actionInputOpen: !this.state.actionInputOpen }); console.log('ACTION: ' ,this.state.activeActionMenu);  }}>
-                            <AntDesign name="plus"  style={styles.actionButtonIcon} />
+                        <ActionButton.Item active={showButtons} buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({ activeActionMenu: !this.state.activeActionMenu, actionInputOpen: !this.state.actionInputOpen }); console.log('ACTION: ', this.state.activeActionMenu); }}>
+                            <AntDesign name="plus" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#228B22' title="Go Home" onPress={() => { this.goHome() }}>
+                        <ActionButton.Item active={showButtons} buttonColor='#228B22' title="Go Home" onPress={() => { this.goHome() }}>
                             <AntDesign name="home" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                        {/* Remove buttons */}
+                        <ActionButton.Item buttonColor="#DE1062" active={showOtherButtons}>
+                            <AntDesign name='minus' style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor="#9999FF" active={showOtherButtons}>
+                            <AntDesign name='edit' style={styles.actionButtonIcon} />
+
                         </ActionButton.Item>
                     </ActionButton>
 

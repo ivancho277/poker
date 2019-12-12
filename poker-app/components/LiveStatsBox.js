@@ -133,7 +133,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={{ height: 200, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', padding: 10 }}>
+            <View style={{ height: 200, color: '#32CD32', width: "85%" , padding: 10, marginBottom: 20 }}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
