@@ -15,6 +15,17 @@ import {
 
 export default class SettingsScreen extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+     action: 'hii',
+     tag: '',
+     yesorno: false
+    };
+  }
+
+
+
   confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {
     Alert.alert(
       title,
@@ -32,29 +43,38 @@ export default class SettingsScreen extends Component {
   }
 
   render() {
+    
     return (
       <ScrollView
         style={{
           flex: 1,
           backgroundColor:
-            Platform.OS === "ios" ? colors.iosSettingsBackground : colors.white
+            colors.white
         }}
       >
         <SettingsCategoryHeader
           title={"Edit Options"}
-          textStyle={Platform.OS === "android" ? { color: colors.monza } : null}
+          textStyle={{ color: colors.monza }}
         />
-        <SettingsDividerLong android={false} />
+        <SettingsDividerLong android={true} />
+        
         <SettingsEditText
+        
           title="Edit Actions"
+          description={'mune'}
+          
           dialogDescription={"All Actions"}
           valuePlaceholder="..."
           negativeButtonTitle={"Cancel"}
+          positiveButtonTitle={"YEAH!"}
           buttonRightTitle={"Save"}
           onValueChange={value => {
+            debugger
             console.log("username:", value);
+            this.setState({action: value})
           }}
-          value={"Actions"}
+          value={this.state.action}
+         
         />
         <SettingsDividerShort />
         <SettingsPicker
@@ -68,8 +88,9 @@ export default class SettingsScreen extends Component {
           ]}
           onValueChange={value => {
             console.log("gender:", value);
+            this.setState({tag: value})
           }}
-          value={"Tags"}
+          value={this.state.tag}
           styleModalButtonsText={{ color: colors.monza }}
         />
         
@@ -77,7 +98,9 @@ export default class SettingsScreen extends Component {
           title={"Allow Push Notifications"}
           onValueChange={value => {
             console.log("allow push notifications:", value);
+            this.setState({ yesorno: value })
           }}
+          value={this.state.yesorno}
           trackColor={{
             true: colors.switchEnabled,
             false: colors.switchDisabled,
