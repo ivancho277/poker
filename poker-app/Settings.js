@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert, ScrollView, Platform } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, Platform, } from 'react-native';
+// import { Button } from 'react-native-elements';
 const storage = require('./components/AsyncStorageController.js');
-import {
-  SettingsDividerShort,
-  SettingsDividerLong,
-  SettingsEditText,
-  SettingsCategoryHeader,
-  SettingsSwitch,
-  SettingsPicker,
-  SettingsButton
-} from "react-native-settings-components";
-
+import { Container, Header, Content, List, ListItem, Text, Button } from 'native-base';
+import { TextInput } from 'react-native-gesture-handler';
+import BottomSheet from './components/BottomSheetList'
 
 export default class SettingsScreen extends Component {
 
   constructor() {
     super();
     this.state = {
-     action: 'hii',
-     tag: '',
-     yesorno: false
+      action: '',
+      tag: '',
+      yesorno: false
     };
   }
 
@@ -43,71 +36,45 @@ export default class SettingsScreen extends Component {
   }
 
   render() {
-    
+
     return (
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor:
-            colors.white
-        }}
-      >
-        <SettingsCategoryHeader
-          title={"Edit Options"}
-          textStyle={{ color: colors.monza }}
-        />
-        <SettingsDividerLong android={true} />
-        
-        <SettingsEditText
-        
-          title="Edit Actions"
-          description={'mune'}
-          
-          dialogDescription={"All Actions"}
-          valuePlaceholder="..."
-          negativeButtonTitle={"Cancel"}
-          positiveButtonTitle={"YEAH!"}
-          buttonRightTitle={"Save"}
-          onValueChange={value => {
-            debugger
-            console.log("username:", value);
-            this.setState({action: value})
-          }}
-          value={this.state.action}
-         
-        />
-        <SettingsDividerShort />
-        <SettingsPicker
-          title="Edit Tags"
-          dialogDescription={"All Tags"}
-          options={[
-            { label: "...", value: "" },
-            { label: "male", value: "male" },
-            { label: "female", value: "female" },
-            { label: "other", value: "other" }
-          ]}
-          onValueChange={value => {
-            console.log("gender:", value);
-            this.setState({tag: value})
-          }}
-          value={this.state.tag}
-          styleModalButtonsText={{ color: colors.monza }}
-        />
-        
-        <SettingsSwitch
-          title={"Allow Push Notifications"}
-          onValueChange={value => {
-            console.log("allow push notifications:", value);
-            this.setState({ yesorno: value })
-          }}
-          value={this.state.yesorno}
-          trackColor={{
-            true: colors.switchEnabled,
-            false: colors.switchDisabled,
-          }}
-        />
-        
-      </ScrollView>
+      <Container>
+        <Content>
+          <List>
+            <ListItem itemHeader>
+              <Text>Edit Options</Text>
+            </ListItem>
+            <ListItem>
+              <Button hasText transparent onPress={() => { console.log('clicked') }}>
+                <Text>Edit Actions</Text>
+              </Button>
+            </ListItem>
+            <ListItem last>
+              <Button hasText transparent onPress={() => { console.log('moo') }}>
+                <Text>Edit Tags</Text>
+              </Button>
+            </ListItem>
+            <ListItem itemHeader>
+              <Text>Delete or Reset</Text>
+            </ListItem>
+            <ListItem>
+              <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
+                <Text>Reset Actions</Text>
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
+                <Text>Delete all Tags</Text>
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
+                <Text>Delete all Data</Text>
+              </Button>
+            </ListItem>
+          </List>
+        </Content>
+      </Container>
     )
   }
 }
