@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, Platform, } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight } from 'react-native';
 // import { Button } from 'react-native-elements';
 const storage = require('./components/AsyncStorageController.js');
-import { Container, Header, Content, List, ListItem, Text, Button } from 'native-base';
-import { TextInput } from 'react-native-gesture-handler';
+import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
 import BottomSheet from './components/BottomSheetList'
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+
+const editOptions = ["Edit Actions", 'Edit Tags']
 
 export default class SettingsScreen extends Component {
 
@@ -13,7 +15,11 @@ export default class SettingsScreen extends Component {
     this.state = {
       action: '',
       tag: '',
-      yesorno: false
+      yesorno: false,
+      basic: true,
+      showEditingActions: false,
+      showEditingTags: false,
+      selectedValue: undefined
     };
   }
 
@@ -35,25 +41,102 @@ export default class SettingsScreen extends Component {
     );
   }
 
-  render() {
+  onValueChange(value){
+    this.setState({
+      selectedValue: value
+    });
+  }
+ 
 
+  render() {
     return (
       <Container>
-        <Content>
+        <Content >
           <List>
             <ListItem itemHeader>
               <Text>Edit Options</Text>
             </ListItem>
             <ListItem>
-              <Button hasText transparent onPress={() => { console.log('clicked') }}>
-                <Text>Edit Actions</Text>
-              </Button>
+
+
+              <View style={{ flex: 1, justifyContent: "center" }}>
+
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={this.state.showEditingActions}
+                  onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                  }}>
+                  <View style={{flex: 1, justifyContent: 'center', height: 'auto', alignItems: 'center'}}>
+                    {/* <View style={{ width: '85%', height: '70%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}> */}
+                    <Card bordered style={{ flex: 1, width: "85%", height: "45%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                      <CardItem bordered header>
+                        <Text>Edit Your Actions</Text>
+                      </CardItem>
+                      <CardItem bordered>
+                        <Body>
+                        <Form>
+                          <Item stackedLabel style={{width: 250}}>
+                            <Label>Add New Action</Label>
+                            <Input />
+                          </Item>
+                          <Item style={{width: 250}}> 
+                            <Picker
+                              mode="dropdown"
+                              placeholder="Select your SIM"
+                              iosIcon={<Icon name="arrow-down" />}
+                              placeholder="Select your SIM"
+                              textStyle={{ color: "#5cb85c" }}
+                              itemStyle={{
+                                backgroundColor: "#d3d3d3",
+                                marginLeft: 0,
+                                paddingLeft: 10
+                              }}
+                              itemTextStyle={{ color: '#788ad2' }}
+                              style={{ width: 'auto' }}
+                              selectedValue={this.state.selectedValue}
+                              onValueChange={this.onValueChange.bind(this)}
+                            >
+                              <Picker.Item label="Wallet" value="key0" />
+                              <Picker.Item label="ATM Card" value="key1" />
+                              <Picker.Item label="Debit Card" value="key2" />
+                              <Picker.Item label="Credit Card" value="key3" />
+                              <Picker.Item label="Net Banking" value="key4" />
+                            </Picker>
+
+                          </Item>
+
+                        </Form>
+                        </Body>
+
+
+                      </CardItem>
+                      <CardItem footer button bordered
+                        onPress={() => {
+                          this.setState({ showEditingActions: !this.state.showEditingActions });
+                        }}  >
+                        <Text>Hide Modal</Text>
+                      </CardItem>
+                    </Card>
+                    </View>
+                </Modal>
+                <View>
+                  <Button hasText transparent onPress={() => { this.setState({ showEditingActions: true }) }}>
+                    <Text>Edit Actions</Text>
+                  </Button>
+                </View>
+              </View>
+
+
             </ListItem>
             <ListItem last>
-              <Button hasText transparent onPress={() => { console.log('moo') }}>
+              <Button hasText transparent onPress={() => { console.log('clicked') }}>
                 <Text>Edit Tags</Text>
               </Button>
             </ListItem>
+          </List>
+          <List>
             <ListItem itemHeader>
               <Text>Delete or Reset</Text>
             </ListItem>
@@ -74,7 +157,7 @@ export default class SettingsScreen extends Component {
             </ListItem>
           </List>
         </Content>
-      </Container>
+      </Container >
     )
   }
 }
@@ -87,7 +170,79 @@ const colors = {
   blueGem: "#27139A",
 };
 
-  // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  standalone: {
+
+  },
+  standaloneRowFront: {
+    alignItems: 'center',
+    backgroundColor: '#CCC',
+    justifyContent: 'center',
+    height: 50,
+  },
+  standaloneRowBack: {
+    alignItems: 'center',
+    backgroundColor: '#8BC645',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  backTextWhite: {
+    color: '#FFF',
+  },
+  rowFront: {
+    alignItems: 'center',
+    backgroundColor: '#CCC',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    justifyContent: 'center',
+    height: 50,
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+  },
+  backRightBtnLeft: {
+    backgroundColor: 'blue',
+    right: 75,
+  },
+  backRightBtnRight: {
+    backgroundColor: 'red',
+    right: 0,
+  },
+  controls: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 5,
+  },
+
+  trash: {
+    height: 25,
+    width: 25,
+  },
+});
+
+  // <View style={{ width: 200, height: 200, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
             // <View style={styles.container}>
             //     <Text> Settings </Text>
             //     <Button title='Delete all tags' onPress={() =>   this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} />

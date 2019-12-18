@@ -277,6 +277,12 @@ function percentagesByPostion(allgames) {
     return percentages;
 }
 
+
+
+function newPercentagesByPosition(allGames){
+
+}
+
 function percentagePerPositionByTags(allgames, currentGame) {
     try {
         let currentTags = [...currentGame.tags];
@@ -300,6 +306,9 @@ function percentagePerPositionByTags(allgames, currentGame) {
 
 
 }
+
+
+
 
 
 

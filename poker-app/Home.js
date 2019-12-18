@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {Button} from 'react-native-elements';
 import StatsBox from './components/Statsbox'
 import SearchModal from './components/SearchModal'
-import { TextInput } from 'react-native-gesture-handler';
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 

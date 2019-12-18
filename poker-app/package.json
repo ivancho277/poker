@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
   },
   "dependencies": {
     "expo": "^33.0.0",
@@ -20,7 +21,7 @@
     "react-native-dropdown": "git+https://github.com/alinz/react-native-dropdown.git",
     "react-native-elements": "^1.2.7",
     "react-native-fen-wheel-scroll-picker": "^0.1.14",
-    "react-native-gesture-handler": "~1.2.1",
+    "react-native-gesture-handler": "^1.2.2",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-material-ui": "^1.30.1",
     "react-native-modal": "^11.5.1",
@@ -32,6 +33,7 @@
     "react-native-settings-screen": "^2.1.2",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-slider": "^0.11.0",
+    "react-native-swipe-list-view": "^2.1.1",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.4",
     "react-native-wheel-scroll-picker": "^0.2.4",
@@ -40,7 +42,8 @@
     "toggle-switch-react-native": "^2.1.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.1.1"
+    "babel-preset-expo": "^5.1.1",
+    "jest": "^24.9.0"
   },
   "private": true
 }
