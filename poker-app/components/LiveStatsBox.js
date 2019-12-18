@@ -26,24 +26,30 @@ export default class Statsbox extends Component {
             loading: true,
             gamesObj: {},
             searchedTag: {},
-            displayChange: false
+            displayChange: false,
         }
     }
 
 
     componentDidMount() {
-        storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-            this.setState({
-                gamesObj: JSON.parse(res),
-                loading: false,
-            })
-            console.log("THIS IS ASYNC")
-            console.log(this.state.gamesObj)
-        }).catch((error) => {
-            console.log("HOME SCREEN ERROR");
-            throw error;
-        })
+        this.setState({gamesObj: this.props.getGamesObj, loading: false})
+        // storage.retrieveData().then((res) => {
+        //     if (res != undefined) {
+        //         console.log(JSON.parse(res));
+        //         this.setState({
+        //             gamesObj: JSON.parse(res),
+        //             loading: false,
+        //         })
+        //         console.log("THIS IS ASYNC")
+        //         console.log(this.state.gamesObj)
+        //     } else {
+        //         this.setState({ loading: false })
+        //     }
+        // }).catch((error) => {
+        //     console.log("HOME SCREEN ERROR");
+        //     throw error;
+        // })
+
     }
 
     logTotalsByPosition() {
@@ -51,10 +57,15 @@ export default class Statsbox extends Component {
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
+    logPercentagesByPosition() {
+        return calculation.calcPercentByPosition(this.state.gamesObj);
+    }
+
 
 
     currentPositionDisplay(position) {
-        let allGames = this.logTotalsByPosition();
+        //let allGames = this.logTotalsByPosition();
+        let allGames = this.logPercentagesByPosition();
         if (this.isEmpty(allGames)) {
             return <Text>No Saved Games</Text>
         }
@@ -72,7 +83,7 @@ export default class Statsbox extends Component {
             console.log(allGamesArray)
             return <Text>
                 {allGamesArray.map(game => {
-                    return `${game.key}s: ${game[position]}  `
+                    return `${game.key}s: ${game[position]}%  `
                 })
                 }
 
@@ -81,23 +92,12 @@ export default class Statsbox extends Component {
     }
 
     logTagsTotals() {
-        this.props.logTags().then((res) => {
-            console.log("FOUNDDDDD");
-            console.log(res);
-            let obj = {
-                games: res
-            }
-            let totals = calculation.calculateTotalStats(obj);
-            console.log("calls " + totals.calls);
-            console.log("folds " + totals.folds);
-            console.log("raises " + totals.raises);
-            this.setState({
-                gamesObj: obj
-            });
-        }).catch(err => {
-            console.log("error searching for tag");
-            throw err;
-        })
+        if (this.props.tags.length >= 0) {
+            return calculation.includesAllTags(this.state.gamesObj, this.props.tags)
+        } else {
+            return calculation.includesAllTags(this.state.gamesObj, ['default'])
+
+        }
     }
 
     isEmpty(obj) {
@@ -118,6 +118,7 @@ export default class Statsbox extends Component {
         console.log(this.props.currentGame)
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
+
                 {this.props.currentGame.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
@@ -132,7 +133,7 @@ export default class Statsbox extends Component {
 
     render() {
         return (
-            <View style={{ height: 180, color: '#32CD32', width: this.props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+            <View style={{ height: 200, color: '#32CD32', width: "85%" , padding: 10, marginBottom: 20 }}>
                 {this.state.loading
                     ?
                     <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
@@ -141,7 +142,7 @@ export default class Statsbox extends Component {
                     :
                     this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
                         ?
-                        <Text>Nothing here</Text>
+                        <Divider>Nothing in storage</Divider>
                         :
                         this.state.displayChange ?
 
@@ -159,20 +160,17 @@ export default class Statsbox extends Component {
 
                                     </View>
                                 </View>
-
                                 :
-                                <Text>NO TAGS</Text>
-
-
+                                <Divider>NO TAGS</Divider>
                             :
 
                             <View>
-                                <Divider>Overall Stats:</Divider>
+                                <Divider>Overall Stats: {table[this.props.position]}</Divider>
                                 <Text>
                                     {this.currentPositionDisplay(this.props.position)} {'\n'}
 
                                 </Text>
-                                <Divider>Current Game {'\n'}</Divider>
+                                <Divider>Current Game: {table[this.props.position]}{'\n'}</Divider>
                                 <Text>
 
                                     {this.currentGameDisplay(this.props.position)}
@@ -194,7 +192,7 @@ export default class Statsbox extends Component {
                     }}
                 />
 
-
+                {/* <Button title='check tags included' onPress={() => console.log(this.logTagsTotals())}></Button> */}
                 {/* <Button title="log position stats" onPress={() => this.logTotalsByPosition()}></Button>
                 <Button title="search tags" onPress={() => this.logTagsTotals()} /> */}
             </View>

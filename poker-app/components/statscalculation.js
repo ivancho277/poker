@@ -1,12 +1,19 @@
 module.exports = {
-
     /**
      * 
      * @param {object} allGames 
      * @param {string} tag 
      */
     findTag: function (allGames, tag) {
-        return SearchTag(allGames, tag)
+        if (allGames != undefined && !isEmpty(allGames)) {
+            return SearchTag(allGames, tag)
+        } else {
+            return null
+        }
+    },
+
+    findManyTags(allgames, tags) {
+        return findManytags(allgames, tags)
     },
 
     /**
@@ -31,16 +38,56 @@ module.exports = {
         return countTotal(gamesObj)
     },
 
+    /**
+     * 
+     * @param {object} gameObj 
+     */
     calculateByPosition: function (gameObj) {
         return CountPositions(gameObj)
 
     },
-
+    /**
+     * 
+     * @param {object} gameObj 
+     */
     getPercentages: function (gameObj) {
         return calculatePercentages(gameObj);
+    },
+
+    /**
+     * 
+     * @param {object} gamesObj 
+     * @param {Array} tagsArr 
+     */
+    includesAllTags: function (gamesObj, tagsArr) {
+        return findManytags(gamesObj, tagsArr)
+    },
+
+
+    calcTotalsPerPosition: function (gameObj) {
+        return totalsPerPosition(gameObj);
+    },
+
+    calcTotalsPerAction: function (gamesObj) {
+        return totalsPerAction(gamesObj);
+    },
+
+    calcPercentByPosition: function (gamesObj) {
+        return percentagesByPostion(gamesObj);
+    },
+
+    calcCurrentGamePercentages: function (gamesObj, currentGame) {
+        return percentagePerPositionByTags(gamesObj, currentGame)
     }
 }
 
+function isEmpty(obj){
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 function CountPositions(obj) {
     //go through games and find totals per position
@@ -52,14 +99,14 @@ function CountPositions(obj) {
         obj.games.forEach(game => {
             for (action in game.game) {
                 //console.log(action + " " + game.game)
-                if(!finalStats[action]){
+                if (!finalStats[action]) {
                     finalStats[action] = {}
                 }
-                for (position in game.game[action]){
-                //console.log(position + " "  + "    " + action)
-                //nsole.log("POSISH " + position)
+                for (position in game.game[action]) {
+                    //console.log(position + " "  + "    " + action)
+                    //nsole.log("POSISH " + position)
                     if (finalStats[action][position]) {
-                        finalStats[action][position] = finalStats[action][position] += game.game[action][position]; 
+                        finalStats[action][position] = finalStats[action][position] += game.game[action][position];
                     }
                     else {
                         finalStats[action][position] = game.game[action][position]
@@ -73,7 +120,7 @@ function CountPositions(obj) {
         console.log("STATS", finalStats)
         return finalStats;
     } catch {
-        console.log("Cant calculate positions") 
+        console.log("Cant calculate positions")
     }
 
 }
@@ -99,9 +146,6 @@ function calculatePercentages(obj) {
 
 function countTotal(obj) {
     try {
-        let totalCalls = 0;
-        let totalFolds = 0;
-        let totalRaises = 0;
         //debugger;
         let totals = {}
         obj.games.forEach(game => {
@@ -114,13 +158,12 @@ function countTotal(obj) {
                     totals[action] = totals[action] += game.game[action].total
                 }
             }
-
         })
         console.log('STATS', totals)
         return totals
-
-
     } catch {
+        throw console.error('cant count');
+
         alert('cant count')
     }
 
@@ -128,67 +171,134 @@ function countTotal(obj) {
 
 /**
  * 
- * @param {object} obj 
+ * @param {object} allgames 
  * @param {string} tag 
  */
-function SearchTag(obj, tag) {
-    let tagsArr = [];
-    console.log(tag + " LOOOK AT TAG")
-    console.log(obj)
-    for (let i = 0; i < obj.games.length; i++) {
-        console.log(tag);
-        console.log(obj.games[i].tags.includes(tag));
-        if (obj.games[i].tags.includes(tag)) {
-            let temp = {
-                calls: obj.games[i].calls,
-                folds: obj.games[i].folds,
-                raises: obj.games[i].raises,
-                tags: [...obj.games[i].tags]
-            }
-            tagsArr.push(temp);
+function SearchTag(allgames, tag) {
+    //console.log("FUNCTION",allgames, "TAGwE: ", tag)
+    let foundGamesWithTag = allgames.games.filter((game => {
+        if (game.tags.includes(tag)) {
+            return game;
         }
-    }
-    return tagsArr
+    }));
+    return foundGamesWithTag;
 }
 
-function checkversion(currentVer, OldVersion) {
+function checkversion(OldVersion) {
+    let currentVersion = '1.0.3';
 
 }
 
-function countTotalfromTag(obj, tag = "all") {
-    if (tag === "all") {
-        let totalCalls = 0;
-        let totalFolds = 0;
-        let totalRaises = 0;
-        for (let i = 0; i < obj.games.length; i++) {
-            totalCalls += obj.games[i].calls;
-            totalFolds += obj.games[i].folds;
-            totalRaises += obj.games[i].raises;
+function findManytags(allgames, tagarr) {
+    //console.log("inside: ", allgames);
+    //console.log("more inside: ", tagarr)
+    let foundgames = allgames.games.filter(game => {
+        if (tagarr.every(value => { return (game.tags.indexOf(value) >= 0) })) {
+            return game;
         }
-        return {
-            calls: totalCalls,
-            folds: totalFolds,
-            raises: totalRaises
-        }
-    } else {
-        let tagsArr = [];
+    })
+    return foundgames;
+}
 
-        for (let i = 0; i < obj.games.length; i++) {
-            console.log(tag);
-            console.log(obj.games[i].tags.includes(tag));
-            if (obj.games[i].tags.includes(tag)) {
-                let temp = {
-                    calls: obj.games[i].calls,
-                    folds: obj.games[i].folds,
-                    raises: obj.games[i].raises,
-                    tags: [...obj.games[i].tags]
+function totalsPerAction(allgames) {
+    try {
+        //debugger;
+        let totals = {}
+        //console.log("FUNCTION", allgames)
+        allgames.games.forEach(game => {
+            //console.log(game)
+            for (action in game.game) {
+                // console.log(action + " " + game.game[action].total)
+
+                if (!totals[action]) {
+                    //console.log("YOU", game.game[action])
+                    totals[action] = {}
                 }
-                tagsArr.push(temp);
+
+                for (position in game.game[action]) {
+                    //console.log("MEEEE", game.game[action][position])
+                    if ([position] != 'total') {
+                        if (!totals[action][position]) {
+                            totals[action][position] = game.game[action][position]
+                        }
+                        else {
+                            totals[action][position] = totals[action][position] + game.game[action][position]
+
+                        }
+                    }
+                }
+
+
+            }
+        })
+        // console.log('PERCENT', totals)
+        return totals
+    } catch {
+        console.log('cant count')
+
+        // alert('cant count')
+    }
+}
+
+function totalsPerPosition(allgames) {
+    let perAction = totalsPerAction(allgames);
+    let positionTotals = {}
+    for (action in perAction) {
+        for (position in perAction[action]) {
+            if (!positionTotals[position]) {
+                positionTotals[position] = perAction[action][position]
+            }
+            else {
+                positionTotals[position] = positionTotals[position] + perAction[action][position]
             }
         }
-        return tagsArr
-
     }
+    console.log('POS TOT: ', positionTotals)
+    return positionTotals;
+}
+
+function percentagesByPostion(allgames) {
+    let perAction = totalsPerAction(allgames);
+    let perPosition = totalsPerPosition(allgames);
+    // console.log('me: ', perPosition)
+    let array = Object.values(perPosition);
+    let percentages = {};
+    for (action in perAction) {
+
+        percentages[action] = perAction[action];
+        //console.log("too: ", percentages[action], action)
+
+        for (position in perAction[action]) {
+            percentages[action][position] = Math.round(perAction[action][position] / perPosition[position] * 100)
+        }
+    }
+
+    // console.log("look at me", percentages)
+    return percentages;
+}
+
+function percentagePerPositionByTags(allgames, currentGame) {
+    try {
+        let currentTags = [...currentGame.tags];
+        console.log(findManytags(allgames, ['Moon', "France"]))
+        let foundGames = findManytags(allgames, currentTags);
+        console.log("array: ", currentTags)
+        let percentages = {};
+        percentages = currentGame.actions.map(action => {
+            let name = action.actionName
+            let total = action.count
+            return { [name]: total }
+        })
+        console.log("NEW TEST: ", foundGames)
+        console.log()
+        let totals = countTotal({ games: foundGames });
+        console.log("Test 2: ", totals);
+
+    } catch {
+        return Error('Cant calculate current game stats')
+    }
+
+
 }
 
 

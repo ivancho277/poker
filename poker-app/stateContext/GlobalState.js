@@ -7,67 +7,140 @@ export const MyContext = React.createContext();
 
 export class GlobalState extends Component {
     state = {
-        allgames: {},     
         position: 0,
         totalsByPosition: {},
         totals: {},
         gamesObj: {},
-        allTags: []
+        gamesArray: [],
+        allTags: [],
+        totalGames: 0
     }
     componentDidMount() {
-       // storage.removeData()
-        storage.retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-            let temp = calculation.calculateByPosition(JSON.parse(res))
-            this.setState({
-                gamesObj: JSON.parse(res),
-                loading: false,
-                totals: temp
+        // storage.removeData()
+        this.getDataFromStorage().then((res) => {
+            console.log('global state populated')
+        })
+    }
+
+    async getDataFromStorage(){
+        await storage.retrieveData().then((res) => {
+            //console.log(JSON.parse(res));
+            //debugger;
+            if (res != undefined) {
+                let pastGames = JSON.parse(res)
+                console.log("SYNCC ", pastGames)
+                let temp = calculation.calculateByPosition(pastGames)
+                let allGamesArray = [];
+                if (pastGames.games) {
+                    pastGames.games.forEach(game => {
+                        allGamesArray.push(game)
+                    })
+                }
+
+                this.setState({
+                    gamesObj: JSON.parse(res),
+                    loading: false,
+                    totals: temp,
+                    gamesArray: allGamesArray,
+                    totalGames: allGamesArray.length
+                })
+                console.log("THIS IS ASYNC")
+                console.log(pastGames)
+                console.log(this.state.gamesObj)
+            }
+            storage.retrieveTags().then(res => {
+                if (res != undefined && res != null) {
+                    this.setState({ allTags: JSON.parse(res) })
+                }
+            }).catch(err => {
+                console.log('NO TAGS IN STORAGE');
             })
-            console.log("THIS IS ASYNC")
-            console.log(this.state.gamesObj)
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
+            storage.resetActions();
             throw error;
         })
     }
 
-    componentDidUpdate(){
-     
+    componentDidUpdate() {
+        //checks to see if any new tags are added to our list of overall tags, and updates state if so.
+        storage.retrieveTags().then(res => {
+            if (res != undefined && res != null) {
+                if (this.state.allTags.length >= 1) {
+                    //debugger;
+                    if ( this.state.allTags.length !== JSON.parse(res).length) {
+                        this.setState({ allTags: JSON.parse(res) })
+                    }
+                }
+            }
+        })
+        // storage.retrieveData().then((res) => {
+        //     //console.log(JSON.parse(res));
+        //     //debugger;
+        //     if (res != undefined) {
+        //         let pastGames = JSON.parse(res)
+        //         console.log("SYNCC ", pastGames)
+        //         //let temp = calculation.calculateByPosition(pastGames)
+        //         let allGamesArray = [];
+        //         if (pastGames.games) {
+        //             pastGames.games.forEach(game => {
+        //                 allGamesArray.push(game)
+        //             })
+        //         }
+        //         debugger;
+                // if (allGamesArray.length !== this.state.totalGames) {
+                //    this.getDataFromStorage().then((res) => {
+                //        console.log('Update global storage')
+                //    })
+                // }
+            // }
         
+
     }
     logTotalsByPosition = () => {
         console.log(calculation.calculateByPosition(this.state.gamesObj));
         return calculation.calculateByPosition(this.state.gamesObj);
     }
 
-    incrementPosition(){
+    incrementPosition() {
         this.setState({
             position: this.state.position + 1
         })
     }
 
-    updateGames(newGamesObj){
+    updateGames(newGamesObj) {
         this.setState({
-            gamesObj: newGamesObj
+            gamesObj: newGamesObj,
+            gamesArray: newGamesObj.games
         })
     }
 
-    setPosition(position){
+    setPosition(position) {
         this.setState({
             position: position
         })
     }
 
-    render(){
-        return(
+    getGames() {
+        return this.state.gamesObj;
+    }
+
+    getGamesArray() {
+        return this.state.gamesArray;
+    }
+
+    render() {
+        return (
             <MyContext.Provider value={{
                 state: this.state,
                 incrementPosition: () => this.incrementPosition(),
                 setPosition: (position) => this.setPosition(position),
                 remount: () => this.componentDidMount(),
-                updateGames: (gamesObj) => {this.updateGames(gamesObj)}
-            }}>
+                updateGames: (gamesObj) => { this.updateGames(gamesObj) },
+                getGames: () => this.getGames(),
+                getGamesArray: () => this.getGamesArray()
+            }
+            }>
                 {this.props.children}
             </MyContext.Provider>
         )

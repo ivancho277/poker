@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, Modal, TextInput, KeyboardAvoidingView } from 'react-native';
 import ScrollPicker from "react-native-fen-wheel-scroll-picker";
+import { AntDesign } from '@expo/vector-icons';
+import ActionButton from 'react-native-action-button';
 
 
 export default class TagsModal extends Component {
     state = {
-        isVisible: false, //state of modal default false  
+       // isVisible: false, //state of modal default false  
         tag: ''
     }
 
 
 
+  
+
+
+
     render() {
+        //debugger;
         return (
 
             <View>
                 <Modal
                     animationType={"fade"}
                     transparent={false}
-                    visible={this.state.isVisible}
+                    visible={this.props.showModal}
                     onRequestClose={() => { console.log("Modal has been closed.") }}>
                     {/*All views of Modal*/}
                     <View style={styles.modal}>
@@ -48,16 +55,19 @@ export default class TagsModal extends Component {
                         </View>
 
                         <Button title="Done" onPress={() => {
-                            this.setState({ isVisible: !this.state.isVisible })
+                            this.props.closeModal()
                         }} />
                     </View>
                 </Modal>
 
                 {/*Button will change state to true and view will re-render*/}
-                <Button
+                {/* <Button
                     title="Add Tag to Game"
                     onPress={() => { this.setState({ isVisible: true }) }}
-                />
+                /> */}
+                 
+                <AntDesign size={22} name='tags' />
+
             </View>
         );
     }

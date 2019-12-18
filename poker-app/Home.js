@@ -1,6 +1,8 @@
 import React, { Component, useContext } from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {Button} from 'react-native-elements';
 import StatsBox from './components/Statsbox'
+import SearchModal from './components/SearchModal'
 import { TextInput } from 'react-native-gesture-handler';
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
@@ -20,79 +22,93 @@ class HomeScreen extends Component {
             loading: true,
             gamesObj: {},
             totals: {},
-            tagsearch: ''
+            tagsearch: '',
+            openSearchModal: false
         }
     }
 
+    componentDidMount() {
 
-    logTagsTotals = () => {
-        this.logTags().then((res) => {
-            console.log("FOUNDDDDD");
-            console.log(res);
-            let obj = {
-                games: res
-            }
-            let totals = calculation.calculateTotalStats(obj);
-            console.log("calls " + totals.calls);
-            console.log("folds " + totals.folds);
-            console.log("raises " + totals.raises);
-            this.setState({
-                gamesObj: obj
-            });
-        }).catch(err => {
-            console.log("error searching for tag");
-            throw err;
-        })
     }
 
     conextRender = (cb) => {
         cb()
     }
 
-    logTags = async () => {
-        let tags = await storage.retrieveData().then((res) => {
-            console.log("HEY CHECK ME OUT");
-            console.log(JSON.parse(res), this.state.tagsearch)
-            const data = JSON.parse(res)
-            let byTag = calculation.findTag(data, this.state.tagsearch);
-            console.log(byTag);
-            return byTag;
-        }).catch(err => {
-            console.log("nothing here");
-            throw err;
-        })
-        return tags;
+    logTags = (allGames, tag) => {
+        console.log('MY TAG', tag)
+        if (tag === "") {
+            return calculation.findTag(allGames, 'default');
+        } else {
+            return calculation.findTag(allGames, tag);
+        }
     }
 
+    objToArray = (obj) => {
+        // let values = Object.values(obj);
+        let objArray = [];
+        for (key in obj) {
+            objArray.push({ [key]: obj[key] })
+        }
+        console.log('OBJECT ARRAY', objArray)
+        return objArray
+    }
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <AntDesign name="doubleright" size={32} color="green"> </AntDesign>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+                <View>
+                    {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
+                    <MyContext.Consumer>
+                        {(context) => <Button title="test" onPress={() => { console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"])) }} />}
+                    </MyContext.Consumer>
+                    <Text>POKER TRACKER</Text>
+                    {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
+                </View>
 
-                <Text>POKER TRACKER</Text>
-                <TextInput
-                    style={{ height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                    placeholder="Search by tag"
-                    onChangeText={(tagsearch) => this.setState({ tagsearch })}
-                    value={this.state.tagsearch}
-                />
-                {/* <Button title="search" onPress={() => this.logTags()} style={{ float: 'right' }} /> */}
-                <StatsBox logTags={this.logTags} logTotalsByPosition={this.logTotalsByPosition} logTagsTotals={this.logTagsTotals} height={300} width={170} />
-                <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
-                <Text>ReRender global state</Text>
+                <View>
+                    <View>
+                        <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+                    </View>
+                    <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
+                    <Text>ReRender global state</Text>
 
-                <MyContext.Consumer>
-                    {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
-                        <Text>Press me</Text>
-                    </TouchableOpacity>}
-                </MyContext.Consumer>
-                <TouchableOpacity onPress={() => { storage.removeData(); storage.removeCurrentGame() }}>
-                    <Text style={{ color: 'red' }}>Delete storage</Text>
-                </TouchableOpacity>
+                    <MyContext.Consumer>
+                        {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
+                            <Text>Press me</Text>
+                        </TouchableOpacity>}
+                    </MyContext.Consumer>
+                  
+                </View >
             </View>
         )
     }
 }
 
-export default HomeScreen; 
+export default HomeScreen;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+    },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "#00BCD4",
+        height: '80%',
+        width: '80%',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#fff',
+        marginTop: 80,
+        marginLeft: 40,
+
+    },
+    text: {
+        color: '#3f2949',
+        marginTop: 10
+    }
+});  

@@ -57,6 +57,7 @@ module.exports = {
                 return games;
         }
         catch {
+            throw error
             console.log('error retrieving data')
         }
     },
@@ -81,6 +82,7 @@ module.exports = {
             let allTags = await AsyncStorage.getItem('tags');
             return allTags;
         } catch {
+            return null;
             console.log("No Tags")
         }
     },

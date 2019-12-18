@@ -1,8 +1,11 @@
 import React, { Component, useState } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, ImageBackground, ScrollView, SafeAreaView } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { MyContext } from '../stateContext/GlobalState';
 import Divider from "react-native-divider";
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
+//import { ScrollView } from 'react-native-gesture-handler';
+
 const calculation = require('./statscalculation.js');
 const storage = require("./AsyncStorageController.js");
 const cardImg = require('../images/ace_diamond.jpg');
@@ -26,67 +29,103 @@ export default function Statsbox(props) {
     }
 
     const objToArray = (obj) => {
-       // let values = Object.values(obj);
+        // let values = Object.values(obj);
         let objArray = [];
-        for(key in obj){
-            objArray.push({[key] : obj[key]})
+        for (key in obj) {
+            objArray.push({ [key]: obj[key] })
         }
         console.log('OBJECT ARRAY', objArray)
         return objArray
-    } 
+    }
 
 
     return (
-        <View style={{ height: props.height, color: '#32CD32', width: props.width, borderColor: '#000000', borderWidth: 3, borderStyle: 'solid' }}>
+        <View >
 
             <MyContext.Consumer>
-                {(context) => <ImageBackground style={{ flex: 1, height: '100%', width: '100%' }} source={cardImg}>
+                {(context) => <View style={{ display: 'flex', justifyContent: "center", position: 'relative' }}>
                     {props.loading
                         ?
                         <View style={[spinnerStyles.container, spinnerStyles.horizontal]}>
                             <ActivityIndicator size='small' color='#0000ff' />
                         </View>
                         :
-                        isEmpty(context.state.gamesObj) || context.state.gamesObj === [{}]
+                        isEmpty(context.state.gamesObj)
+                            
                             ?
-                            <Text>Nothing here</Text>
+                            <View style={{ borderStyle: 'solid', borderColor: 'black', borderWidth: 2, position: 'absolute', bottom: props.height / 2,}}>
+                                <Text style={{ fontStyle: 'italic', fontSize: 20, padding: 10,}}>No Data</Text>
+                            </View>
+                            
                             :
                             isOnPositionStats === true
                                 ?
-                                <Text>
-                                    Stats by position: {'\n'} 
-                                    {calculation.getPercentages(context.state.gamesObj).map(action => { 
-                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% \n`;
-                                    })}
-                    
-                                </Text>
+                                <View>
+                                    <Card title='By percentge: ' containerStyle={{ width: props.width, marginBottom: 10, padding: 10 }}>
+                                        {/* <Divider> By percentage: {'\n'} </Divider> */}
+                                        {/* <Text style={{fontSize: 16, opacity: 1, textAlign: 'center'}}> */}
+                                        <SafeAreaView style={{ height: props.height }}>
+                                            <ScrollView>
+                                                {calculation.getPercentages(context.state.gamesObj).map((action, i) => {
+                                                    return <ListItem key={i} bottomDivider title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% `} />
+                                                })}
+                                                <Text>{'\n'}</Text>
+                                                <ToggleSwitch
+
+                                                    isOn={isOnPositionStats}
+                                                    onColor="green"
+                                                    offColor="red"
+                                                    label="Change View"
+                                                    labelStyle={{ color: "black", fontWeight: "900" }}
+                                                    size="mediuim"
+                                                    onToggle={isOnPositionStats => {
+                                                        setPositionStats(isOnPositionStats);
+                                                        onToggle(isOnPositionStats);
+                                                    }}
+
+                                                />
+                                            </ScrollView>
+                                        </SafeAreaView>
+                                        {/* </Text> */}
+                                    </Card>
+                                </View>
                                 :
-                                <Text style={{ justifyContent: 'center' }} >
-                                    Total Stats:{'\n'}
-                                    {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map(action => {
-                                        return `${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]} \n`
-                                    })}
-                </Text>
+                                <View>
+                                    <Card title='Totals: ' containerStyle={{ width: props.width, marginBottom: 10, padding: 10 }}>
+                                        {/* <Divider>Total Stats:{'\n'}</Divider> */}
+                                        {/* <Text style={{opacity: 1, textAlign: 'center', fontSize: 16 }} > */}
+                                        <SafeAreaView style={{ height: props.height }}>
+                                            <ScrollView>
+                                                {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map((action, i) => {
+                                                    return <ListItem bottomDivider key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} />
+                                                })}
+                                                <Text>{'\n'}</Text>
+                                                <ToggleSwitch
+
+                                                    isOn={isOnPositionStats}
+                                                    onColor="green"
+                                                    offColor="red"
+                                                    label="Change View"
+                                                    labelStyle={{ color: "black", fontWeight: "900" }}
+                                                    size="mediuim"
+                                                    onToggle={isOnPositionStats => {
+                                                        setPositionStats(isOnPositionStats);
+                                                        onToggle(isOnPositionStats);
+                                                    }}
+
+                                                />
+                                            </ScrollView>
+                                        </SafeAreaView>
+                                        {/* </Text> */}
+                                    </Card>
+                                </View>
                     }
-                    <Button title="log position stats" onPress={() => props.logTotalsByPosition()}></Button>
-                    <Button title="search tags" onPress={() => props.logTagsTotals()} />
-                    <ToggleSwitch
-                        isOn={isOnPositionStats}
-                        onColor="green"
-                        offColor="red"
-                        label="Change View"
-                        labelStyle={{ color: "black", fontWeight: "900" }}
-                        size="mediuim"
-                        onToggle={isOnPositionStats => {
-                            setPositionStats(isOnPositionStats);
-                            onToggle(isOnPositionStats);
-                        }}
-                    />
-                </ ImageBackground>
+
+                </View>
                 }
             </MyContext.Consumer>
 
-        </View>
+        </View >
 
     )
 
