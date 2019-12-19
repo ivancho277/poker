@@ -19,7 +19,7 @@ export default class SettingsScreen extends Component {
       basic: true,
       showEditingActions: false,
       showEditingTags: false,
-      selectedValue: 'placeholder'
+      selectedValue: undefined
     };
   }
 
@@ -68,6 +68,7 @@ export default class SettingsScreen extends Component {
                     </ListItem>
 
                   <ListItem picker>
+                    <Label>remove action:</Label>
                     <Picker
                       prompt="Remove Action"
                       mode="dialog"
@@ -118,7 +119,7 @@ export default class SettingsScreen extends Component {
                 </ListItem>
 
               <ListItem>
-                <Item>
+                <Label>remove tag: </Label>
                   <Picker
                     prompt="Remove Tag"
                     mode="dialog"
@@ -153,7 +154,6 @@ export default class SettingsScreen extends Component {
                     <Picker.Item label="Net Banking" value="key14" />
                   </Picker>
 
-                </Item>
               </ListItem>
               <ListItem itemDivider>
                 <Text>Delete or Reset</Text>
