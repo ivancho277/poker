@@ -19,7 +19,7 @@ export default class SettingsScreen extends Component {
       basic: true,
       showEditingActions: false,
       showEditingTags: false,
-      selectedValue: undefined
+      selectedValue: 'placeholder'
     };
   }
 
@@ -51,208 +51,131 @@ export default class SettingsScreen extends Component {
   render() {
     return (
       <Container>
-        <Content contentContainerStyle={{ flex: 1, justifyContent: "center", alignContent: 'center' }} >
-          <List>
-            <ListItem itemHeader>
-              <Text>Edit Options</Text>
-            </ListItem>
-            <ListItem>
+        <Content padder contentContainerStyle={{ flex: 1, justifyContent: "center" }} >
 
 
-              <View style={{ flex: 1, justifyContent: "center", }}>
-
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.showEditingActions}
-                  onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                  }}>
-                  <Container style={{ flex: 1, justifyContent: 'center', maxHeight: "75%", alignContent: "space-around", alignItems: "center" }}>
-
-                    {/* <View style={{ width: '85%', height: '70%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}> */}
-                    <Card bordered style={{ flex: 1, width: "85%", height: "45%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                      <CardItem bordered header>
-                        <Text>Edit Your Actions</Text>
-                      </CardItem>
-                      <CardItem bordered>
-                        <Body>
-                          <Form>
-                            <Item>
-                              <Icon active name='pricetag' />
-                              <Input placeholder='write action here' />
-                            </Item>
-                            <Item style={{ width: 250 }}>
-                              <Picker
-                                renderHeader={backAction =>
-                                  <Header style={{ backgroundColor: "#f44242" }}>
-                                    <Left>
-                                      <Button transparent onPress={backAction}>
-                                        <Icon name="arrow-back" style={{ color: "#fff" }} />
-                                      </Button>
-                                    </Left>
-                                    <Body style={{ flex: 3 }}>
-                                      <Title style={{ color: "#fff" }}>Your Header</Title>
-                                    </Body>
-                                    <Right />
-                                  </Header>
-                                }
-                                mode="dropdown"
-                                // prompt='Select Action to remove'
-                                note
-                                placeholder="Select your SIM"
-                                iosIcon={<Icon name="arrow-down" />}
-                                placeholder="Select your SIM"
-                                textStyle={{ color: "#5cb85c" }}
-                                itemStyle={{
-                                  backgroundColor: "#d3d3d3",
-                                  marginLeft: 0,
-                                  paddingLeft: 10
-                                }}
-                                itemTextStyle={{ color: '#788ad2' }}
-                                style={{ width: 'auto' }}
-                                selectedValue={this.state.selectedValue}
-                                onValueChange={this.onValueChange.bind(this)}
-                              >
-                                <Picker.Item label="Wallet" value="key0" />
-                                <Picker.Item label="ATM Card" value="key1" />
-                                <Picker.Item label="Debit Card" value="key2" />
-                                <Picker.Item label="Credit Card" value="key3" />
-                                <Picker.Item label="Net Banking" value="key4" />
-                              </Picker>
-
-                            </Item>
-
-                          </Form>
-                        </Body>
+          <ScrollView>
+            <List>
+              <ListItem itemDivider>
+                <Text>Edit Action</Text>
+              </ListItem>
+              
 
 
-                      </CardItem>
-                      <CardItem footer button bordered
-                        onPress={() => {
-                          this.setState({ showEditingActions: !this.state.showEditingActions });
-                        }}  >
-                        <Text>Hide Modal</Text>
-                      </CardItem>
-                    </Card>
-                  </Container>
+                    <ListItem>
+                      <Icon active name='hand' />
+                      <Input placeholder='add action here' />
+                    </ListItem>
 
-                </Modal>
-                <View>
-                  <Button hasText transparent onPress={() => { this.setState({ showEditingActions: true }) }}>
-                    <Text>Edit Actions</Text>
-                  </Button>
-                </View>
-              </View>
+                  <ListItem picker>
+                    <Picker
+                      prompt="Remove Action"
+                      mode="dialog"
+                      note={true}
+                      placeholder="choose action to remove"
+                      iosIcon={<Icon name="arrow-down" />}
+                      textStyle={{ color: "#5cb85c" }}
+                      itemStyle={{
+                        backgroundColor: "#d3d3d3",
+                        marginLeft: 0,
+                        paddingLeft: 10
+                      }}
+                      itemTextStyle={{ color: '#788ad2' }}
+                      style={{ width: undefined }}
+                      selectedValue={this.state.selectedValue}
+                      onValueChange={this.onValueChange.bind(this)}
+                    >
+                      <Picker.Item label="actions list" value="placeholder" />
+                      <Picker.Item label="Wallet" value="key0" />
+                      <Picker.Item label="ATM Card" value="key1" />
+                      <Picker.Item label="Debit Card" value="key2" />
+                      <Picker.Item label="Credit Card" value="key3" />
+                      <Picker.Item label="Net Banking" value="key4" />
+                      <Picker.Item label="Wallet" value="key5" />
+                      <Picker.Item label="ATM Card" value="key6" />
+                      <Picker.Item label="Debit Card" value="key7" />
+                      <Picker.Item label="Credit Card" value="key8" />
+                      <Picker.Item label="Net Banking" value="key9" />
+                      <Picker.Item label="Wallet" value="key10" />
+                      <Picker.Item label="ATM Card" value="key11" />
+                      <Picker.Item label="Debit Card" value="key12" />
+                      <Picker.Item label="Credit Card" value="key13" />
+                      <Picker.Item label="Net Banking" value="key14" />
+                    </Picker>
 
+                  </ListItem>
 
-            </ListItem>
-            <ListItem last>
-
-              <View style={{ flex: 1, justifyContent: "center", }}>
-
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.showEditingTags}
-                  onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                  }}>
-                  <Container style={{ flex: 1, justifyContent: 'center', maxHeight: "75%", alignContent: "space-around", alignItems: "center" }}>
-
-                    {/* <View style={{ width: '85%', height: '70%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}> */}
-                    <Card bordered style={{ flex: 1, width: "85%", height: "45%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                      <CardItem bordered header>
-                        <Text>Edit Your Tags</Text>
-                      </CardItem>
-                      <CardItem bordered>
-                        <Body>
-                          <Form>
-                            <Item>
-                              <Icon active name='pricetag' />
-                              <Input placeholder='write tag here' />
-                            </Item>
-                            <Item style={{ width: 250 }}>
-                              <Picker
-                                mode="dialog"
-                                note={true}
-                                placeholder="choose tag to remove"
-                                iosIcon={<Icon name="arrow-down" />}
-                                textStyle={{ color: "#5cb85c" }}
-                                itemStyle={{
-                                  backgroundColor: "#d3d3d3",
-                                  marginLeft: 0,
-                                  paddingLeft: 10
-                                }}
-                                itemTextStyle={{ color: '#788ad2' }}
-                                style={{ width: 'auto' }}
-                                selectedValue={this.state.selectedValue}
-                                onValueChange={this.onValueChange.bind(this)}
-                              >
-                                <Picker.Item label="Wallet" value="key0" />
-                                <Picker.Item label="ATM Card" value="key1" />
-                                <Picker.Item label="Debit Card" value="key2" />
-                                <Picker.Item label="Credit Card" value="key3" />
-                                <Picker.Item label="Net Banking" value="key4" />
-                                <Picker.Item label="Wallet" value="key5" />
-                                <Picker.Item label="ATM Card" value="key6" />
-                                <Picker.Item label="Debit Card" value="key7" />
-                                <Picker.Item label="Credit Card" value="key8" />
-                                <Picker.Item label="Net Banking" value="key9" />
-                                <Picker.Item label="Wallet" value="key10" />
-                                <Picker.Item label="ATM Card" value="key11" />
-                                <Picker.Item label="Debit Card" value="key12" />
-                                <Picker.Item label="Credit Card" value="key13" />
-                                <Picker.Item label="Net Banking" value="key14" />
-                              </Picker>
-
-                            </Item>
-
-                          </Form>
-                        </Body>
+              <ListItem itemDivider>
+                <Text>Edit Tags</Text>
+              </ListItem>
 
 
-                      </CardItem>
-                      <CardItem footer button bordered
-                        onPress={() => {
-                          this.setState({ showEditingTags: !this.state.showEditingTags });
-                        }}  >
-                        <Text>Hide Modal</Text>
-                      </CardItem>
-                    </Card>
-                  </Container>
-                </Modal>
-                <View>
-                  <Button hasText transparent onPress={() => { this.setState({ showEditingTags: true }) }}>
-                    <Text>Edit Actions</Text>
-                  </Button>
-                </View>
-              </View>
 
 
-            </ListItem>
-          </List>
-          <List>
-            <ListItem itemHeader>
-              <Text>Delete or Reset</Text>
-            </ListItem>
-            <ListItem>
-              <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
-                <Text>Reset Actions</Text>
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
-                <Text>Delete all Tags</Text>
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
-                <Text>Delete all Data</Text>
-              </Button>
-            </ListItem>
-          </List>
-        </Content>
+                <ListItem>
+                  <Icon active name='pricetag' />
+                  <Input placeholder='add tag here' />
+                </ListItem>
+
+              <ListItem>
+                <Item>
+                  <Picker
+                    prompt="Remove Tag"
+                    mode="dialog"
+                    note={true}
+                    placeholder="choose tag to remove"
+                    iosIcon={<Icon name="arrow-down" />}
+                    textStyle={{ color: "#5cb85c" }}
+                    itemStyle={{
+                      backgroundColor: "#d3d3d3",
+                      marginLeft: 0,
+                      paddingLeft: 10
+                    }}
+                    itemTextStyle={{ color: '#788ad2' }}
+                    selectedValue={this.state.selectedValue}
+                    onValueChange={this.onValueChange.bind(this)}
+                  >
+                    <Picker.Item label="list of tags" value="placeholder" />
+                    <Picker.Item label="Wallet" value="key0" />
+                    <Picker.Item label="ATM Card" value="key1" />
+                    <Picker.Item label="Debit Card" value="key2" />
+                    <Picker.Item label="Credit Card" value="key3" />
+                    <Picker.Item label="Net Banking" value="key4" />
+                    <Picker.Item label="Wallet" value="key5" />
+                    <Picker.Item label="ATM Card" value="key6" />
+                    <Picker.Item label="Debit Card" value="key7" />
+                    <Picker.Item label="Credit Card" value="key8" />
+                    <Picker.Item label="Net Banking" value="key9" />
+                    <Picker.Item label="Wallet" value="key10" />
+                    <Picker.Item label="ATM Card" value="key11" />
+                    <Picker.Item label="Debit Card" value="key12" />
+                    <Picker.Item label="Credit Card" value="key13" />
+                    <Picker.Item label="Net Banking" value="key14" />
+                  </Picker>
+
+                </Item>
+              </ListItem>
+              <ListItem itemDivider>
+                <Text>Delete or Reset</Text>
+              </ListItem>
+              <ListItem>
+                <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
+                  <Text>Reset Actions</Text>
+                </Button>
+              </ListItem>
+              <ListItem>
+                <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
+                  <Text>Delete all Tags</Text>
+                </Button>
+              </ListItem>
+              <ListItem>
+                <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
+                  <Text>Delete all Data</Text>
+                </Button>
+              </ListItem>
+            </List>
+          </ScrollView >
+        </Content >
       </Container >
     )
   }
