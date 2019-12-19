@@ -41,17 +41,17 @@ export default class SettingsScreen extends Component {
     );
   }
 
-  onValueChange(value){
+  onValueChange(value) {
     this.setState({
       selectedValue: value
     });
   }
- 
+
 
   render() {
     return (
       <Container>
-        <Content >
+        <Content contentContainerStyle={{ flex: 1, justifyContent: "center", alignContent: 'center' }} >
           <List>
             <ListItem itemHeader>
               <Text>Edit Options</Text>
@@ -59,7 +59,7 @@ export default class SettingsScreen extends Component {
             <ListItem>
 
 
-              <View style={{ flex: 1, justifyContent: "center" }}>
+              <View style={{ flex: 1, justifyContent: "center", }}>
 
                 <Modal
                   animationType="slide"
@@ -68,7 +68,8 @@ export default class SettingsScreen extends Component {
                   onRequestClose={() => {
                     Alert.alert('Modal has been closed.');
                   }}>
-                  <View style={{flex: 1, justifyContent: 'center', height: 'auto', alignItems: 'center'}}>
+                  <Container style={{ flex: 1, justifyContent: 'center', maxHeight: "75%", alignContent: "space-around", alignItems: "center" }}>
+
                     {/* <View style={{ width: '85%', height: '70%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}> */}
                     <Card bordered style={{ flex: 1, width: "85%", height: "45%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                       <CardItem bordered header>
@@ -76,38 +77,53 @@ export default class SettingsScreen extends Component {
                       </CardItem>
                       <CardItem bordered>
                         <Body>
-                        <Form>
-                          <Item stackedLabel style={{width: 250}}>
-                            <Label>Add New Action</Label>
-                            <Input />
-                          </Item>
-                          <Item style={{width: 250}}> 
-                            <Picker
-                              mode="dropdown"
-                              placeholder="Select your SIM"
-                              iosIcon={<Icon name="arrow-down" />}
-                              placeholder="Select your SIM"
-                              textStyle={{ color: "#5cb85c" }}
-                              itemStyle={{
-                                backgroundColor: "#d3d3d3",
-                                marginLeft: 0,
-                                paddingLeft: 10
-                              }}
-                              itemTextStyle={{ color: '#788ad2' }}
-                              style={{ width: 'auto' }}
-                              selectedValue={this.state.selectedValue}
-                              onValueChange={this.onValueChange.bind(this)}
-                            >
-                              <Picker.Item label="Wallet" value="key0" />
-                              <Picker.Item label="ATM Card" value="key1" />
-                              <Picker.Item label="Debit Card" value="key2" />
-                              <Picker.Item label="Credit Card" value="key3" />
-                              <Picker.Item label="Net Banking" value="key4" />
-                            </Picker>
+                          <Form>
+                            <Item>
+                              <Icon active name='pricetag' />
+                              <Input placeholder='write action here' />
+                            </Item>
+                            <Item style={{ width: 250 }}>
+                              <Picker
+                                renderHeader={backAction =>
+                                  <Header style={{ backgroundColor: "#f44242" }}>
+                                    <Left>
+                                      <Button transparent onPress={backAction}>
+                                        <Icon name="arrow-back" style={{ color: "#fff" }} />
+                                      </Button>
+                                    </Left>
+                                    <Body style={{ flex: 3 }}>
+                                      <Title style={{ color: "#fff" }}>Your Header</Title>
+                                    </Body>
+                                    <Right />
+                                  </Header>
+                                }
+                                mode="dropdown"
+                                // prompt='Select Action to remove'
+                                note
+                                placeholder="Select your SIM"
+                                iosIcon={<Icon name="arrow-down" />}
+                                placeholder="Select your SIM"
+                                textStyle={{ color: "#5cb85c" }}
+                                itemStyle={{
+                                  backgroundColor: "#d3d3d3",
+                                  marginLeft: 0,
+                                  paddingLeft: 10
+                                }}
+                                itemTextStyle={{ color: '#788ad2' }}
+                                style={{ width: 'auto' }}
+                                selectedValue={this.state.selectedValue}
+                                onValueChange={this.onValueChange.bind(this)}
+                              >
+                                <Picker.Item label="Wallet" value="key0" />
+                                <Picker.Item label="ATM Card" value="key1" />
+                                <Picker.Item label="Debit Card" value="key2" />
+                                <Picker.Item label="Credit Card" value="key3" />
+                                <Picker.Item label="Net Banking" value="key4" />
+                              </Picker>
 
-                          </Item>
+                            </Item>
 
-                        </Form>
+                          </Form>
                         </Body>
 
 
@@ -119,7 +135,8 @@ export default class SettingsScreen extends Component {
                         <Text>Hide Modal</Text>
                       </CardItem>
                     </Card>
-                    </View>
+                  </Container>
+
                 </Modal>
                 <View>
                   <Button hasText transparent onPress={() => { this.setState({ showEditingActions: true }) }}>
@@ -131,9 +148,88 @@ export default class SettingsScreen extends Component {
 
             </ListItem>
             <ListItem last>
-              <Button hasText transparent onPress={() => { console.log('clicked') }}>
-                <Text>Edit Tags</Text>
-              </Button>
+
+              <View style={{ flex: 1, justifyContent: "center", }}>
+
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={this.state.showEditingTags}
+                  onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                  }}>
+                  <Container style={{ flex: 1, justifyContent: 'center', maxHeight: "75%", alignContent: "space-around", alignItems: "center" }}>
+
+                    {/* <View style={{ width: '85%', height: '70%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}> */}
+                    <Card bordered style={{ flex: 1, width: "85%", height: "45%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                      <CardItem bordered header>
+                        <Text>Edit Your Tags</Text>
+                      </CardItem>
+                      <CardItem bordered>
+                        <Body>
+                          <Form>
+                            <Item>
+                              <Icon active name='pricetag' />
+                              <Input placeholder='write tag here' />
+                            </Item>
+                            <Item style={{ width: 250 }}>
+                              <Picker
+                                mode="dialog"
+                                note={true}
+                                placeholder="choose tag to remove"
+                                iosIcon={<Icon name="arrow-down" />}
+                                textStyle={{ color: "#5cb85c" }}
+                                itemStyle={{
+                                  backgroundColor: "#d3d3d3",
+                                  marginLeft: 0,
+                                  paddingLeft: 10
+                                }}
+                                itemTextStyle={{ color: '#788ad2' }}
+                                style={{ width: 'auto' }}
+                                selectedValue={this.state.selectedValue}
+                                onValueChange={this.onValueChange.bind(this)}
+                              >
+                                <Picker.Item label="Wallet" value="key0" />
+                                <Picker.Item label="ATM Card" value="key1" />
+                                <Picker.Item label="Debit Card" value="key2" />
+                                <Picker.Item label="Credit Card" value="key3" />
+                                <Picker.Item label="Net Banking" value="key4" />
+                                <Picker.Item label="Wallet" value="key5" />
+                                <Picker.Item label="ATM Card" value="key6" />
+                                <Picker.Item label="Debit Card" value="key7" />
+                                <Picker.Item label="Credit Card" value="key8" />
+                                <Picker.Item label="Net Banking" value="key9" />
+                                <Picker.Item label="Wallet" value="key10" />
+                                <Picker.Item label="ATM Card" value="key11" />
+                                <Picker.Item label="Debit Card" value="key12" />
+                                <Picker.Item label="Credit Card" value="key13" />
+                                <Picker.Item label="Net Banking" value="key14" />
+                              </Picker>
+
+                            </Item>
+
+                          </Form>
+                        </Body>
+
+
+                      </CardItem>
+                      <CardItem footer button bordered
+                        onPress={() => {
+                          this.setState({ showEditingTags: !this.state.showEditingTags });
+                        }}  >
+                        <Text>Hide Modal</Text>
+                      </CardItem>
+                    </Card>
+                  </Container>
+                </Modal>
+                <View>
+                  <Button hasText transparent onPress={() => { this.setState({ showEditingTags: true }) }}>
+                    <Text>Edit Actions</Text>
+                  </Button>
+                </View>
+              </View>
+
+
             </ListItem>
           </List>
           <List>
