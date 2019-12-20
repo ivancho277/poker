@@ -15,7 +15,10 @@ module.exports = {
             console.log("error saving data");
         }
     },
-
+    /**
+     * Takes a Current Game Object to save.
+     * @param {Object} data 
+     */
     saveCurrentGame: function (data) {
         try {
             AsyncStorage.setItem('currentGame', JSON.stringify(data));

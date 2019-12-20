@@ -78,6 +78,10 @@ module.exports = {
 
     calcCurrentGamePercentages: function (gamesObj, currentGame) {
         return percentagePerPositionByTags(gamesObj, currentGame)
+    },
+
+    isEmpty: function(obj){
+        return isEmpty(obj);
     }
 }
 
