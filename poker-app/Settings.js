@@ -5,6 +5,7 @@ const storage = require('./components/AsyncStorageController.js');
 import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
 import BottomSheet from './components/BottomSheetList'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+import { MyContext } from './stateContext/GlobalState'
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
@@ -19,7 +20,8 @@ export default class SettingsScreen extends Component {
       basic: true,
       showEditingActions: false,
       showEditingTags: false,
-      selectedValue: undefined
+      tagVal: undefined,
+      actionVal: undefined
     };
   }
 
@@ -41,9 +43,16 @@ export default class SettingsScreen extends Component {
     );
   }
 
-  onValueChange(value) {
+  onActionChange(value) {
     this.setState({
-      selectedValue: value
+      actionVal: value
+    });
+  }
+
+
+  onTagChange(value) {
+    this.setState({
+      tagVal: value
     });
   }
 
@@ -59,16 +68,19 @@ export default class SettingsScreen extends Component {
               <ListItem itemDivider>
                 <Text>Edit Action</Text>
               </ListItem>
-              
 
 
-                    <ListItem>
-                      <Icon active name='hand' />
-                      <Input placeholder='add action here' />
-                    </ListItem>
 
-                  <ListItem picker>
-                    <Label>remove action:</Label>
+              <ListItem>
+                <Icon active name='hand' />
+                <Input placeholder='add action here' />
+              </ListItem>
+
+              <ListItem picker>
+                <Label>remove action:</Label>
+
+                <MyContext.Consumer>
+                  {(context) =>
                     <Picker
                       prompt="Remove Action"
                       mode="dialog"
@@ -83,28 +95,32 @@ export default class SettingsScreen extends Component {
                       }}
                       itemTextStyle={{ color: '#788ad2' }}
                       style={{ width: undefined }}
-                      selectedValue={this.state.selectedValue}
-                      onValueChange={this.onValueChange.bind(this)}
+                      selectedValue={this.state.actionVal}
+                      onValueChange={this.onActionChange.bind(this)}
                     >
-                      <Picker.Item label="actions list" value="placeholder" />
-                      <Picker.Item label="Wallet" value="key0" />
-                      <Picker.Item label="ATM Card" value="key1" />
-                      <Picker.Item label="Debit Card" value="key2" />
-                      <Picker.Item label="Credit Card" value="key3" />
-                      <Picker.Item label="Net Banking" value="key4" />
-                      <Picker.Item label="Wallet" value="key5" />
-                      <Picker.Item label="ATM Card" value="key6" />
-                      <Picker.Item label="Debit Card" value="key7" />
-                      <Picker.Item label="Credit Card" value="key8" />
-                      <Picker.Item label="Net Banking" value="key9" />
-                      <Picker.Item label="Wallet" value="key10" />
-                      <Picker.Item label="ATM Card" value="key11" />
-                      <Picker.Item label="Debit Card" value="key12" />
-                      <Picker.Item label="Credit Card" value="key13" />
-                      <Picker.Item label="Net Banking" value="key14" />
+                      {context.state.actions.map((action, i) => {
+                        return <Picker.Item label={action} key={i} value={i} />
+                      })}
+                      {/* <Picker.Item label="actions list" value="placeholder" />
+                  <Picker.Item label="Wallet" value="key0" />
+                  <Picker.Item label="ATM Card" value="key1" />
+                  <Picker.Item label="Debit Card" value="key2" />
+                  <Picker.Item label="Credit Card" value="key3" />
+                  <Picker.Item label="Net Banking" value="key4" />
+                  <Picker.Item label="Wallet" value="key5" />
+                  <Picker.Item label="ATM Card" value="key6" />
+                  <Picker.Item label="Debit Card" value="key7" />
+                  <Picker.Item label="Credit Card" value="key8" />
+                  <Picker.Item label="Net Banking" value="key9" />
+                  <Picker.Item label="Wallet" value="key10" />
+                  <Picker.Item label="ATM Card" value="key11" />
+                  <Picker.Item label="Debit Card" value="key12" />
+                  <Picker.Item label="Credit Card" value="key13" />
+                  <Picker.Item label="Net Banking" value="key14" /> */}
                     </Picker>
-
-                  </ListItem>
+                  }
+                </MyContext.Consumer>
+              </ListItem>
 
               <ListItem itemDivider>
                 <Text>Edit Tags</Text>
@@ -113,30 +129,35 @@ export default class SettingsScreen extends Component {
 
 
 
-                <ListItem>
-                  <Icon active name='pricetag' />
-                  <Input placeholder='add tag here' />
-                </ListItem>
+              <ListItem>
+                <Icon active name='pricetag' />
+                <Input placeholder='add tag here' />
+              </ListItem>
 
               <ListItem>
                 <Label>remove tag: </Label>
-                  <Picker
-                    prompt="Remove Tag"
-                    mode="dialog"
-                    note={true}
-                    placeholder="choose tag to remove"
-                    iosIcon={<Icon name="arrow-down" />}
-                    textStyle={{ color: "#5cb85c" }}
-                    itemStyle={{
-                      backgroundColor: "#d3d3d3",
-                      marginLeft: 0,
-                      paddingLeft: 10
-                    }}
-                    itemTextStyle={{ color: '#788ad2' }}
-                    selectedValue={this.state.selectedValue}
-                    onValueChange={this.onValueChange.bind(this)}
-                  >
-                    <Picker.Item label="list of tags" value="placeholder" />
+                <MyContext.Consumer>
+                  {(context) =>
+                    <Picker
+                      prompt="Remove Tag"
+                      mode="dialog"
+                      note={true}
+                      placeholder="choose tag to remove"
+                      iosIcon={<Icon name="arrow-down" />}
+                      textStyle={{ color: "#5cb85c" }}
+                      itemStyle={{
+                        backgroundColor: "#d3d3d3",
+                        marginLeft: 0,
+                        paddingLeft: 10
+                      }}
+                      itemTextStyle={{ color: '#788ad2' }}
+                      selectedValue={this.state.tagVal}
+                      onValueChange={this.onTagChange.bind(this)}
+                    >
+                      {context.state.allTags.map((tag, i) => {
+                        return <Picker.Item label={tag} key={i} value={i} />
+                      })}
+                      {/* <Picker.Item label="list of tags" value="placeholder" />
                     <Picker.Item label="Wallet" value="key0" />
                     <Picker.Item label="ATM Card" value="key1" />
                     <Picker.Item label="Debit Card" value="key2" />
@@ -151,9 +172,11 @@ export default class SettingsScreen extends Component {
                     <Picker.Item label="ATM Card" value="key11" />
                     <Picker.Item label="Debit Card" value="key12" />
                     <Picker.Item label="Credit Card" value="key13" />
-                    <Picker.Item label="Net Banking" value="key14" />
-                  </Picker>
+                    <Picker.Item label="Net Banking" value="key14" /> */}
+                    </Picker>
+                  }
 
+                </MyContext.Consumer>
               </ListItem>
               <ListItem itemDivider>
                 <Text>Delete or Reset</Text>

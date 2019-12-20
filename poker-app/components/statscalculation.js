@@ -81,7 +81,7 @@ module.exports = {
     }
 }
 
-function isEmpty(obj){
+const isEmpty = function(obj){
     for (var key in obj) {
         if (obj.hasOwnProperty(key))
             return false;
@@ -89,7 +89,7 @@ function isEmpty(obj){
     return true;
 }
 
-function CountPositions(obj) {
+const CountPositions = function(obj) {
     //go through games and find totals per position
 
     try {
@@ -125,7 +125,7 @@ function CountPositions(obj) {
 
 }
 
-function calculatePercentages(obj) {
+calculatePercentages = function(obj) {
     try {
         // debugger;
         let seperateTotals = countTotal(obj);
@@ -144,7 +144,7 @@ function calculatePercentages(obj) {
 }
 
 
-function countTotal(obj) {
+const countTotal = function(obj) {
     try {
         //debugger;
         let totals = {}
@@ -174,7 +174,7 @@ function countTotal(obj) {
  * @param {object} allgames 
  * @param {string} tag 
  */
-function SearchTag(allgames, tag) {
+const SearchTag = function(allgames, tag) {
     //console.log("FUNCTION",allgames, "TAGwE: ", tag)
     let foundGamesWithTag = allgames.games.filter((game => {
         if (game.tags.includes(tag)) {
@@ -184,12 +184,12 @@ function SearchTag(allgames, tag) {
     return foundGamesWithTag;
 }
 
-function checkversion(OldVersion) {
+const checkversion = function(OldVersion) {
     let currentVersion = '1.0.3';
 
 }
 
-function findManytags(allgames, tagarr) {
+const findManytags = function(allgames, tagarr) {
     //console.log("inside: ", allgames);
     //console.log("more inside: ", tagarr)
     let foundgames = allgames.games.filter(game => {
@@ -240,7 +240,7 @@ function totalsPerAction(allgames) {
     }
 }
 
-function totalsPerPosition(allgames) {
+const totalsPerPosition = function(allgames) {
     let perAction = totalsPerAction(allgames);
     let positionTotals = {}
     for (action in perAction) {
@@ -257,7 +257,7 @@ function totalsPerPosition(allgames) {
     return positionTotals;
 }
 
-function percentagesByPostion(allgames) {
+const percentagesByPostion = function(allgames) {
     let perAction = totalsPerAction(allgames);
     let perPosition = totalsPerPosition(allgames);
     // console.log('me: ', perPosition)
@@ -279,11 +279,11 @@ function percentagesByPostion(allgames) {
 
 
 
-function newPercentagesByPosition(allGames){
+const newPercentagesByPosition = function(allGames){
 
 }
 
-function percentagePerPositionByTags(allgames, currentGame) {
+const percentagePerPositionByTags = function(allgames, currentGame) {
     try {
         let currentTags = [...currentGame.tags];
         console.log(findManytags(allgames, ['Moon', "France"]))

@@ -13,12 +13,18 @@ export class GlobalState extends Component {
         gamesObj: {},
         gamesArray: [],
         allTags: [],
-        totalGames: 0
+        totalGames: 0,
+        actions: []
     }
     componentDidMount() {
         // storage.removeData()
         this.getDataFromStorage().then((res) => {
             console.log('global state populated')
+        })
+        storage.retrieveActions().then((res) => {
+            this.setState({actions: JSON.parse(res)});
+        }).catch(err => {
+            alert('actions!')
         })
     }
 
