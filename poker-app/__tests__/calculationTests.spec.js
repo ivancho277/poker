@@ -12,6 +12,14 @@ const { findTag,
     isEmpty
 } = require('../components/statscalculation.js')
 
+
+const EmptyTest = {};
+const NonExsistant = undefined;
+const NullTest = null;
+const gameObj1 = {}
+const gameObj2 = {}
+
+
 describe('Test my is Empty function', () => {
     const obj1 = {}
     const obj2 = {
@@ -21,14 +29,15 @@ describe('Test my is Empty function', () => {
     test('test if empty object function', () => {
         expect(isEmpty(obj1)).toBe(true);
     }),
-    test('test2', () => {
-        expect(isEmpty(obj2)).toBe(false);
-    }),
-    test('matcher test', ()=>{
+        test('test2', () => {
+            expect(isEmpty(obj2)).toBe(false);
+        }),
+
+
         expect.extend({
-            isEmpty(obj1) {
+            isEmpty1() {
                 const pass = true
-                if(pass){
+                if (pass) {
                     return {
                         message: () => 'Yes the object is empty',
                         pass: true
@@ -42,23 +51,31 @@ describe('Test my is Empty function', () => {
                 }
             }
         })
-    })
-   
 
+        test('test 3 extend', () => {
 
-
-
+        })
+        
 })
 
 
-    // describe('Tests for calculation functions for app data', () => {
-    //     test('Searchs is a tag exsists in all current games', () => {
-
-    //     })
 
 
 
-    // });
+
+
+
+
+    describe('Tests for calculation functions for app data', () => {
+
+
+        test('Searchs is a tag exsists in all current games', () => {
+
+        })
+
+
+
+    });
 
 
 
