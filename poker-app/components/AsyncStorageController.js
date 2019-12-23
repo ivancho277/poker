@@ -177,7 +177,7 @@ module.exports = {
 
     resetActions: resetActions,
 
-    isFirstLaunch: isFirstLaunch
+    firstTimeLauching: firstTimeLauching
 
 }
 

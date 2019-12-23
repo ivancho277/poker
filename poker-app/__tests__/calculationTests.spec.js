@@ -34,23 +34,23 @@ describe('Test my is Empty function', () => {
         }),
 
 
-        expect.extend({
-            isEmpty1() {
-                const pass = true
-                if (pass) {
-                    return {
-                        message: () => 'Yes the object is empty',
-                        pass: true
-                    }
-                }
-                else {
-                    return {
-                        message: () => 'NOT EMPTY OBJECT',
-                        pass: false
-                    }
-                }
-            }
-        })
+        // expect.extend({
+        //     isEmpty1() {
+        //         const pass = true
+        //         if (pass) {
+        //             return {
+        //                 message: () => 'Yes the object is empty',
+        //                 pass: true
+        //             }
+        //         }
+        //         else {
+        //             return {
+        //                 message: () => 'NOT EMPTY OBJECT',
+        //                 pass: false
+        //             }
+        //         }
+        //     }
+        // })
 
         test('test 3 extend', () => {
 
