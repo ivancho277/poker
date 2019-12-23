@@ -1,7 +1,19 @@
 import React, { useState, useContext, Component } from 'react';
 const storage = require('../components/AsyncStorageController.js')
 const calculation = require('../components/statscalculation.js')
-
+const { saveCurrentGame,
+    retrieveCurrentGame,
+    removeCurrentGame,
+    retrieveData,
+    removeData,
+    saveTags,
+    retrieveTags,
+    removeTags,
+    saveActions,
+    retrieveActions,
+    resetActions,
+    firstTimeLauching
+} = require('../components/AsyncStorageController.js')
 export const MyContext = React.createContext();
 
 
@@ -14,21 +26,54 @@ export class GlobalState extends Component {
         gamesArray: [],
         allTags: [],
         totalGames: 0,
-        actions: []
+        actions: [],
+        currentGame: {}
+
     }
     componentDidMount() {
         // storage.removeData()
         this.getDataFromStorage().then((res) => {
             console.log('global state populated')
         })
-        storage.retrieveActions().then((res) => {
-            this.setState({actions: JSON.parse(res)});
+    }
+
+    async getDataFromStorage() {
+        await this.getAllGames();
+        await this.getActions();
+        await this.getTags();
+        await this.getCurrentGame();
+    }
+
+
+
+    getTags = async () => {
+        await storage.retrieveTags().then(res => {
+            if (res != undefined && res != null) {
+                this.setState({ allTags: JSON.parse(res) })
+            }
+        }).catch(err => {
+            console.log('NO TAGS IN STORAGE');
+        })
+    }
+
+    getActions = async  () => {
+        await storage.retrieveActions().then((res) => {
+            this.setState({ actions: JSON.parse(res) });
         }).catch(err => {
             alert('actions!')
         })
     }
 
-    async getDataFromStorage(){
+    getCurrentGame = async () => {
+        return currentTags = await storage.retrieveCurrentGame().then(res => {
+            if (res) {
+                return JSON.parse(res);
+            }
+            else return res;
+        })
+    }
+
+    getAllGames = async () => {
         await storage.retrieveData().then((res) => {
             //console.log(JSON.parse(res));
             //debugger;
@@ -54,13 +99,6 @@ export class GlobalState extends Component {
                 console.log(pastGames)
                 console.log(this.state.gamesObj)
             }
-            storage.retrieveTags().then(res => {
-                if (res != undefined && res != null) {
-                    this.setState({ allTags: JSON.parse(res) })
-                }
-            }).catch(err => {
-                console.log('NO TAGS IN STORAGE');
-            })
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
             storage.resetActions();
@@ -68,13 +106,45 @@ export class GlobalState extends Component {
         })
     }
 
+    updateActions() {
+
+    }
+
+    updateTags() {
+
+    }
+
+    updateGames(newGamesObj) {
+        this.setState({
+            gamesObj: newGamesObj,
+            gamesArray: newGamesObj.games
+        })
+
+    }
+
+    resetActions() {
+
+    }
+
+    deleteAllTags() {
+
+    }
+
+    addTag() {
+
+    }
+
+
+
+
+
     componentDidUpdate() {
         //checks to see if any new tags are added to our list of overall tags, and updates state if so.
         storage.retrieveTags().then(res => {
             if (res != undefined && res != null) {
                 if (this.state.allTags.length >= 1) {
                     //debugger;
-                    if ( this.state.allTags.length !== JSON.parse(res).length) {
+                    if (this.state.allTags.length !== JSON.parse(res).length) {
                         this.setState({ allTags: JSON.parse(res) })
                     }
                 }
@@ -94,13 +164,13 @@ export class GlobalState extends Component {
         //             })
         //         }
         //         debugger;
-                // if (allGamesArray.length !== this.state.totalGames) {
-                //    this.getDataFromStorage().then((res) => {
-                //        console.log('Update global storage')
-                //    })
-                // }
-            // }
-        
+        // if (allGamesArray.length !== this.state.totalGames) {
+        //    this.getDataFromStorage().then((res) => {
+        //        console.log('Update global storage')
+        //    })
+        // }
+        // }
+
 
     }
     logTotalsByPosition = () => {
@@ -114,12 +184,7 @@ export class GlobalState extends Component {
         })
     }
 
-    updateGames(newGamesObj) {
-        this.setState({
-            gamesObj: newGamesObj,
-            gamesArray: newGamesObj.games
-        })
-    }
+
 
     setPosition(position) {
         this.setState({
