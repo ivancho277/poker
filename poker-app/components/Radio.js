@@ -44,7 +44,7 @@ class Radio extends Component {
         }
     }
 
-    componentWillUpdate() {
+    UNSAFE_componentWillUpdate() {
         this.props.shouldPositionIncrement(this.updateIndex)
     }
 
