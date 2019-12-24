@@ -104,10 +104,11 @@ export class GlobalState extends Component {
         })
     }
 
+    //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators
     updateActions() {
 
     }
-    
+     //TODO: finish writing this funtion, use validators
     updateTags(tag) {
         if (!this.state.allTags.includes(tag) && tag != "") {
             let updatedTags = this.state.allTags.concat(this.state.tag);
@@ -127,6 +128,8 @@ export class GlobalState extends Component {
 
     }
 
+
+    //TODO: handle all storage controll in context, after you finish these funtions implement them in settings screen
     resetActions() {
 
     }
@@ -209,6 +212,7 @@ export class GlobalState extends Component {
         return this.state.gamesArray;
     }
 
+    //TODO: remember to add new funtions to context provider
     render() {
         return (
             <MyContext.Provider value={{
