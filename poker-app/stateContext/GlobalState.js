@@ -44,8 +44,6 @@ export class GlobalState extends Component {
         await this.getCurrentGame();
     }
 
-
-
     getTags = async () => {
         await storage.retrieveTags().then(res => {
             if (res != undefined && res != null) {
@@ -134,6 +132,10 @@ export class GlobalState extends Component {
 
     }
 
+    addAction(){
+        
+    }
+
 
 
 
@@ -209,7 +211,9 @@ export class GlobalState extends Component {
                 remount: () => this.componentDidMount(),
                 updateGames: (gamesObj) => { this.updateGames(gamesObj) },
                 getGames: () => this.getGames(),
-                getGamesArray: () => this.getGamesArray()
+                getGamesArray: () => this.getGamesArray(),
+                
+
             }
             }>
                 {this.props.children}

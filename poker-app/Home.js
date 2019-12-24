@@ -27,7 +27,11 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
+        console.log(this.context)
+    }
 
+    componentDidUpdate() {
+        console.log(this.context)
     }
 
     conextRender = (cb) => {
@@ -85,6 +89,8 @@ class HomeScreen extends Component {
 }
 
 export default HomeScreen;
+
+HomeScreen.contextType = MyContext;
 
 const styles = StyleSheet.create({
     container: {

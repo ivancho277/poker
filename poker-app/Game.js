@@ -43,21 +43,35 @@ class GameScreen extends Component {
     }
 
     componentDidMount() {
-        storage.retrieveTags().then(res => {
-            let tagsArr = JSON.parse(res);
-            if (tagsArr) {
-                this.setState({
-                    allTags: tagsArr
-                })
-            }
-        })
-        this.retriveCurrentGame().then(res => {
-            console.log("tag: ", res)
-            if (res != null) {
-                this.setState({ tags: res.tags })
-            }
+        // storage.retrieveTags().then(res => {
+        //     let tagsArr = JSON.parse(res);
+        //     if (tagsArr) {
+        //         this.setState({
+        //             allTags: tagsArr
+        //         })
+        //     }
+        // })
+        // this.retriveCurrentGame().then(res => {
+        //     console.log("tag: ", res)
+        //     if (res != null) {
+        //         this.setState({ tags: res.tags })
+        //     }
+        // })
+        console.log("CONT", this.context.allTags)
+        this.setState({
+            allTags: this.context.allTags,
+            tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
         })
     }
+    
+    componentDidUpdate(){
+        // this.setState({
+        //     allTags: this.context.allTags,
+        //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
+        // })
+    }
+
+
 
     saveToAllTags() {
         if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {
@@ -140,7 +154,6 @@ class GameScreen extends Component {
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                     <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
-
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
@@ -164,7 +177,6 @@ class GameScreen extends Component {
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor="#9999FF" active={showOtherButtons}>
                             <AntDesign name='edit' style={styles.actionButtonIcon} />
-
                         </ActionButton.Item>
                     </ActionButton>
 
@@ -178,6 +190,9 @@ class GameScreen extends Component {
 }
 
 export default GameScreen;
+
+GameScreen.contextType = MyContext
+
 const styles = StyleSheet.create({
     actionButtonIcon: {
         fontSize: 20,
