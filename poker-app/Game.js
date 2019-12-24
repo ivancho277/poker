@@ -64,6 +64,7 @@ class GameScreen extends Component {
         })
     }
     
+    
     componentDidUpdate(){
         // this.setState({
         //     allTags: this.context.allTags,
@@ -71,8 +72,8 @@ class GameScreen extends Component {
         // })
     }
 
-
-
+ 
+ // TODO(ivan): should be fixed: should be getting and updating tags in Global state
     saveToAllTags() {
         if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {
             let updatedTags = this.state.allTags.concat(this.state.tag);
@@ -98,7 +99,7 @@ class GameScreen extends Component {
     setLiveGamePosition = (games, tags) => {
         this.setState({
             currentGame: games,
-            tags: tags
+            //tags: tags
         })
     }
 
@@ -163,7 +164,7 @@ class GameScreen extends Component {
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
                     <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => {showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>
                         <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>
-                            <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput} />
+                            <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={context.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>
                         <ActionButton.Item active={showButtons} buttonColor='#3498db' title="Add Action" onPress={() => { this.setState({ activeActionMenu: !this.state.activeActionMenu, actionInputOpen: !this.state.actionInputOpen }); console.log('ACTION: ', this.state.activeActionMenu); }}>
                             <AntDesign name="plus" style={styles.actionButtonIcon} />

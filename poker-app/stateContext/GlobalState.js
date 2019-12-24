@@ -107,9 +107,16 @@ export class GlobalState extends Component {
     updateActions() {
 
     }
-
-    updateTags() {
-
+    
+    updateTags(tag) {
+        if (!this.state.allTags.includes(tag) && tag != "") {
+            let updatedTags = this.state.allTags.concat(this.state.tag);
+            this.setState({
+                allTags: updatedTags
+            }, () => {
+                storage.saveTags(this.state.allTags)
+            })
+        }
     }
 
     updateGames(newGamesObj) {
