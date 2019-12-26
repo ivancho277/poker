@@ -121,6 +121,7 @@ export class GlobalState extends Component {
                 saveTags(this.state.allTags)
             })
         }
+        
     }
 
     updateGames(newGamesObj) {
@@ -128,6 +129,7 @@ export class GlobalState extends Component {
             gamesObj: newGamesObj,
             gamesArray: newGamesObj.games
         })
+        
         
     }
 

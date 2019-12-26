@@ -116,6 +116,7 @@ export default class PracticeButtonController extends Component {
                     actions: actions,
                     actionStrings: JSON.parse(res)
                 })
+                
             }
         })
     }

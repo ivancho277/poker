@@ -18,6 +18,7 @@ module.exports = {
                 }
             })
             return this.currentStats;
+            
         };
 
         this.getTags = function(){
@@ -25,7 +26,7 @@ module.exports = {
         }
     
         this.addGameStats = function (gameStats) {
-    
+            
         }
     },
     
