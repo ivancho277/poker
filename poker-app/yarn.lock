@@ -5846,6 +5846,13 @@ react-native-animatable@1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-async-storage-dev-menu-item@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-async-storage-dev-menu-item/-/react-native-async-storage-dev-menu-item-0.0.4.tgz#502beac8b8ac30e44d3f896aa99e127d49072197"
+  integrity sha512-0GqvMYTf0PyKFEJU2z8Qvbw/1sHh5CjvaOzkxcpswyo1Phwpv3bwKcnIYRADC/I8tiOlNGyGu4q69ZeLv7CMPQ==
+  dependencies:
+    react-native-log-async-storage "^0.0.1"
+
 react-native-dialogs@^1.0.2, react-native-dialogs@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-dialogs/-/react-native-dialogs-1.1.0.tgz#8f7ee7f9d96574fc878fb7c1be101611fb4af517"
@@ -5918,6 +5925,11 @@ react-native-keyboard-aware-scroll-view@0.9.1:
   dependencies:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
+
+react-native-log-async-storage@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-log-async-storage/-/react-native-log-async-storage-0.0.1.tgz#d96b33c5ac5900c582fae4970b57e624346a7655"
+  integrity sha512-eYWquAW3wPHNsvUrm5+7iQRvNhXL4EAAXacPGUp/1UzpZXRoJ5j134mz3aIwGDXVOuqYx+jCDnpR6VjaVo5yqg==
 
 react-native-material-buttons@^0.5.0:
   version "0.5.0"

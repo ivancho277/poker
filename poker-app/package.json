@@ -23,6 +23,7 @@
     "react-dom": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-action-button": "^2.8.5",
+    "react-native-async-storage-dev-menu-item": "^0.0.4",
     "react-native-dialogs": "^1.1.0",
     "react-native-divider": "^1.0.3",
     "react-native-dropdown": "git+https://github.com/alinz/react-native-dropdown.git",

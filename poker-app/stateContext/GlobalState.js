@@ -14,6 +14,7 @@ const { saveCurrentGame,
     resetActions,
     firstTimeLauching
 } = require('../components/AsyncStorageController.js')
+const {isValidTag, validActionAdd, validActionRemove} = require('../utils/validators.js')
 export const MyContext = React.createContext();
 
 
@@ -105,13 +106,13 @@ export class GlobalState extends Component {
     }
 
     //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators
-    updateActions() {
+    updateActions(action) {
 
     }
      //TODO: finish writing this funtion, use validators
     updateTags(tag) {
-        if (!this.state.allTags.includes(tag) && tag != "") {
-            let updatedTags = this.state.allTags.concat(this.state.tag);
+        if(isValidTag(tag, this.state.tags)){
+            let updatedTages = this.state.allTags.concat(tag);
             this.setState({
                 allTags: updatedTags
             }, () => {
@@ -131,11 +132,12 @@ export class GlobalState extends Component {
 
     //TODO: handle all storage controll in context, after you finish these funtions implement them in settings screen
     resetActions() {
-
+        storage.resetActions();
+        console.log('actions reset')
     }
 
     deleteAllTags() {
-
+        storage.
     }
 
     addTag() {

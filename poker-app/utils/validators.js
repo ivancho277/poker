@@ -25,6 +25,12 @@ const validActionRemove = (action) => {
     }
 }
 
+//TODO: fix this function
+const correctlyVersionedGames = (allGames) => {
+    const currentVersionGames = {};
+
+}
+
 module.exports = {
     isValidTag: isValidTag,
     validActionAdd: validActionAdd,
