@@ -31,6 +31,7 @@ class GameScreen extends Component {
 
     goHome = () => {
         this.props.navigation.navigate('Home');
+        
     }
 
     retriveCurrentGame = async () => {
@@ -70,6 +71,7 @@ class GameScreen extends Component {
         //     allTags: this.context.allTags,
         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
         // })
+
     }
 
  
@@ -107,6 +109,7 @@ class GameScreen extends Component {
         this.setState({
             tag: ''
         })
+        
     }
 
     saveToTags(tag) {

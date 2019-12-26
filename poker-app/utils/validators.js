@@ -2,14 +2,14 @@
 
 
 const isValidTag = (tag, allTags) => {
-    if (!allTags.includes(tag) && tag != "" && typeof(tag) === 'string') {
-       return true;
+    if (!allTags.includes(tag) && tag != "" && typeof (tag) === 'string') {
+        return true;
     }
     else return false;
 }
 
 const validActionAdd = (action, allActions) => {
-    if(!allActions.includes(action) && action != ""){
+    if (!allActions.includes(action) && action != "") {
         return true;
     }
     else return false;

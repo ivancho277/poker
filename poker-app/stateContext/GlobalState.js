@@ -1,5 +1,5 @@
 import React, { useState, useContext, Component } from 'react';
-const storage = require('../components/AsyncStorageController.js')
+//const storage = require('../components/AsyncStorageController.js')
 const calculation = require('../components/statscalculation.js')
 const { saveCurrentGame,
     retrieveCurrentGame,
@@ -14,7 +14,7 @@ const { saveCurrentGame,
     resetActions,
     firstTimeLauching
 } = require('../components/AsyncStorageController.js')
-const {isValidTag, validActionAdd, validActionRemove} = require('../utils/validators.js')
+const { isValidTag, validActionAdd, validActionRemove } = require('../utils/validators.js')
 export const MyContext = React.createContext();
 
 
@@ -35,6 +35,7 @@ export class GlobalState extends Component {
         // storage.removeData()
         this.getDataFromStorage().then((res) => {
             console.log('global state populated')
+            
         })
     }
 
@@ -46,17 +47,18 @@ export class GlobalState extends Component {
     }
 
     getTags = async () => {
-        await storage.retrieveTags().then(res => {
+        await retrieveTags().then(res => {
             if (res != undefined && res != null) {
                 this.setState({ allTags: JSON.parse(res) })
             }
         }).catch(err => {
             console.log('NO TAGS IN STORAGE');
+            
         })
     }
 
-    getActions = async  () => {
-        await storage.retrieveActions().then((res) => {
+    getActions = async () => {
+        await retrieveActions().then((res) => {
             this.setState({ actions: JSON.parse(res) });
         }).catch(err => {
             alert('actions!')
@@ -64,7 +66,7 @@ export class GlobalState extends Component {
     }
 
     getCurrentGame = async () => {
-        return currentTags = await storage.retrieveCurrentGame().then(res => {
+        return currentTags = await retrieveCurrentGame().then(res => {
             if (res) {
                 return JSON.parse(res);
             }
@@ -73,7 +75,7 @@ export class GlobalState extends Component {
     }
 
     getAllGames = async () => {
-        await storage.retrieveData().then((res) => {
+        await retrieveData().then((res) => {
             //console.log(JSON.parse(res));
             //debugger;
             if (res != undefined) {
@@ -100,7 +102,7 @@ export class GlobalState extends Component {
             }
         }).catch((error) => {
             console.log("HOME SCREEN ERROR");
-            storage.resetActions();
+            resetActions();
             throw error;
         })
     }
@@ -109,14 +111,14 @@ export class GlobalState extends Component {
     updateActions(action) {
 
     }
-     //TODO: finish writing this funtion, use validators
-    updateTags(tag) {
-        if(isValidTag(tag, this.state.tags)){
+    //TODO: finish writing this funtion, use validators
+    updateTags = (tag) => {
+        if (isValidTag(tag, this.state.tags)) {
             let updatedTages = this.state.allTags.concat(tag);
             this.setState({
                 allTags: updatedTags
             }, () => {
-                storage.saveTags(this.state.allTags)
+                saveTags(this.state.allTags)
             })
         }
     }
@@ -126,26 +128,30 @@ export class GlobalState extends Component {
             gamesObj: newGamesObj,
             gamesArray: newGamesObj.games
         })
-
+        
     }
 
 
     //TODO: handle all storage controll in context, after you finish these funtions implement them in settings screen
-    resetActions() {
-        storage.resetActions();
+    resetActions = () => {
+        resetActions();
         console.log('actions reset')
     }
 
-    deleteAllTags() {
-        storage.
+    deleteAllTags = () => {
+        removeTags();
+        
+        
+        
+
     }
 
     addTag() {
 
     }
 
-    addAction(){
-        
+    addAction() {
+
     }
 
 
@@ -154,7 +160,7 @@ export class GlobalState extends Component {
 
     componentDidUpdate() {
         //checks to see if any new tags are added to our list of overall tags, and updates state if so.
-        storage.retrieveTags().then(res => {
+        retrieveTags().then(res => {
             if (res != undefined && res != null) {
                 if (this.state.allTags.length >= 1) {
                     //debugger;
@@ -225,7 +231,7 @@ export class GlobalState extends Component {
                 updateGames: (gamesObj) => { this.updateGames(gamesObj) },
                 getGames: () => this.getGames(),
                 getGamesArray: () => this.getGamesArray(),
-                
+
 
             }
             }>
