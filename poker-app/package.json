@@ -47,14 +47,12 @@
     "react-native-wheel-scroll-picker": "^0.2.4",
     "react-navigation": "^3.11.1",
     "styled-components": "^4.4.1",
-    "toggle-switch-react-native": "^2.1.0",
-    "typescript": "^3.7.4"
+    "toggle-switch-react-native": "^2.1.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
     "jest": "^24.9.0",
-    "jest-expo": "^36.0.0",
-    "react-native-vscode-settings": "0.0.8"
+    "jest-expo": "^36.0.0"
   },
   "private": true
 }
