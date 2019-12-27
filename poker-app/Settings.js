@@ -28,6 +28,7 @@ export default class SettingsScreen extends Component {
 
 
   confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {
+    
     Alert.alert(
       title,
       message,

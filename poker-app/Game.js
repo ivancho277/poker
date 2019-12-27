@@ -31,7 +31,7 @@ class GameScreen extends Component {
 
     goHome = () => {
         this.props.navigation.navigate('Home');
-        cl  
+        
         
     }
 
@@ -40,6 +40,7 @@ class GameScreen extends Component {
             if (res) {
                 return JSON.parse(res);
             }
+
             else return res;
         })
     }
@@ -60,14 +61,15 @@ class GameScreen extends Component {
         //     }
         // })
         console.log("CONT", this.context.allTags)
+
         this.setState({
             allTags: this.context.allTags,
             tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
         })
     }
-    
+
     //TODO: Might need to set state from context here, or just update context instead.
-    componentDidUpdate(){
+    componentDidUpdate() {
         // this.setState({
         //     allTags: this.context.allTags,
         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
@@ -75,8 +77,8 @@ class GameScreen extends Component {
 
     }
 
- 
- // TODO(ivan): should be fixed: should be getting and updating tags in Global state
+
+    // TODO(ivan): should be fixed: should be getting and updating tags in Global state
     saveToAllTags() {
         if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {
             let updatedTags = this.state.allTags.concat(this.state.tag);
@@ -110,7 +112,7 @@ class GameScreen extends Component {
         this.setState({
             tag: ''
         })
-        
+
     }
 
     saveToTags(tag) {
@@ -166,8 +168,8 @@ class GameScreen extends Component {
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
-                {/* TODO: action button should be changes as it is outdated */}
-                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => {showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>
+                    {/* TODO: action button should be changes as it is outdated */}
+                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => { showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>
                         <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>
                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={context.state.allTags} renderTagInput={this.renderTagInput} />
                         </ActionButton.Item>

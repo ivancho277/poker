@@ -40,6 +40,7 @@ class App extends React.Component {
     if (!this.state.isReady) {
       return <AppLoading />;
     }
+    
 
     return (
       <Container>

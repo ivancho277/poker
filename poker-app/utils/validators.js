@@ -15,20 +15,25 @@ const validActionAdd = (action, allActions) => {
     else return false;
 }
 
-const validActionRemove = (action) => {
+const validActionRemove = (action, allActions) => {
     const baseActions = ['call', 'fold', 'raise'];
     if (baseActions.includes(action)) {
         alert('you cannot remove base actions')
         return false;
-    } else {
-        return true;
     }
+    if (!allActions.includes(action)) {
+        console.log('this action doesnt exsist');
+        return false;
+        
+    }
+    return true;
+
 }
 
 //TODO: fix this function
 const correctlyVersionedGames = (allGames) => {
     const currentVersionGames = {};
-    
+
 }
 
 module.exports = {
