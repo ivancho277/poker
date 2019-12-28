@@ -49,6 +49,8 @@ export class GlobalState extends Component {
     await this.getActions();
     await this.getTags();
     await this.getCurrentGame();
+    
+    
   }
 
   getTags = async () => {

@@ -25,7 +25,7 @@ export default class StatsScreen extends Component {
                     this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
                         return <ListItem title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} key={i} />
                     })
-
+                    
 
                 )
             }

@@ -12,6 +12,7 @@ const validActionAdd = (action, allActions) => {
     if (!allActions.includes(action) && action != "") {
         return true;
     }
+    
     else return false;
     
 }
