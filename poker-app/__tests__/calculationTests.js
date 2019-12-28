@@ -53,7 +53,9 @@ describe('Test my is Empty function', () => {
         // })
 
         test('test 3 extend', () => {
-
+            expect(() => {
+                calculateTotalStats({});
+              }).toThrow('cant count');
         })
         
 })
