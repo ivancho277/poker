@@ -1,7 +1,7 @@
 import React, { useState, useContext, Component } from "react";
 //const storage = require('../components/AsyncStorageController.js')
 const calculation = require("../components/statscalculation.js");
-const {
+import {
   saveCurrentGame,
   retrieveCurrentGame,
   removeCurrentGame,
@@ -14,12 +14,12 @@ const {
   retrieveActions,
   resetActions,
   firstTimeLauching
-} = require("../components/AsyncStorageController.js");
-const {
+} from "../components/AsyncStorageController.js";
+import {
   isValidTag,
   validActionAdd,
   validActionRemove
-} = require("../utils/validators.js");
+} from "../utils/validators.js";
 export const MyContext = React.createContext();
 
 export class GlobalState extends Component {

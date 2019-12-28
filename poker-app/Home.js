@@ -6,8 +6,10 @@ import SearchModal from './components/SearchModal'
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 
-const storage = require("./components/AsyncStorageController.js");
-const calculation = require('./components/statscalculation.js')
+import * as storage from './components/AsyncStorageController.js'
+import * as calculation from './components/statscalculation.js'
+// const storage = require("./components/AsyncStorageController.js");
+// const calculation = require('./components/statscalculation.js')
 
 //  const context = useContext(MyContext)
 

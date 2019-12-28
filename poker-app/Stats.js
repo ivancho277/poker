@@ -3,9 +3,11 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-n
 import { MyContext } from './stateContext/GlobalState'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
-const calculation = require('./components/statscalculation.js')
+import * as calculation from './components/statscalculation.js';
+import * as storage from './components/AsyncStorageController.js';
+// const calculation = require('./components/statscalculation.js')
 
-const storage = require('./components/AsyncStorageController.js');
+// const storage = require('./components/AsyncStorageController.js');
 
 export default class StatsScreen extends Component {
 

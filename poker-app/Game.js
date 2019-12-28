@@ -8,8 +8,8 @@ import { MyContext } from './stateContext/GlobalState';
 import ActionButton from 'react-native-action-button';
 import ActionModal from './components/ActionsModal'
 import { AntDesign } from '@expo/vector-icons';
-
-const storage = require("./components/AsyncStorageController.js");
+import * as storage from './components/AsyncStorageController.js';
+// const storage = require("./components/AsyncStorageController.js");
 
 //import Controller from './components/Controller'
 class GameScreen extends Component {
