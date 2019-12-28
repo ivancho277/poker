@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Divider from 'react-native-divider';
-const calculation = require('./statscalculation.js');
-const storage = require("./AsyncStorageController.js");
+import * as calculation from './statscalculation.js'
+import * as storage from './AsyncStorageController.js'
+// const calculation = require('./statscalculation.js');
+// const storage = require("./AsyncStorageController.js");
 
 
 let table = {

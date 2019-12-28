@@ -5,9 +5,11 @@ import { MyContext } from '../stateContext/GlobalState';
 import Divider from "react-native-divider";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 //import { ScrollView } from 'react-native-gesture-handler';
+import * as calculation from './statscalculation.js';
+import * as storage from './AsyncStorageController.js'
 
-const calculation = require('./statscalculation.js');
-const storage = require("./AsyncStorageController.js");
+// const calculation = require('./statscalculation.js');
+// const storage = require("./AsyncStorageController.js");
 const cardImg = require('../images/ace_diamond.jpg');
 
 

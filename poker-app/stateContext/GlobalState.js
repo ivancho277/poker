@@ -173,6 +173,7 @@ export class GlobalState extends Component {
       });
       saveActions(updatedActions);
     }
+    
   }
 
   removeAction = (action) => {

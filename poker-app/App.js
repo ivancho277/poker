@@ -97,7 +97,8 @@ const AppDrawerNavigator = createDrawerNavigator({
     screen: SettingsScreen
   },
   Statistics: {
-    screen: StatsScreen
+    screen: StatsScreen,
+    
   }
 });
 

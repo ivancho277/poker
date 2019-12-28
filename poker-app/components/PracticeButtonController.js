@@ -5,8 +5,10 @@ import {Button} from 'react-native-elements';
 
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
-const storageController = require('./AsyncStorageController.js')
-const calculations = require('./statscalculation.js')
+import * as storageController from './AsyncStorageController.js';
+import * as calculations from './statscalculation.js';
+// const storageController = require('./AsyncStorageController.js')
+// const calculations = require('./statscalculation.js')
 const gameConstructors = require('./gameObjects.js');
 const { gameStats, Action } = gameConstructors;
 

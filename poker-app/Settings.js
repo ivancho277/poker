@@ -4,7 +4,7 @@ import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platfo
 const storage = require('./components/AsyncStorageController.js');
 import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
 import BottomSheet from './components/BottomSheetList'
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+// import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { MyContext } from './stateContext/GlobalState'
 
 const editOptions = ["Edit Actions", 'Edit Tags']

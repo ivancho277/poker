@@ -13,6 +13,7 @@ const validActionAdd = (action, allActions) => {
         return true;
     }
     else return false;
+    
 }
 
 const validActionRemove = (action, allActions) => {
@@ -26,8 +27,10 @@ const validActionRemove = (action, allActions) => {
         return false;
         
     }
+    
     return true;
-
+    
+    
 }
 
 //TODO: fix this function

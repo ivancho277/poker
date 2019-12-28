@@ -74,6 +74,7 @@ module.exports = {
 
     calcPercentByPosition: function (gamesObj) {
         return percentagesByPostion(gamesObj);
+        
     },
 
     calcCurrentGamePercentages: function (gamesObj, currentGame) {
