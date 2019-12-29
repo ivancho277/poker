@@ -17,6 +17,8 @@ export default class StatsScreen extends Component {
 
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.logTags(allGames, tag);
+        console.log(this.state.tagpicker);
+        
         console.log(foundgames)
         if (tag != '') {
             if (foundgames.length >= 1) {
@@ -30,6 +32,7 @@ export default class StatsScreen extends Component {
                 )
             }
         }
+
         else return <Text>No found Games</Text>
     }
 

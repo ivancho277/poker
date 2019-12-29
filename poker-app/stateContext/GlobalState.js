@@ -39,9 +39,9 @@ export class GlobalState extends Component {
     this.getDataFromStorage().then(res => {
       console.log("global state populated");
     });
-    
-    
-    
+
+
+
   }
 
   async getDataFromStorage() {
@@ -49,8 +49,8 @@ export class GlobalState extends Component {
     await this.getActions();
     await this.getTags();
     await this.getCurrentGame();
-    
-    
+
+
   }
 
   getTags = async () => {
@@ -61,11 +61,12 @@ export class GlobalState extends Component {
             allTags: JSON.parse(res)
           });
         }
+
       })
       .catch(err => {
-        console.log("NO TAGS IN STORAGE");
-      });
 
+        console.log("NO TAGS IN STORAGE");
+      })
   };
 
   getActions = async () => {
@@ -86,7 +87,7 @@ export class GlobalState extends Component {
         return JSON.parse(res);
       } else return res;
     });
-    
+
   };
 
   getAllGames = async () => {
@@ -141,7 +142,7 @@ export class GlobalState extends Component {
     resetActions();
     this.getActions();
     console.log("actions reset");
-    
+
 
   };
 
@@ -175,7 +176,7 @@ export class GlobalState extends Component {
       });
       saveActions(updatedActions);
     }
-    
+
   }
 
   removeAction = (action) => {
@@ -185,6 +186,9 @@ export class GlobalState extends Component {
       saveActions(updatedActions);
     } else {
       alert('Can not remove base action, or action doesnt exsist')
+      console.log(he)
+
+
     }
 
   };
@@ -260,10 +264,12 @@ export class GlobalState extends Component {
           incrementPosition: () => this.incrementPosition(),
           setPosition: position => this.setPosition(position),
           remount: () => this.componentDidMount(),
-
           updateGames: gamesObj => {
             this.updateGames(gamesObj);
           },
+          addTag: (tag) => this.addTag(tag),
+          addAction: (action) => this.addAction(action),
+          removeAction: (action) => this.removeAction(action),
           getGames: () => this.getGames(),
           getGamesArray: () => this.getGamesArray(),
         }}

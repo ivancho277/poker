@@ -55,6 +55,7 @@ export default class SettingsScreen extends Component {
     this.setState({
       tagVal: value
     });
+    
   }
 
   
@@ -76,7 +77,7 @@ export default class SettingsScreen extends Component {
 
               <ListItem>
                 <Icon active name='hand' />
-                <Input placeholder='add action here' />
+                <Input onChangeText={(action) =>{this.setState({action}); console.log(action);} } placeholder='add action here' />
               </ListItem>
 
               <ListItem picker>
@@ -134,7 +135,7 @@ export default class SettingsScreen extends Component {
 
               <ListItem>
                 <Icon active name='pricetag' />
-                <Input placeholder='add tag here' />
+                <Input onChangeText={(tag) => {this.setState({tag}); console.log(tag); } }placeholder='add tag here' />
               </ListItem>
 
               <ListItem>

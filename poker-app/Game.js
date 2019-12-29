@@ -31,8 +31,8 @@ class GameScreen extends Component {
 
     goHome = () => {
         this.props.navigation.navigate('Home');
-        
-        
+
+
     }
 
     retriveCurrentGame = async () => {
@@ -79,15 +79,8 @@ class GameScreen extends Component {
 
 
     // TODO(ivan): should be fixed: should be getting and updating tags in Global state
-    saveToAllTags() {
-        if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {
-            let updatedTags = this.state.allTags.concat(this.state.tag);
-            this.setState({
-                allTags: updatedTags
-            }, () => {
-                storage.saveTags(this.state.allTags)
-            })
-        }
+    saveToAllTags(alltags) {
+        this.context.addTag(alltags)
     }
 
 
@@ -139,8 +132,11 @@ class GameScreen extends Component {
                     onChangeText={(tag) => this.setState({ tag })}
                     value={this.state.tag}
                 />
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} />
+                {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.addTag(this.state.tag) ;this.clearTags(); }} />
+
             </View>
+
         )
     }
 

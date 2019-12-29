@@ -6,6 +6,7 @@ const isValidTag = (tag, allTags) => {
         return true;
     }
     else return false;
+    
 }
 
 const validActionAdd = (action, allActions) => {
