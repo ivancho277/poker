@@ -20,7 +20,7 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
-export const MyContext = React.createContext();
+export const MyContext = React.createContext('app');
 
 export class GlobalState extends Component {
   state = {
@@ -261,17 +261,22 @@ export class GlobalState extends Component {
       <MyContext.Provider
         value={{
           state: this.state,
-          incrementPosition: () => this.incrementPosition(),
-          setPosition: position => this.setPosition(position),
-          remount: () => this.componentDidMount(),
-          updateGames: gamesObj => {
-            this.updateGames(gamesObj);
-          },
-          addTag: (tag) => this.addTag(tag),
-          addAction: (action) => this.addAction(action),
-          removeAction: (action) => this.removeAction(action),
-          getGames: () => this.getGames(),
-          getGamesArray: () => this.getGamesArray(),
+          modifiers: {
+            incrementPosition: () => this.incrementPosition(),
+            setPosition: position => this.setPosition(position),
+            remount: () => this.componentDidMount(),
+            updateGames: gamesObj => {
+              this.updateGames(gamesObj);
+            },
+            addTag: (tag) => this.addTag(tag),
+            addAction: (action) => this.addAction(action),
+            removeAction: (action) => this.removeAction(action),
+            getGames: () => this.getGames(),
+            getGamesArray: () => this.getGamesArray(),
+            deleteAllTags: () => this.deleteAllTags(),
+            resetActions: () => this.resetActions(),
+            
+          }
         }}
       >
         {this.props.children}

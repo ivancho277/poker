@@ -79,7 +79,7 @@ class HomeScreen extends Component {
                     <Text>ReRender global state</Text>
 
                     <MyContext.Consumer>
-                        {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
+                        {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.modifiers.remount() }}>
                             <Text>Press me</Text>
                         </TouchableOpacity>}
                     </MyContext.Consumer>
