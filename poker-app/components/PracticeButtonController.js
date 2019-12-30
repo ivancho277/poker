@@ -45,35 +45,7 @@ export default class PracticeButtonController extends Component {
         };
     };
 
-    async populateGames() {
-        await storageController.retrieveData().then((res) => {
-            if (res != undefined) {
-                let pastGames = JSON.parse(res);
-                console.log("populate function");
-                let arrayOfgames = [];
 
-                if (pastGames.games) {
-                    pastGames.games.forEach(game => {
-                        arrayOfgames.push(game);
-                        console.log(game)
-                    })
-                }
-                console.log("TAKE A LOOK")
-                console.log(arrayOfgames)
-                console.log(res)
-                console.log(pastGames)
-                this.setState({
-                    gamesArray: arrayOfgames,
-                });
-            }
-        }).catch((error) => {
-            alert("populate error");
-            if (this.state.actions.length <= 3) {
-                this.retrieveActions();
-            }
-            throw error;
-        })
-    }
 
     async retrieveCurrentGame() {
         let game = await storageController.retrieveCurrentGame().then((res) => {
@@ -138,7 +110,8 @@ export default class PracticeButtonController extends Component {
                 }
             })
         })
-
+      //  console.log("PBCCCC", this.props.context);
+        
     }
 
     componentDidUpdate() {

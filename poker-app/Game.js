@@ -77,13 +77,6 @@ class GameScreen extends Component {
 
     }
 
-
-    // TODO(ivan): should be fixed: should be getting and updating tags in Global state
-    saveToAllTags(alltags) {
-        this.context.addTag(alltags)
-    }
-
-
     componentDidUpdate() {
         // console.log("GAME SCREEN"); console.log(this.state.currentGame);
     }
@@ -133,7 +126,7 @@ class GameScreen extends Component {
                     value={this.state.tag}
                 />
                 {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.addTag(this.state.tag) ;this.clearTags(); }} />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag) ;this.clearTags(); }} />
 
             </View>
 
@@ -160,7 +153,7 @@ class GameScreen extends Component {
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                    <PBC actionInputOpen={this.state.actionInputOpen} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={context} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}

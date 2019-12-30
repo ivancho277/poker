@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platfo
 // import { Button } from 'react-native-elements';
 const storage = require('./components/AsyncStorageController.js');
 import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
-import BottomSheet from './components/BottomSheetList'
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { MyContext } from './stateContext/GlobalState'
 

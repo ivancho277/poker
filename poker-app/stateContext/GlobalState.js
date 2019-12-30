@@ -2,6 +2,7 @@ import React, { useState, useContext, Component } from "react";
 //const storage = require('../components/AsyncStorageController.js')
 const calculation = require("../components/statscalculation.js");
 import {
+  saveData,
   saveCurrentGame,
   retrieveCurrentGame,
   removeCurrentGame,
@@ -135,7 +136,14 @@ export class GlobalState extends Component {
       gamesObj: newGamesObj,
       gamesArray: newGamesObj.games
     });
+    saveData(newGamesObj);
   }
+
+  
+
+
+  
+
 
   //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen
   resetActions = () => {
