@@ -121,7 +121,7 @@ export default class Statsbox extends Component {
         if (!this.isEmpty(this.props.currentGame)) {
             return <Text>
 
-                {this.props.currentGame.map(game => {
+                {this.props.currentGame.actions.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
 

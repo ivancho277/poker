@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, onLongPress } from 'react-native';
 import Radio from './Radio.js';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
@@ -90,29 +90,68 @@ export default class PracticeButtonController extends Component {
                     actions: actions,
                     actionStrings: JSON.parse(res)
                 })
-                
+
             }
+        })
+    }
+
+    checkforCurrentGame() {
+
+        if (!calculations.isEmpty(this.props.context.state.currentGame)) {
+            let pastactions = props.context.state.currentGame.actions.map((action) => {
+                return new Action(action.actionName, action.count, action.countPerPosition)
+            })
+            this.setState({
+                currentGame: this.props.context.state.currentGame,
+                doneLoading: true,
+                actions: pastactions,
+                tags: this.props.context.state.currentGame.tags
+            }, () => { this.props.setLiveGamePosition(this.state.actions) })
+            return false;
+        }
+        else {
+            this.setActions()
+            this.setState({
+                doneLoading: true,
+
+            });
+            return true
+        }
+    }
+    setActions() {
+        let actions = this.props.context.state.actions.map(action => {
+            return new Action(action)
+        })
+        this.setState({
+            actions: actions,
+            actionStrings: this.props.context.state.actions
+
         })
     }
 
     componentDidMount() {
         // this.populateGames().then(() => {
+
         this.setState({ gamesArray: this.props.getGames }, () => {
+            this.checkforCurrentGame();
+            this.setActions();
+
             console.log("LOOK UNDER");
             console.log(this.state.gamesArray)
-            this.retrieveCurrentGame().then(res => {
-                console.log("MY RESPONSE", res)
-                if (!!res) {
-                    this.retrieveActions().then((res) => {
-                        console.log('actions')
-                        this.setState({ doneLoading: true })
-                    })
-                }
-            })
+            //     this.retrieveCurrentGame().then(res => {
+            //         console.log("MY RESPONSE", res)
+            //         if (!!res) {
+            //             this.retrieveActions().then((res) => {
+            //                 console.log('actions')
+            //                 this.setState({ doneLoading: true })
+            //             })
+            //         }
+            //     })
+            // })
+            console.log("PBCCCC", this.props.context);
         })
-      //  console.log("PBCCCC", this.props.context);
-        
     }
+
 
     componentDidUpdate() {
         if (this.state.actionInputOpen !== this.props.actionInputOpen) {
@@ -170,7 +209,8 @@ export default class PracticeButtonController extends Component {
         console.log("HOLLLY MOLLY")
         //console.log(temp.getCurrentStats())
         console.log(gamesObj)
-        storageController.saveCurrentGame(gamesObj)
+        this.props.context.modifiers.updateCurrentGame(gamesObj)
+        //storageController.saveCurrentGame(gamesObj)
     }
 
 
@@ -227,13 +267,13 @@ export default class PracticeButtonController extends Component {
     render() {
         return (
             this.state.doneLoading ?
-                <View style={{justifyContent: 'center', alignContent: 'center',display: 'flex' ,margin: 10}}>
+                <View style={{ justifyContent: 'center', alignContent: 'center', display: 'flex', margin: 10 }}>
                     {/* <Text> PracticeButtonController </Text> */}
                     <Text>{'\n'}</Text>
                     {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
                         {this.state.actions.length > 0 ?
-                            <View style={{ display: "flex", flexDirection: 'row',zIndex: -1 ,justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                            <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {this.state.actions.map((action, index) => {
                                     return (
                                         <View key={index}>
@@ -250,9 +290,9 @@ export default class PracticeButtonController extends Component {
                     </View>
                     <Text>{'\n'}</Text>
                     {this.state.actionInputOpen ?
-                        <View style={{position: "relative", zIndex: -1}}>
+                        <View style={{ position: "relative", zIndex: -1 }}>
                             <TextInput
-                                style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid',}}
+                                style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid', }}
                                 placeholder='Add a new game Action'
                                 onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
                                 value={this.state.actionToAdd}
@@ -267,7 +307,7 @@ export default class PracticeButtonController extends Component {
                     <View>
                         <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
                     </View>
-                    <View style={{ width: 150 ,marginLeft:80 ,borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black' , justifyContent: 'center', position: 'relative' }}>
+                    <View style={{ width: 150, marginLeft: 80, borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black', justifyContent: 'center', position: 'relative' }}>
                         <MyContext.Consumer >
                             {(context) => <Button title='Save, End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
                         </MyContext.Consumer>

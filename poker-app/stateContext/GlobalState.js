@@ -33,7 +33,8 @@ export class GlobalState extends Component {
     allTags: [],
     totalGames: 0,
     actions: [],
-    currentGame: {}
+    currentGame: {},
+
   };
   componentDidMount() {
     // storage.removeData()
@@ -62,6 +63,7 @@ export class GlobalState extends Component {
             allTags: JSON.parse(res)
           });
         }
+        else this.setState
 
       })
       .catch(err => {
@@ -139,6 +141,14 @@ export class GlobalState extends Component {
     saveData(newGamesObj);
   }
 
+  updateCurrentGame = (CurGame) => {
+    this.setState({currentGame: CurGame});
+    saveCurrentGame(CurGame);
+  }
+
+  deleteCurrentGame = () => {
+    removeCurrentGame()
+  }
   
 
 
@@ -150,7 +160,6 @@ export class GlobalState extends Component {
     resetActions();
     this.getActions();
     console.log("actions reset");
-
 
   };
 
@@ -276,6 +285,7 @@ export class GlobalState extends Component {
             updateGames: gamesObj => {
               this.updateGames(gamesObj);
             },
+            updateCurrentGame: currgame => this.updateCurrentGame(currgame),
             addTag: (tag) => this.addTag(tag),
             addAction: (action) => this.addAction(action),
             removeAction: (action) => this.removeAction(action),

@@ -8,6 +8,7 @@ import { MyContext } from './stateContext/GlobalState';
 import ActionButton from 'react-native-action-button';
 import ActionModal from './components/ActionsModal'
 import { AntDesign } from '@expo/vector-icons';
+import { isEmpty } from './components/statscalculation.js'
 import * as storage from './components/AsyncStorageController.js';
 // const storage = require("./components/AsyncStorageController.js");
 
@@ -36,6 +37,7 @@ class GameScreen extends Component {
     }
 
     retriveCurrentGame = async () => {
+
         return currentTags = await storage.retrieveCurrentGame().then(res => {
             if (res) {
                 return JSON.parse(res);
@@ -54,17 +56,19 @@ class GameScreen extends Component {
         //         })
         //     }
         // })
+
         // this.retriveCurrentGame().then(res => {
         //     console.log("tag: ", res)
         //     if (res != null) {
         //         this.setState({ tags: res.tags })
         //     }
         // })
-        console.log("CONT", this.context.allTags)
+        console.log("MONT", this.context.state.allTags)
 
         this.setState({
-            allTags: this.context.allTags,
-            tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
+            allTags: this.context.state.allTags,
+            tags: isEmpty(this.context.state.currentGame) ? [] : this.context.state.currentGame.tags,
+            currentGame: this.context.state.currentGame
         })
     }
 
@@ -74,12 +78,11 @@ class GameScreen extends Component {
         //     allTags: this.context.allTags,
         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
         // })
+        console.log("up", this.context.state.allTags)
+
 
     }
 
-    componentDidUpdate() {
-        // console.log("GAME SCREEN"); console.log(this.state.currentGame);
-    }
     setPosition = (position) => {
         //  console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
         this.setState({
@@ -126,7 +129,7 @@ class GameScreen extends Component {
                     value={this.state.tag}
                 />
                 {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
-                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag) ;this.clearTags(); }} />
+                <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag); this.clearTags(); }} />
 
             </View>
 
@@ -153,7 +156,7 @@ class GameScreen extends Component {
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                    <PBC actionInputOpen={this.state.actionInputOpen} context={context} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
