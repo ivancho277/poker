@@ -6,10 +6,12 @@ import LiveStatsBox from './components/LiveStatsBox';
 import TagsModal from './components/TagsModal';
 import { MyContext } from './stateContext/GlobalState';
 import ActionButton from 'react-native-action-button';
-import ActionModal from './components/ActionsModal'
 import { AntDesign } from '@expo/vector-icons';
 import { isEmpty } from './components/statscalculation.js'
 import * as storage from './components/AsyncStorageController.js';
+const gameConstructors = require('./components/gameObjects.js');
+
+const { gameStats, Action } = gameConstructors;
 // const storage = require("./components/AsyncStorageController.js");
 
 //import Controller from './components/Controller'
@@ -22,7 +24,9 @@ class GameScreen extends Component {
             showModal: false,
             tag: '',
             tags: [],
+            currentTags: [],
             allTags: [],
+            currentActions: [],
             selected: "",
             actionInputOpen: false,
             showTagsModal: false,
@@ -32,12 +36,9 @@ class GameScreen extends Component {
 
     goHome = () => {
         this.props.navigation.navigate('Home');
-
-
     }
 
     retriveCurrentGame = async () => {
-
         return currentTags = await storage.retrieveCurrentGame().then(res => {
             if (res) {
                 return JSON.parse(res);
@@ -48,6 +49,7 @@ class GameScreen extends Component {
     }
 
     componentDidMount() {
+        const { currentGame, allTags } = this.context.state
         // storage.retrieveTags().then(res => {
         //     let tagsArr = JSON.parse(res);
         //     if (tagsArr) {
@@ -64,12 +66,25 @@ class GameScreen extends Component {
         //     }
         // })
         console.log("MONT", this.context.state.allTags)
+        if (currentGame !== null) {
+            let pastactions = currentgame.actions.map((action) => {
+                return new Action(action.actionName, action.count, action.countPerPosition)
+            })
 
-        this.setState({
-            allTags: this.context.state.allTags,
-            tags: isEmpty(this.context.state.currentGame) ? [] : this.context.state.currentGame.tags,
-            currentGame: this.context.state.currentGame
-        })
+            this.setState({
+                allTags: this.context.state.allTags,
+                currentTags: this.context.state.currentGame.tags,
+                currentGame: this.context.state.currentGame
+            })
+        }
+        else {
+            this.setState({
+                allTags: this.context.state.allTags,
+                currentTags: [],
+                currentGame: null
+            })
+        }
+
     }
 
     //TODO: Might need to set state from context here, or just update context instead.
@@ -90,9 +105,9 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (games, tags) => {
+    setLiveGamePosition = (gameActions, tags) => {
         this.setState({
-            currentGame: games,
+            currentActions: gameActions,
             //tags: tags
         })
     }
@@ -152,7 +167,7 @@ class GameScreen extends Component {
         return (
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} currentActions={this.state.currentActions} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}

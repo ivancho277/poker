@@ -8,7 +8,11 @@ const isValidTag = (tag, allTags) => {
     else return false;
     
 }
-
+/**
+ * 
+ * @param {string} action 
+ * @param {array} allActions 
+ */
 const validActionAdd = (action, allActions) => {
     if (!allActions.includes(action) && action != "") {
         return true;

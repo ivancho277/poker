@@ -27,7 +27,6 @@ export default class Statsbox extends Component {
         this.state = {
             loading: true,
             gamesObj: {},
-            searchedTag: {},
             displayChange: false,
         }
     }
@@ -111,17 +110,21 @@ export default class Statsbox extends Component {
     }
     componentDidUpdate() {
         console.log("MOOOO")
-        console.log(this.props.currentGame)
+        console.log(this.props.currentActions)
         //  console.log("WHAT ARE PROPS", this.props.position)
     }
-
+    /**
+     * * Fix this .map of undefined. Check how we are getting currentGame to here.
+     * 
+     * @param {integer} position 
+     */
     currentGameDisplay(position) {
         console.log("SEE HERE")
-        console.log(this.props.currentGame)
-        if (!this.isEmpty(this.props.currentGame)) {
+        console.log(this.props.currentActions)
+        if (!this.isEmpty(this.props.currentActions)) {
             return <Text>
 
-                {this.props.currentGame.actions.map(game => {
+                {this.props.currentActions.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
 
@@ -142,7 +145,7 @@ export default class Statsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
+                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.state.gamesObj)
                         ?
                         <Divider>Nothing in storage</Divider>
                         :

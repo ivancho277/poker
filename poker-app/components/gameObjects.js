@@ -33,7 +33,7 @@ module.exports = {
     
     Action: function Action(actionName, count = 0, countPerPosition = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }) {
         this.actionName = actionName,
-            this.count = count;
+        this.count = count;
         this.countPerPosition = countPerPosition;
     
         this.incrementActionAtPosition = function (position) {
@@ -48,7 +48,21 @@ module.exports = {
         this.getTotalCount = function () {
             return this.count;
         }
-    
+    },
+
+    Game: function Game(actions, tags, date){
+        this.actions = actions;
+        this.tags = tags;
+        this.date = date;
+
+        this.addTag = function(tag){
+            this.tags.push(tag)
+        }
+
+        this.addAction = function(action){
+            this.actions.push(action);
+        }
+
     }
     
 }

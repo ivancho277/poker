@@ -21,6 +21,7 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
+
 export const MyContext = React.createContext('app');
 
 export class GlobalState extends Component {
@@ -47,15 +48,15 @@ export class GlobalState extends Component {
   }
 
   async getDataFromStorage() {
-    await this.getAllGames();
-    await this.getActions();
-    await this.getTags();
-    await this.getCurrentGame();
+    await this.setAllGames();
+    await this.setActions();
+    await this.setTags();
+    await this.setCurrentGame();
 
 
   }
 
-  getTags = async () => {
+  setTags = async () => {
     await retrieveTags()
       .then(res => {
         if (res != undefined && res != null) {
@@ -63,16 +64,13 @@ export class GlobalState extends Component {
             allTags: JSON.parse(res)
           });
         }
-        else this.setState
-
       })
       .catch(err => {
-
         console.log("NO TAGS IN STORAGE");
       })
   };
 
-  getActions = async () => {
+  setActions = async () => {
     await retrieveActions()
       .then(res => {
         this.setState({
@@ -84,16 +82,20 @@ export class GlobalState extends Component {
       });
   };
 
-  getCurrentGame = async () => {
+  setCurrentGame = async () => {
     await retrieveCurrentGame().then(res => {
       if (res) {
-        return JSON.parse(res);
-      } else return res;
+        let currentGame = JSON.parse(res);
+        this.setState({currentGame: currentGame})
+        return currentGame
+      } else
+        this.setState({currentGame: res})
+      return res;
     });
 
   };
 
-  getAllGames = async () => {
+  setAllGames = async () => {
     await retrieveData()
       .then(res => {
         //console.log(JSON.parse(res));
@@ -111,7 +113,6 @@ export class GlobalState extends Component {
 
           this.setState({
             gamesObj: JSON.parse(res),
-            loading: false,
             totals: temp,
             gamesArray: allGamesArray,
             totalGames: allGamesArray.length
@@ -158,7 +159,7 @@ export class GlobalState extends Component {
   //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen
   resetActions = () => {
     resetActions();
-    this.getActions();
+    this.setActions();
     console.log("actions reset");
 
   };

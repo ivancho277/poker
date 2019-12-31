@@ -95,10 +95,16 @@ export default class PracticeButtonController extends Component {
         })
     }
 
-    checkforCurrentGame() {
 
-        if (!calculations.isEmpty(this.props.context.state.currentGame)) {
-            let pastactions = props.context.state.currentGame.actions.map((action) => {
+    /**
+     *
+     *
+     * @returns
+     * @memberof PracticeButtonController
+     */
+    checkforCurrentGame() {
+        if (this.props.context.state.currentGame !== null) {
+            let pastactions = this.props.context.state.currentGame.actions.map((action) => {
                 return new Action(action.actionName, action.count, action.countPerPosition)
             })
             this.setState({
@@ -108,9 +114,9 @@ export default class PracticeButtonController extends Component {
                 tags: this.props.context.state.currentGame.tags
             }, () => { this.props.setLiveGamePosition(this.state.actions) })
             return false;
+            debugger
         }
         else {
-            this.setActions()
             this.setState({
                 doneLoading: true,
 
@@ -131,8 +137,7 @@ export default class PracticeButtonController extends Component {
 
     componentDidMount() {
         // this.populateGames().then(() => {
-
-        this.setState({ gamesArray: this.props.getGames }, () => {
+        
             this.checkforCurrentGame();
             this.setActions();
 
@@ -149,7 +154,7 @@ export default class PracticeButtonController extends Component {
             //     })
             // })
             console.log("PBCCCC", this.props.context);
-        })
+        
     }
 
 
