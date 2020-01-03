@@ -49,7 +49,8 @@ class GameScreen extends Component {
     }
 
     componentDidMount() {
-        const { currentGame, allTags } = this.context.state
+
+        const { allTags, currentGame } = this.context.state
         // storage.retrieveTags().then(res => {
         //     let tagsArr = JSON.parse(res);
         //     if (tagsArr) {
@@ -65,16 +66,19 @@ class GameScreen extends Component {
         //         this.setState({ tags: res.tags })
         //     }
         // })
-        console.log("MONT", this.context.state.allTags)
-        if (currentGame !== null) {
-            let pastactions = currentgame.actions.map((action) => {
+        console.log("MONT", allTags)
+        if (currentGame) {
+            //const { currentGame } = this.context.state
+            let exsistingActions =  currentGame.actions.map((action) => {
                 return new Action(action.actionName, action.count, action.countPerPosition)
             })
 
             this.setState({
-                allTags: this.context.state.allTags,
-                currentTags: this.context.state.currentGame.tags,
-                currentGame: this.context.state.currentGame
+                allTags: allTags,
+                currentTags: currentGame.tags,
+                currentGame: currentGame,
+                currentActions: exsistingActions
+
             })
         }
         else {

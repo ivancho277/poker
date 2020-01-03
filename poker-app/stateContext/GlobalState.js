@@ -148,8 +148,11 @@ export class GlobalState extends Component {
   }
 
   deleteCurrentGame = () => {
+    this.setState({currentGame : {}})
     removeCurrentGame()
   }
+
+  
   
 
 
@@ -294,7 +297,7 @@ export class GlobalState extends Component {
             getGamesArray: () => this.getGamesArray(),
             deleteAllTags: () => this.deleteAllTags(),
             resetActions: () => this.resetActions(),
-            
+            deleteCurrentGame: () => this.deleteCurrentGame()
           }
         }}
       >

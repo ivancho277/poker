@@ -41,7 +41,7 @@ export default class PracticeButtonController extends Component {
             actionInputOpen: false,
             showModal: false,
             actionToAdd: '',
-            doneLoading: false
+            doneLoading: true
         };
     };
 
@@ -101,9 +101,9 @@ export default class PracticeButtonController extends Component {
      *
      * @returns
      * @memberof PracticeButtonController
-     */
+    //  */
     checkforCurrentGame() {
-        if (this.props.context.state.currentGame !== null) {
+        if (this.props.context.state.currentGame) {
             let pastactions = this.props.context.state.currentGame.actions.map((action) => {
                 return new Action(action.actionName, action.count, action.countPerPosition)
             })
@@ -138,7 +138,7 @@ export default class PracticeButtonController extends Component {
     componentDidMount() {
         // this.populateGames().then(() => {
         
-            this.checkforCurrentGame();
+            // this.checkforCurrentGame();
             this.setActions();
 
             console.log("LOOK UNDER");
@@ -179,12 +179,13 @@ export default class PracticeButtonController extends Component {
             time: date.getTime(),
             tags: tagsToSave,
             game: temp.getCurrentStats(),
-            totals: totals
+            totals: totals,
+            version: "1.0.4"
         }
         console.log(temp.getCurrentStats())
-        let gamesarr = this.state.gamesArray.concat(gamesObj);
+        let gamesarr = this.props.getGames.concat(gamesObj);
         let saveObj = {
-            version: "1.0.3",
+            version: "1.0.4",
             games: gamesarr
         }
         console.log("LOOOK")
@@ -193,7 +194,7 @@ export default class PracticeButtonController extends Component {
             return saveObj;
         } else {
             this.props.updateGames(saveObj);
-            storageController.saveData(saveObj);
+            //storageController.saveData(saveObj);
 
         }
         //debugger
@@ -314,7 +315,7 @@ export default class PracticeButtonController extends Component {
                     </View>
                     <View style={{ width: 150, marginLeft: 80, borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black', justifyContent: 'center', position: 'relative' }}>
                         <MyContext.Consumer >
-                            {(context) => <Button title='Save, End game.' onPress={() => { storageController.removeCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
+                            {(context) => <Button title='Save, End game.' onPress={() => { context.modifiers.deleteCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
                         </MyContext.Consumer>
                     </View>
                 </View>
