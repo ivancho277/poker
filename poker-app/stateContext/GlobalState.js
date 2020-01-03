@@ -134,7 +134,7 @@ export class GlobalState extends Component {
   //TODO: finish writing this funtion, use validators
   updateTags = tag => { };
 
-  updateGames(newGamesObj) {
+  updateGames = (newGamesObj) => {
     this.setState({
       gamesObj: newGamesObj,
       gamesArray: newGamesObj.games
@@ -148,8 +148,8 @@ export class GlobalState extends Component {
   }
 
   deleteCurrentGame = () => {
-    this.setState({currentGame : {}})
-    removeCurrentGame()
+    this.setState({currentGame : null})
+    removeCurrentGame();
   }
 
   
