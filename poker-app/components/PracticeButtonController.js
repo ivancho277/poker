@@ -125,36 +125,49 @@ export default class PracticeButtonController extends Component {
         }
     }
     setActions() {
-        let actions = this.props.context.state.actions.map(action => {
-            return new Action(action)
-        })
-        this.setState({
-            actions: actions,
-            actionStrings: this.props.context.state.actions
 
-        })
+        if (this.props.context.state.currentGame) {
+            let actions = this.props.context.state.actions.map(action => {
+                return new Action(action)
+            })
+            this.setState({
+                actions: this.props.context.state.currentGame.actions,
+                actionStrings: this.props.context.state.actions
+
+            })
+        }
+        else {
+            let actions = this.props.context.state.actions.map(action => {
+                return new Action(action)
+            })
+            this.setState({
+                actions: actions,
+                actionStrings: this.props.context.state.actions
+
+            })
+        }
     }
 
     componentDidMount() {
         // this.populateGames().then(() => {
-        
-            // this.checkforCurrentGame();
-            this.setActions();
 
-            console.log("LOOK UNDER");
-            console.log(this.state.gamesArray)
-            //     this.retrieveCurrentGame().then(res => {
-            //         console.log("MY RESPONSE", res)
-            //         if (!!res) {
-            //             this.retrieveActions().then((res) => {
-            //                 console.log('actions')
-            //                 this.setState({ doneLoading: true })
-            //             })
-            //         }
-            //     })
-            // })
-            console.log("PBCCCC", this.props.context);
-        
+        // this.checkforCurrentGame();
+        this.setActions();
+
+        console.log("LOOK UNDER");
+        console.log(this.state.gamesArray)
+        //     this.retrieveCurrentGame().then(res => {
+        //         console.log("MY RESPONSE", res)
+        //         if (!!res) {
+        //             this.retrieveActions().then((res) => {
+        //                 console.log('actions')
+        //                 this.setState({ doneLoading: true })
+        //             })
+        //         }
+        //     })
+        // })
+        console.log("PBCCCC", this.props.context);
+
     }
 
 
@@ -202,7 +215,13 @@ export default class PracticeButtonController extends Component {
 
     saveCurrentGame() {
         let date = new Date();
-        let temp = new gameStats(this.state.actions, this.state.tags);
+        let temp;
+        if (this.props.context.state.currentGame === null) {
+            temp = new gameStats(this.props.context.state.actions, [])
+        }
+        else {
+            temp = new gameStats(this.props.context.state.currentGame.actions, this.props.tags);
+        }
         console.log("TAGS: ", temp.getTags())
         let gamesObj = {
             date: date.toDateString(),
@@ -244,7 +263,7 @@ export default class PracticeButtonController extends Component {
         action.incrementActionAtPosition(this.state.position);
         this.setState({ currentTime: new Date() });
         this.props.setPosition(this.state.position);
-        this.props.setLiveGamePosition(this.state.actions, this.props.tags);
+        this.props.setLiveGamePosition(this.state.actions);
         console.log(action)
     }
 

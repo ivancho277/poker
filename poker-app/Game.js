@@ -109,7 +109,7 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (gameActions, tags) => {
+    setLiveGamePosition = (gameActions) => {
         this.setState({
             currentActions: gameActions,
             //tags: tags
