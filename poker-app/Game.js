@@ -176,7 +176,7 @@ class GameScreen extends Component {
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}
-                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={this.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}
                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />
                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}
@@ -192,7 +192,7 @@ class GameScreen extends Component {
                             <AntDesign name="home" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         {/* Remove buttons */}
-                        <ActionButton.Item buttonColor="#DE1062" active={showOtherButtons}>
+                        <ActionButton.Item buttonColor="#DE1062" title="End Current Game" active={showButtons} onPress={()=> {this.context.modifiers.deleteCurrentGame(); this.goHome()}}>
                             <AntDesign name='minus' style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor="#9999FF" active={showOtherButtons}>

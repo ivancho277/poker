@@ -37,7 +37,8 @@ export class GlobalState extends Component {
     actions: [],
     currentGame: {},
     currentActions: null,
-    currentGameStats: null
+    currentGameStats: null,
+    currentTags: []
 
   };
   componentDidMount() {
@@ -59,9 +60,6 @@ export class GlobalState extends Component {
     await this.setTags().then(res => { console.log("SET TAGS", res) });
     await this.setCurrentGame().then(res => { console.log("SET CURRENT", res) });
     console.log("==========")
-
-
-
   }
 
   setTags = async () => {
@@ -95,9 +93,17 @@ export class GlobalState extends Component {
 
   setCurrentGame = async () => {
     return await retrieveCurrentGame().then(res => {
-      if (res) {
+      if (res != null) {
         let currentGame = JSON.parse(res);
-        this.setState({ currentGame: currentGame })
+        let actionsObj = this.createActions(currentGame);
+        console.log("BUILT ACTIONS :", actionsObj);
+
+        this.setState({
+          currentGame: currentGame,
+          currentActions: actionsObj,
+          currentTags: currentGame.tags
+        })
+        alert('it in')
         return currentGame
       } else
         this.setState({ currentGame: res })
@@ -116,7 +122,7 @@ export class GlobalState extends Component {
 
   createGameStats = (actoins, tags) => {
     let createGameStats = new gameStats(actions, tags);
-    
+
 
   }
 

@@ -181,8 +181,8 @@ export default class PracticeButtonController extends Component {
     //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
-        let temp = new gameStats(this.state.actions, this.state.tags);
-        let totals = this.state.actions.map((action) => {
+        let temp = new gameStats(this.props.currentActions, this.state.tags);
+        let totals = this.props.currentActions.map((action) => {
             return { [action.actionName]: action.getTotalCount() }
         })
         let tagsToSave = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags
@@ -299,9 +299,9 @@ export default class PracticeButtonController extends Component {
                     <Text>{'\n'}</Text>
                     {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
-                        {this.state.actions.length > 0 ?
+                        {this.props.currentActions.length > 0 && this.props.currentActions != null  ?
                             <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
-                                {this.state.actions.map((action, index) => {
+                                {this.props.currentActions.map((action, index) => {
                                     return (
                                         <View key={index}>
                                             <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action) }} />
