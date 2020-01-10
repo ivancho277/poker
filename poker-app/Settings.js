@@ -27,7 +27,7 @@ export default class SettingsScreen extends Component {
 
 
   confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {
-    
+
     Alert.alert(
       title,
       message,
@@ -54,36 +54,38 @@ export default class SettingsScreen extends Component {
     this.setState({
       tagVal: value
     });
-    
+
   }
 
-  
-//TODO: need some kind of save button here, also after finishing globalState funtions use them here to update global state state.
+
+  //TODO: need some kind of save button here, also after finishing globalState funtions use them here to update global state state.
 
   render() {
     return (
-      <Container>
-        <Content padder contentContainerStyle={{ flex: 1, justifyContent: "center" }} >
+      <MyContext.Consumer>
+        {(context) =>
+          <Container>
+            <Content padder contentContainerStyle={{ flex: 1, justifyContent: "center" }} >
 
 
-          <ScrollView>
-            <List>
-              <ListItem itemDivider>
-                <Text>Edit Action</Text>
-              </ListItem>
+              <ScrollView>
+                <List>
+                  <ListItem itemDivider>
+                    <Text>Edit Action</Text>
+                  </ListItem>
 
 
 
-              <ListItem>
-                <Icon active name='hand' />
-                <Input onChangeText={(action) =>{this.setState({action}); console.log(action);} } placeholder='add action here' />
-              </ListItem>
+                  <ListItem>
+                    <Icon active name='hand' />
+                    <Input onChangeText={(action) => { this.setState({ action }); console.log(action); }} placeholder='add action here' />
+                  </ListItem>
 
-              <ListItem picker>
-                <Label>remove action:</Label>
+                  <ListItem picker>
+                    <Label>remove action:</Label>
 
-                <MyContext.Consumer>
-                  {(context) =>
+
+
                     <Picker
                       prompt="Remove Action"
                       mode="dialog"
@@ -104,43 +106,32 @@ export default class SettingsScreen extends Component {
                       {context.state.actions.map((action, i) => {
                         return <Picker.Item label={action} key={i} value={i} />
                       })}
-                      {/* <Picker.Item label="actions list" value="placeholder" />
-                  <Picker.Item label="Wallet" value="key0" />
-                  <Picker.Item label="ATM Card" value="key1" />
-                  <Picker.Item label="Debit Card" value="key2" />
-                  <Picker.Item label="Credit Card" value="key3" />
-                  <Picker.Item label="Net Banking" value="key4" />
-                  <Picker.Item label="Wallet" value="key5" />
-                  <Picker.Item label="ATM Card" value="key6" />
-                  <Picker.Item label="Debit Card" value="key7" />
-                  <Picker.Item label="Credit Card" value="key8" />
-                  <Picker.Item label="Net Banking" value="key9" />
-                  <Picker.Item label="Wallet" value="key10" />
-                  <Picker.Item label="ATM Card" value="key11" />
-                  <Picker.Item label="Debit Card" value="key12" />
-                  <Picker.Item label="Credit Card" value="key13" />
-                  <Picker.Item label="Net Banking" value="key14" /> */}
+                      {/* <Picker.Item label="actions list" value="placeholder" /> */}
                     </Picker>
-                  }
-                </MyContext.Consumer>
-              </ListItem>
-
-              <ListItem itemDivider>
-                <Text>Edit Tags</Text>
-              </ListItem>
 
 
+                  </ListItem>
+
+                  <ListItem itemDivider>
+                    <Text>Edit Tags</Text>
+                  </ListItem>
 
 
-              <ListItem>
-                <Icon active name='pricetag' />
-                <Input onChangeText={(tag) => {this.setState({tag}); console.log(tag); } }placeholder='add tag here' />
-              </ListItem>
 
-              <ListItem>
-                <Label>remove tag: </Label>
-                <MyContext.Consumer>
-                  {(context) =>
+
+                  <ListItem>
+                    <Icon active name='pricetag' />
+                    <Input onChangeText={(tag) => { this.setState({ tag }); console.log(tag); }} placeholder='add tag here' />
+                    <Button icon onPress={() => { context.modifiers.addTag(this.state.tag) }}>
+                      <Icon name='add' />
+
+                    </Button>
+
+                  </ListItem>
+
+                  <ListItem>
+                    <Label>remove tag: </Label>
+
                     <Picker
                       prompt="Remove Tag"
                       mode="dialog"
@@ -160,49 +151,34 @@ export default class SettingsScreen extends Component {
                       {context.state.allTags.map((tag, i) => {
                         return <Picker.Item label={tag} key={i} value={i} />
                       })}
-                      {/* <Picker.Item label="list of tags" value="placeholder" />
-                    <Picker.Item label="Wallet" value="key0" />
-                    <Picker.Item label="ATM Card" value="key1" />
-                    <Picker.Item label="Debit Card" value="key2" />
-                    <Picker.Item label="Credit Card" value="key3" />
-                    <Picker.Item label="Net Banking" value="key4" />
-                    <Picker.Item label="Wallet" value="key5" />
-                    <Picker.Item label="ATM Card" value="key6" />
-                    <Picker.Item label="Debit Card" value="key7" />
-                    <Picker.Item label="Credit Card" value="key8" />
-                    <Picker.Item label="Net Banking" value="key9" />
-                    <Picker.Item label="Wallet" value="key10" />
-                    <Picker.Item label="ATM Card" value="key11" />
-                    <Picker.Item label="Debit Card" value="key12" />
-                    <Picker.Item label="Credit Card" value="key13" />
-                    <Picker.Item label="Net Banking" value="key14" /> */}
+                      {/* <Picker.Item label="list of tags" value="placeholder" />*/}
                     </Picker>
-                  }
 
-                </MyContext.Consumer>
-              </ListItem>
-              <ListItem itemDivider>
-                <Text>Delete or Reset</Text>
-              </ListItem>
-              <ListItem>
-                <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
-                  <Text>Reset Actions</Text>
-                </Button>
-              </ListItem>
-              <ListItem>
-                <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
-                  <Text>Delete all Tags</Text>
-                </Button>
-              </ListItem>
-              <ListItem>
-                <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
-                  <Text>Delete all Data</Text>
-                </Button>
-              </ListItem>
-            </List>
-          </ScrollView >
-        </Content >
-      </Container >
+                  </ListItem>
+                  <ListItem itemDivider>
+                    <Text>Delete or Reset</Text>
+                  </ListItem>
+                  <ListItem>
+                    <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
+                      <Text>Reset Actions</Text>
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
+                      <Text>Delete all Tags</Text>
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
+                      <Text>Delete all Data</Text>
+                    </Button>
+                  </ListItem>
+                </List>
+              </ScrollView >
+            </Content >
+          </Container >
+        }
+      </MyContext.Consumer>
     )
   }
 }
