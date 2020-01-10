@@ -21,6 +21,7 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
+import { gameStats, Action } from '../components/gameObjects.js';
 
 export const MyContext = React.createContext('app');
 
@@ -35,11 +36,15 @@ export class GlobalState extends Component {
     totalGames: 0,
     actions: [],
     currentGame: {},
+    currentActions: null,
+    currentGameStats: null
 
   };
   componentDidMount() {
     // storage.removeData()
     this.getDataFromStorage().then(res => {
+      console.log("VVVVV");
+      console.log(res);
       console.log("global state populated");
     });
 
@@ -48,22 +53,26 @@ export class GlobalState extends Component {
   }
 
   async getDataFromStorage() {
-    await this.setAllGames();
-    await this.setActions();
-    await this.setTags();
-    await this.setCurrentGame();
+    console.log("==========")
+    await this.setAllGames().then(res => { console.log("SET ALL", res); });
+    await this.setActions().then(res => { console.log("SET ACTIONS", res) });
+    await this.setTags().then(res => { console.log("SET TAGS", res) });
+    await this.setCurrentGame().then(res => { console.log("SET CURRENT", res) });
+    console.log("==========")
+
 
 
   }
 
   setTags = async () => {
-    await retrieveTags()
+    return await retrieveTags()
       .then(res => {
         if (res != undefined && res != null) {
           this.setState({
             allTags: JSON.parse(res)
           });
         }
+        return res
       })
       .catch(err => {
         console.log("NO TAGS IN STORAGE");
@@ -71,32 +80,50 @@ export class GlobalState extends Component {
   };
 
   setActions = async () => {
-    await retrieveActions()
+    return await retrieveActions()
       .then(res => {
         this.setState({
           actions: JSON.parse(res)
         });
+        return res
       })
       .catch(err => {
         alert("actions!");
+
       });
   };
 
   setCurrentGame = async () => {
-    await retrieveCurrentGame().then(res => {
+    return await retrieveCurrentGame().then(res => {
       if (res) {
         let currentGame = JSON.parse(res);
-        this.setState({currentGame: currentGame})
+        this.setState({ currentGame: currentGame })
         return currentGame
       } else
-        this.setState({currentGame: res})
-      return res;
+        this.setState({ currentGame: res })
+      return JSON.parse(res);
     });
-
   };
 
+
+  //TODO: thesen 2 methods might need some edge case checks.
+  createActions = (game) => {
+    let createdActions = game.actions.map(action => {
+      return new Action(action.actionName, action.count, action.countPerPosition)
+    })
+    return createdActions;
+  }
+
+  createGameStats = (actoins, tags) => {
+    let createGameStats = new gameStats(actions, tags);
+    
+
+  }
+
+
+
   setAllGames = async () => {
-    await retrieveData()
+    return await retrieveData()
       .then(res => {
         //console.log(JSON.parse(res));
         //debugger;
@@ -121,6 +148,7 @@ export class GlobalState extends Component {
           console.log(pastGames);
           console.log(this.state.gamesObj);
         }
+        return res
       })
       .catch(error => {
         console.log("HOME SCREEN ERROR");
@@ -143,20 +171,20 @@ export class GlobalState extends Component {
   }
 
   updateCurrentGame = (CurGame) => {
-    this.setState({currentGame: CurGame});
+    this.setState({ currentGame: CurGame });
     saveCurrentGame(CurGame);
   }
 
   deleteCurrentGame = () => {
-    this.setState({currentGame : null})
+    this.setState({ currentGame: null })
     removeCurrentGame();
   }
 
-  
-  
 
 
-  
+
+
+
 
 
   //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen

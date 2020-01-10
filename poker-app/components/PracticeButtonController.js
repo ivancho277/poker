@@ -178,7 +178,7 @@ export default class PracticeButtonController extends Component {
     }
 
 
-
+    //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
         let temp = new gameStats(this.state.actions, this.state.tags);
@@ -213,6 +213,7 @@ export default class PracticeButtonController extends Component {
         //debugger
     };
 
+    //TODO: also see if there is more apporpriate spot for this method as well.
     saveCurrentGame() {
         let date = new Date();
         let temp;
@@ -289,6 +290,7 @@ export default class PracticeButtonController extends Component {
 
     }
 
+    //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component
     render() {
         return (
             this.state.doneLoading ?
