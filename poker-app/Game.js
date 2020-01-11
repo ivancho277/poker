@@ -67,28 +67,28 @@ class GameScreen extends Component {
         //     }
         // })
         console.log("MONT", allTags)
-        if (currentGame) {
-            //const { currentGame } = this.context.state
-            let exsistingActions =  currentGame.actions.map((action) => {
-                return new Action(action.actionName, action.count, action.countPerPosition)
-            })
+        // if (currentGame) {
+        //     //const { currentGame } = this.context.state
+        //     let exsistingActions =  currentGame.actions.map((action) => {
+        //         return new Action(action.actionName, action.count, action.countPerPosition)
+        //     })
 
-            this.setState({
-                allTags: allTags,
-                currentTags: currentGame.tags,
-                currentGame: currentGame,
-                currentActions: exsistingActions
+        //     this.setState({
+        //         allTags: allTags,
+        //         currentTags: currentGame.tags,
+        //         currentGame: currentGame,
+        //         currentActions: exsistingActions
 
-            })
-        }
-        else {
-            this.setState({
-                allTags: this.context.state.allTags,
-                currentTags: [],
-                currentGame: null,
-                currentActions: null
-            })
-        }
+        //     })
+        // }
+        // else {
+        //     this.setState({
+        //         allTags: this.context.state.allTags,
+        //         currentTags: [],
+        //         currentGame: null,
+        //         currentActions: null
+        //     })
+        // }
 
     }
 
@@ -172,7 +172,7 @@ class GameScreen extends Component {
         return (
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} currentActions={this.state.currentActions} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
+                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={this.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
                     {/* <Button title='show modal' onPress={() => { this.setState({ showModal: true }) }} /> */}
                     {/* <TagsModal showSelectedTag={this.showSelectedTag} allTags={this.state.allTags} renderTagInput={this.renderTagInput}></TagsModal> */}
                     {/* <Button title="log State" onPress={() => console.log(this.state.position)} /> */}

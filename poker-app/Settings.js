@@ -78,11 +78,21 @@ export default class SettingsScreen extends Component {
 
                   <ListItem>
                     <Icon active name='hand' />
-                    <Input onChangeText={(action) => { this.setState({ action }); console.log(action); }} placeholder='add action here' />
+                    <Input onChangeText={(value) => { this.setState({ action: value }); console.log(value); }} placeholder='add action here' value={this.state.action} />
+                    <Button onPress={() => { context.modifiers.addAction(this.state.action) & this.setState({ action: '' }) }} >
+
+                      <Icon name='add' />
+
+                    </Button>
                   </ListItem>
 
+
                   <ListItem picker>
-                    <Label>remove action:</Label>
+                  <Button iconLeft warning onPress={() => {context.modifiers.removeAction(this.state.actionVal); console.log('lookie');}}>
+                      <Label>Remove: </Label>
+                      <Icon type="AntDesign" name='minus' />
+
+                    </Button>
 
 
 
@@ -103,8 +113,8 @@ export default class SettingsScreen extends Component {
                       selectedValue={this.state.actionVal}
                       onValueChange={this.onActionChange.bind(this)}
                     >
-                      {context.state.actions.map((action, i) => {
-                        return <Picker.Item label={action} key={i} value={i} />
+                      {context.state.actionStrings.map((action, i) => {
+                        return <Picker.Item label={action} key={action} value={action} />
                       })}
                       {/* <Picker.Item label="actions list" value="placeholder" /> */}
                     </Picker>
@@ -121,16 +131,18 @@ export default class SettingsScreen extends Component {
 
                   <ListItem>
                     <Icon active name='pricetag' />
-                    <Input onChangeText={(tag) => { this.setState({ tag }); console.log(tag); }} placeholder='add tag here' />
-                    <Button icon onPress={() => { context.modifiers.addTag(this.state.tag) }}>
+                    <Input onChangeText={(value) => { this.setState({ tag: value }); console.log(value); }} placeholder='add tag here' value={this.state.tag} />
+                    <Button onPress={() => { context.modifiers.addTag(this.state.tag) & this.setState({ tag: '' }) }}>
                       <Icon name='add' />
-
                     </Button>
-
                   </ListItem>
 
                   <ListItem>
-                    <Label>remove tag: </Label>
+                    <Button iconLeft warning onPress={() => { context.modifiers.removeTag(this.state.tagVal); console.log('lookie');}}>
+                      <Label>Remove: </Label>
+                      <Icon type="AntDesign" name='minus' />
+
+                    </Button>
 
                     <Picker
                       prompt="Remove Tag"
@@ -149,7 +161,7 @@ export default class SettingsScreen extends Component {
                       onValueChange={this.onTagChange.bind(this)}
                     >
                       {context.state.allTags.map((tag, i) => {
-                        return <Picker.Item label={tag} key={i} value={i} />
+                        return <Picker.Item label={tag} key={tag} value={tag} />
                       })}
                       {/* <Picker.Item label="list of tags" value="placeholder" />*/}
                     </Picker>

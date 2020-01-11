@@ -217,19 +217,15 @@ export default class PracticeButtonController extends Component {
     saveCurrentGame() {
         let date = new Date();
         let temp;
-        if (this.props.context.state.currentGame === null) {
-            temp = new gameStats(this.props.context.state.actions, [])
-        }
-        else {
-            temp = new gameStats(this.props.context.state.currentGame.actions, this.props.tags);
-        }
+        temp = new gameStats(this.props.context.state.currentActions, this.props.context.state.currentTags)
         console.log("TAGS: ", temp.getTags())
         let gamesObj = {
             date: date.toDateString(),
             time: date.getTime(),
-            tags: this.props.tags,
+            tags: this.props.context.state.currentTags,
             currentGame: temp.getCurrentStats(),
-            actions: this.state.actions
+            actions: this.props.context.state.currentActions,
+            actionStrings: this.props.context.state.actionStrings
         }
         this.currentGameStats(this.props.gamesObj, gamesObj)
         console.log("HOLLLY MOLLY")
@@ -299,7 +295,8 @@ export default class PracticeButtonController extends Component {
                     <Text>{'\n'}</Text>
                     {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
-                        {this.props.currentActions.length > 0 && this.props.currentActions != null  ?
+                        {
+                       /*his.props.currentActions != null ?  */  this.props.currentActions.length > 0  ?
                             <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {this.props.currentActions.map((action, index) => {
                                     return (
@@ -313,6 +310,7 @@ export default class PracticeButtonController extends Component {
 
                             :
                             <Text>Loading....</Text>
+                           
                         }
                     </View>
                     <Text>{'\n'}</Text>

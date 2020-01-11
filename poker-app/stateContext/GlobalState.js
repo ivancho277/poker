@@ -14,7 +14,8 @@ import {
   saveActions,
   retrieveActions,
   resetActions,
-  firstTimeLauching
+  firstTimeLauching,
+  isEmpty
 } from "../components/AsyncStorageController.js";
 import {
   isValidTag,
@@ -35,6 +36,7 @@ export class GlobalState extends Component {
     allTags: [],
     totalGames: 0,
     actions: [],
+    actionStrings: [],
     currentGame: {},
     currentActions: null,
     currentGameStats: null,
@@ -80,8 +82,12 @@ export class GlobalState extends Component {
   setActions = async () => {
     return await retrieveActions()
       .then(res => {
+        let createdActions = JSON.parse(res).map(action => {
+          return new Action(action)
+        })
         this.setState({
-          actions: JSON.parse(res)
+          actionStrings: JSON.parse(res),
+          currentActions: createdActions
         });
         return res
       })
@@ -105,11 +111,20 @@ export class GlobalState extends Component {
         })
         alert('it in')
         return currentGame
-      } else
-        this.setState({ currentGame: res })
-      return JSON.parse(res);
+      } else {
+        let currentActions = this.state.actionStrings.map((action) => {
+          return new Action(action);
+        })
+        this.setState({
+          currentGame: null,
+          currentActions: currentActions
+        })
+        return JSON.parse(res);
+      }
     });
   };
+
+  
 
 
   //TODO: thesen 2 methods might need some edge case checks.
@@ -181,9 +196,21 @@ export class GlobalState extends Component {
     saveCurrentGame(CurGame);
   }
 
+  createNewStartingActions= () =>{
+    return this.state.actionStrings.map((action) => {
+      return new Action(action);
+    })
+  }
+
   deleteCurrentGame = () => {
-    this.setState({ currentGame: null })
+    this.setState({
+      currentGame: null,
+      currentActions: this.createNewStartingActions(),
+      currentTags: []
+    })
+
     removeCurrentGame();
+    this.setCurrentGame();
   }
 
 
@@ -220,28 +247,51 @@ export class GlobalState extends Component {
           saveTags(this.state.allTags);
         }
       );
+      return true;
+    } else {
+      return false;
     }
+  };
+
+
+  removeTag = (tagtoremove) => {
+      const newTags = this.state.allTags.filter(tag => {
+        console.log("ARG:", tagtoremove);
+        console.log("filter: ", tag);
+        return tagtoremove != tag
+      })
+      console.log("NEW TAGS", newTags);
+      
+      this.setState({allTags: newTags}, () =>{
+        saveTags(this.state.allTags);
+      } );
+      console.log("NEW TAGS", newTags);
+    
+    
   }
 
   addAction(action) {
     if (validActionAdd(action, this.state.actions)) {
-      let updatedActions = this.state.actions.concat(action);
+      let updatedActions = this.state.actionStrings.concat(action);
       this.setState({
-        actions: updatedActions
+        actionStrings: updatedActions
       });
       saveActions(updatedActions);
+      return true;
+    } else {
+      return false;
     }
 
   }
 
   removeAction = (action) => {
-    if (validActionRemove(action, this.state.actions)) {
-      let updatedActions = this.state.actions.filter((Oaction) => Oaction != action)
-      this.setState({ actions: updatedActions });
+    if (validActionRemove(action, this.state.actionStrings)) {
+      let updatedActions = this.state.actionStrings.filter((Oaction) => Oaction != action)
+      this.setState({ actionStrings: updatedActions });
       saveActions(updatedActions);
     } else {
       alert('Can not remove base action, or action doesnt exsist')
-      console.log(he)
+      console.log("sup")
 
 
     }
@@ -327,6 +377,7 @@ export class GlobalState extends Component {
             addTag: (tag) => this.addTag(tag),
             addAction: (action) => this.addAction(action),
             removeAction: (action) => this.removeAction(action),
+            removeTag: (tag) => this.removeTag(tag),
             getGames: () => this.getGames(),
             getGamesArray: () => this.getGamesArray(),
             deleteAllTags: () => this.deleteAllTags(),

@@ -177,7 +177,9 @@ module.exports = {
 
     resetActions: resetActions,
 
-    firstTimeLauching: firstTimeLauching
+    firstTimeLauching: firstTimeLauching,
+    
+    isEmpty: isEmpty
 
 }
 
