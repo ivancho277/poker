@@ -12,15 +12,16 @@ const isValidTag = (tag, allTags) => {
  * 
  * @param {string} action 
  * @param {array} allActions 
+ * 
+ * @returns {boolean} true for valid action false for not valid addition
  */
 const validActionAdd = (action, allActions) => {
     if (!allActions.includes(action) && action != "") {
         return true;
     }
-    
     else return false;
-    
 }
+
 
 const validActionRemove = (action, allActions) => {
     const baseActions = ['call', 'fold', 'raise'];

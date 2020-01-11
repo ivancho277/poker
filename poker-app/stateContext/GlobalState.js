@@ -27,6 +27,8 @@ import { gameStats, Action } from '../components/gameObjects.js';
 export const MyContext = React.createContext('app');
 
 export class GlobalState extends Component {
+
+  //TODO: there's a better was to represent some things
   state = {
     position: 0,
     totalsByPosition: {},
@@ -54,7 +56,7 @@ export class GlobalState extends Component {
 
 
   }
-
+  //TODO: thing about order here, what happens when?
   async getDataFromStorage() {
     console.log("==========")
     await this.setAllGames().then(res => { console.log("SET ALL", res); });

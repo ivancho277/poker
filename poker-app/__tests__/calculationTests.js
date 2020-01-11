@@ -16,8 +16,8 @@ const { findTag,
 const EmptyTest = {};
 const NonExsistant = undefined;
 const NullTest = null;
-const gameObj1 = {}
-const gameObj2 = {}
+const gameObj1 = {};
+const gameObj2 = {};
 
 
 describe('Test my is Empty function', () => {
@@ -28,52 +28,26 @@ describe('Test my is Empty function', () => {
     }
     test('test if empty object function', () => {
         expect(isEmpty(obj1)).toBe(true);
-    }),
-        test('test2', () => {
-            expect(isEmpty(obj2)).toBe(false);
-        }),
+    })
+    test(`test2`, () => {
+        expect(isEmpty(obj2)).toBe(false);
+    })
 
 
-        // expect.extend({
-        //     isEmpty1() {
-        //         const pass = true
-        //         if (pass) {
-        //             return {
-        //                 message: () => 'Yes the object is empty',
-        //                 pass: true
-        //             }
-        //         }
-        //         else {
-        //             return {
-        //                 message: () => 'NOT EMPTY OBJECT',
-        //                 pass: false
-        //             }
-        //         }
-        //     }
-        // })
 
-        // test('test 3 extend', () => {
-        //     expect(() => {
-        //         calculateTotalStats({});
-        //       }).toThrow('cant count');
-        // })
-        
+
 })
 
 
 
 
 
+describe('Tests for calculation functions for app data', () => {
+    test('Searchs is a tag exsists in all current games', () => {
+    })
 
 
-
-
-    describe('Tests for calculation functions for app data', () => {
-        test('Searchs is a tag exsists in all current games', () => {
-        })
-
-
-    });
+})
 
 
 

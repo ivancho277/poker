@@ -16,7 +16,7 @@ import * as calculation from './components/statscalculation.js'
 
 
 class HomeScreen extends Component {
-
+    //TODO: get ride of any unsed state data.
     constructor(props) {
         super(props);
         this.state = {
@@ -36,10 +36,6 @@ class HomeScreen extends Component {
         console.log(this.context)
     }
 
-    conextRender = (cb) => {
-        cb()
-    }
-
     logTags = (allGames, tag) => {
         console.log('MY TAG', tag)
         if (tag === "") {
@@ -49,6 +45,7 @@ class HomeScreen extends Component {
         }
     }
 
+    //TODO: this might be a utils method to pull out in different file
     objToArray = (obj) => {
         // let values = Object.values(obj);
         let objArray = [];

@@ -149,23 +149,7 @@ export default class PracticeButtonController extends Component {
     }
 
     componentDidMount() {
-        // this.populateGames().then(() => {
-
-        // this.checkforCurrentGame();
         this.setActions();
-
-        console.log("LOOK UNDER");
-        console.log(this.state.gamesArray)
-        //     this.retrieveCurrentGame().then(res => {
-        //         console.log("MY RESPONSE", res)
-        //         if (!!res) {
-        //             this.retrieveActions().then((res) => {
-        //                 console.log('actions')
-        //                 this.setState({ doneLoading: true })
-        //             })
-        //         }
-        //     })
-        // })
         console.log("PBCCCC", this.props.context);
 
     }
@@ -255,6 +239,13 @@ export default class PracticeButtonController extends Component {
     }
 
 
+    /**
+     *!Check setliveGameposition
+     *TODO: only real state we have here is position
+     * 
+     * @param {*} action
+     * @memberof PracticeButtonController
+     */
     onActionClick(action) {
         console.log(`you clicked ${action.actionName}`);
         action.incrementActionAtPosition(this.state.position);
