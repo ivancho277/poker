@@ -52,11 +52,11 @@ describe('Test my is Empty function', () => {
         //     }
         // })
 
-        test('test 3 extend', () => {
-            expect(() => {
-                calculateTotalStats({});
-              }).toThrow('cant count');
-        })
+        // test('test 3 extend', () => {
+        //     expect(() => {
+        //         calculateTotalStats({});
+        //       }).toThrow('cant count');
+        // })
         
 })
 
@@ -69,12 +69,8 @@ describe('Test my is Empty function', () => {
 
 
     describe('Tests for calculation functions for app data', () => {
-
-
         test('Searchs is a tag exsists in all current games', () => {
-
         })
-
 
 
     });

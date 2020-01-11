@@ -121,7 +121,7 @@ export default class Statsbox extends Component {
     currentGameDisplay(position) {
         console.log("SEE HERE")
         console.log(this.props.currentActions)
-        if (!this.isEmpty(this.props.currentActions)) {
+        if (this.props.currentGame != null) {
             return <Text>
 
                 {this.props.currentActions.map(game => {
