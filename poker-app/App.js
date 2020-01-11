@@ -14,7 +14,7 @@ import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import { Container, Text } from "native-base";
+import { Container, Text, Root } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 // import Menu from 'react-native--storage-dev-menu-item';
@@ -40,14 +40,16 @@ class App extends React.Component {
     if (!this.state.isReady) {
       return <AppLoading />;
     }
-    
+
 
     return (
-      <Container>
-        <GlobalState>
-          <AppContainer />
-        </GlobalState>
-      </Container>
+      <Root>
+        <Container>
+          <GlobalState>
+            <AppContainer />
+          </GlobalState>
+        </Container>
+      </Root>
     );
   }
 }
@@ -98,7 +100,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   },
   Statistics: {
     screen: StatsScreen,
-    
+
   }
 });
 
