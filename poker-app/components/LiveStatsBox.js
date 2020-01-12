@@ -20,7 +20,7 @@ let table = {
     "8": "D+6",
 }
 
-export default class Statsbox extends Component {
+export default class LiveStatsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
@@ -33,7 +33,7 @@ export default class Statsbox extends Component {
 
 
     componentDidMount() {
-        this.setState({gamesObj: this.props.getGamesObj, loading: false})
+        this.setState({loading: false})
         // storage.retrieveData().then((res) => {
         //     if (res != undefined) {
         //         console.log(JSON.parse(res));
@@ -145,7 +145,7 @@ export default class Statsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.state.gamesObj)
+                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.props.GetGamesObj)
                         ?
                         <Divider>Nothing in storage</Divider>
                         :
