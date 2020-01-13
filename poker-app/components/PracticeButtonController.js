@@ -41,7 +41,7 @@ export default class PracticeButtonController extends Component {
             actionInputOpen: false,
             showModal: false,
             actionToAdd: '',
-            doneLoading: true
+            doneLoading: false
         };
     };
 
@@ -149,7 +149,8 @@ export default class PracticeButtonController extends Component {
     }
 
     componentDidMount() {
-        this.setActions();
+        //this.setActions();
+        this.setState({doneLoading: true})
         console.log("PBCCCC", this.props.context);
 
     }
@@ -251,7 +252,7 @@ export default class PracticeButtonController extends Component {
         action.incrementActionAtPosition(this.state.position);
         this.setState({ currentTime: new Date() });
         this.props.setPosition(this.state.position);
-        this.props.setLiveGamePosition(this.state.actions);
+        //this.props.setLiveGamePosition(this.state.actions);
         console.log(action)
     }
 
@@ -267,7 +268,8 @@ export default class PracticeButtonController extends Component {
         }
         return true;
     }
-
+    
+    //FIXME: need to send to context
     saveActions(action) {
         if (action != "") {
             let newActions = this.state.actionStrings.concat(action);

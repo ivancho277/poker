@@ -25,7 +25,7 @@ export default class LiveStatsbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
+            loading: false,
             gamesObj: {},
             displayChange: false,
         }
@@ -33,7 +33,7 @@ export default class LiveStatsbox extends Component {
 
 
     componentDidMount() {
-        this.setState({loading: false})
+        //this.setState({loading: false})
         // storage.retrieveData().then((res) => {
         //     if (res != undefined) {
         //         console.log(JSON.parse(res));
@@ -55,11 +55,11 @@ export default class LiveStatsbox extends Component {
 
     logTotalsByPosition() {
         //console.log(calculation.calculateByPosition(this.state.gamesObj));
-        return calculation.calculateByPosition(this.state.gamesObj);
+        return calculation.calculateByPosition(this.props.gamesObj);
     }
 
     logPercentagesByPosition() {
-        return calculation.calcPercentByPosition(this.state.gamesObj);
+        return calculation.calcPercentByPosition(this.props.gamesObj);
     }
 
 
@@ -145,7 +145,7 @@ export default class LiveStatsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.props.GetGamesObj)
+                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.props.gamesObj)
                         ?
                         <Divider>Nothing in storage</Divider>
                         :

@@ -65,12 +65,6 @@ class GameScreen extends Component {
         })
     }
 
-    setLiveGamePosition = (gameActions) => {
-        this.setState({
-            currentActions: gameActions,
-            //tags: tags
-        })
-    }
 
     clearTags = () => {
         this.setState({
@@ -127,8 +121,8 @@ class GameScreen extends Component {
         return (
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                    <LiveStatsBox getGamesObj={context.state.gamesObj} currentGame={context.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} position={this.state.position} logTags={this.logTags} height={100} width={270} />
-                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} setLiveGamePosition={this.setLiveGamePosition} goHome={this.goHome} setPosition={this.setPosition} />
+                    <LiveStatsBox gamesObj={context.state.gamesObj} currentGame={context.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} position={this.state.position} height={100} width={270} />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} goHome={this.goHome} setPosition={this.setPosition} />
             
                     {/* TODO: action button should be changes as it is outdated */}
                     
