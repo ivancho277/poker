@@ -83,7 +83,22 @@ module.exports = {
 
     isEmpty: function(obj){
         return isEmpty(obj);
+    },
+
+    objToArray: function(obj){
+        return objToArray(obj);
     }
+}
+
+
+const objToArray = (obj) => {
+    // let values = Object.values(obj);
+    let objArray = [];
+    for (key in obj) {
+        objArray.push({ [key]: obj[key] })
+    }
+    console.log('OBJECT ARRAY', objArray)
+    return objArray
 }
 
 const isEmpty = function(obj){

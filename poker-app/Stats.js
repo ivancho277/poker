@@ -8,20 +8,22 @@ import * as storage from './components/AsyncStorageController.js';
 // const calculation = require('./components/statscalculation.js')
 
 // const storage = require('./components/AsyncStorageController.js');
-
 export default class StatsScreen extends Component {
 
     state = {
         tagpicker: ''
     }
 
+    componentDidMount() {
+        console.log(this.context.state.allTags);
+    }
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.logTags(allGames, tag);
         console.log(this.state.tagpicker);
         
         console.log(foundgames)
         if (tag != '') {
-            if (foundgames.length >= 1) {
+            if (foundgames.length > 0) {
                 return (
 
                     this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
@@ -106,6 +108,10 @@ export default class StatsScreen extends Component {
         )
     }
 }
+
+
+StatsScreen.contextType = MyContext;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

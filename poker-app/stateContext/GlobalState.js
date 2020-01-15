@@ -22,7 +22,7 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
-import { gameStats, Action } from '../components/gameObjects.js';
+import { GameStats, Action } from '../components/gameObjects.js';
 
 export const MyContext = React.createContext('app');
 
@@ -32,11 +32,9 @@ export class GlobalState extends Component {
   state = {
     position: 0,
     totalsByPosition: {},
-    totals: {},
     gamesObj: {},
     gamesArray: [],
     allTags: [],
-    totalGames: 0,
     actions: [],
     actionStrings: [],
     currentGame: {},
@@ -138,7 +136,7 @@ export class GlobalState extends Component {
   }
 
   createGameStats = (actoins, tags) => {
-    let createGameStats = new gameStats(actions, tags);
+    let createGameStats = new GameStats(actions, tags);
 
 
   }
@@ -273,7 +271,7 @@ export class GlobalState extends Component {
   }
 
   addAction(action) {
-    if (validActionAdd(action, this.state.actions)) {
+    if (validActionAdd(action, this.state.actionsStrings)) {
       let updatedActions = this.state.actionStrings.concat(action);
       this.setState({
         actionStrings: updatedActions
@@ -301,44 +299,32 @@ export class GlobalState extends Component {
   };
 
   componentDidUpdate() {
-    //checks to see if any new tags are added to our list of overall tags, and updates state if so.
-    // retrieveTags().then(res => {
-    //   if (res != undefined && res != null) {
-    //     if (this.state.allTags.length >= 1) {
-    //       //debugger;
-    //       if (this.state.allTags.length !== JSON.parse(res).length) {
-    //         this.setState({
-    //           allTags: JSON.parse(res)
-    //         });
-    //       }
-    //     }
-    //   }
-    // });
-    // storage.retrieveData().then((res) => {
-    //     //console.log(JSON.parse(res));
-    //     //debugger;
-    //     if (res != undefined) {
-    //         let pastGames = JSON.parse(res)
-    //         console.log("SYNCC ", pastGames)
-    //         //let temp = calculation.calculateByPosition(pastGames)
-    //         let allGamesArray = [];
-    //         if (pastGames.games) {
-    //             pastGames.games.forEach(game => {
-    //                 allGamesArray.push(game)
-    //             })
-    //         }
-    //         debugger;
-    // if (allGamesArray.length !== this.state.totalGames) {
-    //    this.getDataFromStorage().then((res) => {
-    //        console.log('Update global storage')
-    //    })
-    // }
-    // }
+   
   }
+
   logTotalsByPosition = () => {
     console.log(calculation.calculateByPosition(this.state.gamesObj));
     return calculation.calculateByPosition(this.state.gamesObj);
   };
+
+  logPercentageTotals = () => {
+    return calculation.getPercentages(this.state.gamesObj);
+  }
+
+  logTotals = () => {
+    return calculation.objToArray(calculation.calculateTotalStats(this.state.gamesObj))
+  }
+
+  logPercentByPosition = () => {
+    return calculation.calcPercentByPosition(this.state.gamesObj)
+  }
+  
+
+
+
+
+
+
 
   incrementPosition() {
     this.setState({
@@ -350,6 +336,10 @@ export class GlobalState extends Component {
     this.setState({
       position: position
     });
+  }
+
+  getPostion(){
+    return () => {return this.state.position};
   }
 
   getGames() {
@@ -368,9 +358,16 @@ export class GlobalState extends Component {
       <MyContext.Provider
         value={{
           state: this.state,
+          stats: {
+            totals: () => this.logTotals(),
+            totalPercentages: () => this.logPercentageTotals(),
+            totalsByPosition: () => this.logTotalsByPosition(),
+            percentByPosition: () => this.logPercentByPosition()
+          },
           modifiers: {
             incrementPosition: () => this.incrementPosition(),
             setPosition: position => this.setPosition(position),
+            
             remount: () => this.componentDidMount(),
             updateGames: gamesObj => {
               this.updateGames(gamesObj);

@@ -66,19 +66,20 @@ export default class LiveStatsbox extends Component {
 
     currentPositionDisplay(position) {
         //let allGames = this.logTotalsByPosition();
-        let allGames = this.logPercentagesByPosition();
-        if (this.isEmpty(allGames)) {
+        const {logTotals} = this.props
+
+        if (this.isEmpty(logTotals)) {
             return <Text>No Saved Games</Text>
         }
         else {
             console.log("POSITION")
-            console.log(allGames)
+            console.log(logTotals)
             console.log(position)
-            let allGamesArray = Object.keys(allGames).map(key => {
+            let allGamesArray = Object.keys(logTotals).map(key => {
                 let newkey = String(key)
                 console.log(newkey)
                 newkey = { key: key }
-                return Object.assign(newkey, allGames[key]);
+                return Object.assign(newkey, logTotals[key]);
             })
             console.log("HAHAHAHAA")
             console.log(allGamesArray)

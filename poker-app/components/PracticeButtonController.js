@@ -10,7 +10,7 @@ import * as calculations from './statscalculation.js';
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 const gameConstructors = require('./gameObjects.js');
-const { gameStats, Action } = gameConstructors;
+const { GameStats, Action } = gameConstructors;
 
 
 
@@ -166,7 +166,7 @@ export default class PracticeButtonController extends Component {
     //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
-        let temp = new gameStats(this.props.currentActions, this.state.tags);
+        let temp = new GameStats(this.props.currentActions, this.state.tags);
         let totals = this.props.currentActions.map((action) => {
             return { [action.actionName]: action.getTotalCount() }
         })
@@ -202,7 +202,7 @@ export default class PracticeButtonController extends Component {
     saveCurrentGame() {
         let date = new Date();
         let temp;
-        temp = new gameStats(this.props.context.state.currentActions, this.props.context.state.currentTags)
+        temp = new GameStats(this.props.context.state.currentActions, this.props.context.state.currentTags)
         console.log("TAGS: ", temp.getTags())
         let gamesObj = {
             date: date.toDateString(),
@@ -219,7 +219,6 @@ export default class PracticeButtonController extends Component {
         this.props.context.modifiers.updateCurrentGame(gamesObj)
         //storageController.saveCurrentGame(gamesObj)
     }
-
 
     getPosition = (position) => {
         this.setState({
@@ -253,6 +252,8 @@ export default class PracticeButtonController extends Component {
         this.setState({ currentTime: new Date() });
         this.props.setPosition(this.state.position);
         //this.props.setLiveGamePosition(this.state.actions);
+ 
+        
         console.log(action)
     }
 
@@ -294,7 +295,7 @@ export default class PracticeButtonController extends Component {
                                 {this.props.currentActions.map((action, index) => {
                                     return (
                                         <View key={index}>
-                                            <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action) }} />
+                                            <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action); }} />
                                         </View>
                                     )
                                 })}

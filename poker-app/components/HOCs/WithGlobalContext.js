@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import { MyContext } from '../../stateContext/GlobalState'
 
 
-export function WithGlobalContext(Component) {
+function WithGlobalContext(Component) {
     return function WrapperComponent(props) {
         return (
             <MyContext.Consumer>
@@ -13,4 +13,6 @@ export function WithGlobalContext(Component) {
         )
     }
 }
+
+
 

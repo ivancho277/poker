@@ -27,6 +27,7 @@ class GameScreen extends Component {
             tags: [],
             allTags: [],
             selected: "",
+            actionToAdd: '',
             actionInputOpen: false,
             showTagsModal: false,
             activeActionMenu: false
@@ -43,7 +44,7 @@ class GameScreen extends Component {
 
         const { allTags, currentGame } = this.context.state
         console.log("MONT", allTags)
-   
+
 
     }
 
@@ -99,9 +100,21 @@ class GameScreen extends Component {
                 />
                 {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
                 <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag); this.clearTags(); }} />
-
             </View>
+        )
+    }
 
+    renderActionInput = () => {
+        return (
+            <View style={{ position: "relative", zIndex: -1 }}>
+                <TextInput
+                    style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid', }}
+                    placeholder='Add a new game Action'
+                    onChangeText={(actionToAdd) => this.setState({ actionToAdd })}
+                    value={this.state.actionToAdd}
+                />
+                {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { this.state.actionToAdd != "" ? this.context.modifiers.saveActions(this.state.actionToAdd & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} /> */}
+            </View>
         )
     }
 
@@ -121,11 +134,11 @@ class GameScreen extends Component {
         return (
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
-                    <LiveStatsBox gamesObj={context.state.gamesObj} currentGame={context.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} position={this.state.position} height={100} width={270} />
-                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} goHome={this.goHome} setPosition={this.setPosition} />
-            
+                    <LiveStatsBox gamesObj={context.state.gamesObj} currentGame={context.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} logPercentages={context.stats.totalPercentages()} logTotals={context.stats.percentByPosition()}  position={context.state.position} height={100} width={270} />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} goHome={this.goHome} setPosition={context.modifiers.setPosition}  />
+
                     {/* TODO: action button should be changes as it is outdated */}
-                    
+
                     <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => { showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>
                         <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>
                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={context.state.allTags} renderTagInput={this.renderTagInput} />
@@ -137,7 +150,7 @@ class GameScreen extends Component {
                             <AntDesign name="home" style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         {/* Remove buttons */}
-                        <ActionButton.Item buttonColor="#DE1062" title="End Current Game" active={showButtons} onPress={()=> {this.context.modifiers.deleteCurrentGame(); this.goHome()}}>
+                        <ActionButton.Item buttonColor="#DE1062" title="End Current Game" active={showButtons} onPress={() => { this.context.modifiers.deleteCurrentGame(); this.goHome() }}>
                             <AntDesign name='minus' style={styles.actionButtonIcon} />
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor="#9999FF" active={showOtherButtons}>
@@ -145,7 +158,7 @@ class GameScreen extends Component {
                         </ActionButton.Item>
                     </ActionButton>
 
-                  
+
 
 
                 </View>
