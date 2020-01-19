@@ -22,7 +22,7 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
-import { GameStats, Action } from '../components/gameObjects.js';
+import { GameStats, Action, Game } from '../components/gameObjects.js';
 
 export const MyContext = React.createContext('app');
 
