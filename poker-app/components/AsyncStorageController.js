@@ -6,7 +6,7 @@ import { AsyncStorage } from 'react-native';
 const firstTimeLauching = async function () {
     try {
         let isFirstLaunch = await AsyncStorage.getItem('firstlaunch')
-        if(isFirstLaunch === null){
+        if(isFirstLaunch === undefined){
             AsyncStorage.setItem('firstlaunch', 'false')
             return true;
         } 
@@ -27,6 +27,7 @@ const saveData = function (data) {
     }
     catch (error) {
         console.log("error saving data");
+        throw Error(error);
     }
 }
 

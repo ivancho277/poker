@@ -22,8 +22,8 @@ import {
   validActionAdd,
   validActionRemove
 } from "../utils/validators.js";
-import { GameStats, Action } from '../components/gameObjects.js';
-import { useImmer } from 'use-immer'
+import { GameStats, Action, Game } from '../components/gameObjects.js';
+import {GameProvider, MyContext, MyDispatch}from './contextProvider'
 
 //const MyContext = React.createContext('app');
 
@@ -46,16 +46,8 @@ function useMyDispatch() {
   return dispatch
 }
 
-const GameProvider = ({ children }) => {
-  const [state, dispatch] = useImmer({ ...defaultState });
-  return (
-    <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>
-        {children}
-      </DispatchContext.Provider>
-    </StateContext.Provider>
-  );
-};
+
+
 
 function WithMyContext(Component) {
   return function WrappedComponent(props) {
@@ -73,7 +65,7 @@ function WithMyDispatch(Component) {
 
 function LoadContext(contextProvider) {
   const [loading, setLoading] = useState(true);
-  return
+  
     
 
 

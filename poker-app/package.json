@@ -12,6 +12,9 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+    ],
+    "testPathIgnorePatterns" : [
+      "__tests__/mockStorage.js" 
     ]
   },
   "dependencies": {
@@ -23,6 +26,7 @@
     "expo": "^36.0.0",
     "expo-font": "~8.0.0",
     "immer": "^5.3.2",
+    "mock-async-storage": "^2.2.0",
     "native-base": "^2.13.8",
     "react": "16.9.0",
     "react-async": "^10.0.0",

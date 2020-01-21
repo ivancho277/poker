@@ -40,7 +40,8 @@ export class GlobalState extends Component {
     currentGame: {},
     currentActions: null,
     currentGameStats: null,
-    currentTags: []
+    currentTags: [],
+    game: null
 
   };
   componentDidMount() {
@@ -49,6 +50,10 @@ export class GlobalState extends Component {
       console.log("VVVVV");
       console.log(res);
       console.log("global state populated");
+      
+        const game = new Game(this.state.currentActions, this.state.currentTags, this.state.position, "1.0.5", new Date())
+        console.log("the game=====: ", game);
+      
     });
 
 
