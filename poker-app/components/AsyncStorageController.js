@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
 
-
+/**
+ *Checks if it is the Applications first time launching
+ *Set storage key after first launch
+ * @returns {boolean} 
+ */
 const firstTimeLauching = async function () {
     try {
         let isFirstLaunch = await AsyncStorage.getItem('firstlaunch')
@@ -18,7 +21,12 @@ const firstTimeLauching = async function () {
 }
 
 
-
+/**
+ *
+ *
+ * @param {Object} data -Full games object for with all game data
+ * @returns {Object}
+ */
 const saveData = function (data) {
     try {
         AsyncStorage.setItem('key', JSON.stringify(data));
@@ -30,17 +38,29 @@ const saveData = function (data) {
         throw Error(error);
     }
 }
-
+/**
+ *
+ *
+ * @param {Object} data -saves a current game object to storage
+ * @returns {Object}
+ */
 const saveCurrentGame = function (data) {
     try {
         AsyncStorage.setItem('currentGame', JSON.stringify(data));
         console.log(`stored a current Game!`)
         return data
-    } catch {
-        console.log("error saving current game")
+    } catch (error){
+        console.log("error saving current game");
+        throw Error(error);
     }
 }
 
+
+/**
+ *
+ * gets a current game if one exsists
+ * @returns {Object|null}
+ */
 const retrieveCurrentGame = async function () {
     try {
         let currentGame = await AsyncStorage.getItem('currentGame')
@@ -51,6 +71,10 @@ const retrieveCurrentGame = async function () {
     }
 }
 
+/**
+ *removes current game form storage
+ *
+ */
 const removeCurrentGame = async function () {
     try {
         AsyncStorage.removeItem('currentGame', () => {
@@ -62,6 +86,11 @@ const removeCurrentGame = async function () {
     }
 }
 
+/**
+ *
+ * -retrieves all Saved Games
+ * @returns {Object} -all games
+ */
 const retrieveData = async function () {
     try {
         let keys = await AsyncStorage.getAllKeys();
@@ -71,27 +100,47 @@ const retrieveData = async function () {
         if (!isEmpty(games))
             return games;
     }
-    catch {
-        throw error
+    catch(error) {
+        throw Error(error)
         console.log('error retrieving data')
     }
 }
     
+/**
+ *removes all saved games
+ *
+ */
 const removeData = function () {
+    try{
     let empty = {};
     AsyncStorage.setItem('key', JSON.stringify(empty));
     console.log("REMOVED")
+    }
+    catch(error){
+        throw Error(Error)
+    }
 }
 
+/**
+ *
+ *save tags to storage
+ * @param {String[]} data
+ */
 const saveTags = function (data) {
     try {
         AsyncStorage.setItem('tags', JSON.stringify(data));
         console.log("SUCCESS STORING TAGS")
-    } catch {
+    } catch(error) {
+        throw Error(error)
         console.log("ERROR SAVING TAGS")
     }
 }
 
+/**
+ * get array of all tags
+ *
+ * @returns {String[]}
+ */
 const retrieveTags =  async function () {
     try {
         let allTags = await AsyncStorage.getItem('tags');
@@ -102,6 +151,10 @@ const retrieveTags =  async function () {
     }
 }
 
+/**
+ *remove all tags from storage
+ *
+ */
 const removeTags = function () {
     try {
         AsyncStorage.removeItem('tags', () => {
@@ -111,7 +164,11 @@ const removeTags = function () {
         console.log("Unable to remove tags")
     }
 }
-
+/**
+ *save game actions
+ *
+ * @param {String[]} data
+ */
 const saveActions = function (data) {
     try {
         AsyncStorage.setItem('actions', JSON.stringify(data));
@@ -121,6 +178,11 @@ const saveActions = function (data) {
     }
 }
 
+/**
+ *
+ * gets all actions
+ * @returns {String[]}
+ */
 const retrieveActions = async function () {
     try {
         let actions = await AsyncStorage.getItem('actions');
@@ -130,6 +192,10 @@ const retrieveActions = async function () {
     }
 }
 
+/**
+ *resets game actions to the base 3.
+ *
+ */
 const resetActions = function () {
     try {
         const originalAction = ['call', 'fold', 'raise'];
@@ -141,6 +207,12 @@ const resetActions = function () {
 }
 
 
+/**
+ * checks if object is empty
+ *
+ * @param {Object} obj
+ * @returns {Boolean}
+ */
 function isEmpty(obj) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key))

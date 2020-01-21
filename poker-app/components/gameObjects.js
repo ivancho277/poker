@@ -139,7 +139,8 @@ class Game {
     }
 
     addAction = (action) => {
-        this.actions.push(action);
+        const newAction = new Action(action)
+        this.actions.push(newAction);
     }
     getCurrentStats = () => {
         //debugger;
