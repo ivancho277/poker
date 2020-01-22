@@ -10,7 +10,7 @@ import * as calculations from './statscalculation.js';
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 const gameConstructors = require('./gameObjects.js');
-const { GameStats, Action } = gameConstructors;
+const { GameStats, Action, Game } = gameConstructors;
 
 
 
@@ -166,6 +166,7 @@ export default class PracticeButtonController extends Component {
     //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
     toBeSaved = (shouldReturn = false) => {
         let date = new Date();
+        //let thisgame = new Game(this.props.currentActions. this.)
         let temp = new GameStats(this.props.currentActions, this.state.tags);
         let totals = this.props.currentActions.map((action) => {
             return { [action.actionName]: action.getTotalCount() }

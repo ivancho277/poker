@@ -1,6 +1,6 @@
 import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import StatsBox from './components/Statsbox'
 import SearchModal from './components/SearchModal'
 import { MyContext } from './stateContext/GlobalState';
@@ -8,10 +8,48 @@ import { AntDesign } from '@expo/vector-icons';
 
 import * as storage from './components/AsyncStorageController.js'
 import * as calculation from './components/statscalculation.js'
+import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
 // const calculation = require('./components/statscalculation.js')
 
 //  const context = useContext(MyContext)
+
+
+
+// const HomeScreen = () => {
+//     [state, dispatch] = useGameContext();
+    
+
+//     return (
+//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+//             <View>
+//                 {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
+//                 <MyContext.Consumer>
+//                     {(context) => <Button title="test" onPress={() => { console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"])) }} />}
+//                 </MyContext.Consumer>
+//                 <Text>POKER TRACKER</Text>
+//                 {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
+//             </View>
+
+//             <View>
+//                 <View>
+//                     <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+//                 </View>
+//                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
+//                 <Text>ReRender global state</Text>
+
+//                 <MyContext.Consumer>
+//                     {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.modifiers.remount() }}>
+//                         <Text>Press me</Text>
+//                     </TouchableOpacity>}
+//                 </MyContext.Consumer>
+
+//             </View >
+//         </View>
+//     )
+// }
+
+// export default Home
 
 
 
@@ -80,7 +118,7 @@ class HomeScreen extends Component {
                             <Text>Press me</Text>
                         </TouchableOpacity>}
                     </MyContext.Consumer>
-                  
+
                 </View >
             </View>
         )

@@ -101,7 +101,6 @@ const retrieveData = async function () {
             return games;
     }
     catch(error) {
-        throw Error(error)
         console.log('error retrieving data')
     }
 }
@@ -187,7 +186,8 @@ const retrieveActions = async function () {
     try {
         let actions = await AsyncStorage.getItem('actions');
         return actions;
-    } catch {
+    } catch(err) {
+        throw Error(err);
         console.log('could not retrieve actions')
     }
 }

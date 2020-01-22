@@ -17,6 +17,7 @@ import { AppLoading } from "expo";
 import { Container, Text, Root } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
+import { GameProvider } from './stateContext/contextProvider'
 // import Menu from 'react-native--storage-dev-menu-item';
 
 class App extends React.Component {
@@ -45,9 +46,11 @@ class App extends React.Component {
     return (
       <Root>
         <Container>
-          <GlobalState>
-            <AppContainer />
-          </GlobalState>
+          <GameProvider>
+            <GlobalState>
+              <AppContainer />
+            </GlobalState>
+          </GameProvider>
         </Container>
       </Root>
     );

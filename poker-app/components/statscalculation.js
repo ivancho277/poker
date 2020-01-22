@@ -182,7 +182,7 @@ const countTotal = function(obj) {
         console.log('STATS', totals)
         return totals
     } catch {
-        throw console.error('cant count');
+        throw Error('cant count');
 
         alert('cant count')
     }
