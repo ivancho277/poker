@@ -50,10 +50,10 @@ export class GlobalState extends Component {
       console.log("VVVVV");
       console.log(res);
       console.log("global state populated");
-      
-        const game = new Game(this.state.currentActions, this.state.currentTags, this.state.position, "1.0.5", new Date())
-        console.log("the game=====: ", game);
-      
+
+      const game = new Game(this.state.currentActions, this.state.currentTags, this.state.position, "1.0.5", new Date())
+      console.log("the game=====: ", game);
+
     });
 
 
@@ -106,12 +106,12 @@ export class GlobalState extends Component {
     return await retrieveCurrentGame().then(res => {
       if (res != null) {
         let currentGame = JSON.parse(res);
-        let actionsObj = this.createActions(currentGame);
-        console.log("BUILT ACTIONS :", actionsObj);
-
+        let actionsList = this.createActions(currentGame);
+        console.log("BUILT ACTIONS :", actionsList);
+        this.state.currentGame.actions = actionsList;
         this.setState({
           currentGame: currentGame,
-          currentActions: actionsObj,
+          currentActions: actionsList,
           currentTags: currentGame.tags
         })
         alert('it in')
@@ -129,7 +129,7 @@ export class GlobalState extends Component {
     });
   };
 
-  
+
 
 
   //TODO: thesen 2 methods might need some edge case checks.
@@ -201,7 +201,7 @@ export class GlobalState extends Component {
     saveCurrentGame(CurGame);
   }
 
-  createNewStartingActions= () =>{
+  createNewStartingActions = () => {
     return this.state.actionStrings.map((action) => {
       return new Action(action);
     })
@@ -260,23 +260,23 @@ export class GlobalState extends Component {
 
 
   removeTag = (tagtoremove) => {
-      const newTags = this.state.allTags.filter(tag => {
-        console.log("ARG:", tagtoremove);
-        console.log("filter: ", tag);
-        return tagtoremove != tag
-      })
-      console.log("NEW TAGS", newTags);
-      
-      this.setState({allTags: newTags}, () =>{
-        saveTags(this.state.allTags);
-      } );
-      console.log("NEW TAGS", newTags);
-    
-    
+    const newTags = this.state.allTags.filter(tag => {
+      console.log("ARG:", tagtoremove);
+      console.log("filter: ", tag);
+      return tagtoremove != tag
+    })
+    console.log("NEW TAGS", newTags);
+
+    this.setState({ allTags: newTags }, () => {
+      saveTags(this.state.allTags);
+    });
+    console.log("NEW TAGS", newTags);
+
+
   }
 
-  addAction(action) {
-    if (validActionAdd(action, this.state.actionsStrings)) {
+  addAction = (action) => {
+    if (validActionAdd(action, this.state.actionStrings)) {
       let updatedActions = this.state.actionStrings.concat(action);
       this.setState({
         actionStrings: updatedActions
@@ -304,7 +304,7 @@ export class GlobalState extends Component {
   };
 
   componentDidUpdate() {
-   
+
   }
 
   logTotalsByPosition = () => {
@@ -323,7 +323,7 @@ export class GlobalState extends Component {
   logPercentByPosition = () => {
     return calculation.calcPercentByPosition(this.state.gamesObj)
   }
-  
+
 
 
 
@@ -343,8 +343,8 @@ export class GlobalState extends Component {
     });
   }
 
-  getPostion(){
-    return () => {return this.state.position};
+  getPostion() {
+    return () => { return this.state.position };
   }
 
   getGames() {
@@ -372,7 +372,7 @@ export class GlobalState extends Component {
           modifiers: {
             incrementPosition: () => this.incrementPosition(),
             setPosition: position => this.setPosition(position),
-            
+
             remount: () => this.componentDidMount(),
             updateGames: gamesObj => {
               this.updateGames(gamesObj);

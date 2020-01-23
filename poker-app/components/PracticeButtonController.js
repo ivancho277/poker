@@ -150,7 +150,7 @@ export default class PracticeButtonController extends Component {
 
     componentDidMount() {
         //this.setActions();
-        this.setState({doneLoading: true})
+        this.setState({ doneLoading: true })
         console.log("PBCCCC", this.props.context);
 
     }
@@ -163,8 +163,57 @@ export default class PracticeButtonController extends Component {
     }
 
 
+    /**
+     * !!!! NEW SAVE METHODS WILL RESTRUCTURE STORAGE !!!
+     */
+    SaveAllGames = () => {
+        //*this Game instance might actually come from contect state.
+        const GameToSave = new Game(this.props.currentActions, this.props.currentTags, this.props.position, "1.0.5", new Date())
+        const totals = currentGameToSave.actions.map(action => {
+            return { [action.actionName]: action.getTotalCount() }
+        });
+        const gameStats = currentGameToSave.getCurrentStats();
+        const tagsForCurrentGame = this.props.tags.length === 0 ? this.props.currentTags.concat('default') : this.props.currentTags;
+        const gamesObj = {
+            gameRaw: GameToSave,
+            totals: totals,
+            game: gameStats,
+            tags: tagsForCurrentGame,
+            version: GameToSave.getVersion(),
+            time: GameToSave.date.toDateString(),
+            date: GameToSave.date.getTime()
+        }
+        const updatedGamesList = this.props.getGames.concat(gamesObj);
+        this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
+
+    }
+
+    CurrentGameSave = () => {
+        const date = new Date();
+        const currentgame = new Game(this.props.currentActions, this.props.currentTags, this.props.position, "1.0.5", date);
+        const gamesObj = {
+            rawGameData: currentgame,
+            date: date.toDateString(),
+            time: date.getTime(),
+            tags: currentgame.getTags(),
+            currentGame: currentgame.getCurrentStats(),
+            actions: currentgame.getAllActions(),
+            actionStrings: currentgame.getActionsAsList()
+        }
+
+        this.props.context.modifiers.updateCurrentGame(gamesObj)
+
+    }
+
+
+
+
+
+
+
+    //!!!!!!!!!!! OLD SAVE
     //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
-    toBeSaved = (shouldReturn = false) => {
+saveAllGames = (shouldReturn = false) => {
         let date = new Date();
         //let thisgame = new Game(this.props.currentActions. this.)
         let temp = new GameStats(this.props.currentActions, this.state.tags);
@@ -199,6 +248,8 @@ export default class PracticeButtonController extends Component {
         //debugger
     };
 
+
+    //!!!!!!!! OLD SAVE
     //TODO: also see if there is more apporpriate spot for this method as well.
     saveCurrentGame() {
         let date = new Date();
@@ -231,13 +282,17 @@ export default class PracticeButtonController extends Component {
     shouldPositionIncrement = (cb) => {
         if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
             cb(this.state.position)
-            //this.toBeSaved();
-            this.saveCurrentGame();
+            //this.saveAllGames();
+            this.CurrentGameSave();
             this.setState({
                 previousTime: this.state.currentTime
             })
         }
     }
+
+
+
+
 
 
     /**
@@ -253,8 +308,8 @@ export default class PracticeButtonController extends Component {
         this.setState({ currentTime: new Date() });
         this.props.setPosition(this.state.position);
         //this.props.setLiveGamePosition(this.state.actions);
- 
-        
+
+
         console.log(action)
     }
 
@@ -270,7 +325,7 @@ export default class PracticeButtonController extends Component {
         }
         return true;
     }
-    
+
     //FIXME: need to send to context
     saveActions(action) {
         if (action != "") {
@@ -291,21 +346,21 @@ export default class PracticeButtonController extends Component {
                     {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
                     <View>
                         {
-                       /*his.props.currentActions != null ?  */  this.props.currentActions.length > 0  ?
-                            <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
-                                {this.props.currentActions.map((action, index) => {
-                                    return (
-                                        <View key={index}>
-                                            <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action); }} />
-                                        </View>
-                                    )
-                                })}
-                                <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
-                            </View>
+                       /*his.props.currentActions != null ?  */  this.props.currentActions.length > 0 ?
+                                <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                    {this.props.currentActions.map((action, index) => {
+                                        return (
+                                            <View key={index}>
+                                                <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { this.onActionClick(action); }} />
+                                            </View>
+                                        )
+                                    })}
+                                    <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                                </View>
 
-                            :
-                            <Text>Loading....</Text>
-                           
+                                :
+                                <Text>Loading....</Text>
+
                         }
                     </View>
                     <Text>{'\n'}</Text>
@@ -329,7 +384,7 @@ export default class PracticeButtonController extends Component {
                     </View>
                     <View style={{ width: 150, marginLeft: 80, borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black', justifyContent: 'center', position: 'relative' }}>
                         <MyContext.Consumer >
-                            {(context) => <Button title='Save, End game.' onPress={() => { context.modifiers.deleteCurrentGame(); this.toBeSaved(); this.props.goHome() }} />}
+                            {(context) => <Button title='Save, End game.' onPress={() => { context.modifiers.deleteCurrentGame(); this.saveAllGames(); this.props.goHome() }} />}
                         </MyContext.Consumer>
                     </View>
                 </View>

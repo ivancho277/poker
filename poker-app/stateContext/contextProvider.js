@@ -24,6 +24,8 @@ import {
 } from "../utils/validators.js";
 import { GameStats, Action, Game } from '../components/gameObjects.js';
 import { useImmer } from 'use-immer';
+import produce from 'immer'
+import { initialState } from "./reducer.js";
 // import { isLoaded } from "expo-font";
 // import createActions from './createActions';
 // import useAsyncReducer from './useAsyncReducer';
@@ -108,6 +110,13 @@ async function setAllData() {
 //     );
 // };
 
+//!example code from docs.
+const loadedUser = await produce(initialState, async function(draft) {  
+        
+})
+const loadData = await produce(initialState, async function(draft) {
+
+})
 
 
 

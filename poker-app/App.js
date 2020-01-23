@@ -46,11 +46,11 @@ class App extends React.Component {
     return (
       <Root>
         <Container>
-          <GameProvider>
+          {/* <GameProvider> */}
             <GlobalState>
               <AppContainer />
             </GlobalState>
-          </GameProvider>
+          {/* </GameProvider> */}
         </Container>
       </Root>
     );

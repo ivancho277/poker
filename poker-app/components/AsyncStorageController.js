@@ -30,12 +30,12 @@ const firstTimeLauching = async function () {
 const saveData = function (data) {
     try {
         AsyncStorage.setItem('key', JSON.stringify(data));
-        console.log(`success storing ${data.calls}`);
-        return data;
+        // console.log(`success storing ${data}`);
+        //return data;
     }
     catch (error) {
         console.log("error saving data");
-        throw Error(error);
+        //throw Error(error);
     }
 }
 /**
@@ -93,15 +93,17 @@ const removeCurrentGame = async function () {
  */
 const retrieveData = async function () {
     try {
-        let keys = await AsyncStorage.getAllKeys();
-        console.log(keys);
+        // let keys = await AsyncStorage.getAllKeys();
+        // console.log(keys);
         let games = await AsyncStorage.getItem('key');
         console.log(games);
-        if (!isEmpty(games))
+        if (!isEmpty(games)){
             return games;
+        } else return games
     }
     catch(error) {
         console.log('error retrieving data')
+        return null;
     }
 }
     
@@ -123,14 +125,14 @@ const removeData = function () {
 /**
  *
  *save tags to storage
- * @param {String[]} data
+ * @param {String[]} 
  */
 const saveTags = function (data) {
     try {
         AsyncStorage.setItem('tags', JSON.stringify(data));
         console.log("SUCCESS STORING TAGS")
-    } catch(error) {
-        throw Error(error)
+    } catch {
+        //throw Error(error)
         console.log("ERROR SAVING TAGS")
     }
 }
