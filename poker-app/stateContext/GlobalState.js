@@ -219,7 +219,7 @@ export class GlobalState extends Component {
   }
 
 
-
+ 
 
 
 
@@ -306,6 +306,11 @@ export class GlobalState extends Component {
   componentDidUpdate() {
    
   }
+
+
+
+
+  
 
   logTotalsByPosition = () => {
     console.log(calculation.calculateByPosition(this.state.gamesObj));

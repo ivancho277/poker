@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import * as storage from './components/AsyncStorageController.js'
 import * as calculation from './components/statscalculation.js'
-import { useGameContext } from './stateContext/useGameContext'
+// import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
 // const calculation = require('./components/statscalculation.js')
 
@@ -67,7 +67,8 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        console.log(this.context)
+        debugger;
+        console.log("MOUNTED: ", this.context.modifiers.getGames())
     }
 
     componentDidUpdate() {

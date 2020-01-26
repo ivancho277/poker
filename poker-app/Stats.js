@@ -5,7 +5,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/AsyncStorageController.js';
-import Tester from './components/tester'
+//import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
 // const storage = require('./components/AsyncStorageController.js');
@@ -105,7 +105,7 @@ export default class StatsScreen extends Component {
                 </Card>
 
                 <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
-                <Tester></Tester>
+                
             </View>
         )
     }

@@ -35,7 +35,7 @@ const saveData = function (data) {
     }
     catch (error) {
         console.log("error saving data");
-        throw Error(error);
+        return null;
     }
 }
 /**
@@ -51,7 +51,7 @@ const saveCurrentGame = function (data) {
         return data
     } catch (error){
         console.log("error saving current game");
-        throw Error(error);
+        return null;
     }
 }
 
@@ -82,7 +82,7 @@ const removeCurrentGame = async function () {
             return null;
         })
     } catch {
-        (console.log('nothing to remove'))
+        (console.log('nothing to remove'));
     }
 }
 
@@ -101,7 +101,8 @@ const retrieveData = async function () {
             return games;
     }
     catch(error) {
-        console.log('error retrieving data')
+        console.log('error retrieving data');
+        return null;
     }
 }
     
@@ -116,8 +117,9 @@ const removeData = function () {
     console.log("REMOVED")
     }
     catch(error){
-        throw Error(Error)
+        return null;
     }
+
 }
 
 /**
@@ -130,8 +132,9 @@ const saveTags = function (data) {
         AsyncStorage.setItem('tags', JSON.stringify(data));
         console.log("SUCCESS STORING TAGS")
     } catch(error) {
-        throw Error(error)
+        
         console.log("ERROR SAVING TAGS")
+        return null;
     }
 }
 
@@ -187,8 +190,9 @@ const retrieveActions = async function () {
         let actions = await AsyncStorage.getItem('actions');
         return actions;
     } catch(err) {
-        throw Error(err);
-        console.log('could not retrieve actions')
+        //throw Error(err);
+        console.log('could not retrieve actions');
+        return null;
     }
 }
 
