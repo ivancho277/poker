@@ -25,7 +25,7 @@ import {
 import { GameStats, Action, Game } from '../components/gameObjects.js';
 
 export const MyContext = React.createContext('app');
-export const DispatchContext = React.createContext({});
+
 
 export class GlobalState extends Component {
 

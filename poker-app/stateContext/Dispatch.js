@@ -23,27 +23,62 @@ import {
     validActionRemove
 } from "../utils/validators.js";
 import { GameStats, Action, Game } from '../components/gameObjects.js';
-import { MyContext } from './GlobalState'
-export const DispatchContext = React.createContext({});
+import { MyContext, GlobalState } from './GlobalState';
+import { useImmer } from 'use-immer';
+export const MyDispatch = React.createContext({});
 
 
-export function DispatchProvider({ children }) {
-    const [globalState, dispatch] = useContext(MyContext);
+
+
+
+export function Dispatch({ children }) {
+    const { state, stats, modifiers } = useContext(MyContext);
+    const initialState = useState(loadedState = { state, stats, modifiers })
+    const [globalState, dispatch] = useImmer({...loadedState})
+    //MyDispatch = useImmer({ ...state, ...stats, ...modifiers });
 
 
     return (
-        <DispatchProvider value={[globalState, dispatch]}>
-            {Children}
-        </DispatchProvider>
+        <GlobalState>
+            <MyDispatch.Provider value={[globalState, dispatch]}>
+                {children}
+            </MyDispatch.Provider>
+        </GlobalState>
     )
-
-
-
 }
 
 
 
+export function useGlobalState() {
+    const state = useContext(MyContext);
+    if (state === undefined) {
+        throw new Error("Ut oh, where is my state?");
+    }
 
+
+
+
+
+
+
+
+    return state;
+}
+
+export function useDispatch() {
+    const dispatch = useContext(DispatchContext)
+
+
+    if (dispatch === undefined) {
+        throw new Error("Ut oh, where is my dispatch?");
+    }
+
+
+    return dispatch
+
+
+
+}
 
 
 

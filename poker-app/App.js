@@ -20,6 +20,8 @@ import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
 // import Menu from 'react-native--storage-dev-menu-item';
 
+import { Dispatch } from './stateContext/Dispatch'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -47,9 +49,9 @@ class App extends React.Component {
       <Root>
         <Container>
     
-            <GlobalState>
+            <Dispatch>
               <AppContainer />
-            </GlobalState>
+            </Dispatch>
         
         </Container>
       </Root>
