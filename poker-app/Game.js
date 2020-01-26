@@ -135,7 +135,7 @@ class GameScreen extends Component {
             <MyContext.Consumer>
                 {(context) => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 2, borderColor: 'blue', borderStyle: "solid" }}>
                     <LiveStatsBox gamesObj={context.state.gamesObj} currentGame={context.state.currentGame} currentActions={context.state.currentActions} tags={this.state.tags} logPercentages={context.stats.totalPercentages()} logTotals={context.stats.percentByPosition()}  position={context.state.position} height={100} width={270} />
-                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.state.tags} goHome={this.goHome} setPosition={context.modifiers.setPosition}  />
+                    <PBC actionInputOpen={this.state.actionInputOpen} context={this.context} getGames={context.state.gamesArray} currentActions={context.state.currentActions} gamesObj={context.state.gamesObj} updateGames={context.modifiers.updateGames} tags={this.context.state.currentTags} goHome={this.goHome} setPosition={context.modifiers.setPosition}  />
 
                     {/* TODO: action button should be changes as it is outdated */}
 

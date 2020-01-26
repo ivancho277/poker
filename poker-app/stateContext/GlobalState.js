@@ -25,6 +25,7 @@ import {
 import { GameStats, Action, Game } from '../components/gameObjects.js';
 
 export const MyContext = React.createContext('app');
+export const DispatchContext = React.createContext({});
 
 export class GlobalState extends Component {
 
@@ -107,12 +108,12 @@ export class GlobalState extends Component {
     return await retrieveCurrentGame().then(res => {
       if (res != null) {
         let currentGame = JSON.parse(res);
-        let actionsObj = this.createActions(currentGame);
-        console.log("BUILT ACTIONS :", actionsObj);
-
+        let actionsList = this.createActions(currentGame);
+        console.log("BUILT ACTIONS :", actionsList);
+        this.state.currentGame.actions = actionsList;
         this.setState({
           currentGame: currentGame,
-          currentActions: actionsObj,
+          currentActions: actionsList,
           currentTags: currentGame.tags
         })
         alert('it in')
@@ -276,7 +277,7 @@ export class GlobalState extends Component {
     
   }
 
-  addAction(action) {
+  addAction = (action) => {
     if (validActionAdd(action, this.state.actionsStrings)) {
       let updatedActions = this.state.actionStrings.concat(action);
       this.setState({

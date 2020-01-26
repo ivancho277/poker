@@ -181,6 +181,10 @@ class Game {
         return foundAction !== undefined ? foundAction : alert('this action does not exsist')
     }
 
+    getAllActions = () => {
+        return this.actions
+    }
+
     getActionsAsList = () => {
         return this.actions.map(action => action.actionName);
     }
