@@ -125,8 +125,8 @@ class Game {
      * @param {Date} date -date object when created
      * @memberof Game
      */
-    constructor(actions, tags = [], position = 0, version, date) {
-        this.actions = actions.every((action) => { return typeof action === "string" }) ? actions.map(action => {return new Action(action)}) : actions;
+    constructor(actions, tags, position, version, date) {
+        this.actions = actions;
         this.position = position;
         this.tags = tags;
         this.version = version;
@@ -142,28 +142,6 @@ class Game {
         const newAction = new Action(action)
         this.actions.push(newAction);
     }
-
-    getAllActions = () => {
-        return this.actions;
-    }
-
-    getSingleAction = (actionName) => {
-        const foundAction = this.actions.find(action => action.actionName === actionName);
-        return foundAction !== undefined ? foundAction : alert('this action does not exsist')
-    }
-
-    getActionsAsList = () => {
-        return this.actions.map(action => action.actionName);
-    }
-
-    reintanciateActions = () => {
-        const actionInstances = this.actions.map(action => {
-            return new Action(action.actionName, action.count, action.countPerPosition )
-        });
-        this.actions = actionInstances;
-    }
-
-
     getCurrentStats = () => {
         //debugger;
         this.actions.forEach(action => {
@@ -184,10 +162,6 @@ class Game {
     changePosition = (newPosition) => {
         this.position = newPosition;
     }
-    
-    getPosition = () => {
-        return this.position;
-    }
 
     getTags = () => {
         return this.tags;
@@ -196,7 +170,6 @@ class Game {
     setTags = (tags) => {
         this.tags = tags;
     }
-
 
     getVersion = () => {
         return this.version;
