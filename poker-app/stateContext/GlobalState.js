@@ -52,6 +52,7 @@ export class GlobalState extends Component {
       console.log("global state populated");
       
         const game = new Game(this.state.currentActions, this.state.currentTags, this.state.position, "1.0.5", new Date())
+        
         console.log("the game=====: ", game);
       
     });

@@ -125,8 +125,8 @@ class Game {
      * @param {Date} date -date object when created
      * @memberof Game
      */
-    constructor(actions, tags, position, version, date) {
-        this.actions = actions;
+    constructor(actions, tags = [], position = 0, version, date) {
+        this.actions = actions.every((action) => { return typeof action === "string" }) ? actions.map(action => { return new Action(action) }) : actions;
         this.position = position;
         this.tags = tags;
         this.version = version;
@@ -159,6 +159,7 @@ class Game {
 
 
 
+
     changePosition = (newPosition) => {
         this.position = newPosition;
     }
@@ -174,6 +175,23 @@ class Game {
     getVersion = () => {
         return this.version;
     }
+
+    getSingleAction = (actionName) => {
+        const foundAction = this.actions.find(action => action.actionName === actionName);
+        return foundAction !== undefined ? foundAction : alert('this action does not exsist')
+    }
+
+    getActionsAsList = () => {
+        return this.actions.map(action => action.actionName);
+    }
+
+    reintanciateActions = () => {
+        const actionInstances = this.actions.map(action => {
+            return new Action(action.actionName, action.count, action.countPerPosition)
+        });
+        this.actions = actionInstances;
+    }
+
 
 }
 

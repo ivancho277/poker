@@ -53,6 +53,15 @@ describe('test games', () => {
 
 // })
 
+describe('test creating ation instances', () => {
+    console.log("the list: ", actionList);
+    const newgame = new Game(actionList, [], 0, '1.0.5', new Date());
+    console.log(newgame);
+    it('check if antion instances are created', () => {
+        expect(newgame.actions.every(action => {return action instanceof Action})).toEqual(true)
+    })
+})
+
 describe('test adding tags', () => {
     
 })
@@ -61,3 +70,5 @@ describe('test adding tags', () => {
 describe('test adding actions', () => {
     
 })
+
+
