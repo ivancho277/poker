@@ -64,10 +64,10 @@ export class GlobalState extends Component {
   //TODO: thing about order here, what happens when?
   async getDataFromStorage() {
     console.log("==========")
-    await this.setAllGames().then(res => { console.log("SET ALL", res); });
-    await this.setActions().then(res => { console.log("SET ACTIONS", res) });
-    await this.setTags().then(res => { console.log("SET TAGS", res) });
-    await this.setCurrentGame().then(res => { console.log("SET CURRENT", res) });
+    await this.setAllGames().then(res => { console.log("SET ALL"); });
+    await this.setActions().then(res => { console.log("SET ACTIONS", ) });
+    await this.setTags().then(res => { console.log("SET TAGS",) });
+    await this.setCurrentGame().then(res => { console.log("SET CURRENT",) });
     console.log("==========")
   }
 
@@ -172,9 +172,9 @@ export class GlobalState extends Component {
             gamesArray: allGamesArray,
             totalGames: allGamesArray.length
           });
-          console.log("THIS IS ASYNC");
-          console.log(pastGames);
-          console.log(this.state.gamesObj);
+         // console.log("THIS IS ASYNC");
+          //console.log(pastGames);
+          //console.log(this.state.gamesObj);
         }
         return res
       })
