@@ -49,16 +49,15 @@ export const load = () => async ({ getState, setState, dispatch }) => {
     
         const data = await fetchData();
         console.log("load action: ", data);
-
-
-        setData({
+        // setData({
+        //     loading: false,
+        //     data: data,
+        //     error: false
+        // })
+        dispatch(setData({
             loading: false,
             data: data,
             error: false
-        })
-        dispatch(setData({
-            loading: false,
-            data: data
         }))
 
     
