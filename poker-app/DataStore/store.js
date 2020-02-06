@@ -1,94 +1,42 @@
-import { useReducerAsync } from 'use-reducer-async';
-import { createContainer } from 'react-tracked';
+import React, { Component, Children } from 'react';
 import { Game } from '../components/gameObjects';
 import { VERSION } from '../constants/version';
+import { GlobalState } from '../stateContext/GlobalState';
 import {
-    saveData,
-    saveCurrentGame,
-    retrieveCurrentGame,
-    removeCurrentGame,
-    retrieveData,
-    removeData,
-    saveTags,
-    retrieveTags,
-    removeTags,
-    saveActions,
-    retrieveActions,
-    resetActions,
-    firstTimeLauching,
-    isEmpty
-} from "../components/AsyncStorageController.js";
+    createStore,
+    createContainer,
+    createSubscriber,
+    createHook,
+} from 'react-sweet-state';
+import * as actions from './actions';
+//import * as selectors from './selectors';
+// import { } from 'react-tracked';
 
 const initialState = {
-    allGames: {},
-    GamesArray: [],
-    allTags: [],
-    allActions: [],
-    currentGame: null,
+    data: null ,
     loading: false,
     error: null
 };
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case "LOADING_STATE":
-            return {
-                ...state,
-                loading: true
-            };
-        case "FETCH_DATA":
-            return {
-                ...state,
-                allGames: action.allGames,
-                GamesArray: action.allGames.games,
-                allTags: action.allTags,
-                allActions: action.allActions,
-                currentGame: action.currentGame === null ? new Game(action.allActions, [], 0, VERSION, new Date()) : new Game(action.currentGame.actionStrings, action.currentGame.tags, 0, action.currentGame.VERSION, action.currentGame.Date),
-                loading: false
-            };
-        case "FAILED": {
-            return {
-                ...state,
-                loading: false,
-                error: action.error
-            }
-        }
-        default: {
-            throw new Error('unkown action type');
-        }
+const Store = createStore({
+    initialState,
+    actions,
+});
 
+
+export const GameSubscriber = createSubscriber(Store)
+export const GameContainer = createContainer(Store,
+    {
+        onInit: actions.load,
+        
     }
-}
+);
 
+// export const GameSelectedSubscriber = createSubscriber(Store, {
+//     selector: selectors.getSelected
+// })
 
+export const UseGameStore = createHook(Store);
 
-const asyncActionHandlers = {
-
-    LOAD_DATA: dispatch = async action => {
-        try {
-            dispatch({ type: 'LOADING_STATE' });
-            const data = {
-                allGames: await retrieveData().then(res => { return JSON.parse(res) }),
-                allTags: await retrieveTags().then(res => { return JSON.parse(res) }),
-                allActions: await retrieveActions().then(res => { return JSON.parse(res) }),
-                currentGame: await retrieveCurrentGame().then(res => { return JSON.parse(res) })
-            }
-            dispatch({ type: 'FETCH_DATA', allData: data });
-        } catch (error) {
-            dispatch({ type: 'FAILED', error });
-        }
-    }
-}
-
-
-const useValue = () => {
-    useReducerAsync(reducer, initialState, asyncActionHandlers)
-}
-
-export const {
-    Provider,
-    useTrackedState,
-    useUpdate: useDispatch,
-} = createContainer(useValue);
 
 

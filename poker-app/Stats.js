@@ -5,6 +5,8 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/AsyncStorageController.js';
+import Tester from './components/Tester';
+import { GameSubscriber } from './DataStore/store'
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -21,7 +23,7 @@ export default class StatsScreen extends Component {
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.logTags(allGames, tag);
         console.log(this.state.tagpicker);
-        
+
         console.log(foundgames)
         if (tag != '') {
             if (foundgames.length > 0) {
@@ -30,7 +32,7 @@ export default class StatsScreen extends Component {
                     this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
                         return <ListItem title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} key={i} />
                     })
-                    
+
 
                 )
             }
@@ -86,7 +88,7 @@ export default class StatsScreen extends Component {
                     })} */}
                 </RNPickerSelect>}
             </MyContext.Consumer>
-            
+
         )
     }
 
@@ -97,7 +99,7 @@ export default class StatsScreen extends Component {
                 <Card title='Search By Tag'
                     containerStyle={{ width: '80%' }}
                 >
-                    
+
                     {this.renderPicker()}
                     <MyContext.Consumer>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
@@ -105,7 +107,13 @@ export default class StatsScreen extends Component {
                 </Card>
 
                 <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
-                
+
+                <GameSubscriber>
+
+                    {({state}) => 
+                        <Tester></Tester>
+                    }
+                </GameSubscriber>
             </View>
         )
     }

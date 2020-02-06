@@ -49,9 +49,9 @@ class App extends React.Component {
       <Root>
         <Container>
     
-            <Dispatch>
+            <GlobalState>
               <AppContainer />
-            </Dispatch>
+            </GlobalState>
         
         </Container>
       </Root>
