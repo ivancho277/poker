@@ -6,18 +6,19 @@ import { UseGameStore, GameContainer, GameSubscriber } from '../DataStore/store'
 const Tester = () => {
 
     const [state, actions] = UseGameStore();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
 
-    // useEffect(() => {
-    //     actions.load();
+        actions.load();
 
-    // }, [state])
+    }, [])
 
 
 
     return (
         <View>
 
-            <GameContainer isGlobal>
+            <GameContainer>
                
                 {state.loading ?
 
@@ -27,7 +28,7 @@ const Tester = () => {
 
                     <View>
                         <Text>FROM STORE: {state.loading.toString()}</Text>
-                        <Text>STATE: {JSON.stringify(this.state)}</Text>
+                        <Text>STATE: {JSON.stringify(state.data)}</Text>
                         <Text>Test sweet state.</Text>
                         <Text />
                         <Button title='test ren' onClick={console.log(state) } />
