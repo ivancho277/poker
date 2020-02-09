@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Button } from 'react-native'
-import { UseGameStore, GameContainer, GameSubscriber } from '../DataStore/store'
+import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore'
 
 
 const Tester = () => {
@@ -18,7 +18,7 @@ const Tester = () => {
     return (
         <View>
 
-            <GameContainer>
+        
                
                 {state.loading ?
 
@@ -31,11 +31,11 @@ const Tester = () => {
                         <Text>STATE: {JSON.stringify(state.data)}</Text>
                         <Text>Test sweet state.</Text>
                         <Text />
-                        <Button title='test ren' onClick={console.log(state) } />
+                        <Button title='test ren' onClick={console.log(state.data) } />
                     </View>
         
                 }
-            </GameContainer>
+            
 
 
 
