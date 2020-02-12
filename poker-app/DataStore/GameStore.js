@@ -1,5 +1,4 @@
 import React, { Component, Children } from 'react';
-import { Game } from '../components/gameObjects';
 import { VERSION } from '../constants/version';
 import { GlobalState } from '../stateContext/GlobalState';
 import {
@@ -11,6 +10,7 @@ import {
 } from 'react-sweet-state';
 import { produce } from 'immer';
 import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
+import { Game, Action } from '../components/gameObjects'
 const calculation = require("../components/statscalculation.js");
 
 
@@ -32,6 +32,7 @@ const initialState = {
         allTags: null,
         actions: null
     },
+    liveGame: null,
     loading: false,
     error: null
 };
@@ -52,8 +53,69 @@ const setData = data => ({ setState }) => {
 //defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
 const setError = msg => ({ setState }) => {
-    setState({ error: msg });
+    setState(draft => {
+        draft.error = 'Error with loading';
+    });
 }
+
+// const createNewActionInstances = actions => {
+//     let gameActions = actions.map(action => { return new Action(action) })
+//     return new Game(gameActions);
+// };
+
+const reInstanceCurrentGame = currentGame => {
+    let actions = currentGame.actions.map(action => { return new Action(action.actionName, action.count, action.countPerPosition) })
+    return new Game(actions, currentGame.tags, currentGame.position, currentGame.version, currentGame.date);
+}
+
+const createGame = actions => {
+    let gameActions = actions.map(action => { return new Action(action) })
+    return new Game(gameActions);
+};
+
+
+//TODO: reconfigure save all games to work from actions in store
+const SaveAllGames = () => {
+    //*this Game instance might actually come from contect state.
+    const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
+    const totals = GameToSave.actions.map(action => {
+        return { [action.actionName]: action.getTotalCount() }
+    });
+    const gameStats = GameToSave.getCurrentStats();
+    const tagsForCurrentGame = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags;
+    const gamesObj = {
+        gameRaw: GameToSave,
+        totals: totals,
+        game: gameStats,
+        tags: tagsForCurrentGame,
+        version: GameToSave.getVersion(),
+        time: GameToSave.date.toDateString(),
+        date: GameToSave.date.getTime()
+    }
+    const updatedGamesList = this.props.getGames.concat(gamesObj);
+    this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
+
+}
+//TODO:  reconfigure save current game to work from actions in store 
+const CurrentGameSave = game => {
+    const date = new Date();
+    const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
+    const gamesObj = {
+        rawGameData: currentgame,
+        date: date.toDateString(),
+        time: date.getTime(),
+        tags: currentgame.getTags(),
+        currentGame: currentgame.getCurrentStats(),
+        actions: currentgame.getAllActions(),
+        actionStrings: currentgame.getActionsAsList()
+    }
+
+    this.props.context.modifiers.updateCurrentGame(gamesObj)
+
+}
+
+
+
 
 
 
@@ -99,22 +161,30 @@ const actions = {
         //     data: data,
         //     error: false
         // })
-        dispatch(setData({
-            loading: false,
-            data: data,
-            error: false
-        }))
+        if (data.currentGame) {
+
+        } else {
+            const newGame = createGame(data.actions)
+            dispatch(setData({
+                loading: false,
+                data: data,
+                allGamesArray: data.allGames.games,
+                gamesObj: data.allGames,
+                liveGame: newGame,
+                error: false
+            }))
+        }
     },
 
-    createGameActions: createGameActions = () => ({ getState, setState, dispatch }) => {
+    createGameActions: createGameActions = actionsArr => ({ getState, setState, dispatch }) => {
 
     },
 
-    createGameInstance: createGameInstance = () => ({ getState, setState, dispatch }) => {
+    createNewGameInstance: createGameInstance = () => ({ getState, setState, dispatch }) => {
 
     },
 
-    createCurrentGame: createCurrentGame = () => ({ getState, setState, dispatch }) => {
+    createCurrentGameInstance: createCurrentGame = () => ({ getState, setState, dispatch }) => {
 
     },
 
@@ -131,7 +201,7 @@ const actions = {
 
     },
 
-    
+
 
 }
 

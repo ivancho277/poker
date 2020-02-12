@@ -1,3 +1,4 @@
+import { VERSION } from "../constants/version";
 
 
 
@@ -125,7 +126,7 @@ class Game {
      * @param {Date} date -date object when created
      * @memberof Game
      */
-    constructor(actions, tags = [], position = 0, version, date) {
+    constructor(actions, tags = [], position = 0, version = VERSION ,date = new Date()) {
         this.actions = actions.every((action) => { return typeof action === "string" }) ? actions.map(action => { return new Action(action) }) : actions;
         this.position = position;
         this.tags = tags;

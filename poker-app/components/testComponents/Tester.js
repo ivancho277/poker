@@ -28,7 +28,7 @@ const Tester = () => {
 
                     <View>
                         <Text>FROM STORE: {state.loading.toString()}</Text>
-                        <Text>STATE: {JSON.stringify(state.data)}</Text>
+                        <Text>STATE: {JSON.stringify(state, undefined, 4)}</Text>
                         <Text>Test sweet state.</Text>
                         <Text />
                         <Button title='test ren' onClick={console.log(state.data) } />
