@@ -48,12 +48,19 @@ const setData = data => ({ setState }) => {
         draft.loading = false;
         draft.data = data;
         draft.error = false;
+        
     })
 };
-//defaults.mutator = (currentState, producer) => produce(currentState, producer);
+
+const setLiveGame = gameInstance => {
+    setState(draft => {
+        draft.liveGame = gameInstance
+    })
+}
 
 const setError = msg => ({ setState }) => {
     setState(draft => {
+        dispatch(setData(loadedData));
         draft.error = 'Error with loading';
     });
 }
@@ -72,6 +79,10 @@ const createGame = actions => {
     let gameActions = actions.map(action => { return new Action(action) })
     return new Game(gameActions);
 };
+
+const incrementAction = actionName => {
+
+}
 
 
 //TODO: reconfigure save all games to work from actions in store
@@ -154,24 +165,28 @@ const actions = {
         if (getState().loading === true) return;
         dispatch(setLoading());
 
-        const data = await fetchData();
-        console.log("load action: ", data);
+        const loadedData = await fetchData();
+        console.log("load action: ", loadedData);
         // setData({
         //     loading: false,
         //     data: data,
         //     error: false
         // })
-        if (data.currentGame) {
-
+        dispatch(setData(loadedData));
+        if (loadedData.currentGame) {
+            const game = reInstanceCurrentGame(loadedData.currentGame)
+            dispatch(setLiveGame(game))
+            dispatch(setState(draft => {
+                draft.allGamesArray = loadedData.allGames.games;
+                draft.gamesObj = loadedData.allGames;
+                
+            }))
         } else {
-            const newGame = createGame(data.actions)
-            dispatch(setData({
-                loading: false,
-                data: data,
-                allGamesArray: data.allGames.games,
-                gamesObj: data.allGames,
-                liveGame: newGame,
-                error: false
+            const newGame = createGame(loadedData.actions)
+            dispatch(setLiveGame(newGame));
+            dispatch(setState(draft => {
+                draft.allGamesArray = loadedData.allGames.games;
+                draft.gamesObj = loadedData.allGames;
             }))
         }
     },
