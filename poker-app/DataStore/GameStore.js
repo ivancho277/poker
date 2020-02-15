@@ -32,6 +32,8 @@ const initialState = {
         allTags: null,
         actions: null
     },
+    allGamesArray: null,
+    gamesObj: null,
     liveGame: null,
     loading: false,
     error: null
@@ -48,19 +50,22 @@ const setData = data => ({ setState }) => {
         draft.loading = false;
         draft.data = data;
         draft.error = false;
+        draft.allGamesArray = data.allGames.games;
+        draft.gamesObj = data.allGames;
 
     })
 };
 
 const setLiveGame = gameInstance => ({ setState }) => {
+    const newGame = createGame(gameInstance.actions)
     setState(draft => {
-        draft.liveGame = gameInstance
+        draft.liveGame = gameInstance;
     })
-}
+};
 
 const setError = msg => ({ setState }) => {
     setState(draft => {
-        dispatch(setData(loadedData));
+        //dispatch(setData(loadedData));
         draft.error = 'Error with loading';
     });
 }
@@ -139,11 +144,16 @@ const CurrentGameSave = () => ({ setState, getState }) => {
 
 
 const fetchData = async () => {
-    const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) })
-    const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) })
-    const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) })
-    const CurrentGameResponse = await storage.retrieveCurrentGame().then(res => { return JSON.parse(res) })
-    return { allGames: dataResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
+    try {
+        const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) })
+        const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) })
+        const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) })
+        const CurrentGameResponse = await storage.retrieveCurrentGame().then(res => { return JSON.parse(res) })
+        return { allGames: dataResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
+    } catch {
+        console.log('error fetching');
+        throw console.error("error loading data into store.");
+    }
 }
 
 logTotalsByPosition = () => {
@@ -172,31 +182,26 @@ const actions = {
     load: load = () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
+        await fetchData().then((loadedData) => {
+            console.log("load action: ", loadedData);
+            // setData({
+            //     loading: false,
+            //     data: data,
+            //     error: false
+            // })
+            dispatch(setData(loadedData));
+            if (loadedData.currentGame) {
+                const game = reInstanceCurrentGame(loadedData.currentGame)
+                dispatch(setLiveGame(game))
+            } else {
+                const newGame = createGame(loadedData.actions)
+                dispatch(setLiveGame(newGame));
+            }
+        });
+    },
 
-        const loadedData = await fetchData();
-        console.log("load action: ", loadedData);
-        // setData({
-        //     loading: false,
-        //     data: data,
-        //     error: false
-        // })
-        dispatch(setData(loadedData));
-        if (loadedData.currentGame) {
-            const game = reInstanceCurrentGame(loadedData.currentGame)
-            dispatch(setLiveGame(game))
-            dispatch(setState(draft => {
-                draft.allGamesArray = loadedData.allGames.games;
-                draft.gamesObj = loadedData.allGames;
+    onActionClick: onActionClick = () => ({ getState, setState, dispatch }) => {
 
-            }))
-        } else {
-            const newGame = createGame(loadedData.actions)
-            dispatch(setLiveGame(newGame));
-            dispatch(setState(draft => {
-                draft.allGamesArray = loadedData.allGames.games;
-                draft.gamesObj = loadedData.allGames;
-            }))
-        }
     },
 
     createGameActions: createGameActions = actionsArr => ({ getState, setState, dispatch }) => {

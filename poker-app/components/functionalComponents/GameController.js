@@ -20,18 +20,99 @@ import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/Gam
 //         Add Action
 //     </AntDesign.Button>
 
-export default function GameController(props) {
+
+
+getPosition = (position) => {
+    this.setState({
+        position: position
+    })
+    this.props.setPosition(position);
+}
+
+shouldPositionIncrement = (cb) => {
+    if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
+        cb(this.state.position)
+        //this.saveAllGames();
+        this.CurrentGameSave();
+        this.setState({
+            previousTime: this.state.currentTime
+        })
+    }
+}
+
+
+
+
+
+
+export const GameController = (props) => {
     const [state, actions] = UseGameStore();
-    const 
+    const [loading, setLoading] = useState(state.loading);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [previousTime, setPreviousTime] = useState(new Date());
     const [actionInputOpen, setActionInput] = useState(false);
     const [actionToAdd, editActionToAdd] = useState('');
+    const [doneLoading, setDoneLoading] = useState(false);
+    const [position, setPosition] = useState();
 
 
+    useEffect(() => {
+        actions.load().then(() => {
+            setDoneLoading(true);
+        })
+    }, [])
 
-    return(
+    return (
+        doneLoading ?
+            <View style={{ justifyContent: 'center', alignContent: 'center', display: 'flex', margin: 10 }}>
+                {/* <Text> PracticeButtonController </Text> */}
+                <Text>{'\n'}</Text>
+                {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
+                <View>
+                    {
+           /*his.props.currentActions != null ?  */  state.liveGame.actions.length > 0 ?
+                            <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                {state.liveGame.actions.map((action, index) => {
+                                    return (
+                                        <View key={index}>
+                                            <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action); }} />
+                                        </View>
+                                    )
+                                })}
+                                <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            </View>
 
+                            :
+                            <Text>Loading....</Text>
+                    }
+                </View>
+                <Text>{'\n'}</Text>
+                {actionInputOpen ?
+                    <View style={{ position: "relative", zIndex: -1 }}>
+                        <TextInput
+                            style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid', }}
+                            placeholder='Add a new game Action'
+                            onChangeText={(actionToAdd) => editActionToAdd({ actionToAdd })}
+                            value={actionToAdd}
+                        />
+                        {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { actionToAdd != "" ? actions.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} /> */}
+                    </View>
+                    :
+                    <Text></Text>
+
+                }
+                <Text>{'\n'}</Text>
+                <View>
+                    <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                </View>
+                <View style={{ width: 150, marginLeft: 80, borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black', justifyContent: 'center', position: 'relative' }}>
+                    <MyContext.Consumer >
+                        {(context) => <Button title='Save, End game.' onPress={() => { context.modifiers.deleteCurrentGame(); this.SaveAllGames(); this.props.goHome() }} />}
+                    </MyContext.Consumer>
+                </View>
+            </View>
+            :
+            <Text> Loading ...</Text>
     );
 }
 
@@ -42,13 +123,13 @@ export default function GameController(props) {
 // const {currentTags} = global.state
 export default class PracticeButtonController extends Component {
     constructor(props) {
-        
+
         super(props);
         this.state = {
             //call: 0,
             //fold: 0,
             //raise: 0,
-            
+
 
             actions: [],
             actionStrings: [],
@@ -173,7 +254,7 @@ export default class PracticeButtonController extends Component {
         //this.setActions();
         this.setState({ doneLoading: true })
         console.log("PBCCCC", this.props.context);
-        
+
 
     }
 
