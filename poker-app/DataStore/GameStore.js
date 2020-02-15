@@ -48,11 +48,11 @@ const setData = data => ({ setState }) => {
         draft.loading = false;
         draft.data = data;
         draft.error = false;
-        
+
     })
 };
 
-const setLiveGame = gameInstance => {
+const setLiveGame = gameInstance => ({ setState }) => {
     setState(draft => {
         draft.liveGame = gameInstance
     })
@@ -86,31 +86,38 @@ const incrementAction = actionName => {
 
 
 //TODO: reconfigure save all games to work from actions in store
-const SaveAllGames = () => {
+const SaveAllGames = () => ({ setState, getState }) => {
     //*this Game instance might actually come from contect state.
-    const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
-    const totals = GameToSave.actions.map(action => {
+    const liveGame = getState().liveGame
+    //const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
+    const totals = liveGame.actions.map(action => {
         return { [action.actionName]: action.getTotalCount() }
     });
-    const gameStats = GameToSave.getCurrentStats();
-    const tagsForCurrentGame = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags;
+    const gameStats = liveGame.getCurrentStats();
+    const tagsForCurrentGame = liveGame.tags.length === 0 ? liveGame.tags.concat('default') : liveGame.tags;
     const gamesObj = {
-        gameRaw: GameToSave,
+        gameRaw: liveGame,
         totals: totals,
         game: gameStats,
         tags: tagsForCurrentGame,
-        version: GameToSave.getVersion(),
-        time: GameToSave.date.toDateString(),
-        date: GameToSave.date.getTime()
+        version: liveGame.getVersion(),
+        time: liveGame.date.toDateString(),
+        date: liveGame.date.getTime()
     }
-    const updatedGamesList = this.props.getGames.concat(gamesObj);
-    this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
+    const updatedGamesList = getState().allGamesArray.concat(gamesObj);
+    setState(draft => {
+        draft.allGamesArray = updatedGamesList;
+        draft.gamesObj = { games: updatedGamesList, currentVersion: VERSION }
+    });
+    storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
+    // this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
 
 }
 //TODO:  reconfigure save current game to work from actions in store 
-const CurrentGameSave = game => {
+const CurrentGameSave = () => ({ setState, getState }) => {
     const date = new Date();
-    const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
+    //const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
+    const currentgame = getState().liveGame;
     const gamesObj = {
         rawGameData: currentgame,
         date: date.toDateString(),
@@ -121,7 +128,8 @@ const CurrentGameSave = game => {
         actionStrings: currentgame.getActionsAsList()
     }
 
-    this.props.context.modifiers.updateCurrentGame(gamesObj)
+    storage.saveCurrentGame(gamesObj);
+    //this.props.context.modifiers.updateCurrentGame(gamesObj)
 
 }
 
@@ -179,7 +187,7 @@ const actions = {
             dispatch(setState(draft => {
                 draft.allGamesArray = loadedData.allGames.games;
                 draft.gamesObj = loadedData.allGames;
-                
+
             }))
         } else {
             const newGame = createGame(loadedData.actions)
@@ -209,11 +217,11 @@ const actions = {
     },
 
     saveAllGames: saveAllGames = () => ({ getState, setState, dispatch }) => {
-
+        dispatch(SaveAllGames());
     },
 
     saveCurrentGame: saveCurrentGame = () => ({ getState, setState, dispatch }) => {
-
+        dispatch(CurrentGameSave());
     },
 
 
