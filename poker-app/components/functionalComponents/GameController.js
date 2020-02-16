@@ -83,6 +83,13 @@ export const GameController = (props) => {
         <View>
             <Text>DONE</Text>
             {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
+            <View>{state.liveGame.actions.map((action, index) => {
+                return <Text>{action.actionName}: {action.count}  </Text>
+            })}</View>
+            <View>
+
+            </View>
+
             {state.liveGame.actions.map((action, index) => {
                 return (
                     <View key={index}>
