@@ -8,6 +8,7 @@ import * as storage from './components/AsyncStorageController.js';
 import { Tester } from './components/testComponents/Tester';
 import { GameSubscriber } from './DataStore/store'
 import { ScrollView } from 'react-native-gesture-handler';
+import { GameController } from './components/functionalComponents/GameController'
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
 // const calculation = require('./components/statscalculation.js')
@@ -105,12 +106,22 @@ export default class TestScreen extends Component {
         return (
             // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
             <View style={styles.container}>
-                <Card title='Test Screem'>
-                    <Text> FOR TESTS! </Text>
-                    <ScrollView>
-                        <Tester></Tester>
-                    </ScrollView>
-                </Card>
+                <ScrollView>
+                    <Card title='Test Screem'>
+                        <Text> FOR TESTS! </Text>
+                        <ScrollView>
+                            <GameController></GameController>
+                        </ScrollView>
+                    </Card>
+
+                    <Card title='Controll me plz'>
+                        <Text> Test controller </Text>
+                        <ScrollView>
+                            <Tester></Tester>
+                        </ScrollView>
+                    </Card>
+                </ScrollView>
+
 
                 {/* <Tester></Tester> */}
 
