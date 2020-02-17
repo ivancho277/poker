@@ -57,7 +57,7 @@ export const GameController = (props) => {
 
     useEffect(() => {
         actions.load().then(() => {
-            setDoneLoading(true);
+            setLoading(state.loading);
         })
     }, [])
 
@@ -79,11 +79,11 @@ export const GameController = (props) => {
     }
 
 
-    return doneLoading ?
+    return loading ?
         <View>
             <Text>DONE</Text>
             {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
-            <Text>Position: {state.liveGame.position}</Text>
+            <Text>Position: </Text>
             <View>{state.liveGame.actions.map((action, index) => {
                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
             })}</View>

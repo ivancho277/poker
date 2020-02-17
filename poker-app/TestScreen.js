@@ -78,28 +78,28 @@ export default class TestScreen extends Component {
 
 
     renderPicker() {
-        return (
-            <MyContext.Consumer>
-                {(context) => <RNPickerSelect
-                    selectedValue={this.state.tagpicker}
-                    style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
+        // return (
+        //     <MyContext.Consumer>
+        //         {(context) => <RNPickerSelect
+        //             selectedValue={this.state.tagpicker}
+        //             style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
 
-                    // prompt={"select tag"}
-                    onValueChange={(itemValue, itemIndex) => {
-                        this.setState({ tagpicker: itemValue });
+        //             // prompt={"select tag"}
+        //             onValueChange={(itemValue, itemIndex) => {
+        //                 this.setState({ tagpicker: itemValue });
 
-                    }}
-                    items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
+        //             }}
+        //             items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
 
 
-                >
-                    {/* {context.state.allTags.map((tag, i) => {
-                        return <RNPickerSelect.Item label={tag} value={tag} key={i} />
-                    })} */}
-                </RNPickerSelect>}
-            </MyContext.Consumer>
+        //         >
+        //             {/* {context.state.allTags.map((tag, i) => {
+        //                 return <RNPickerSelect.Item label={tag} value={tag} key={i} />
+        //             })} */}
+        //         </RNPickerSelect>}
+        //     </MyContext.Consumer>
 
-        )
+        // )
     }
 
     render() {

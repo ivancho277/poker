@@ -22,6 +22,17 @@ const calculation = require("../components/statscalculation.js");
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
+//This will be middleware
+const logger = storeState => next => action => {
+    console.log('Updating..: ', storeState.getState());
+    next(action);
+    console.log("action: ", action)
+    return storeState;
+}
+
+defaults.middlewares.add(logger);
+
+
 
 
 
@@ -199,9 +210,18 @@ const actions = {
             }
         });
     },
+    
 
-    onActionClick: onActionClick = () => ({ getState, setState, dispatch }) => {
+    // TODO: I need to pass the action i am changing the postition for 
+     
+    onActionClick: onActionClick = clickedAction => ({ getState, setState, dispatch }) => {
+        //FIXME: I need to increment the action then reassign to state using draft.
 
+        setState(draft => {
+            draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
+            console.log("test", clickedAction)
+        })
+        
     },
 
     createGameActions: createGameActions = actionsArr => ({ getState, setState, dispatch }) => {
