@@ -13,7 +13,7 @@ export const TestComponent = () => {
                 <View>
                     <Text>Subscriber test</Text>
                     <Text>1. {state.loading.toString()}</Text>
-                    <Text>2. {JSON.stringify(state.datadata, undefined, 4)}</Text>
+                    <Text>2. {JSON.stringify(state.data, undefined, 4)}</Text>
                     {!state.liveGame === Object ? <Text>not loaded</Text> : <Text>3. {JSON.stringify(state.liveGame, undefined, 4)}</Text>}
                 </View>
             )}

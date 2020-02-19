@@ -46,7 +46,7 @@ shouldPositionIncrement = (cb) => {
 
 export const GameController = (props) => {
     const [state, actions] = UseGameStore();
-    const [loading, setLoading] = useState(state.loading);
+    const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [previousTime, setPreviousTime] = useState(new Date());
     const [actionInputOpen, setActionInput] = useState(false);
@@ -102,16 +102,18 @@ export const GameController = (props) => {
                                 </View>
                             )
                         })}
-                        <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                        <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                     </View>
 
                     :
-                    <Text> not done </Text>
+                    <View>
+                        <Text> not done </Text>
+                    </View>
+                
             )}
         </GameSubscriber>
     )
 }
-
 
 
 

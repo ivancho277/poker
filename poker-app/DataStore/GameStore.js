@@ -28,7 +28,7 @@ const logger = storeState => next => action => {
     console.log('Updating..: ', storeState.getState());
     next(action);
     console.log("action: ", action.toString() )
-    return storeState;
+    //return storeState;
 }
 
 
@@ -201,7 +201,7 @@ const actions = {
     load: load = () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
-        return await fetchData().then((loadedData) => {
+        await fetchData().then((loadedData) => {
             console.log("load action: ", loadedData);
             // setData({
             //     loading: false,
@@ -212,11 +212,11 @@ const actions = {
             if (loadedData.currentGame) {
                 const game = reInstanceCurrentGame(loadedData.currentGame)
                 dispatch(setLiveGame(game));
-                return;
+                //return;
             } else {
                 const newGame = createGame(loadedData.actions)
                 dispatch(setLiveGame(newGame));
-                return;
+                //return;
             }
         });
     },
