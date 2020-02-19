@@ -274,7 +274,7 @@ export const Store = createStore({
 export const GameSubscriber = createSubscriber(Store);
 export const GameContainer = createContainer(Store,
     {
-        onInit: actions.load,
+        onInit: actions.load(),
 
     }
 );

@@ -21,121 +21,42 @@ import { GameController } from './components/functionalComponents/GameController
 
 
 
-export default class TestScreen extends Component {
-
-    state = {
-        tagpicker: ''
-    }
-
-    componentDidMount() {
-        console.log(this.context.state.allTags);
-    }
-    renderFoundGames = (allGames, tag) => {
-        let foundgames = this.logTags(allGames, tag);
-        console.log(this.state.tagpicker);
-
-        console.log(foundgames)
-        if (tag != '') {
-            if (foundgames.length > 0) {
-                return (
-
-                    this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
-                        return <ListItem title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} key={i} />
-                    })
+export default function TestScreen() {
 
 
-                )
-            }
-        }
-
-        else return <Text>No found Games</Text>
-    }
-
-    logTags = (allGames, tag) => {
-        console.log('MY TAG', tag)
-        if (allGames != undefined) {
-            if (tag === "") {
-                return calculation.findTag(allGames, 'default');
-            } else {
-                return calculation.findTag(allGames, tag);
-            }
-        }
-        else {
-            return null;
-        }
-    }
-
-    objToArray = (obj) => {
-        // let values = Object.values(obj);
-        let objArray = [];
-        for (key in obj) {
-            objArray.push({ [key]: obj[key] })
-        }
-        console.log('OBJECT ARRAY', objArray)
-        return objArray
-    }
-
-
-
-    renderPicker() {
-        // return (
-        //     <MyContext.Consumer>
-        //         {(context) => <RNPickerSelect
-        //             selectedValue={this.state.tagpicker}
-        //             style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
-
-        //             // prompt={"select tag"}
-        //             onValueChange={(itemValue, itemIndex) => {
-        //                 this.setState({ tagpicker: itemValue });
-
-        //             }}
-        //             items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
-
-
-        //         >
-        //             {/* {context.state.allTags.map((tag, i) => {
-        //                 return <RNPickerSelect.Item label={tag} value={tag} key={i} />
-        //             })} */}
-        //         </RNPickerSelect>}
-        //     </MyContext.Consumer>
-
-        // )
-    }
-
-    render() {
         return (
             // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-            <View style={styles.container}>
-                <ScrollView>
-                    <Card title='Test Screem'>
-                        <Text> FOR TESTS! </Text>
+            <GameSubscriber>
+                {(state, actions) => (
+                    <View style={styles.container}>
                         <ScrollView>
-                            <GameController></GameController>
+                            <Card title='Test Screem'>
+                                <Text> FOR TESTS! </Text>
+                                <ScrollView>
+                                    <GameController></GameController>
+                                </ScrollView>
+                            </Card>
+
+                            <Card title='Controll me plz'>
+                                <Text> Subscriber test </Text>
+                                <ScrollView>
+                                    <TestComponent></TestComponent>
+                                </ScrollView>
+                            </Card>
+
+                            <Card title='Controll me plz'>
+                                <Text> Test controller </Text>
+                                <ScrollView>
+                                    <Tester></Tester>
+                                </ScrollView>
+                            </Card>
                         </ScrollView>
-                    </Card>
-
-                    <Card title='Controll me plz'>
-                        <Text> Subscriber test </Text>
-                        <ScrollView>
-                            <TestComponent></TestComponent>
-                        </ScrollView>
-                    </Card>
-
-                    <Card title='Controll me plz'>
-                        <Text> Test controller </Text>
-                        <ScrollView>
-                            <Tester></Tester>
-                        </ScrollView>
-                    </Card>
-                </ScrollView>
-
-
-                {/* <Tester></Tester> */}
-
-
-            </View>
+                        {/* <Tester></Tester> */}
+                    </View>
+                )}
+            </GameSubscriber>
         )
-    }
+    
 }
 
 
