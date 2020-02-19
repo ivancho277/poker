@@ -57,7 +57,7 @@ export const GameController = (props) => {
 
     useEffect(() => {
         actions.load().then(() => {
-            setLoading(state.loading);
+            setLoading(false);
         })
     }, [])
 
@@ -78,84 +78,38 @@ export const GameController = (props) => {
         // this.props.setPosition(position);
     }
 
+    //TODO: figure this out
 
-    return loading ?
-        <View>
-            <Text>DONE</Text>
-            {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
-            <Text>Position: </Text>
-            <View>{state.liveGame.actions.map((action, index) => {
-                return <Text key={index}>{action.actionName}: {action.count}  </Text>
-            })}</View>
-            <View>
+    return (
+        <GameSubscriber>
+            {(state) => (
+                !loading ?
+                    <View>
+                        <Text>DONE</Text>
+                        {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
+                        <Text>Position: </Text>
+                        <View>{state.liveGame.actions.map((action, index) => {
+                            return <Text key={index}>{action.actionName}: {action.count}  </Text>
+                        })}</View>
+                        <View>
 
-            </View>
+                        </View>
 
-            {state.liveGame.actions.map((action, index) => {
-                return (
-                    <View key={index}>
-                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action); }} />
+                        {state.liveGame.actions.map((action, index) => {
+                            return (
+                                <View key={index}>
+                                    <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action); }} />
+                                </View>
+                            )
+                        })}
+                        <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                     </View>
-                )
-            })}
-            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
-        </View>
 
-        :
-        <Text> not done </Text>
-
-
-    //     doneLoading ?
-    //         <View style={{ justifyContent: 'center', alignContent: 'center', display: 'flex', margin: 10 }}>
-    //             {/* <Text> PracticeButtonController </Text> */}
-    //             <Text>{'\n'}</Text>
-    //             {/* <View  style={{ flexDirection: "row", justifyContent: 'space-evenly', }}> */}
-    //             <View>
-    //                 {
-    //        /*his.props.currentActions != null ?  */  state.liveGame.actions.length > 0 ?
-    //                         <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
-    //                             {state.liveGame.actions.map((action, index) => {
-    //                                 return (
-    //                                     <View key={index}>
-    //                                         <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action); }} />
-    //                                     </View>
-    //                                 )
-    //                             })}
-    //                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { this.setState({ actionInputOpen: true }) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
-    //                         </View>
-
-    //                         :
-    //                         <Text>Loading....</Text>
-    //                 }
-    //             </View>
-    //             <Text>{'\n'}</Text>
-    //             {actionInputOpen ?
-    //                 <View style={{ position: "relative", zIndex: -1 }}>
-    //                     <TextInput
-    //                         style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid', }}
-    //                         placeholder='Add a new game Action'
-    //                         onChangeText={(actionToAdd) => editActionToAdd({ actionToAdd })}
-    //                         value={actionToAdd}
-    //                     />
-    //                     {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="add action" onPress={() => { actionToAdd != "" ? actions.saveActions(this.state.actionToAdd.toLowerCase().trim()) & this.setState({ actionInputOpen: false, actions: this.state.actions.concat(new Action(this.state.actionToAdd)), actionToAdd: '' }) : this.setState({ actionInputOpen: false }) }} /> */}
-    //                 </View>
-    //                 :
-    //                 <Text></Text>
-
-    //             }
-    //             <Text>{'\n'}</Text>
-    //             <View>
-    //                 <Radio getPosition={getPosition} shouldPositionIncrement={shouldPositionIncrement} />
-    //             </View>
-    //             <View style={{ width: 150, marginLeft: 80, borderWidth: 2, borderStyle: 'solid', borderBottomColor: 'black', justifyContent: 'center', position: 'relative' }}>
-    //                 <MyContext.Consumer >
-    //                     {(context) => <Button title='Save, End game.' onPress={() => { /** context.modifiers.deleteCurrentGame(); this.SaveAllGames(); this.props.goHome() */ }} />}
-    //                 </MyContext.Consumer>
-    //             </View>
-    //         </View>
-    //         :
-    //         <Text> Loading ...</Text>
-    // 
+                    :
+                    <Text> not done </Text>
+            )}
+        </GameSubscriber>
+    )
 }
 
 

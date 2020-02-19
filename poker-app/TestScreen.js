@@ -5,7 +5,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/AsyncStorageController.js';
-import { Tester } from './components/testComponents/Tester';
+import { Tester, TestComponent } from './components/testComponents/Tester';
 import { GameSubscriber } from './DataStore/store'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController'
@@ -111,6 +111,13 @@ export default class TestScreen extends Component {
                         <Text> FOR TESTS! </Text>
                         <ScrollView>
                             <GameController></GameController>
+                        </ScrollView>
+                    </Card>
+
+                    <Card title='Controll me plz'>
+                        <Text> Subscriber test </Text>
+                        <ScrollView>
+                            <TestComponent></TestComponent>
                         </ScrollView>
                     </Card>
 

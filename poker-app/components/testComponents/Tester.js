@@ -5,22 +5,24 @@ import { StoreLoader } from '../HOCs/StoreLoader'
 
 
 
-export const TestComponent = (Component) => {
-    const [{ loading }, actions] = UseGameStore();
-    useEffect(() => {
-        actions.load();
-    }, []);
+export const TestComponent = () => {
 
     return (
-        <View>
-            <Test>HOCS RENDER: </Test>
-            <Component isLoading={loading} />
-        </View>
+        <GameSubscriber>
+            {(state) => (
+                <View>
+                    <Text>Subscriber test</Text>
+                    <Text>1. {state.loading.toString()}</Text>
+                    <Text>2. {JSON.stringify(state.datadata, undefined, 4)}</Text>
+                    {!state.liveGame === Object ? <Text>not loaded</Text> : <Text>3. {JSON.stringify(state.liveGame, undefined, 4)}</Text>}
+                </View>
+            )}
+        </GameSubscriber>
     )
 }
 
 const innerComponent = () => {
-    
+
 }
 
 export const Tester = () => {

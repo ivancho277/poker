@@ -10,7 +10,8 @@ import {
 } from 'react-sweet-state';
 import { produce } from 'immer';
 import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
-import { Game, Action } from '../components/gameObjects'
+import { Game, Action } from '../components/gameObjects';
+import * as actionTypes from './ActionTypes';
 const calculation = require("../components/statscalculation.js");
 
 
@@ -26,9 +27,15 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 const logger = storeState => next => action => {
     console.log('Updating..: ', storeState.getState());
     next(action);
-    console.log("action: ", action)
+    console.log("action: ", action.toString() )
     return storeState;
 }
+
+
+const makeLiveGame = storeState => next => action => {
+
+}
+
 
 defaults.middlewares.add(logger);
 
@@ -190,10 +197,11 @@ logPercentByPosition = () => {
 
 
 const actions = {
+
     load: load = () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
-        await fetchData().then((loadedData) => {
+        return await fetchData().then((loadedData) => {
             console.log("load action: ", loadedData);
             // setData({
             //     loading: false,
@@ -203,10 +211,12 @@ const actions = {
             dispatch(setData(loadedData));
             if (loadedData.currentGame) {
                 const game = reInstanceCurrentGame(loadedData.currentGame)
-                dispatch(setLiveGame(game))
+                dispatch(setLiveGame(game));
+                return;
             } else {
                 const newGame = createGame(loadedData.actions)
                 dispatch(setLiveGame(newGame));
+                return;
             }
         });
     },
@@ -261,7 +271,7 @@ export const Store = createStore({
 });
 
 
-export const GameSubscriber = createSubscriber(Store)
+export const GameSubscriber = createSubscriber(Store);
 export const GameContainer = createContainer(Store,
     {
         onInit: actions.load,
