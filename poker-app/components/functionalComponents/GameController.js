@@ -45,21 +45,21 @@ shouldPositionIncrement = (cb) => {
 
 
 export const GameController = (props) => {
-    const [state, actions] = UseGameStore();
-    const [loading, setLoading] = useState(true);
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const [previousTime, setPreviousTime] = useState(new Date());
-    const [actionInputOpen, setActionInput] = useState(false);
-    const [actionToAdd, editActionToAdd] = useState('');
-    const [doneLoading, setDoneLoading] = useState(false);
-    const [position, setPosition] = useState();
+    // const [state, actions] = UseGameStore();
+    // const [loading, setLoading] = useState(true);
+    // const [currentTime, setCurrentTime] = useState(new Date());
+    // const [previousTime, setPreviousTime] = useState(new Date());
+    // const [actionInputOpen, setActionInput] = useState(false);
+    // const [actionToAdd, editActionToAdd] = useState('');
+    // const [doneLoading, setDoneLoading] = useState(false);
+    // const [position, setPosition] = useState();
 
 
-    useEffect(() => {
-        actions.load().then(() => {
-            setLoading(false);
-        })
-    }, [])
+    // useEffect(() => {
+    //     actions.load().then(() => {
+    //         setLoading(false);
+    //     })
+    // }, [])
 
 
     shouldPositionIncrement = (cb) => {
@@ -78,12 +78,12 @@ export const GameController = (props) => {
         // this.props.setPosition(position);
     }
 
-    //TODO: figure this out
+    //NOTE: Problem was with that conditional check
 
     return (
         <GameSubscriber>
-            {(state) => (
-                !loading ?
+            {(state) => {
+                return (state.liveGame !== null ?
                     <View>
                         <Text>DONE</Text>
                         {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
@@ -109,8 +109,9 @@ export const GameController = (props) => {
                     <View>
                         <Text> not done </Text>
                     </View>
-                
-            )}
+                )
+
+            }}
         </GameSubscriber>
     )
 }

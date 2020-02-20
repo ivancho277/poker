@@ -23,21 +23,28 @@ const calculation = require("../components/statscalculation.js");
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
-//This will be middleware
+//TODO: this is middleware.
 const logger = storeState => next => action => {
-    console.log('Updating..: ', storeState.getState());
-    next(action);
-    console.log("action: ", action.toString() )
-    //return storeState;
+    console.log('Updating(gamesObj)..: ', storeState.getState().gamesObj);
+    let result = next(action);
+    console.log("action: ", action.toString());
+    console.log("result!!: ", result);
+    //console.log('UPDATED>> :', storeState.getState());
+    return result;
 }
 
 
 const makeLiveGame = storeState => next => action => {
-
+    const { data } = storeState.getState();
+    if (data.actions) {
+        const newGame = data.actions;
+        console.log("LOOOK! :", newGame)
+    }
 }
 
 
 defaults.middlewares.add(logger);
+// defaults.middlwares.add(makeLiveGame);
 
 
 
@@ -170,7 +177,7 @@ const fetchData = async () => {
         return { allGames: dataResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
     } catch {
         console.log('error fetching');
-        throw console.error("error loading data into store.");
+        throw Error("this is a fetch error")
     }
 }
 
@@ -220,10 +227,10 @@ const actions = {
             }
         });
     },
-    
+
 
     // TODO: I need to pass the action i am changing the postition for 
-     
+
     onActionClick: onActionClick = clickedAction => ({ getState, setState, dispatch }) => {
         //FIXME: I need to increment the action then reassign to state using draft.
 
@@ -231,7 +238,7 @@ const actions = {
             draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
             console.log("test", clickedAction)
         })
-        
+
     },
 
     createGameActions: createGameActions = actionsArr => ({ getState, setState, dispatch }) => {

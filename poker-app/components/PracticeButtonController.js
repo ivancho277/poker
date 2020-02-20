@@ -178,12 +178,12 @@ export default class PracticeButtonController extends Component {
             return { [action.actionName]: action.getTotalCount() }
         });
         const gameStats = GameToSave.getCurrentStats();
-        const tagsForCurrentGame = this.props.tags.length === 0 ? this.props.tags.concat('default') : this.props.tags;
+        this.props.tags.length === 0 ? GameToSave.addTag(this.props.tags.concat('default')) : GameToSave.addTag(this.props.tags);
         const gamesObj = {
             gameRaw: GameToSave,
             totals: totals,
             game: gameStats,
-            tags: tagsForCurrentGame,
+            tags: GameToSave.getTags(),
             version: GameToSave.getVersion(),
             time: GameToSave.date.toDateString(),
             date: GameToSave.date.getTime()

@@ -1,0 +1,136 @@
+
+FIXME:
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js
+    ☐ //FIXME: I need to increment the action then reassign to state using draft. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#229
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo
+    ☐ ☐ //FIXME: I need to increment the action then reassign to state using draft. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#229 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#4
+    ☐ ☐ //FIXME: need to send to context @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#334 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#6
+    ☐ ☐ //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#344 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#7
+    ☐ ☐ //     //FIXME: need to send to context @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#430 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#9
+    ☐ ☐ //     //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#440 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#10
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js
+    ☐ //FIXME: need to send to context @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#334
+    ☐ //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#344
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js
+    ☐ //     //FIXME: need to send to context @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#430
+    ☐ //     //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#440
+
+NOTE:
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo
+    ☐ ☐ // Note: test renderer must be required after react-native. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/__tests__/storageTests.spec.js#23 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#14
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/__tests__/storageTests.spec.js
+    ☐ // Note: test renderer must be required after react-native. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/__tests__/storageTests.spec.js#23
+
+TODO:
+  @file:///c%3A/Users/rousk/Documents/projects/poker/on
+    ☐ //TODO: Might need to set state from context here, or just update context instead.[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#57
+    ☐ [31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#68
+    ☐ [32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#70
+    ☐ [31m-                {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#87
+    ☐ [32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#89
+    ☐ [32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#224
+    ☐ [32m+[m[32m  //TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#226
+    ☐ [31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#237
+    ☐ [31m-//TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#239
+    ☐ [32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#241
+    ☐ [31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#265
+    ☐ [32m+[m[32m  //TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#448
+    ☐ [31m-//TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#458
+    ☐ //TODO: fix this function[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#519
+    ☐ //TODO: Might need to set state from context here, or just update context instead.[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#583
+    ☐ [31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#594
+    ☐ [32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#596
+    ☐ [31m-                {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#613
+    ☐ [32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#615
+    ☐ [32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#750
+    ☐ [32m+[m[32m  //TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#752
+    ☐ [31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#763
+    ☐ [31m-//TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#765
+    ☐ [32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#767
+    ☐ [31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#791
+    ☐ [32m+[m[32m  //TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#974
+    ☐ [31m-//TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#984
+    ☐ //TODO: fix this function[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#1045
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js
+    ☐ //TODO: this is middleware. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#26
+    ☐ //TODO: reconfigure save all games to work from actions in store @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#112
+    ☐ //TODO:  reconfigure save current game to work from actions in store  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#140
+    ☐ // TODO: I need to pass the action i am changing the postition for  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#226
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Game.js
+    ☐ //TODO: Might need to set state from context here, or just update context instead. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Game.js#51
+    ☐ {/* TODO: action button should be changes as it is outdated */} @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Game.js#140
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Home.js
+    ☐ //TODO: get ride of any unsed state data. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Home.js#57
+    ☐ //TODO: this might be a utils method to pull out in different file @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Home.js#87
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Settings.js
+    ☐ //TODO: need some kind of save button here, also after finishing globalState funtions use them here to update global state state. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Settings.js#61
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo
+    ☐ ☐ //TODO: Might need to set state from context here, or just update context instead.[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#57 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#18
+    ☐ ☐ [31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#68 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#19
+    ☐ ☐ [32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#70 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#20
+    ☐ ☐ [31m-                {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#87 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#21
+    ☐ ☐ [32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#89 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#22
+    ☐ ☐ [32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#224 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#23
+    ☐ ☐ [32m+[m[32m  //TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#226 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#24
+    ☐ ☐ [31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#237 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#25
+    ☐ ☐ [31m-//TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#239 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#26
+    ☐ ☐ [32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#241 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#27
+    ☐ ☐ [31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#265 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#28
+    ☐ ☐ [32m+[m[32m  //TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#448 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#29
+    ☐ ☐ [31m-//TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#458 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#30
+    ☐ ☐ //TODO: fix this function[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#519 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#31
+    ☐ ☐ //TODO: Might need to set state from context here, or just update context instead.[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#583 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#32
+    ☐ ☐ [31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#594 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#33
+    ☐ ☐ [32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#596 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#34
+    ☐ ☐ [31m-                {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#613 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#35
+    ☐ ☐ [32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#615 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#36
+    ☐ ☐ [32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#750 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#37
+    ☐ ☐ [32m+[m[32m  //TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#752 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#38
+    ☐ ☐ [31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#763 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#39
+    ☐ ☐ [31m-//TODO: finish writing this funtion, use validators[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#765 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#40
+    ☐ ☐ [32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#767 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#41
+    ☐ ☐ [31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#791 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#42
+    ☐ ☐ [32m+[m[32m  //TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#974 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#43
+    ☐ ☐ [31m-//TODO: remember to add new funtions to context provider[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#984 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#44
+    ☐ ☐ //TODO: fix this function[m @file:///c%3A/Users/rousk/Documents/projects/poker/on#1045 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#45
+    ☐ ☐ //TODO: this is middleware. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#26 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#47
+    ☐ ☐ //TODO: reconfigure save all games to work from actions in store @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#112 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#48
+    ☐ ☐ //TODO:  reconfigure save current game to work from actions in store  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#140 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#49
+    ☐ ☐ // TODO: I need to pass the action i am changing the postition for  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/DataStore/GameStore.js#226 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#50
+    ☐ ☐ //TODO: Might need to set state from context here, or just update context instead. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Game.js#51 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#52
+    ☐ ☐ {/* TODO: action button should be changes as it is outdated */} @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Game.js#140 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#53
+    ☐ ☐ //TODO: get ride of any unsed state data. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Home.js#57 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#55
+    ☐ ☐ //TODO: this might be a utils method to pull out in different file @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Home.js#87 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#56
+    ☐ ☐ //TODO: need some kind of save button here, also after finishing globalState funtions use them here to update global state state. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/Settings.js#61 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#58
+    ☐ ☐ //TODO: find out where is best to put the next two save methods, global state or in Game screen component. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#220 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#60
+    ☐ ☐ //TODO: also see if there is more apporpriate spot for this method as well. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#258 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#61
+    ☐ ☐ //TODO: figure this out @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#81 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#63
+    ☐ ☐ //     //TODO: find out where is best to put the next two save methods, global state or in Game screen component. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#316 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#64
+    ☐ ☐ //     //TODO: also see if there is more apporpriate spot for this method as well. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#354 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#65
+    ☐ ☐ //TODO: there's a better was to represent some things @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#32 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#67
+    ☐ ☐ //TODO: thing about order here, what happens when? @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#64 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#68
+    ☐ ☐ //TODO: thesen 2 methods might need some edge case checks. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#137 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#69
+    ☐ ☐ //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#188 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#70
+    ☐ ☐ //TODO: finish writing this funtion, use validators @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#190 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#71
+    ☐ ☐ //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#230 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#72
+    ☐ ☐ //TODO: remember to add new funtions to context provider @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#367 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#73
+    ☐ ☐ // TODO(ivan):Create validators for different inputs in app @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/utils/validators.js#1 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#75
+    ☐ ☐ //TODO: fix this function @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/utils/validators.js#43 @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/TODOS%20embedded.todo#76
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js
+    ☐ //TODO: find out where is best to put the next two save methods, global state or in Game screen component. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#220
+    ☐ //TODO: also see if there is more apporpriate spot for this method as well. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/PracticeButtonController.js#258
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js
+    ☐ //TODO: figure this out @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#81
+    ☐ //     //TODO: find out where is best to put the next two save methods, global state or in Game screen component. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#316
+    ☐ //     //TODO: also see if there is more apporpriate spot for this method as well. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/components/functionalComponents/GameController.js#354
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js
+    ☐ //TODO: there's a better was to represent some things @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#32
+    ☐ //TODO: thing about order here, what happens when? @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#64
+    ☐ //TODO: thesen 2 methods might need some edge case checks. @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#137
+    ☐ //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#188
+    ☐ //TODO: finish writing this funtion, use validators @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#190
+    ☐ //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#230
+    ☐ //TODO: remember to add new funtions to context provider @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/stateContext/GlobalState.js#367
+  @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/utils/validators.js
+    ☐ // TODO(ivan):Create validators for different inputs in app @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/utils/validators.js#1
+    ☐ //TODO: fix this function @file:///c%3A/Users/rousk/Documents/projects/poker/poker-app/utils/validators.js#43

@@ -49,7 +49,7 @@ export class GlobalState extends Component {
     // storage.removeData()
     this.getDataFromStorage().then(res => {
       console.log("VVVVV");
-      console.log(res);
+      //console.log(res);
       console.log("global state populated");
       
         const game = new Game(this.state.currentActions, this.state.currentTags, this.state.position, "1.0.5", new Date())
