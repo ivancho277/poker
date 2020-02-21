@@ -108,6 +108,20 @@ class Action {
     getTotalCount() {
         return this.count;
     }
+
+    /**
+     * 
+     *
+     * @returns {Object} returns a copy of only the data of this instance.
+     * @memberof Action
+     */
+    getActionData() {
+        return {
+            actionName: this.actionName,
+            count: this.count,
+            countPerPosition: this.getPositionCount();
+        }
+    }
 }
 
 
@@ -157,7 +171,18 @@ class Game {
         })
         return this.currentStats;
     }
+    
+    getGameData = () => {
+        return {
+            actions: this.actions.getActionData(),
+            position: this.position,
+            tags: [...this.tags],
+            version: this.version,
+            date: this.date,
+            currentStats: this.getCurrentStats()
 
+        }
+    }
 
 
 

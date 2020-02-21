@@ -205,7 +205,7 @@ logPercentByPosition = () => {
 
 const actions = {
 
-    load: load = () => async ({ getState, setState, dispatch }) => {
+    load: () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
         await fetchData().then((loadedData) => {
@@ -231,7 +231,7 @@ const actions = {
 
     // TODO: I need to pass the action i am changing the postition for 
 
-    onActionClick: onActionClick = clickedAction => ({ getState, setState, dispatch }) => {
+    onActionClick: (clickedAction) => ({ getState, setState, dispatch }) => {
         //FIXME: I need to increment the action then reassign to state using draft.
 
         setState(draft => {
@@ -241,7 +241,7 @@ const actions = {
 
     },
 
-    createGameActions: createGameActions = actionsArr => ({ getState, setState, dispatch }) => {
+    createGameActions: (createGameActions) = actionsArr => ({ getState, setState, dispatch }) => {
 
     },
 
