@@ -67,7 +67,7 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        debugger;
+       // debugger;
         console.log("MOUNTED: ", this.context.modifiers.getGames())
     }
 

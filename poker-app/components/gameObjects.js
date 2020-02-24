@@ -119,7 +119,7 @@ class Action {
         return {
             actionName: this.actionName,
             count: this.count,
-            countPerPosition: this.getPositionCount();
+            countPerPosition: this.getPositionCount()
         }
     }
 }
@@ -174,7 +174,7 @@ class Game {
     
     getGameData = () => {
         return {
-            actions: this.actions.getActionData(),
+            actions:  this.actions.map(action => { return action.getActionData()}),
             position: this.position,
             tags: [...this.tags],
             version: this.version,

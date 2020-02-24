@@ -25,7 +25,7 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
 //TODO: this is middleware.
 const logger = storeState => next => action => {
-    console.log('Updating(gamesObj)..: ', storeState.getState().gamesObj);
+    console.log('Updating(gamesObj)..: ', storeState.getState());
     let result = next(action);
     console.log("action: ", action.toString());
     console.log("result!!: ", result);
@@ -70,21 +70,28 @@ const setLoading = () => ({ setState }) => {
     })
 };
 
-const setData = data => ({ setState }) => {
+const finishLoading = () => ({ setState }) => {
     setState(draft => {
         draft.loading = false;
+    })
+}
+
+const setData = data => ({ setState }) => {
+    setState(draft => {
         draft.data = data;
         draft.error = false;
         draft.allGamesArray = data.allGames.games;
         draft.gamesObj = data.allGames;
+        draft.loading = false;
 
     })
 };
 
-const setLiveGame = gameInstance => ({ setState }) => {
-    const newGame = createGame(gameInstance.actions)
+//!This should just set live game to an array of action strings
+const setLiveGame = actions => ({ setState }) => {
+    // const newGame = createGame(actions)
     setState(draft => {
-        draft.liveGame = gameInstance;
+        draft.liveGame = actions
     })
 };
 
@@ -208,24 +215,32 @@ const actions = {
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
-        await fetchData().then((loadedData) => {
-            console.log("load action: ", loadedData);
-            // setData({
-            //     loading: false,
-            //     data: data,
-            //     error: false
-            // })
-            dispatch(setData(loadedData));
-            if (loadedData.currentGame) {
-                const game = reInstanceCurrentGame(loadedData.currentGame)
-                dispatch(setLiveGame(game));
-                //return;
-            } else {
-                const newGame = createGame(loadedData.actions)
-                dispatch(setLiveGame(newGame));
-                //return;
-            }
-        });
+        const loadedData = await fetchData().then(response => {return response});
+        //     console.log("load action: ", loadedData);
+        //     // setData({
+        //     //     loading: false,
+        //     //     data: data,
+        //     //     error: false
+        //     // })
+        //     //dispatch(setData(loadedData));
+        //    // const game = null;
+        //     if (loadedData.currentGame !== null) {
+        //         //game = reInstanceCurrentGame(loadedData.currentGame)
+        //         dispatch(setLiveGame(loadedData.actions));
+        //         //return;
+        //     } else {
+        //         //game = createGame(loadedData.actions)
+        //         dispatch(setLiveGame(loadedData.actions));
+        //         //return;
+        //     }
+
+
+        dispatch(setData(loadedData));
+
+        console.log('loadedData: ', loadedData);
+
+
+
     },
 
 
