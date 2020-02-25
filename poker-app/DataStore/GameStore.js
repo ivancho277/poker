@@ -26,11 +26,11 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 //TODO: this is middleware.
 const logger = storeState => next => action => {
     console.log('Updating(gamesObj)..: ', storeState.getState());
-    let result = next(action);
+    next(action);
     console.log("action: ", action.toString());
-    console.log("result!!: ", result);
+    console.log("result!!: ");
     //console.log('UPDATED>> :', storeState.getState());
-    return result;
+    
 }
 
 
@@ -89,9 +89,9 @@ const setData = data => ({ setState }) => {
 
 //!This should just set live game to an array of action strings
 const setLiveGame = actions => ({ setState }) => {
-    // const newGame = createGame(actions)
+     const newGame = createGame(actions)
     setState(draft => {
-        draft.liveGame = actions
+        draft.liveGame = newGame
     })
 };
 
@@ -215,7 +215,7 @@ const actions = {
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
-        const loadedData = await fetchData().then(response => {return response});
+        const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
         //     // setData({
         //     //     loading: false,
@@ -224,15 +224,15 @@ const actions = {
         //     // })
         //     //dispatch(setData(loadedData));
         //    // const game = null;
-        //     if (loadedData.currentGame !== null) {
-        //         //game = reInstanceCurrentGame(loadedData.currentGame)
-        //         dispatch(setLiveGame(loadedData.actions));
-        //         //return;
-        //     } else {
-        //         //game = createGame(loadedData.actions)
-        //         dispatch(setLiveGame(loadedData.actions));
-        //         //return;
-        //     }
+        if (loadedData.currentGame !== null) {
+            //game = reInstanceCurrentGame(loadedData.currentGame)
+            dispatch(setLiveGame(loadedData.actions));
+            //return;
+        } else {
+            //game = createGame(loadedData.actions)
+            dispatch(setLiveGame(loadedData.actions));
+            //return;
+        }
 
 
         dispatch(setData(loadedData));
@@ -248,11 +248,12 @@ const actions = {
 
     onActionClick: (clickedAction) => ({ getState, setState, dispatch }) => {
         //FIXME: I need to increment the action then reassign to state using draft.
-
-        setState(draft => {
-            draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
-            console.log("test", clickedAction)
-        })
+        //clickedAction.incrementActionAtPosition(++getState().liveGame.position);
+        console.log('clickedAction', clickedAction)
+        // setState(draft => {
+        //     draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
+        //     console.log("test", clickedAction)
+        // })
 
     },
 

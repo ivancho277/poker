@@ -46,6 +46,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 export const GameController = (props) => {
     const [state, actions] = UseGameStore();
+
     // const [loading, setLoading] = useState(true);
     // const [currentTime, setCurrentTime] = useState(new Date());
     // const [previousTime, setPreviousTime] = useState(new Date());
@@ -56,8 +57,15 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
 
     useEffect(() => {
-        console.log("CONTROLLER STATE: ", state);
-    }, [])
+        console.log("CONTROLLER STATE: ", state.liveGame);
+        // if (state.liveGame) {
+        //     const game = state.liveGame.map(action => { return new Action(action) })
+        //     setLiveActions(game);
+        //     console.log('liveActions', liveActions)
+        // }
+
+        console.log('out', liveActions)
+    }, [state.liveGame])
 
 
     // const shouldPositionIncrement = (cb) => {
@@ -116,7 +124,7 @@ export const GameController = (props) => {
                     <View>
                         <Text> not done </Text>
                     </View>
-                
+                // <View><Text>Things will happen</Text></View>
 
             )}
         </GameSubscriber>

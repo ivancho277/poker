@@ -26,7 +26,7 @@ export default function TestScreen() {
 
         //setLoading(true);
         actions.load().then(() => {
-            console.log("screen state::::", state);
+           // console.log("screen state::::", state);
             //setLoading(false);
         }).catch(err => {
             alert('error in test load')
