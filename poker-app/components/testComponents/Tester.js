@@ -30,7 +30,7 @@ export const Tester = () => {
     const [state, actions] = UseGameStore();
     // const [loading, setLoading] = useState(false);
     useEffect(() => {
-        actions.load();
+        //actions.load();
     }, [])
 
 

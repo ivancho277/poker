@@ -10,7 +10,7 @@ import * as calculations from '../statscalculation.js';
 // const calculations = require('./statscalculation.js')
 const gameConstructors = require('../gameObjects.js');
 const { GameStats, Action, Game } = gameConstructors;
-import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore'
+import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 
@@ -28,16 +28,16 @@ import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/Gam
 //     this.props.setPosition(position);
 // }
 
-shouldPositionIncrement = (cb) => {
-    if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
-        cb(this.state.position)
-        //this.saveAllGames();
-        this.CurrentGameSave();
-        this.setState({
-            previousTime: this.state.currentTime
-        })
-    }
-}
+// shouldPositionIncrement = (cb) => {
+//     if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
+//         cb(this.state.position)
+//         //this.saveAllGames();
+//         this.CurrentGameSave();
+//         this.setState({
+//             previousTime: this.state.currentTime
+//         })
+//     }
+// }
 
 
 
@@ -60,37 +60,37 @@ export const GameController = (props) => {
     }, [])
 
 
-    shouldPositionIncrement = (cb) => {
-        if (currentTime.getTime() != previousTime.getTime()) {
-            cb(position)
-            //this.saveAllGames();
-            actions.saveCurrentGame();
-            setPreviousTime(currentTime)
-        }
-    }
+    // const shouldPositionIncrement = (cb) => {
+    //     if (currentTime.getTime() != previousTime.getTime()) {
+    //         cb(position)
+    //         //this.saveAllGames();
+    //         actions.saveCurrentGame();
+    //         setPreviousTime(currentTime)
+    //     }
+    // }
 
-    getPosition = (position) => {
-        // this.setState({
-        //     position: position
-        // })
-        // this.props.setPosition(position);
-    }
+    // const getPosition = (position) => {
+    //     // this.setState({
+    //     //     position: position
+    //     // })
+    //     // this.props.setPosition(position);
+    // }
 
 
-    buildActions = (actionsStrings) => {
-        const actions = actionStrings.map(action => {
-            return new Action(action);
-        })
-        setLiveActions(actions);
+    // const buildActions = (actionsStrings) => {
+    //     const actions = actionStrings.map(action => {
+    //         return new Action(action);
+    //     })
+    //     setLiveActions(actions);
 
-    }
+    // }
 
     // debugger
     return (
         <GameSubscriber>
-            {(state) => {
-               // debugger
-                return (state.liveGame !== null || !calculations.isEmpty(state.liveGame) ?
+            {(state) => (
+                //debugger
+                (state.liveGame !== null || !calculations.isEmpty(state.liveGame)) ?
                     <View>
                         <Text>DONE</Text>
                         {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
@@ -116,9 +116,9 @@ export const GameController = (props) => {
                     <View>
                         <Text> not done </Text>
                     </View>
-                )
+                
 
-            }}
+            )}
         </GameSubscriber>
     )
 }

@@ -10,7 +10,7 @@ import * as storage from './AsyncStorageController.js'
 
 // const calculation = require('./statscalculation.js');
 // const storage = require("./AsyncStorageController.js");
-const cardImg = require('../images/ace_diamond.jpg');
+// const cardImg = require('../images/ace_diamond.jpg');
 
 
 export default function Statsbox(props) {
