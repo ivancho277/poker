@@ -184,6 +184,13 @@ class Game {
         }
     }
 
+    incrementAction = (actionName, position) => {
+        const action = this.getSingleAction(actionName);
+        if(action){
+            action.incrementActionAtPosition(position);
+        }
+    } 
+
 
 
     changePosition = (newPosition) => {
@@ -204,7 +211,11 @@ class Game {
 
     getSingleAction = (actionName) => {
         const foundAction = this.actions.find(action => action.actionName === actionName);
-        return foundAction !== undefined ? foundAction : alert('this action does not exsist')
+        return foundAction !== undefined ? foundAction : alert('this action does not exist'); null;
+    }
+
+    getCopyOfSingleAction = (actionName) => {
+        
     }
 
     getAllActions = () => {
@@ -221,6 +232,8 @@ class Game {
         });
         this.actions = actionInstances;
     }
+
+
 
 
 }

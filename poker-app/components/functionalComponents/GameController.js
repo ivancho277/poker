@@ -63,7 +63,7 @@ export const GameController = (props) => {
         //     setLiveActions(game);
         //     console.log('liveActions', liveActions)
         // }
-
+        
         console.log('out', liveActions)
     }, [state.liveGame])
 
@@ -113,7 +113,7 @@ export const GameController = (props) => {
                         {state.liveGame.actions.map((action, index) => {
                             return (
                                 <View key={index}>
-                                    <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action); }} />
+                                    <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action, index); }} />
                                 </View>
                             )
                         })}
