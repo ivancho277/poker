@@ -206,7 +206,14 @@ logPercentByPosition = () => {
 }
 
 
-
+const incrementLiveAction = (index) => ({setState, getState}) => {
+    const { liveGame } = getState();
+    setState(draft => {
+        draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
+        draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
+        draft.liveGame.position = liveGame.position++; 
+    })
+}
 
 
 
@@ -233,28 +240,26 @@ const actions = {
 
 
     //TODO: We can directly manipulate the state here, but as soon as setState gets called else where it will be overwritten. Maybe Find a way to make it work, or write something to update state before overwritting happens. Also Will not trigger rerender to show on screen. 
-
-
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {
         //FIXME: I need to increment the action then reassign to state using draft.
         //clickedAction.incrementActionAtPosition(++getState().liveGame.position);
-        const { liveGame } = getState();
-            console.log('liveGame', liveGame)
-            console.log('index', index)
-            console.log('liveGame', liveGame.actions[index])
-            console.log('clickedAction', clickedAction)
+        // const { liveGame } = getState();
+        //     console.log('liveGame', liveGame)
+        //     console.log('index', index)
+        //     console.log('liveGame', liveGame.actions[index])
+        //     console.log('clickedAction', clickedAction)
             //let actionTOUpdate = liveGame.actions[index]
-            setState(draft => {
-                draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
-                draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
-                draft.liveGame.position = liveGame.position++; 
-            })
-           console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
+            dispatch(incrementLiveAction(index));
+            //console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
             
         // setState(draft => {
         //     draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
         //     console.log("test", clickedAction)
         // })
+
+    },
+
+    updatePosition: () => ({getState, setState, dispatch}) => {
 
     },
 

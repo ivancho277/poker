@@ -121,7 +121,7 @@ export const GameController = (props) => {
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
                         <View>
-                            <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                            <Radio getPosition={getPosition} shouldPositionIncrement={shouldPositionIncrement} />
                         </View>
                     </View>
                     :
