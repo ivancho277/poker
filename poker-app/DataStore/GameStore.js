@@ -217,14 +217,6 @@ const actions = {
         dispatch(setLoading());
         const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
-        //     // setData({
-        //     //     loading: false,
-        //     //     data: data,
-        //     //     error: false
-        //     // })
-        //     //dispatch(setData(loadedData));
-        //    // const game = null;
-
         if (loadedData.currentGame !== null) {
             //game = reInstanceCurrentGame(loadedData.currentGame)
             dispatch(setLiveGame(loadedData.actions));
@@ -234,14 +226,8 @@ const actions = {
             dispatch(setLiveGame(loadedData.actions));
             //return;
         }
-
-
         dispatch(setData(loadedData));
-
-        console.log('loadedData: ', loadedData);
-
-
-
+        console.log('loadedData: ', loadedData); 
     },
 
 

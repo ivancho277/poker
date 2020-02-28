@@ -48,8 +48,8 @@ export const GameController = (props) => {
     const [state, actions] = UseGameStore();
 
     // const [loading, setLoading] = useState(true);
-    // const [currentTime, setCurrentTime] = useState(new Date());
-    // const [previousTime, setPreviousTime] = useState(new Date());
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [previousTime, setPreviousTime] = useState(new Date());
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
     // const [doneLoading, setDoneLoading] = useState(false);
@@ -63,26 +63,26 @@ export const GameController = (props) => {
         //     setLiveActions(game);
         //     console.log('liveActions', liveActions)
         // }
-        
+
         console.log('out', liveActions)
     }, [state.liveGame])
 
 
-    // const shouldPositionIncrement = (cb) => {
-    //     if (currentTime.getTime() != previousTime.getTime()) {
-    //         cb(position)
-    //         //this.saveAllGames();
-    //         actions.saveCurrentGame();
-    //         setPreviousTime(currentTime)
-    //     }
-    // }
+    const shouldPositionIncrement = (cb) => {
+        if (currentTime.getTime() != previousTime.getTime()) {
+            cb(position)
+            //this.saveAllGames();
+           // actions.saveCurrentGame();
+            setPreviousTime(currentTime)
+        }
+    }
 
-    // const getPosition = (position) => {
-    //     // this.setState({
-    //     //     position: position
-    //     // })
-    //     // this.props.setPosition(position);
-    // }
+    const getPosition = (position) => {
+        // this.setState({
+        //     position: position
+        // })
+        // this.props.setPosition(position);
+    }
 
 
     // const buildActions = (actionsStrings) => {
@@ -100,26 +100,30 @@ export const GameController = (props) => {
                 //debugger
                 (state.liveGame !== null || !calculations.isEmpty(state.liveGame)) ?
                     <View>
-                        <Text>DONE</Text>
-                        {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
-                        <Text>Position: </Text>
-                        <View>{state.liveGame.actions.map((action, index) => {
-                            return <Text key={index}>{action.actionName}: {action.count}  </Text>
-                        })}</View>
                         <View>
+                            <Text>DONE</Text>
+                            {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
+                            <Text>Position: </Text>
+                            <View>{state.liveGame.actions.map((action, index) => {
+                                return <Text key={index}>{action.actionName}: {action.count}  </Text>
+                            })}</View>
+                            <View>
 
+                            </View>
+
+                            {state.liveGame.actions.map((action, index) => {
+                                return (
+                                    <View key={index}>
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action, index); }} />
+                                    </View>
+                                )
+                            })}
+                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
-
-                        {state.liveGame.actions.map((action, index) => {
-                            return (
-                                <View key={index}>
-                                    <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action, index); }} />
-                                </View>
-                            )
-                        })}
-                        <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                        <View>
+                            <Radio getPosition={this.getPosition} shouldPositionIncrement={this.shouldPositionIncrement} />
+                        </View>
                     </View>
-
                     :
                     <View>
                         <Text> not done </Text>
