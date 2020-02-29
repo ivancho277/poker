@@ -45,7 +45,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [state, actions] = UseGameStore();
+    const [{liveGame, loading}, actions] = UseGameStore();
 
     // const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -57,7 +57,7 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
 
     useEffect(() => {
-        console.log("CONTROLLER STATE: ", state.liveGame);
+        console.log("CONTROLLER STATE: ", liveGame);
         // if (state.liveGame) {
         //     const game = state.liveGame.map(action => { return new Action(action) })
         //     setLiveActions(game);
@@ -65,7 +65,7 @@ export const GameController = (props) => {
         // }
 
         console.log('out', liveActions)
-    }, [state.liveGame])
+    }, [liveGame])
 
 
     const shouldPositionIncrement = (cb) => {
@@ -96,22 +96,22 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {(state) => (
+            {({liveGame, loading}) => (
                 //debugger
-                (state.liveGame !== null || !calculations.isEmpty(state.liveGame)) ?
+                (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
                         <View>
                             <Text>DONE</Text>
-                            {/* <Text>{JSON.stringify(state.liveGame, undefined, 4)}</Text> */}
+                            {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                             <Text>Position: </Text>
-                            <View>{state.liveGame.actions.map((action, index) => {
+                            <View>{liveGame.actions.map((action, index) => {
                                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
                             })}</View>
                             <View>
 
                             </View>
 
-                            {state.liveGame.actions.map((action, index) => {
+                            {liveGame.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
                                         <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action, index); }} />
