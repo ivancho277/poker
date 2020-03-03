@@ -87,7 +87,7 @@ const setData = data => ({ setState }) => {
     })
 };
 
-//!This should just set live game to an array of action strings
+
 const setLiveGame = actions => ({ setState }) => {
     const newGame = createGame(actions)
     setState(draft => {
@@ -164,10 +164,8 @@ const CurrentGameSave = () => ({ setState, getState }) => {
         actions: currentgame.getAllActions(),
         actionStrings: currentgame.getActionsAsList()
     }
-
     storage.saveCurrentGame(gamesObj);
     //this.props.context.modifiers.updateCurrentGame(gamesObj)
-
 }
 
 
@@ -206,19 +204,52 @@ logPercentByPosition = () => {
 }
 
 
-const incrementLiveAction = (index) => ({setState, getState}) => {
+
+/**
+ * 
+ * @param {Function} cb - callback function which will be an increment index of what radio button is pressed in <Radio>
+ * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
+ * any methods form child component <Radio>.
+ */
+const shouldPositionIncrement = (cb) => {
+    console.log("am i here?")
+    if (currentTime.getTime() != previousTime.getTime()) {
+        cb(liveGame.position);
+        console.log("position fun: ", liveGame.position)
+        //this.saveAllGames();
+        // actions.saveCurrentGame();
+        setPreviousTime(currentTime)
+    }
+}
+
+
+/**
+ * 
+ * @param {Number} index - index of clicked action in LiveGame.actions[]
+ * - will increment state of clicked action, as well as state of liveGame position.
+ */
+const incrementLiveAction = (index) => ({ setState, getState }) => {
     const { liveGame } = getState();
     setState(draft => {
         draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
         draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
-        draft.liveGame.position = liveGame.position++; 
+        draft.liveGame.position = ++liveGame.position;
     })
+}
+
+const updatePosition = (newPosition) => ({ setState, getState }) => {
+    if (newPosition >= 0 && newPosition <= 8) {
+        setState(draft => {
+            draft.liveGame.position = newPosition;
+        })
+    }
 }
 
 
 
-const actions = {
 
+
+const actions = {
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
@@ -234,24 +265,26 @@ const actions = {
             //return;
         }
         dispatch(setData(loadedData));
-        console.log('loadedData: ', loadedData); 
+        console.log('loadedData: ', loadedData);
     },
+
+
 
 
 
     //TODO: We can directly manipulate the state here, but as soon as setState gets called else where it will be overwritten. Maybe Find a way to make it work, or write something to update state before overwritting happens. Also Will not trigger rerender to show on screen. 
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {
-        //FIXME: I need to increment the action then reassign to state using draft.
         //clickedAction.incrementActionAtPosition(++getState().liveGame.position);
         // const { liveGame } = getState();
         //     console.log('liveGame', liveGame)
         //     console.log('index', index)
         //     console.log('liveGame', liveGame.actions[index])
         //     console.log('clickedAction', clickedAction)
-            //let actionTOUpdate = liveGame.actions[index]
-            dispatch(incrementLiveAction(index));
-            //console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
-            
+        //let actionTOUpdate = liveGame.actions[index]
+        //dispatch(updatePosition())
+        dispatch(incrementLiveAction(index));
+        //console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
+
         // setState(draft => {
         //     draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
         //     console.log("test", clickedAction)
@@ -259,8 +292,8 @@ const actions = {
 
     },
 
-    updatePosition: () => ({getState, setState, dispatch}) => {
-
+    updatePosition: (newPosition) => ({ getState, setState, dispatch }) => {
+        dispatch(updatePosition(newPosition));
     },
 
     createGameActions: createGameActions = () => ({ getState, setState, dispatch }) => {

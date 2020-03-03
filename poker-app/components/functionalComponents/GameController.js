@@ -45,7 +45,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [{liveGame, loading}, actions] = UseGameStore();
+    const [{ liveGame, loading }, actions] = UseGameStore();
 
     // const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -63,47 +63,52 @@ export const GameController = (props) => {
         //     setLiveActions(game);
         //     console.log('liveActions', liveActions)
         // }
-
+        console.log("Time curr", currentTime)
+        console.log("Time prev", previousTime)
         console.log('out', liveActions)
     }, [liveGame])
-
-
+    /**
+     * 
+     * @param {Function} cb - callback function which will be an increment index of what radio button is pressed in <Radio>
+     * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
+     * any methods form child component <Radio>.
+     */
     const shouldPositionIncrement = (cb) => {
+        console.log("am i here?")
         if (currentTime.getTime() != previousTime.getTime()) {
-            cb(position)
+            cb(liveGame.position);
+            console.log("position fun: ", liveGame.position)
             //this.saveAllGames();
-           // actions.saveCurrentGame();
+            // actions.saveCurrentGame();
             setPreviousTime(currentTime)
         }
     }
-
     const getPosition = (position) => {
-        // this.setState({
-        //     position: position
-        // })
+        actions.updatePosition(position);
+
         // this.props.setPosition(position);
     }
 
+    onActionClick = (action, actionIndex) => {
+        actions.onActionClick(action, actionIndex)
+        setCurrentTime(new Data())
+      
 
-    // const buildActions = (actionsStrings) => {
-    //     const actions = actionStrings.map(action => {
-    //         return new Action(action);
-    //     })
-    //     setLiveActions(actions);
+    }
 
-    // }
+
 
     // debugger
     return (
         <GameSubscriber>
-            {({liveGame, loading}) => (
+            {({ liveGame, loading }, { updatePosition }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
                         <View>
                             <Text>DONE</Text>
                             {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                            <Text>Position: </Text>
+                            <Text>Position: {liveGame.position} </Text>
                             <View>{liveGame.actions.map((action, index) => {
                                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
                             })}</View>
@@ -114,14 +119,14 @@ export const GameController = (props) => {
                             {liveGame.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { actions.onActionClick(action, index); }} />
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); setCurrentTime(new Date()) }} />
                                     </View>
                                 )
                             })}
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
                         <View>
-                            <Radio getPosition={getPosition} shouldPositionIncrement={shouldPositionIncrement} />
+                            <Radio position={liveGame.position} getPosition={getPosition} shouldPositionIncrement={shouldPositionIncrement} />
                         </View>
                     </View>
                     :

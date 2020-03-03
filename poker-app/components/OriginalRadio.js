@@ -22,41 +22,19 @@ class Radio extends Component {
         }
 
     }
-
-    componentDidMount() {
-        // this.setState({
-        //     value: this.props.position
-        // });
-    }
-
-
-    
-
     positionReturn(position) {
         // debugger
-        //this.props.getPosition(position);
+        this.props.getPosition(position);
     }
 
 
-    _updateIndex = (index) => {
+    updateIndex = (index) => {
         if (index < radio_props.length - 1) {
             this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
-            this.positionReturn(index);
-        } else {
-            this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
-            this.positionReturn(0);
-        }
-    }
-
-
-    //!GOT RIDE OF THE ++currIndex to just CurrIndex
-    updateIndex = (currIndex) => {
-        if (currIndex < radio_props.length - 1) {
-            this.radioFormClear.updateIsActiveIndex(currIndex); // just pass -1 and your radio button should clear
             this.setState({
-                value: currIndex
+                value: index
             })
-            this.positionReturn(currIndex);
+            this.positionReturn(index);
         } else {
             this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
             this.setState({
@@ -66,10 +44,8 @@ class Radio extends Component {
         }
     }
 
-    UNSAFE_componentWillUpdate() {
-        if(this.state.value != this.props.position) {
-        this.props.shouldPositionIncrement(this.updateIndex(this.props.position))
-        }
+    componentWillUpdate() {
+        this.props.shouldPositionIncrement(this.updateIndex)
     }
 
     render() {
@@ -98,5 +74,3 @@ class Radio extends Component {
 };
 
 export default Radio;
-
-

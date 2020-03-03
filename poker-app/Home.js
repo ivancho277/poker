@@ -13,7 +13,7 @@ import * as calculation from './components/statscalculation.js'
 // const calculation = require('./components/statscalculation.js')
 
 //  const context = useContext(MyContext)
-
+        
 
 
 // const HomeScreen = () => {
