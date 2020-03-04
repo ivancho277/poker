@@ -84,14 +84,14 @@ export const GameController = (props) => {
         }
     }
     const getPosition = (position) => {
-        actions.updatePosition(position);
+        //actions.updatePosition(position);
 
         // this.props.setPosition(position);
     }
 
     onActionClick = (action, actionIndex) => {
         actions.onActionClick(action, actionIndex)
-        setCurrentTime(new Data())
+        setCurrentTime(new Date())
       
 
     }

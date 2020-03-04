@@ -61,7 +61,9 @@ const initialState = {
     gamesObj: null,
     liveGame: null,
     loading: false,
-    error: null
+    error: null,
+    MAX_POSITION: 8,
+    MIN_POSITION: 0
 };
 
 const setLoading = () => ({ setState }) => {
@@ -229,18 +231,23 @@ const shouldPositionIncrement = (cb) => {
  * - will increment state of clicked action, as well as state of liveGame position.
  */
 const incrementLiveAction = (index) => ({ setState, getState }) => {
-    const { liveGame } = getState();
+    const { liveGame, MIN_POSITION, MAX_POSITION } = getState();
     setState(draft => {
         draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
         draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
-        draft.liveGame.position = ++liveGame.position;
+        draft.liveGame.position =  liveGame.position + 1 <=  MAX_POSITION ? ++liveGame.position : MIN_POSITION;
     })
 }
 
 const updatePosition = (newPosition) => ({ setState, getState }) => {
-    if (newPosition >= 0 && newPosition <= 8) {
+    const { MIN_POSITION, MAX_POSITION } = getState();
+    if (newPosition < MAX_POSITION) {
         setState(draft => {
             draft.liveGame.position = newPosition;
+        })
+    } else {
+        setState(draft => {
+            draft.liveGame.position = MIN_POSITION;
         })
     }
 }

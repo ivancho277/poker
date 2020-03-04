@@ -24,13 +24,13 @@ class Radio extends Component {
     }
 
     componentDidMount() {
-        // this.setState({
-        //     value: this.props.position
-        // });
+        this.setState({
+            value: this.props.position
+        });
     }
 
 
-    
+
 
     positionReturn(position) {
         // debugger
@@ -50,6 +50,11 @@ class Radio extends Component {
 
 
     //!GOT RIDE OF THE ++currIndex to just CurrIndex
+    /**
+     *
+     * @param {Number} - index of the radio_props that should be active. This is the Overall Current Games Position.
+     * @memberof Radio
+     */
     updateIndex = (currIndex) => {
         if (currIndex < radio_props.length - 1) {
             this.radioFormClear.updateIsActiveIndex(currIndex); // just pass -1 and your radio button should clear
@@ -66,9 +71,15 @@ class Radio extends Component {
         }
     }
 
+    //! What Im currently fixing
     UNSAFE_componentWillUpdate() {
-        if(this.state.value != this.props.position) {
-        this.props.shouldPositionIncrement(this.updateIndex(this.props.position))
+        console.log("1111111")
+        if (this.state) {
+            console.log("222222222")
+            if (this.state.value != this.props.position) {
+                console.log("3333333")
+                this.props.shouldPositionIncrement(() => this.updateIndex(this.props.position));
+            }
         }
     }
 
