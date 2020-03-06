@@ -24,6 +24,7 @@ class Radio extends Component {
     }
 
     componentDidMount() {
+        console.log("Tell me when to Mount!")
         this.setState({
             value: this.props.position
         });
@@ -39,17 +40,13 @@ class Radio extends Component {
 
 
     _updateIndex = (index) => {
-        if (index < radio_props.length - 1) {
-            this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
-            this.positionReturn(index);
-        } else {
-            this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
-            this.positionReturn(0);
-        }
+        this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
+        this.setState({value: index});
+        
     }
 
 
-    //!GOT RIDE OF THE ++currIndex to just CurrIndex
+
     /**
      *
      * @param {Number} - index of the radio_props that should be active. This is the Overall Current Games Position.
@@ -71,16 +68,29 @@ class Radio extends Component {
         }
     }
 
+
+    componentDidUpdate(){
+            if(this.props.position != this.state.value){
+               this._updateIndex(this.props.position); 
+            }
+            console.log("Value: ", this.state.value);
+            console.log("Prop, LIVEGAME: ", this.props.position);
+        
+    }
+
     //! What Im currently fixing
     UNSAFE_componentWillUpdate() {
-        console.log("1111111")
-        if (this.state) {
-            console.log("222222222")
-            if (this.state.value != this.props.position) {
-                console.log("3333333")
-                this.props.shouldPositionIncrement(() => this.updateIndex(this.props.position));
-            }
-        }
+        //debugger;
+        // console.log("1111111")
+        // if (this.state) {
+        //     console.log("222222222")
+        //     if (this.state.value != this.props.position) {
+        //         console.log("3333333")
+        //         this.props.shouldPositionIncrement(this._updateIndex);
+        //     }
+        // } else {
+        //     this._updateIndex(this.props.position)
+        // }
     }
 
     render() {

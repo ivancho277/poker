@@ -75,6 +75,7 @@ export const GameController = (props) => {
      */
     const shouldPositionIncrement = (cb) => {
         console.log("am i here?")
+
         if (currentTime.getTime() != previousTime.getTime()) {
             cb(liveGame.position);
             console.log("position fun: ", liveGame.position)
@@ -90,8 +91,9 @@ export const GameController = (props) => {
     }
 
     onActionClick = (action, actionIndex) => {
-        actions.onActionClick(action, actionIndex)
         setCurrentTime(new Date())
+        actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
+        
       
 
     }
@@ -101,7 +103,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading }, { updatePosition }) => (
+            {({ liveGame, loading }, { shouldPositionIncrement }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -119,7 +121,7 @@ export const GameController = (props) => {
                             {liveGame.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); setCurrentTime(new Date()) }} />
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index);  }} />
                                     </View>
                                 )
                             })}

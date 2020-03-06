@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react';
+import React, { Component, Children, useState } from 'react';
 import { VERSION } from '../constants/version';
 import { GlobalState } from '../stateContext/GlobalState';
 import {
@@ -63,8 +63,23 @@ const initialState = {
     loading: false,
     error: null,
     MAX_POSITION: 8,
-    MIN_POSITION: 0
+    MIN_POSITION: 0,
+    currentTime: new Date(),
+    previousTime: new Date()
 };
+
+const setCurrentTime = () => ({ setState }) => {
+    setState(draft => {
+        draft.currentTime = new Date();
+    })
+}
+
+const setPreviousTimeToCurrent = () => ({ getState, setState }) => {
+    const { currentTime } = getState();
+    setState(draft => {
+        draft.previousTime = currentTime;
+    })
+}
 
 const setLoading = () => ({ setState }) => {
     setState(draft => {
@@ -171,10 +186,6 @@ const CurrentGameSave = () => ({ setState, getState }) => {
 }
 
 
-
-
-
-
 const fetchData = async () => {
     try {
         const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) })
@@ -213,16 +224,25 @@ logPercentByPosition = () => {
  * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
  * any methods form child component <Radio>.
  */
-const shouldPositionIncrement = (cb) => {
+const shouldPositionIncrement = (cb) => ({getState, setState}) => {
     console.log("am i here?")
+    const {currentTime, previousTime, liveGame} = getState();
     if (currentTime.getTime() != previousTime.getTime()) {
         cb(liveGame.position);
         console.log("position fun: ", liveGame.position)
         //this.saveAllGames();
         // actions.saveCurrentGame();
-        setPreviousTime(currentTime)
+        //setPreviousTime(currentTime)
+        setPreviousTimeToCurrent();
     }
 }
+
+
+
+// const OnClickAutoIncrement = (index) => ({ setState, getState }) => {
+//     incrementLiveAction(index);
+//     setCurrentTime();
+// }
 
 
 /**
@@ -235,8 +255,9 @@ const incrementLiveAction = (index) => ({ setState, getState }) => {
     setState(draft => {
         draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
         draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
-        draft.liveGame.position =  liveGame.position + 1 <=  MAX_POSITION ? ++liveGame.position : MIN_POSITION;
+        draft.liveGame.position = liveGame.position + 1 <= MAX_POSITION ? ++liveGame.position : MIN_POSITION;
     })
+    setCurrentTime();
 }
 
 const updatePosition = (newPosition) => ({ setState, getState }) => {
@@ -297,6 +318,10 @@ const actions = {
         //     console.log("test", clickedAction)
         // })
 
+    },
+
+    shouldPositionIncrement: (cb) => ({dispatch}) => {
+        dispatch(shouldPositionIncrement(cb))
     },
 
     updatePosition: (newPosition) => ({ getState, setState, dispatch }) => {
