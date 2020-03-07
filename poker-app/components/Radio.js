@@ -39,12 +39,21 @@ class Radio extends Component {
     }
 
 
+
     _updateIndex = (index) => {
         this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
-        this.setState({value: index});
-        
+        this.setState({ value: index });
     }
 
+
+    //!need to update store position as well.
+    handleClick = (value) => {
+        debugger;
+        this.props.setPosition(value);
+        //this._updateIndex(value);
+        this.setState({ value: value });
+
+    }
 
 
     /**
@@ -69,28 +78,14 @@ class Radio extends Component {
     }
 
 
-    componentDidUpdate(){
-            if(this.props.position != this.state.value){
-               this._updateIndex(this.props.position); 
-            }
-            console.log("Value: ", this.state.value);
-            console.log("Prop, LIVEGAME: ", this.props.position);
-        
-    }
+    componentDidUpdate() {
+        debugger;
+        if (this.props.position != this.state.value) {
+            this._updateIndex(this.props.position);
+        }
+        console.log("Value: ", this.state.value);
+        console.log("Prop, LIVEGAME: ", this.props.position);
 
-    //! What Im currently fixing
-    UNSAFE_componentWillUpdate() {
-        //debugger;
-        // console.log("1111111")
-        // if (this.state) {
-        //     console.log("222222222")
-        //     if (this.state.value != this.props.position) {
-        //         console.log("3333333")
-        //         this.props.shouldPositionIncrement(this._updateIndex);
-        //     }
-        // } else {
-        //     this._updateIndex(this.props.position)
-        // }
     }
 
     render() {
@@ -105,7 +100,7 @@ class Radio extends Component {
                         buttonSize={10}
                         buttonOuterSize={20}
                         labelHorizontal={false}
-                        onPress={(value) => { this.setState({ value: value }); this.positionReturn(value); }}
+                        onPress={(value) => { this.handleClick(value); }}
 
                     />
                 </View>

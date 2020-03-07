@@ -261,7 +261,7 @@ const incrementLiveAction = (index) => ({ setState, getState }) => {
 }
 
 const updatePosition = (newPosition) => ({ setState, getState }) => {
-    const { MIN_POSITION, MAX_POSITION } = getState();
+    const { liveGame, MIN_POSITION, MAX_POSITION } = getState();
     if (newPosition < MAX_POSITION) {
         setState(draft => {
             draft.liveGame.position = newPosition;
