@@ -255,22 +255,33 @@ const incrementLiveAction = (index) => ({ setState, getState }) => {
     setState(draft => {
         draft.liveGame.actions[index].count = liveGame.actions[index].count + 1;
         draft.liveGame.actions[index].countPerPosition[liveGame.position] = liveGame.actions[index].countPerPosition[liveGame.position] + 1;
+        // draft.liveGame.position = liveGame.position + 1 <= MAX_POSITION ? ++liveGame.position : MIN_POSITION;
+    })
+
+    setCurrentTime();
+}
+
+const incrementPosition = () => ({setState, getState}) => {
+    const { liveGame, MIN_POSITION, MAX_POSITION } = getState();
+    setState(draft => {
         draft.liveGame.position = liveGame.position + 1 <= MAX_POSITION ? ++liveGame.position : MIN_POSITION;
     })
-    setCurrentTime();
 }
 
 const updatePosition = (newPosition) => ({ setState, getState }) => {
     const { liveGame, MIN_POSITION, MAX_POSITION } = getState();
-    if (newPosition < MAX_POSITION) {
-        setState(draft => {
-            draft.liveGame.position = newPosition;
-        })
-    } else {
-        setState(draft => {
-            draft.liveGame.position = MIN_POSITION;
-        })
-    }
+    setState(draft => {
+        draft.liveGame.position = newPosition;
+    })
+    // if (newPosition < MAX_POSITION) {
+    //     setState(draft => {
+    //         draft.liveGame.position = newPosition;
+    //     })
+    // } else {
+    //     setState(draft => {
+    //         draft.liveGame.position = MIN_POSITION;
+    //     })
+    // }
 }
 
 
@@ -310,7 +321,9 @@ const actions = {
         //     console.log('clickedAction', clickedAction)
         //let actionTOUpdate = liveGame.actions[index]
         //dispatch(updatePosition())
+        dispatch(setCurrentTime());
         dispatch(incrementLiveAction(index));
+        dispatch(incrementPosition());
         //console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
 
         // setState(draft => {
@@ -326,6 +339,10 @@ const actions = {
 
     updatePosition: (newPosition) => ({ getState, setState, dispatch }) => {
         dispatch(updatePosition(newPosition));
+    },
+
+    incrementPosition: () => ({dispatch}) => {
+        dispatch(incrementPosition());
     },
 
     createGameActions: createGameActions = () => ({ getState, setState, dispatch }) => {

@@ -45,11 +45,9 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [{ liveGame, loading }, actions] = UseGameStore();
+    const [{ liveGame, loading, currentTime, previousTime}, actions] = UseGameStore();
 
     // const [loading, setLoading] = useState(true);
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const [previousTime, setPreviousTime] = useState(new Date());
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
     // const [doneLoading, setDoneLoading] = useState(false);
@@ -66,24 +64,24 @@ export const GameController = (props) => {
         console.log("Time curr", currentTime)
         console.log("Time prev", previousTime)
         console.log('out', liveActions)
-    }, [liveGame])
+    }, [liveGame, ])
     /**
      * 
      * @param {Function} cb - callback function which will be an increment index of what radio button is pressed in <Radio>
      * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
      * any methods form child component <Radio>.
      */
-    const shouldPositionIncrement = (cb) => {
-        console.log("am i here?")
+    // const shouldPositionIncrement = (cb) => {
+    //     console.log("am i here?")
 
-        if (currentTime.getTime() != previousTime.getTime()) {
-            cb(liveGame.position);
-            console.log("position fun: ", liveGame.position)
-            //this.saveAllGames();
-            // actions.saveCurrentGame();
-            setPreviousTime(currentTime)
-        }
-    }
+    //     if (currentTime.getTime() != previousTime.getTime()) {
+    //         cb(liveGame.position);
+    //         console.log("position fun: ", liveGame.position)
+    //         //this.saveAllGames();
+    //         // actions.saveCurrentGame();
+    //         setPreviousTime(currentTime)
+    //     }
+    // }
     const getPosition = (position) => {
         //actions.updatePosition(position);
 
@@ -91,7 +89,7 @@ export const GameController = (props) => {
     }
 
     onActionClick = (action, actionIndex) => {
-        setCurrentTime(new Date())
+       // setCurrentTime(new Date())
         actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
         
       
@@ -103,7 +101,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading }, { shouldPositionIncrement, updatePosition }) => (
+            {({ liveGame, loading }, { shouldPositionIncrement, updatePosition, incrementPosition, }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>

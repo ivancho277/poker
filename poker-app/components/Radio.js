@@ -19,6 +19,7 @@ class Radio extends Component {
         super(props);
         state = {
             value: 0
+            
         }
 
     }
@@ -30,28 +31,31 @@ class Radio extends Component {
         });
     }
 
+    
+
 
 
 
     positionReturn(position) {
         // debugger
-        //this.props.getPosition(position);
+        this.props.setPosition(position);
     }
 
 
 
     _updateIndex = (index) => {
-        this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
-        this.setState({ value: index });
+        //this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
+        //this.setState({ value: index });
     }
 
 
     //!need to update store position as well.
     handleClick = (value) => {
-        debugger;
+        //debugger;
+
         this.props.setPosition(value);
-        //this._updateIndex(value);
-        this.setState({ value: value });
+        this._updateIndex(value);
+        //this.setState({ value: value });
 
     }
 
@@ -77,16 +81,24 @@ class Radio extends Component {
         }
     }
 
-
-    componentDidUpdate() {
-        debugger;
-        if (this.props.position != this.state.value) {
-            this._updateIndex(this.props.position);
-        }
+    getSnapshotBeforeUpdate(prevProps, prevState){
+        console.log('prevProps', prevProps)
+        console.log('prevState', prevState)
+        return prevState
+        
+    }
+    componentDidUpdate(prevProps, prevState) {
+        // debugger;
+       // this.props.shouldPositionIncrement(this.updateIndex)
+       if(this.state.value != this.props.position){
+        this.updateIndex(this.props.position)   
+        
+       }
         console.log("Value: ", this.state.value);
         console.log("Prop, LIVEGAME: ", this.props.position);
-
+        
     }
+
 
     render() {
         return (
@@ -100,7 +112,12 @@ class Radio extends Component {
                         buttonSize={10}
                         buttonOuterSize={20}
                         labelHorizontal={false}
-                        onPress={(value) => { this.handleClick(value); }}
+                        onPress={(value) => {
+                            //this.setState({value: value});
+                            //debugger;
+                            this.props.setPosition(value)
+                            console.log("I GOT PRESSEED!!:", value)
+                        }}
 
                     />
                 </View>
@@ -112,6 +129,7 @@ class Radio extends Component {
         );
     }
 };
+
 
 export default Radio;
 
