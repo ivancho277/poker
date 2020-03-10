@@ -20,30 +20,6 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 //     </AntDesign.Button>
 
 
-
-// getPosition = (position) => {
-//     this.setState({
-//         position: position
-//     })
-//     this.props.setPosition(position);
-// }
-
-// shouldPositionIncrement = (cb) => {
-//     if (this.state.currentTime.getTime() != this.state.previousTime.getTime()) {
-//         cb(this.state.position)
-//         //this.saveAllGames();
-//         this.CurrentGameSave();
-//         this.setState({
-//             previousTime: this.state.currentTime
-//         })
-//     }
-// }
-
-
-
-
-
-
 export const GameController = (props) => {
     const [{ liveGame, loading, currentTime, previousTime}, actions] = UseGameStore();
 
@@ -55,48 +31,17 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
 
     useEffect(() => {
-        console.log("CONTROLLER STATE: ", liveGame);
-        // if (state.liveGame) {
-        //     const game = state.liveGame.map(action => { return new Action(action) })
-        //     setLiveActions(game);
-        //     console.log('liveActions', liveActions)
-        // }
+        
         console.log("Time curr", currentTime)
         console.log("Time prev", previousTime)
-        console.log('out', liveActions)
-    }, [liveGame, ])
-    /**
-     * 
-     * @param {Function} cb - callback function which will be an increment index of what radio button is pressed in <Radio>
-     * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
-     * any methods form child component <Radio>.
-     */
-    // const shouldPositionIncrement = (cb) => {
-    //     console.log("am i here?")
+        
+    }, [liveGame])
 
-    //     if (currentTime.getTime() != previousTime.getTime()) {
-    //         cb(liveGame.position);
-    //         console.log("position fun: ", liveGame.position)
-    //         //this.saveAllGames();
-    //         // actions.saveCurrentGame();
-    //         setPreviousTime(currentTime)
-    //     }
-    // }
-    const getPosition = (position) => {
-        //actions.updatePosition(position);
-
-        // this.props.setPosition(position);
-    }
 
     onActionClick = (action, actionIndex) => {
        // setCurrentTime(new Date())
         actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
-        
-      
-
     }
-
-
 
     // debugger
     return (

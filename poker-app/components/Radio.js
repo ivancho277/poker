@@ -57,15 +57,9 @@ class Radio extends Component {
     }
  
     componentDidUpdate(prevProps, prevState) {
-        // debugger;
-       // this.props.shouldPositionIncrement(this.updateIndex)
        if(this.state.value != this.props.position){
            this.updateIndex(this.props.position)   
-        
-       }
-        console.log("Value: ", this.state.value);
-        console.log("Prop, LIVEGAME: ", this.props.position);
-        
+       }  
     }
 
 
