@@ -18,10 +18,8 @@ class Radio extends Component {
     constructor(props) {
         super(props);
         state = {
-            value: 0
-            
+            value: 0   
         }
-
     }
 
     componentDidMount() {
@@ -31,32 +29,9 @@ class Radio extends Component {
         });
     }
 
-    
-
-
-
-
     positionReturn(position) {
         // debugger
         this.props.setPosition(position);
-    }
-
-
-
-    _updateIndex = (index) => {
-        //this.radioFormClear.updateIsActiveIndex(index); // just pass -1 and your radio button should clear
-        //this.setState({ value: index });
-    }
-
-
-    //!need to update store position as well.
-    handleClick = (value) => {
-        //debugger;
-
-        this.props.setPosition(value);
-        this._updateIndex(value);
-        //this.setState({ value: value });
-
     }
 
 
@@ -66,7 +41,7 @@ class Radio extends Component {
      * @memberof Radio
      */
     updateIndex = (currIndex) => {
-        if (currIndex < radio_props.length - 1) {
+        if (currIndex < radio_props.length) {
             this.radioFormClear.updateIsActiveIndex(currIndex); // just pass -1 and your radio button should clear
             this.setState({
                 value: currIndex
@@ -80,18 +55,12 @@ class Radio extends Component {
             this.positionReturn(0);
         }
     }
-
-    getSnapshotBeforeUpdate(prevProps, prevState){
-        console.log('prevProps', prevProps)
-        console.log('prevState', prevState)
-        return prevState
-        
-    }
+ 
     componentDidUpdate(prevProps, prevState) {
         // debugger;
        // this.props.shouldPositionIncrement(this.updateIndex)
        if(this.state.value != this.props.position){
-        this.updateIndex(this.props.position)   
+           this.updateIndex(this.props.position)   
         
        }
         console.log("Value: ", this.state.value);
