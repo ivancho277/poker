@@ -14,21 +14,21 @@ import { AntDesign } from "@expo/vector-icons";
 // import ActionButton from "react-native-action-button";
 
 export default class TagsModal extends Component {
-        state = {
-    // isVisible: false, //state of modal default false
+  state = {
+    isVisible: false, //state of modal default false
     tag: ""
   };
 
   render() {
     //debugger;
-    
+
 
     return (
       <View>
         <Modal
           animationType={"fade"}
           transparent={false}
-          visible={this.props.showModal}
+          visible={this.state.isVisible}
           onRequestClose={() => {
             console.log("Modal has been closed.");
           }}
@@ -38,7 +38,7 @@ export default class TagsModal extends Component {
             <Text style={{ fontSize: 16 }}>
               Add a new Tag or select a previous one.
             </Text>
-            {this.props.renderTagInput()}
+            {/* {this.props.renderTagInput()} */}
             <Text style={styles.text}>Select a Tag</Text>
             <View style={{ height: 200 }}>
               <ScrollPicker
@@ -64,7 +64,7 @@ export default class TagsModal extends Component {
             <Button
               title="Done"
               onPress={() => {
-                this.props.closeModal();
+                this.setState({isVisible: false})
               }}
             />
           </View>
@@ -76,7 +76,7 @@ export default class TagsModal extends Component {
                     onPress={() => { this.setState({ isVisible: true }) }}
                 /> */}
 
-        <AntDesign size={22} name="tags" />
+        <AntDesign.Button size={22} name="tags" onPress={() => { this.setState({ isVisible: true }) }}> Add Tags </AntDesign.Button>
       </View>
     );
   }

@@ -2,14 +2,11 @@ import React, { Component, useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, onLongPress } from 'react-native';
 import Radio from '../Radio.js';
 import { Button } from 'react-native-elements';
-import { MyContext } from '../../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
-import * as storageController from '../AsyncStorageController.js';
 import * as calculations from '../statscalculation.js';
+import TagsModal from '../TagsModal';
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
-const gameConstructors = require('../gameObjects.js');
-const { GameStats, Action, Game } = gameConstructors;
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
@@ -69,6 +66,7 @@ export const GameController = (props) => {
                                 )
                             })}
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            <TagsModal></TagsModal>
                         </View>
                         <View>
                             <Radio position={liveGame.position} setPosition={updatePosition}  />
