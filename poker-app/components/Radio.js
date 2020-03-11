@@ -30,7 +30,6 @@ class Radio extends Component {
     }
 
     positionReturn(position) {
-        // debugger
         this.props.setPosition(position);
     }
 

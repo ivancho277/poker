@@ -46,7 +46,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading }, { shouldPositionIncrement, updatePosition, incrementPosition, }) => (
+            {({ liveGame, loading }, {  updatePosition, incrementPosition, }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -71,7 +71,7 @@ export const GameController = (props) => {
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                         </View>
                         <View>
-                            <Radio position={liveGame.position} setPosition={updatePosition} shouldPositionIncrement={shouldPositionIncrement} />
+                            <Radio position={liveGame.position} setPosition={updatePosition}  />
                         </View>
                     </View>
                     :

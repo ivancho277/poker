@@ -309,28 +309,11 @@ const actions = {
 
 
 
-
-
-    //TODO: We can directly manipulate the state here, but as soon as setState gets called else where it will be overwritten. Maybe Find a way to make it work, or write something to update state before overwritting happens. Also Will not trigger rerender to show on screen. 
+    
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {
-        //clickedAction.incrementActionAtPosition(++getState().liveGame.position);
-        // const { liveGame } = getState();
-        //     console.log('liveGame', liveGame)
-        //     console.log('index', index)
-        //     console.log('liveGame', liveGame.actions[index])
-        //     console.log('clickedAction', clickedAction)
-        //let actionTOUpdate = liveGame.actions[index]
-        //dispatch(updatePosition())
         dispatch(setCurrentTime());
         dispatch(incrementLiveAction(index));
         dispatch(incrementPosition());
-        //console.log('actionToUpdate', liveGame.actions[index].countPerPosition[liveGame.position] )
-
-        // setState(draft => {
-        //     draft.liveGame.clickedAction.incrementActionAtPosition(++getState().liveGame.position)
-        //     console.log("test", clickedAction)
-        // })
-
     },
 
     shouldPositionIncrement: (cb) => ({dispatch}) => {
