@@ -4,7 +4,7 @@ import Radio from '../Radio.js';
 import { Button } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../statscalculation.js';
-import TagsModal from '../TagsModal';
+import {AddTag} from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
@@ -43,7 +43,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading }, {  updatePosition, incrementPosition, }) => (
+            {({ liveGame, loading, data }, {  updatePosition, incrementPosition, }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -66,7 +66,7 @@ export const GameController = (props) => {
                                 )
                             })}
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
-                            <TagsModal></TagsModal>
+                            <AddTag allTags={data.allTags}></AddTag>
                         </View>
                         <View>
                             <Radio position={liveGame.position} setPosition={updatePosition}  />
