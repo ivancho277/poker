@@ -24,7 +24,6 @@ export const GameController = (props) => {
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
     // const [doneLoading, setDoneLoading] = useState(false);
-    // const [position, setPosition] = useState();
     const [liveActions, setLiveActions] = useState();
 
     useEffect(() => {

@@ -11,15 +11,18 @@ import {
 } from "react-native";
 import ScrollPicker from "react-native-fen-wheel-scroll-picker";
 import { AntDesign } from "@expo/vector-icons";
+import { GameSubscriber, UseGameStore } from '../../DataStore/GameStore'
 // import ActionButton from "react-native-action-button";
 
 // export default class AddTag extends Component {
 
 export const AddTag = (props) => {
 
-    const [tag, setTag] = useState("")
+    const [state, actions] = UseGameStore();
+    const [tag, setTag] = useState("");
+    const [selectedTag, setSelectedTag] = useState('choose a Tag')
     const [isVisible, setIsVisible] = useState(false);
-    
+
     return (
         <View>
             <Modal
@@ -35,11 +38,20 @@ export const AddTag = (props) => {
                     <Text style={{ fontSize: 16 }}>
                         Add a new Tag or select a previous one.
             </Text>
-                    {/* {this.props.renderTagInput()} */}
+                    <View>
+                        <TextInput
+                            style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                            placeholder={selectedTag}
+                            onChangeText={(tag) => { setTag(tag) }}
+                            value={tag}
+                        />
+                        {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag); this.clearTags(); }} />
+                    </View>
                     <Text style={styles.text}>Select a Tag</Text>
                     <View style={{ height: 200 }}>
                         <ScrollPicker
-                            dataSource={props.allTags}
+                            dataSource={state.data.tags}
                             selectedIndex={0}
                             renderItem={(data, index, isSelected) => {
                                 //
@@ -61,7 +73,7 @@ export const AddTag = (props) => {
                     <Button
                         title="Done"
                         onPress={() => {
-                            console.log("TAGS!: ", props.allTags);
+                            console.log("TAGS!: ", state.data.tags);
                             setIsVisible(false);
                         }}
                     />
