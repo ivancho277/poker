@@ -1,0 +1,50 @@
+
+Currently Working on:
+  ☐ Getting position auto increment working
+  ☐ Working on getting the double increment fixed
+
+
+
+
+
+ALL TODODS:
+  Store Issues: 
+  ✔ Figure out why when actions file is not available TestScreen cannot find Store actions. @done(20-02-24 14:57)
+  ✔ Fix warning "cant perform a React state update on an unmounted component" @high @done(20-02-27 16:12)
+  ✔ Render and Rerender are working in Test Screen. @done(20-02-27 16:14)
+  ✔ Fix State Update issue with useing Class instances @started(20-02-27 16:17) @done(20-03-02 17:26) @lasted(4d1h9m11s)
+  NOTE: The above is fixed, but not implemented fully yet
+
+  ☐ Finish All store actions
+    ☐ Load
+    ✔ On action Click @done(20-03-10 17:18)
+    ☐ Save All Games
+    ☐ Create new Add Tags Modal, or component that is similar
+    ☐ Create new Add actions component.
+    ☐ Save Current Game
+    ✔ Update Games or Current Game @done(20-03-06 13:49)
+    ✔ Figure out where / how to implement shouldPositionIncrement Method @started(20-03-03 00:01) @done(20-03-06 13:49) @lasted(3d13h48m7s)
+    ✔ Add click specific position @done(20-03-09 18:18)
+    ☐ javaDoc code
+    ☐ Organize Code
+    ☐ fix small bug, auto increment needs to go one more position
+
+
+  New Functional Components :
+    ☐ Button Controller 
+    ☐ New Stats boxes
+
+
+
+
+
+  Misc_Found_BugsToFix:
+    ☐ The add a new Tag is not saving to a live game while playing. Seems like Save and Load work fine. @high (finish new store first)
+    ☐ If warning is annoying for depreciated lifecycle method, can copy the updateed code from github @low 
+ 
+  
+  Tests:  
+    ☐ Figure out what are needed Tests for new Store.
+    ☐ 
+  
+    
