@@ -11,7 +11,6 @@ import {
 import { produce } from 'immer';
 import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
-import * as actionTypes from './ActionTypes';
 const calculation = require("../components/statscalculation.js");
 
 
@@ -117,6 +116,14 @@ const setError = msg => ({ setState }) => {
         //dispatch(setData(loadedData));
         draft.error = 'Error with loading';
     });
+}
+
+const addNewTag = tag => ({getState ,setState}) => {
+
+}
+
+const addNewAction = action => ({getState, setState}) => {
+
 }
 
 // const createNewActionInstances = actions => {
