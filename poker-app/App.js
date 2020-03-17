@@ -19,7 +19,8 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
 // import Menu from 'react-native--storage-dev-menu-item';
-import TestScreen from './TestScreen'
+import TestScreen from './TestScreen';
+import SettingsNew from './SettingsNew';
 import { Dispatch } from './stateContext/Dispatch'
 
 class App extends React.Component {
@@ -94,10 +95,18 @@ const AppSwitchNavigator = createStackNavigator({
     })
   },
 
+  NewSettings: {
+    screen: SettingsNew,
+    navigationOptions: {
+      title: "New Settings"
+    }
+  },
+
   Tests: {
     screen: TestScreen,
-    navigationOptions: { titel: "Test Things" }
-  }
+    navigationOptions: { title: "Test Things" }
+  },
+
 });
 
 const AppDrawerNavigator = createDrawerNavigator({
@@ -118,6 +127,9 @@ const AppDrawerNavigator = createDrawerNavigator({
   Tests: {
     screen: TestScreen,
   },
+  NewSettings: {
+    screen: SettingsNew,
+  }
 
 
 });
