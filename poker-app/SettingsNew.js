@@ -5,7 +5,7 @@ const storage = require('./components/AsyncStorageController.js');
 // import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { MyContext } from './stateContext/GlobalState'
-import { Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';
+import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
@@ -66,173 +66,91 @@ export default class NewSettings extends Component {
             <MyContext.Consumer>
                 {(context) =>
                     <View>
-                        <Subheading style={{ backgroundColor: 'lightgrey' }}>Edit Game Actions</Subheading>
-                        <View style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                        <View style={{ margin: 4, padding: 4, borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }} >
+                            <Subheading style={{ backgroundColor: 'lightgrey' }}>Edit Game Actions</Subheading>
+                            <View>
+                                <View style={{ width: '100%', display: 'flex', flexDirection: 'row', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                    <TextInput
+                                        style={{ width: '100%', position: 'relative' }}
+                                        label='add action'
+                                        value={this.state.actionVal}
+                                        onChangeText={text => this.setState({ actionVal: text })}
+                                    />
 
-                            <TextInput
-                                style={{ width: '100%', position: 'relative' }}
-                                label='add action'
-                                value={this.state.actionVal}
-                                onChangeText={text => this.setState({ actionVal: text })}
-                            />
+                                    <IconButton
+                                        style={{ position: 'absolute', right: 10, top: 7 }}
+                                        icon="plus"
+                                        color={'blue'}
+                                        size={28}
+                                        onPress={() => console.log('Pressed')}
+                                    />
+                                </View>
+                                <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
+                                <View style={{ width: '100%', display: 'flex', position: 'relative', flexDirection: 'row', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                    <View style={{ width: '100%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                        <Picker
+                                            label='choose action to remove'
+                                            selectedValue={this.state.action}
+                                            prompt='Please select action to Remove'
+                                            style={{ margin: 3, height: 50, width: '60%', }}
+                                            onValueChange={(itemValue, itemIndex) =>
+                                                this.setState({ action: itemValue })
+                                            }>
+                                            {context.state.actionStrings.map((action, i) => {
+                                                return <Picker.Item label={action} key={action} value={action} />
+                                            })}
 
-                            <IconButton
-                                style={{ position: 'absolute', right: 10, top: 7 }}
-                                icon="plus"
-                                color={'blue'}
-                                size={28}
-                                onPress={() => console.log('Pressed')}
-                            />
+                                        </Picker>
+                                    </View>
+                                    <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => console.log('Pressed')}>
+                                        <Text style={{ fontSize: 10 }}>Remove Action </Text>
+                                    </Button>
+                                </View>
+                            </View>
                         </View>
-                        <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
-                        <View style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                        <View style={{ margin: 4, padding: 4, borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }} >
+                            <Subheading style={{ backgroundColor: 'lightgrey' }}>Edit Tags</Subheading>
+                            <View>
+                                <View style={{ width: '100%', display: 'flex', flexDirection: 'row', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                    <TextInput
+                                        style={{ width: '100%', position: 'relative' }}
+                                        label='add tag'
+                                        value={this.state.tagVal}
+                                        onChangeText={text => this.setState({ tagVal: text })}
+                                    />
 
-                            <TextInput
-                                style={{ width: '100%', position: 'relative' }}
-                                label='add action'
-                                value={this.state.actionVal}
-                                onChangeText={text => this.setState({ actionVal: text })}
-                            />
+                                    <IconButton
+                                        style={{ position: 'absolute', right: 10, top: 7 }}
+                                        icon="plus"
+                                        color={'blue'}
+                                        size={28}
+                                        onPress={() => console.log('Pressed')}
+                                    />
+                                </View>
+                                <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
+                                <View style={{ width: '100%', display: 'flex', position: 'relative', flexDirection: 'row', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                    <View style={{ width: '100%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
+                                        <Picker
+                                            label='choose tag to remove'
+                                            selectedValue={this.state.tag}
+                                            prompt='Please select action to Remove'
+                                            style={{ margin: 3, height: 50, width: '60%', }}
+                                            onValueChange={(itemValue, itemIndex) =>
+                                                this.setState({ tag: itemValue })
+                                            }>
+                                            {context.state.allTags.map((action, i) => {
+                                                return <Picker.Item label={action} key={action} value={action} />
+                                            })}
 
-                            <IconButton
-                                style={{ position: 'absolute', right: 10, top: 7 }}
-                                icon="plus"
-                                color={'blue'}
-                                size={28}
-                                onPress={() => console.log('Pressed')}
-                            />
+                                        </Picker>
+                                    </View>
+                                    <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => console.log('Pressed')}>
+                                        <Text style={{ fontSize: 10 }}>Remove Action </Text>
+                                    </Button>
+                                </View>
+                            </View>
                         </View>
-
-
                     </View>
-
-
-
-                    //   <Container>
-                    //     <Content padder contentContainerStyle={{ flex: 1, justifyContent: "center" }} >
-
-
-                    //       <ScrollView>
-                    //         <List>
-                    //           <ListItem itemDivider>
-                    //             <Text>Edit Action</Text>
-                    //           </ListItem>
-
-
-
-                    //           <ListItem>
-                    //             <Icon active name='hand' />
-                    //             <Input onChangeText={(value) => { this.setState({ action: value }); console.log(value); }} placeholder='add action here' value={this.state.action} />
-                    //             <Button onPress={() => { context.modifiers.addAction(this.state.action) & this.setState({ action: '' }) }} >
-
-                    //               <Icon name='add' />
-
-                    //             </Button>
-                    //           </ListItem>
-
-
-                    //           <ListItem picker>
-                    //           <Button iconLeft warning onPress={() => {context.modifiers.removeAction(this.state.actionVal); console.log('lookie');}}>
-                    //               <Label>Remove: </Label>
-                    //               <Icon type="AntDesign" name='minus' />
-
-                    //             </Button>
-
-
-
-                    //             <Picker
-                    //               prompt="Remove Action"
-                    //               mode="dialog"
-                    //               note={true}
-                    //               placeholder="choose action to remove"
-                    //               iosIcon={<Icon name="arrow-down" />}
-                    //               textStyle={{ color: "#5cb85c" }}
-                    //               itemStyle={{
-                    //                 backgroundColor: "#d3d3d3",
-                    //                 marginLeft: 0,
-                    //                 paddingLeft: 10
-                    //               }}
-                    //               itemTextStyle={{ color: '#788ad2' }}
-                    //               style={{ width: undefined }}
-                    //               selectedValue={this.state.actionVal}
-                    //               onValueChange={this.onActionChange.bind(this)}
-                    //             >
-                    //               {context.state.actionStrings.map((action, i) => {
-                    //                 return <Picker.Item label={action} key={action} value={action} />
-                    //               })}
-                    //               {/* <Picker.Item label="actions list" value="placeholder" /> */}
-                    //             </Picker>
-
-
-                    //           </ListItem>
-
-                    //           <ListItem itemDivider>
-                    //             <Text>Edit Tags</Text>
-                    //           </ListItem>
-
-
-
-
-                    //           <ListItem>
-                    //             <Icon active name='pricetag' />
-                    //             <Input onChangeText={(value) => { this.setState({ tag: value }); console.log(value); }} placeholder='add tag here' value={this.state.tag} />
-                    //             <Button onPress={() => { context.modifiers.addTag(this.state.tag) & this.setState({ tag: '' }) }}>
-                    //               <Icon name='add' />
-                    //             </Button>
-                    //           </ListItem>
-
-                    //           <ListItem>
-                    //             <Button iconLeft warning onPress={() => { context.modifiers.removeTag(this.state.tagVal); console.log('lookie');}}>
-                    //               <Label>Remove: </Label>
-                    //               <Icon type="AntDesign" name='minus' />
-
-                    //             </Button>
-
-                    //             <Picker
-                    //               prompt="Remove Tag"
-                    //               mode="dialog"
-                    //               note={true}
-                    //               placeholder="choose tag to remove"
-                    //               iosIcon={<Icon name="arrow-down" />}
-                    //               textStyle={{ color: "#5cb85c" }}
-                    //               itemStyle={{
-                    //                 backgroundColor: "#d3d3d3",
-                    //                 marginLeft: 0,
-                    //                 paddingLeft: 10
-                    //               }}
-                    //               itemTextStyle={{ color: '#788ad2' }}
-                    //               selectedValue={this.state.tagVal}
-                    //               onValueChange={this.onTagChange.bind(this)}
-                    //             >
-                    //               {context.state.allTags.map((tag, i) => {
-                    //                 return <Picker.Item label={tag} key={tag} value={tag} />
-                    //               })}
-                    //               {/* <Picker.Item label="list of tags" value="placeholder" />*/}
-                    //             </Picker>
-
-                    //           </ListItem>
-                    //           <ListItem itemDivider>
-                    //             <Text>Delete or Reset</Text>
-                    //           </ListItem>
-                    //           <ListItem>
-                    //             <Button transparent full onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} >
-                    //               <Text>Reset Actions</Text>
-                    //             </Button>
-                    //           </ListItem>
-                    //           <ListItem>
-                    //             <Button transparent onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} >
-                    //               <Text>Delete all Tags</Text>
-                    //             </Button>
-                    //           </ListItem>
-                    //           <ListItem>
-                    //             <Button hasText warning onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} >
-                    //               <Text>Delete all Data</Text>
-                    //             </Button>
-                    //           </ListItem>
-                    //         </List>
-                    //       </ScrollView >
-                    //     </Content >
-                    //   </Container >
                 }
             </MyContext.Consumer>
         )
