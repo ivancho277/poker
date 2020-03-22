@@ -139,6 +139,7 @@ const addToAllTags = tag => ({ getState, setState }) => {
         setState(draft => {
             draft.data.tags = updatedtags;
         })
+        storage.saveTags(updatedtags)
     }
 }
 
