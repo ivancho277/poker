@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Platform,
     StyleSheet,
@@ -18,10 +18,17 @@ import { GameSubscriber, UseGameStore } from '../../DataStore/GameStore'
 
 export const AddTag = (props) => {
 
-    const [state, actions] = UseGameStore();
+    const [{data}, actions] = UseGameStore();
     const [tag, setTag] = useState("");
     const [selectedTag, setSelectedTag] = useState('choose a Tag')
     const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        
+        return () => {
+          console.log('Updated');  
+        }
+    }, [data])
 
     return (
         <View>
@@ -51,7 +58,7 @@ export const AddTag = (props) => {
                     <Text style={styles.text}>Select a Tag</Text>
                     <View style={{ height: 200 }}>
                         <ScrollPicker
-                            dataSource={state.data.tags}
+                            dataSource={data.tags}
                             selectedIndex={0}
                             renderItem={(data, index, isSelected) => {
                                 console.log("CHECK THIS DAMN THING OUT");
@@ -76,7 +83,7 @@ export const AddTag = (props) => {
                     <Button
                         title="Done"
                         onPress={() => {
-                            console.log("TAGS!: ", state.data.tags);
+                            console.log("TAGS!: ", data.tags);
                             setIsVisible(false);
                         }}
                     />

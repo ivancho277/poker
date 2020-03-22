@@ -10,7 +10,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { isEmpty } from './components/statscalculation.js'
 import * as storage from './components/AsyncStorageController.js';
 const gameConstructors = require('./components/gameObjects.js');
-import GameActionSheet from './components/GameActionSheet'
+
 
 const { gameStats, Action } = gameConstructors;
 // const storage = require("./components/AsyncStorageController.js");

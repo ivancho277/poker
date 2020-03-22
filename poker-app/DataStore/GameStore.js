@@ -123,7 +123,7 @@ const setError = msg => ({ setState }) => {
 }
 
 const addNewTag = tag => ({ getState, setState }) => {
-    const { liveGame, allTags } = getState();
+    const { liveGame,  } = getState();
     if (isValidTag(tag, liveGame.tags)) {
         // let updatedtags = allTags.concat(tag);
         setState(draft => {
@@ -133,11 +133,11 @@ const addNewTag = tag => ({ getState, setState }) => {
 }
 
 const addToAllTags = tag => ({ getState, setState }) => {
-    const { liveGame, allTags } = getState();
-    if (isValidTag(tag, allTags)) {
-        let updatedtags = allTags.concat(tag);
+    const { liveGame, data } = getState();
+    if (isValidTag(tag, data.tags)) {
+        let updatedtags = data.tags.concat(tag);
         setState(draft => {
-            draft.data.allTags = updatedtags;
+            draft.data.tags = updatedtags;
         })
     }
 }

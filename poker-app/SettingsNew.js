@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight } from 'react-native';
 // import { Button } from 'react-native-elements';
 const storage = require('./components/AsyncStorageController.js');
-// import { Container, Header, Content, List, ListItem, Text, Button, Icon, CardItem, Card, Input, Picker, Form, Item, Label, Body } from 'native-base';
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { MyContext } from './stateContext/GlobalState'
-import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';
+import { Text, Divider, Subheading, IconButton, List, Checkbox, Button ,TextInput, Appbar } from 'react-native-paper';
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
