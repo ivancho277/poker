@@ -141,7 +141,6 @@ export default class SettingsScreen extends Component {
                     <Button iconLeft warning onPress={() => { context.modifiers.removeTag(this.state.tagVal); console.log('lookie');}}>
                       <Label>Remove: </Label>
                       <Icon type="AntDesign" name='minus' />
-
                     </Button>
 
                     <Picker

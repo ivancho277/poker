@@ -20,15 +20,14 @@ export default class NewSettings extends Component {
             basic: true,
             showEditingActions: false,
             showEditingTags: false,
-            tagVal: undefined,
-            actionVal: 'actions'
+            tagVal: 'add tag...',
+            actionVal: 'add action...'
         };
     }
 
 
 
     confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {
-
         Alert.alert(
             title,
             message,
@@ -133,7 +132,7 @@ export default class NewSettings extends Component {
                                         <Picker
                                             label='choose tag to remove'
                                             selectedValue={this.state.tag}
-                                            prompt='Please select action to Remove'
+                                            prompt='Please select tag to Remove'
                                             style={{ margin: 3, height: 50, width: '60%', }}
                                             onValueChange={(itemValue, itemIndex) =>
                                                 this.setState({ tag: itemValue })
@@ -149,6 +148,16 @@ export default class NewSettings extends Component {
                                     </Button>
                                 </View>
                             </View>
+                        </View>
+
+                        <View>
+                            <Divider />
+                            <Button color='teal' mode='contained'>Remove all Tags</Button>
+                            <Divider />
+                            <Button color='teal' mode='contained'>Reset Actions</Button>
+                            <Divider />
+                            <Button color='red' mode='contained'>DELETE ALL DATA</Button>
+
                         </View>
                     </View>
                 }

@@ -5,8 +5,7 @@ const isValidTag = (tag, allTags) => {
     if (!allTags.includes(tag) && tag != "" && typeof (tag) === 'string') {
         return true;
     }
-    else return false;
-    
+    else return false;  
 }
 /**
  * 

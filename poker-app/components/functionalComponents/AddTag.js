@@ -41,12 +41,12 @@ export const AddTag = (props) => {
                     <View>
                         <TextInput
                             style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
-                            placeholder={selectedTag}
+                            placeholder={tag}
                             onChangeText={(tag) => { setTag(tag) }}
                             value={tag}
                         />
                         {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
-                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.context.modifiers.addTag(this.state.tag); this.clearTags(); }} />
+                        <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { actions.addTagToCurrentGame(tag); actions.addTagToAll(tag); setTag('') }} />
                     </View>
                     <Text style={styles.text}>Select a Tag</Text>
                     <View style={{ height: 200 }}>
@@ -54,10 +54,13 @@ export const AddTag = (props) => {
                             dataSource={state.data.tags}
                             selectedIndex={0}
                             renderItem={(data, index, isSelected) => {
-                                //
+                                console.log("CHECK THIS DAMN THING OUT");
+                                console.log(data, index);
+                                console.log(isSelected);
                             }}
                             onValueChange={(data, selectedIndex) => {
-                                // this.props.showSelectedTag(data);
+                                data[selectedIndex]
+                                setTag(data);
                             }}
                             wrapperHeight={200}
                             wrapperWidth={150}

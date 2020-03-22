@@ -4,7 +4,7 @@ import Radio from '../Radio.js';
 import { Button } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../statscalculation.js';
-import {AddTag} from './AddTag'
+import { AddTag } from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
@@ -18,7 +18,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [{ liveGame, loading, currentTime, previousTime}, actions] = UseGameStore();
+    const [{ liveGame, loading, currentTime, previousTime }, actions] = UseGameStore();
 
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
@@ -27,22 +27,22 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
 
     useEffect(() => {
-        
+
         console.log("Time curr", currentTime)
         console.log("Time prev", previousTime)
-        
-    }, [liveGame])
+        console.log("liveGame:  ", liveGame);
+    }, [liveGame,])
 
 
     onActionClick = (action, actionIndex) => {
-       // setCurrentTime(new Date())
+        // setCurrentTime(new Date())
         actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
     }
 
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, {  updatePosition, incrementPosition, }) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -60,15 +60,17 @@ export const GameController = (props) => {
                             {liveGame.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index);  }} />
+                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
                                     </View>
                                 )
                             })}
+                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { console.log("Should save here") }}>Save Game</AntDesign.Button>
+
                             <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
                             <AddTag allTags={data.allTags}></AddTag>
                         </View>
                         <View>
-                            <Radio position={liveGame.position} setPosition={updatePosition}  />
+                            <Radio position={liveGame.position} setPosition={updatePosition} />
                         </View>
                     </View>
                     :

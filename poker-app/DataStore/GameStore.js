@@ -11,6 +11,11 @@ import {
 import { produce } from 'immer';
 import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
+import {
+    isValidTag,
+    validActionAdd,
+    validActionRemove
+} from "../utils/validators.js";
 const calculation = require("../components/statscalculation.js");
 
 
@@ -29,7 +34,6 @@ const logger = storeState => next => action => {
     console.log("action: ", action.toString());
     console.log("result!!: ");
     //console.log('UPDATED>> :', storeState.getState());
-
 }
 
 
@@ -118,11 +122,40 @@ const setError = msg => ({ setState }) => {
     });
 }
 
-const addNewTag = tag => ({getState ,setState}) => {
+const addNewTag = tag => ({ getState, setState }) => {
+    const { liveGame, allTags } = getState();
+    if (isValidTag(tag, liveGame.tags)) {
+        // let updatedtags = allTags.concat(tag);
+        setState(draft => {
+            draft.liveGame.tags = liveGame.tags.concat(tag);
+        })
+    }
+}
+
+const addToAllTags = tag => ({ getState, setState }) => {
+    const { liveGame, allTags } = getState();
+    if (isValidTag(tag, allTags)) {
+        let updatedtags = allTags.concat(tag);
+        setState(draft => {
+            draft.data.allTags = updatedtags;
+        })
+    }
+}
+
+const removeTag = tag => ({ getState, setState }) => {
 
 }
 
-const addNewAction = action => ({getState, setState}) => {
+const addNewAction = action => ({ getState, setState }) => {
+
+}
+
+const removeAction = actions => ({ getState, setState }) => {
+
+}
+
+const resetActions = () => ({ setState }) => {
+    storage.resetActions();
 
 }
 
@@ -227,33 +260,6 @@ logPercentByPosition = () => {
 
 /**
  * 
- * @param {Function} cb - callback function which will be an increment index of what radio button is pressed in <Radio>
- * - This is necessary due to the Radio component needing to update its index internally, and I am not able to call 
- * any methods form child component <Radio>.
- */
-const shouldPositionIncrement = (cb) => ({getState, setState}) => {
-    console.log("am i here?")
-    const {currentTime, previousTime, liveGame} = getState();
-    if (currentTime.getTime() != previousTime.getTime()) {
-        cb(liveGame.position);
-        console.log("position fun: ", liveGame.position)
-        //this.saveAllGames();
-        // actions.saveCurrentGame();
-        //setPreviousTime(currentTime)
-        setPreviousTimeToCurrent();
-    }
-}
-
-
-
-// const OnClickAutoIncrement = (index) => ({ setState, getState }) => {
-//     incrementLiveAction(index);
-//     setCurrentTime();
-// }
-
-
-/**
- * 
  * @param {Number} index - index of clicked action in LiveGame.actions[]
  * - will increment state of clicked action, as well as state of liveGame position.
  */
@@ -268,7 +274,7 @@ const incrementLiveAction = (index) => ({ setState, getState }) => {
     setCurrentTime();
 }
 
-const incrementPosition = () => ({setState, getState}) => {
+const incrementPosition = () => ({ setState, getState }) => {
     const { liveGame, MIN_POSITION, MAX_POSITION } = getState();
     setState(draft => {
         draft.liveGame.position = liveGame.position + 1 <= MAX_POSITION ? ++liveGame.position : MIN_POSITION;
@@ -316,35 +322,21 @@ const actions = {
 
 
 
-    
+
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {
         dispatch(setCurrentTime());
         dispatch(incrementLiveAction(index));
         dispatch(incrementPosition());
     },
 
-    shouldPositionIncrement: (cb) => ({dispatch}) => {
-        dispatch(shouldPositionIncrement(cb))
-    },
+
 
     updatePosition: (newPosition) => ({ getState, setState, dispatch }) => {
         dispatch(updatePosition(newPosition));
     },
 
-    incrementPosition: () => ({dispatch}) => {
+    incrementPosition: () => ({ dispatch }) => {
         dispatch(incrementPosition());
-    },
-
-    createGameActions: createGameActions = () => ({ getState, setState, dispatch }) => {
-
-    },
-
-    createNewGameInstance: createGameInstance = () => ({ getState, setState, dispatch }) => {
-
-    },
-
-    createCurrentGameInstance: createCurrentGame = () => ({ getState, setState, dispatch }) => {
-
     },
 
 
@@ -359,6 +351,33 @@ const actions = {
     saveCurrentGame: saveCurrentGame = () => ({ getState, setState, dispatch }) => {
         dispatch(CurrentGameSave());
     },
+
+    resetActions: () => ({ dispatch }) => {
+        dispatch(resetActions());
+    },
+
+    addNewAction: () => ({ getState, dispatch }) => {
+
+    },
+
+    addTagToCurrentGame: (tag) => ({ dispatch }) => {
+        dispatch(addNewTag(tag))
+    },
+
+    addTagToAll: (tag) => ({ dispatch }) => {
+        dispatch(addToAllTags(tag))
+    },
+
+    removeTag: (tag) => ({ dispatch }) => {
+
+    },
+
+    removeAllTags: () => ({ dispatch }) => {
+
+    }
+
+
+
 
 
 
