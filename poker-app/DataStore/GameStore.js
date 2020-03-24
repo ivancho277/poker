@@ -385,7 +385,7 @@ const actions = {
     },
 
     removeTag: (tag) => ({ dispatch }) => {
-
+        
     },
 
     removeAllTags: () => ({ dispatch }) => {
