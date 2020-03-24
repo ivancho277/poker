@@ -18,15 +18,15 @@ import { GameSubscriber, UseGameStore } from '../../DataStore/GameStore'
 
 export const AddTag = (props) => {
 
-    const [{data}, actions] = UseGameStore();
+    const [{ data }, actions] = UseGameStore();
     const [tag, setTag] = useState("");
     const [selectedTag, setSelectedTag] = useState('choose a Tag')
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        
+
         return () => {
-          console.log('Updated');  
+            console.log('Updated');
         }
     }, [data])
 

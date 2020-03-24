@@ -8,7 +8,9 @@ import * as storage from './components/AsyncStorageController.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
-import { GameController } from './components/functionalComponents/GameController'
+import { GameController } from './components/functionalComponents/GameController';
+import ScrollPicker from "react-native-fen-wheel-scroll-picker";
+
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
 // const calculation = require('./components/statscalculation.js')
@@ -20,13 +22,13 @@ export default function TestScreen() {
     const [state, actions] = UseGameStore();
     const [loading, setLoading] = useState(state.loading);
 
-    
+
     //NOTE: later I may need to check if I need to define an async function inside, and then call load and run a clean up. 
     useEffect(() => {
 
         //setLoading(true);
         actions.load().then(() => {
-           // console.log("screen state::::", state);
+            // console.log("screen state::::", state);
             //setLoading(false);
         }).catch(err => {
             alert('error in test load')

@@ -19,7 +19,8 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 export const GameController = (props) => {
     const [{ liveGame, loading, currentTime, previousTime }, actions] = UseGameStore();
-
+    const [showActionInput, setShowActionInput] = useState(false);
+    const [action, setAction] = useState('')
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
@@ -42,7 +43,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, }) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction}) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -50,6 +51,7 @@ export const GameController = (props) => {
                             <Text>DONE</Text>
                             {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                             <Text>Position: {liveGame.position} </Text>
+                            <View></View>
                             <View>{liveGame.actions.map((action, index) => {
                                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
                             })}</View>
@@ -66,7 +68,21 @@ export const GameController = (props) => {
                             })}
                             <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { console.log("Should save here") }}>Save Game</AntDesign.Button>
 
-                            <AntDesign.Button name="pluscircleo" backgroundColor="#3b5998" onLongPress={() => { setActionInput(true) }} onPress={() => { console.log("pressed") }}></AntDesign.Button>
+                            <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>Add Action</AntDesign.Button>
+                            {showActionInput ?
+                                <View>
+                                    <TextInput
+                                        style={{ backgroundColor: "white", height: 40, borderColor: "#000000", borderWidth: 1, borderStyle: 'solid' }}
+                                        placeholder={"add an action..."}
+                                        onChangeText={(action) => { setAction(action) }}
+                                        value={action}
+                                    />
+                                    {/* <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save tag" onPress={() => { this.saveToTags(this.state.tag); this.clearTags(); this.saveToAllTags() }} /> */}
+                                    <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save action" onPress={() => { addNewAction(action); setAction('') }} />
+                                </View>
+                                :
+                                <View><Text>{'\n'}</Text></View>
+                            }
                             <AddTag allTags={data.allTags}></AddTag>
                         </View>
                         <View>

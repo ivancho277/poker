@@ -148,6 +148,16 @@ const removeTag = tag => ({ getState, setState }) => {
 }
 
 const addNewAction = action => ({ getState, setState }) => {
+    const {data} = getState();
+    if(validActionAdd(action, data.actions)){
+        let updatedActions =  data.actions.concat(action);
+        console.log(data.actions);
+        console.log(updatedActions);
+        setState(draft => {
+            draft.data.actions = updatedActions
+        })
+        storage.saveActions(updatedActions);
+    }
 
 }
 
@@ -157,6 +167,7 @@ const removeAction = actions => ({ getState, setState }) => {
 
 const resetActions = () => ({ setState }) => {
     storage.resetActions();
+
 
 }
 
@@ -357,8 +368,12 @@ const actions = {
         dispatch(resetActions());
     },
 
-    addNewAction: () => ({ getState, dispatch }) => {
+    addNewAction: (action) => ({ getState, dispatch }) => {
+        dispatch(addNewAction(action));
+    },
 
+    resetActions: () => ({setState}) => {
+        dispatch(storage.resetActions())
     },
 
     addTagToCurrentGame: (tag) => ({ dispatch }) => {
@@ -375,7 +390,7 @@ const actions = {
 
     removeAllTags: () => ({ dispatch }) => {
 
-    }
+    },
 
 
 
