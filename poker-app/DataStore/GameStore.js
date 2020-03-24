@@ -37,13 +37,13 @@ const logger = storeState => next => action => {
 }
 
 
-const makeLiveGame = storeState => next => action => {
-    const { data } = storeState.getState();
-    if (data.actions) {
-        const newGame = data.actions;
-        console.log("LOOOK! :", newGame)
-    }
-}
+// const makeLiveGame = storeState => next => action => {
+//     const { data } = storeState.getState();
+//     if (data.actions) {
+//         const newGame = data.actions;
+//         console.log("LOOOK! :", newGame)
+//     }
+// }
 
 
 defaults.middlewares.add(logger);
@@ -148,13 +148,15 @@ const removeTag = tag => ({ getState, setState }) => {
 }
 
 const addNewAction = action => ({ getState, setState }) => {
-    const {data} = getState();
+    const {data, liveGame} = getState();
     if(validActionAdd(action, data.actions)){
         let updatedActions =  data.actions.concat(action);
+        let updatedLiveGame = liveGame.actions.concat(new Action(action))
         console.log(data.actions);
         console.log(updatedActions);
         setState(draft => {
             draft.data.actions = updatedActions
+            draft.liveGame.actions = updatedLiveGame
         })
         storage.saveActions(updatedActions);
     }
@@ -385,7 +387,7 @@ const actions = {
     },
 
     removeTag: (tag) => ({ dispatch }) => {
-        
+
     },
 
     removeAllTags: () => ({ dispatch }) => {
