@@ -25,13 +25,13 @@ const { GameStats, Action, Game } = gameConstructors;
 // const {currentTags} = global.state
 export default class PracticeButtonController extends Component {
     constructor(props) {
-        
+
         super(props);
         this.state = {
             //call: 0,
             //fold: 0,
             //raise: 0,
-            
+
 
             actions: [],
             actionStrings: [],
@@ -156,7 +156,7 @@ export default class PracticeButtonController extends Component {
         //this.setActions();
         this.setState({ doneLoading: true })
         console.log("PBCCCC", this.props.context);
-        
+
 
     }
 
@@ -352,7 +352,7 @@ export default class PracticeButtonController extends Component {
                     <View>
                         {
                        /*his.props.currentActions != null ?  */  this.props.currentActions.length > 0 ?
-                                <View style={{ display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                <View style={{ borderWidth: 1, borderStyle: 'solid', borderColor: 'black', margin: 5, display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                     {this.props.currentActions.map((action, index) => {
                                         return (
                                             <View key={index}>

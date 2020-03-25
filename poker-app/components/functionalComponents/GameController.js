@@ -43,7 +43,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction}) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -51,24 +51,25 @@ export const GameController = (props) => {
                             <Text>DONE</Text>
                             {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                             <Text>Position: {liveGame.position} </Text>
-                            <View></View>
+                            <View><Text>Current Tags: <Text style={{fontWeight: 'bold'}}> {liveGame.tags.join(', ')}</Text> </Text></View>
                             <View>{liveGame.actions.map((action, index) => {
                                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
                             })}</View>
                             <View>
 
                             </View>
-
-                            {liveGame.actions.map((action, index) => {
-                                return (
-                                    <View key={index}>
-                                        <Button style={{ width: 30 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
-                                    </View>
-                                )
-                            })}
+                            <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                {liveGame.actions.map((action, index) => {
+                                    return (
+                                        <View key={index}>
+                                            <Button containerStyle={{ padding: 3 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
+                                        </View>
+                                    )
+                                })}
+                            </View>   
                             <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { console.log("Should save here") }}>Save Game</AntDesign.Button>
 
-                            <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>Add Action</AntDesign.Button>
+                            <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>{showActionInput ? "Minimize" : "Add Action"}</AntDesign.Button>
                             {showActionInput ?
                                 <View>
                                     <TextInput
