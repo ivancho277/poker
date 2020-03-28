@@ -112,9 +112,8 @@ const addNewTag = tag => ({ getState, setState }) => {
     }
 }
 
-const removeAllTags = () => ({setState}) => {
+const removeAllTags = () => ({ setState }) => {
     storage.removeTags();
-
 }
 
 const addToAllTags = tag => ({ getState, setState }) => {
@@ -137,7 +136,13 @@ const addToAllTags = tag => ({ getState, setState }) => {
     }
 }
 
-const removeTag = tag => ({ getState, setState }) => {
+const removeTag = tagtoremove => ({ getState, setState }) => {
+    const { data } = getState();
+    const newTags = data.tags.filter(tag => { return tagtoremove != tag })
+    setState(draft => {
+        draft.data.tags = newTags;
+    });
+    storage.saveTags(newTags);
 
 }
 
@@ -156,7 +161,7 @@ const addNewAction = action => ({ getState, setState }) => {
     }
 
 }
-
+    //TODO: LAST ONE TO FINISH UPDATING, after this one is done, implement in new Settings and it will be done!
 const removeAction = action => ({ getState, setState }) => {
     const { data } = getState();
     if (validActionRemove(action, data.actions)) {
@@ -171,11 +176,14 @@ const removeAction = action => ({ getState, setState }) => {
 }
 
 
-// TODO: After doing and actions reset i need to set liveGame
+
 const resetActions = () => ({ setState }) => {
     storage.resetActions();
 }
 
+const deleteAllSavedData = () => {
+    storage.removeData();
+}
 // const createNewActionInstances = actions => {
 //     let gameActions = actions.map(action => { return new Action(action) })
 //     return new Game(gameActions);
@@ -361,11 +369,11 @@ const actions = {
 
     },
 
-    saveAllGames: saveAllGames = () => ({ getState, setState, dispatch }) => {
+    saveAllGames: () => ({ getState, setState, dispatch }) => {
         dispatch(SaveAllGames());
     },
 
-    saveCurrentGame: saveCurrentGame = () => ({ getState, setState, dispatch }) => {
+    saveCurrentGame: () => ({ getState, setState, dispatch }) => {
         dispatch(CurrentGameSave());
     },
 
@@ -377,8 +385,8 @@ const actions = {
         dispatch(addNewAction(action));
     },
 
-    resetActions: () => ({ setState }) => {
-        dispatch(storage.resetActions())
+    removeAction: (action) => ({ dispatch }) => {
+        dispatch(removeAction(action));
     },
 
     addTagToCurrentGame: (tag) => ({ dispatch }) => {
@@ -390,12 +398,16 @@ const actions = {
     },
 
     removeTag: (tag) => ({ dispatch }) => {
-
+        dispatch(removeTag(tag))
     },
 
     removeAllTags: () => ({ dispatch }) => {
         dispatch(removeAllTags());
     },
+
+    removeAllData: () => ({ dispatch }) => {
+        dispatch(deleteAllSavedData());
+    }
 
 
 

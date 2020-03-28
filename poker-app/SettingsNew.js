@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight } from 'react-native';
+import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight, ActionSheetIOS } from 'react-native';
 // import { Button } from 'react-native-elements';
 const storage = require('./components/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
@@ -19,8 +19,8 @@ export default function NewSettings(){
     const [{data, loading} , {load}] = UseGameStore();
     const [action, setAction] = useState('');
     const [tag, setTag] = useState('');
-    const [tagVal, setTagVal] = useState('add tag...');
-    const [actionVal, setActionVal] = useState('add action...');
+    const [tagVal, setTagVal] = useState('');
+    const [actionVal, setActionVal] = useState('');
 
     useEffect(() => {
         load();
@@ -54,6 +54,7 @@ export default function NewSettings(){
                                 <TextInput
                                     style={{ width: '100%', position: 'relative' }}
                                     label='add action'
+                                    placeholder='add action...'
                                     value={actionVal}
                                     onChangeText={text => setActionVal(text) }
                                 />
@@ -63,7 +64,7 @@ export default function NewSettings(){
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
-                                    onPress={() => console.log('Pressed')}
+                                    onPress={() => {console.log('Pressed'); actions.addNewAction(actionVal); setActionVal('')} }   
                                 />
                             </View>
                             <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
@@ -99,6 +100,7 @@ export default function NewSettings(){
                                 <TextInput
                                     style={{ width: '100%', position: 'relative' }}
                                     label='add tag'
+                                    placeholder='add tag...'
                                     value={tagVal}
                                     onChangeText={text => setTagVal(text) }
                                 />
@@ -108,7 +110,7 @@ export default function NewSettings(){
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
-                                    onPress={() => console.log('Pressed')}
+                                    onPress={() => {console.log('Pressed'); actions.addTagToAll(tagVal); setTagVal('')} }
                                 />
                             </View>
                             <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
@@ -131,7 +133,7 @@ export default function NewSettings(){
 
                                     </Picker>
                                 </View>
-                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => console.log('Pressed')}>
+                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeTag(tag)   }>
                                     <Text style={{ fontSize: 10 }}>Remove Action </Text>
                                 </Button>
                             </View>
@@ -140,11 +142,11 @@ export default function NewSettings(){
 
                     <View>
                         <Divider />
-                        <Button color='teal' onPress={() => this.confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', storage.removeTags)} mode='contained'>Remove all Tags</Button>
+                        <Button color='teal' onPress={() =>confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', actions.removeAllTags)} mode='contained'>Remove all Tags</Button>
                         <Divider />
-                        <Button color='teal' onPress={() => this.confirmAlert('Reset all actions', "Are you sure?", 'actions reset', storage.resetActions)} mode='contained'>Reset Actions</Button>
+                        <Button color='teal' onPress={() =>confirmAlert('Reset all actions', "Are you sure?", 'actions reset', actions.resetActions)} mode='contained'>Reset Actions</Button>
                         <Divider />
-                        <Button color='red' onPress={() => { this.confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { storage.removeData(); storage.removeCurrentGame(); storage.removeTags() }) }} mode='contained'>DELETE ALL DATA</Button>
+                        <Button color='red' onPress={() => {confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { actions.removeAllData(); storage.removeCurrentGame(); actions.removeAllTags() }) }} mode='contained'>DELETE ALL DATA</Button>
 
                     </View>
                 </View>
