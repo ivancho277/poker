@@ -82,11 +82,11 @@ export const GameController = (props) => {
                                     <Button style={{ borderColor: "#000000", borderStyle: "solid", borderWidth: 1 }} title="save action" onPress={() => { addNewAction(action); setAction('') }} />
                                 </View>
                                 :
-                                <View><Text>{'\n'}</Text></View>
+                                <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
                         </View>
-                        <View>
+                        <View style={{marginTop:  5 }}>
                             <Radio position={liveGame.position} setPosition={updatePosition} />
                         </View>
                     </View>

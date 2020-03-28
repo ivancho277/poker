@@ -18,10 +18,6 @@ import {
 } from "../utils/validators.js";
 const calculation = require("../components/statscalculation.js");
 
-
-
-
-
 //import * as selectors from './selectors';
 // import { } from 'react-tracked';
 
@@ -35,15 +31,6 @@ const logger = storeState => next => action => {
     console.log("result!!: ");
     //console.log('UPDATED>> :', storeState.getState());
 }
-
-
-// const makeLiveGame = storeState => next => action => {
-//     const { data } = storeState.getState();
-//     if (data.actions) {
-//         const newGame = data.actions;
-//         console.log("LOOOK! :", newGame)
-//     }
-// }
 
 
 defaults.middlewares.add(logger);
@@ -74,13 +61,6 @@ const initialState = {
 const setCurrentTime = () => ({ setState }) => {
     setState(draft => {
         draft.currentTime = new Date();
-    })
-}
-
-const setPreviousTimeToCurrent = () => ({ getState, setState }) => {
-    const { currentTime } = getState();
-    setState(draft => {
-        draft.previousTime = currentTime;
     })
 }
 
@@ -123,7 +103,7 @@ const setError = msg => ({ setState }) => {
 }
 
 const addNewTag = tag => ({ getState, setState }) => {
-    const { liveGame,  } = getState();
+    const { liveGame, } = getState();
     if (isValidTag(tag, liveGame.tags)) {
         // let updatedtags = allTags.concat(tag);
         setState(draft => {
@@ -132,8 +112,22 @@ const addNewTag = tag => ({ getState, setState }) => {
     }
 }
 
+const removeAllTags = () => ({setState}) => {
+    storage.removeTags();
+
+}
+
 const addToAllTags = tag => ({ getState, setState }) => {
-    const { liveGame, data } = getState();
+    const { data } = getState();
+    if (data.tags === null || data.tags === undefined) {
+        if (isValidTag(tag, [])) {
+            setState(draft => {
+                draft.data.tags = [tag]
+            })
+            storage.saveTags([tag])
+            return;
+        }
+    }
     if (isValidTag(tag, data.tags)) {
         let updatedtags = data.tags.concat(tag);
         setState(draft => {
@@ -148,9 +142,9 @@ const removeTag = tag => ({ getState, setState }) => {
 }
 
 const addNewAction = action => ({ getState, setState }) => {
-    const {data, liveGame} = getState();
-    if(validActionAdd(action, data.actions)){
-        let updatedActions =  data.actions.concat(action);
+    const { data, liveGame } = getState();
+    if (validActionAdd(action, data.actions)) {
+        let updatedActions = data.actions.concat(action);
         let updatedLiveGame = liveGame.actions.concat(new Action(action))
         console.log(data.actions);
         console.log(updatedActions);
@@ -163,14 +157,23 @@ const addNewAction = action => ({ getState, setState }) => {
 
 }
 
-const removeAction = actions => ({ getState, setState }) => {
+const removeAction = action => ({ getState, setState }) => {
+    const { data } = getState();
+    if (validActionRemove(action, data.actions)) {
+        let updatedActions = this.state.actionStrings.filter((Oaction) => Oaction != action)
+        this.setState({ actionStrings: updatedActions });
+        saveActions(updatedActions);
+    } else {
+        alert('Can not remove base action, or action doesnt exsist')
+        console.log("sup"); ''
+    }
 
 }
 
+
+// TODO: After doing and actions reset i need to set liveGame
 const resetActions = () => ({ setState }) => {
     storage.resetActions();
-
-
 }
 
 // const createNewActionInstances = actions => {
@@ -374,7 +377,7 @@ const actions = {
         dispatch(addNewAction(action));
     },
 
-    resetActions: () => ({setState}) => {
+    resetActions: () => ({ setState }) => {
         dispatch(storage.resetActions())
     },
 
@@ -391,7 +394,7 @@ const actions = {
     },
 
     removeAllTags: () => ({ dispatch }) => {
-
+        dispatch(removeAllTags());
     },
 
 

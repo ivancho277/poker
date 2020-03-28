@@ -299,7 +299,7 @@ export class GlobalState extends Component {
     } else {
       alert('Can not remove base action, or action doesnt exsist')
       console.log("sup")
-
+      
 
     }
 

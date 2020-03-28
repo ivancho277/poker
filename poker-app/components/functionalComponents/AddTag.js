@@ -58,7 +58,7 @@ export const AddTag = (props) => {
                     <Text style={styles.text}>Select a Tag</Text>
                     <View style={{ height: 200 }}>
                         <ScrollPicker
-                            dataSource={data.tags}
+                            dataSource={data.tags === null ? [] : data.tags}
                             selectedIndex={0}
                             renderItem={(data, index, isSelected) => {
                                 console.log("CHECK THIS DAMN THING OUT");
