@@ -76,7 +76,7 @@ export default function NewSettings(){
                                         prompt='Please select action to Remove'
                                         style={{ margin: 3, height: 50, width: '60%', }}
                                         onValueChange={(itemValue, itemIndex) =>
-                                            SetAction(itemValue)
+                                            setAction(itemValue)
                                         }>
                                         {data.actions === null || data.actions === undefined ?  
                                         <Picker.Item label={'no actions'} key={'1'} value={'Loading Actions'} />
