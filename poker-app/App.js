@@ -9,7 +9,6 @@ import {
 } from "react-navigation";
 import HomeScreen from "./Home";
 import GameScreen from "./Game";
-import SettingsScreen from "./Settings";
 import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
@@ -82,7 +81,7 @@ const AppSwitchNavigator = createStackNavigator({
     })
   },
   Settings: {
-    screen: SettingsScreen,
+    screen: SettingsNew,
     navigationOptions: ({ navigation }) => ({
       title: "Settings"
     })
@@ -93,13 +92,6 @@ const AppSwitchNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: "Statistics"
     })
-  },
-
-  NewSettings: {
-    screen: SettingsNew,
-    navigationOptions: {
-      title: "New Settings"
-    }
   },
 
   Tests: {
@@ -117,7 +109,7 @@ const AppDrawerNavigator = createDrawerNavigator({
     })
   },
   Settings: {
-    screen: SettingsScreen
+    screen: SettingsNew
   },
 
   Statistics: {
@@ -127,10 +119,6 @@ const AppDrawerNavigator = createDrawerNavigator({
   Tests: {
     screen: TestScreen,
   },
-  NewSettings: {
-    screen: SettingsNew,
-  }
-
 
 });
 
