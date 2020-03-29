@@ -165,9 +165,11 @@ const addNewAction = action => ({ getState, setState }) => {
 const removeAction = action => ({ getState, setState }) => {
     const { data } = getState();
     if (validActionRemove(action, data.actions)) {
-        let updatedActions = this.state.actionStrings.filter((Oaction) => Oaction != action)
-        this.setState({ actionStrings: updatedActions });
-        saveActions(updatedActions);
+        let updatedActions = data.actions.filter((Oaction) => Oaction != action)
+        setState(draft => {
+            draft.data.actions = updatedActions
+        })
+        storage.saveActions(updatedActions);
     } else {
         alert('Can not remove base action, or action doesnt exsist')
         console.log("sup"); ''

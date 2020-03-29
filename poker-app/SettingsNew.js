@@ -87,7 +87,7 @@ export default function NewSettings(){
 
                                     </Picker>
                                 </View>
-                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => console.log('Pressed')}>
+                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeAction(action)}>
                                     <Text style={{ fontSize: 10 }}>Remove Action </Text>
                                 </Button>
                             </View>
