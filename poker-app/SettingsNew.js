@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight, ActionSheetIOS } from 'react-native';
 // import { Button } from 'react-native-elements';
-const storage = require('./components/AsyncStorageController.js');
+const storage = require('./components/storageAPI/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { MyContext } from './stateContext/GlobalState'
 import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';

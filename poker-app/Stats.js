@@ -4,7 +4,7 @@ import { MyContext } from './stateContext/GlobalState'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
-import * as storage from './components/AsyncStorageController.js';
+import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { GameSubscriber } from './DataStore/store'
 //import Tester from './components/tester'

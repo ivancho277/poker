@@ -19,7 +19,7 @@ import {
 const calculation = require("../components/statscalculation.js");
 
 //import * as selectors from './selectors';
-// import { } from 'react-tracked';
+
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
@@ -102,6 +102,12 @@ const setError = msg => ({ setState }) => {
     });
 }
 
+
+
+/**
+ * * Storage Action
+ * @param {String} tag - a new tag to add to liveGame 
+ */
 const addNewTag = tag => ({ getState, setState }) => {
     const { liveGame, } = getState();
     if (isValidTag(tag, liveGame.tags)) {
@@ -111,6 +117,8 @@ const addNewTag = tag => ({ getState, setState }) => {
         })
     }
 }
+
+
 
 const removeAllTags = () => ({ setState }) => {
     storage.removeTags();
@@ -161,7 +169,7 @@ const addNewAction = action => ({ getState, setState }) => {
     }
 
 }
-    //TODO: LAST ONE TO FINISH UPDATING, after this one is done, implement in new Settings and it will be done!
+
 const removeAction = action => ({ getState, setState }) => {
     const { data } = getState();
     if (validActionRemove(action, data.actions)) {
@@ -212,16 +220,16 @@ const SaveAllGames = () => ({ setState, getState }) => {
     const liveGame = getState().liveGame
     //const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
     const totals = liveGame.actions.map(action => {
-        return { [action.actionName]: action.getTotalCount() }
+        return { [action.actionName]: action.count }
     });
-    const gameStats = liveGame.getCurrentStats();
+    // const gameStats = liveGame.getCurrentStats();
     const tagsForCurrentGame = liveGame.tags.length === 0 ? liveGame.tags.concat('default') : liveGame.tags;
     const gamesObj = {
         gameRaw: liveGame,
         totals: totals,
-        game: gameStats,
+        game: liveGame.currentStats,
         tags: tagsForCurrentGame,
-        version: liveGame.getVersion(),
+        version: liveGame.version,
         time: liveGame.date.toDateString(),
         date: liveGame.date.getTime()
     }
@@ -230,7 +238,10 @@ const SaveAllGames = () => ({ setState, getState }) => {
         draft.allGamesArray = updatedGamesList;
         draft.gamesObj = { games: updatedGamesList, currentVersion: VERSION }
     });
-    storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
+    console.log("LIST: ", updatedGamesList);
+    console.log("STATE: ", getState().gamesObj);
+    storage.saveAllNewGames()
+    //storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
     // this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
 
 }

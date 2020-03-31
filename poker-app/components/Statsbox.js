@@ -6,7 +6,7 @@ import Divider from "react-native-divider";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 //import { ScrollView } from 'react-native-gesture-handler';
 import * as calculation from './statscalculation.js';
-import * as storage from './AsyncStorageController.js'
+import * as storage from './storageAPI/AsyncStorageController.js'
 
 // const calculation = require('./statscalculation.js');
 // const storage = require("./AsyncStorageController.js");
@@ -17,7 +17,7 @@ export default function Statsbox(props) {
     //will pull saved information about users stats and display them back in the box.   
     const [isOnPositionStats, setPositionStats] = useState(false);
 
-
+    //!moving this to statsCalculation file
     const isEmpty = (obj) => {
         for (var key in obj) {
             if (obj.hasOwnProperty(key))

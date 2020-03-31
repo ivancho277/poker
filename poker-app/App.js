@@ -13,7 +13,7 @@ import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import { Container, Text, Root } from "native-base";
+import { Provider as PaperProvider } from 'react-native-paper';
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
@@ -46,15 +46,17 @@ class App extends React.Component {
 
 
     return (
-      <Root>
-        <Container>
+      // <Root>
+      //   <Container>
 
-          <GlobalState>
-            <AppContainer />
-          </GlobalState>
+      <GlobalState>
+        <PaperProvider>
+          <AppContainer />
+        </PaperProvider>
+      </GlobalState>
 
-        </Container>
-      </Root>
+      //   </Container>
+      // </Root>
     );
   }
 }

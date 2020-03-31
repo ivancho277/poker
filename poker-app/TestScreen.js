@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { MyContext } from './stateContext/GlobalState'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
-import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
-import * as storage from './components/AsyncStorageController.js';
+import * as storage from './components/storageAPI/AsyncStorageController.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
-import ScrollPicker from "react-native-fen-wheel-scroll-picker";
+import { DisplayStats } from './components/functionalComponents/DisplayStats'
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -59,7 +58,11 @@ export default function TestScreen() {
                                     <GameController></GameController>
                                 </ScrollView>
                             </Card>
-
+                            <View>
+                                <ScrollView>
+                                    <DisplayStats></DisplayStats>
+                                </ScrollView>
+                            </View>
                             <Card title='TestComponent with Subscriber'>
                                 <Text> Subscriber test </Text>
                                 <ScrollView>

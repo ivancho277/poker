@@ -8,7 +8,7 @@ import { MyContext } from './stateContext/GlobalState';
 import ActionButton from 'react-native-action-button';
 import { AntDesign } from '@expo/vector-icons';
 import { isEmpty } from './components/statscalculation.js'
-import * as storage from './components/AsyncStorageController.js';
+import * as storage from './components/storageAPI/AsyncStorageController.js';
 const gameConstructors = require('./components/gameObjects.js');
 
 

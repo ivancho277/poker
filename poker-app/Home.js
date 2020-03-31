@@ -6,7 +6,7 @@ import SearchModal from './components/SearchModal'
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 
-import * as storage from './components/AsyncStorageController.js'
+import * as storage from './components/storageAPI/AsyncStorageController.js'
 import * as calculation from './components/statscalculation.js'
 // import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
@@ -109,7 +109,7 @@ class HomeScreen extends Component {
 
                 <View>
                     <View>
-                        <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+                        {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
                     </View>
                     <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                     <Text>ReRender global state</Text>

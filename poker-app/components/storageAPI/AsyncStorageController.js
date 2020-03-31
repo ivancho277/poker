@@ -225,7 +225,33 @@ function isEmpty(obj) {
     return true;
 }
 
+const saveAllNewGames = function(allGames){ 
+    try {
+        AsyncStorage.setItem('games', JSON.stringify(allGames));
+        console.log(`success storing ${allGames.calls}`);
+        return allGames;
+    }
+    catch (error) {
+        console.log("error saving allGames");
+        return null;
+    }
+}
+
+const deleteAllNewGames = function() {
+    try {
+        AsyncStorage.removeItem('games', () => {
+            alert('REMOVED DA GAMEZ');
+        })
+    } catch {
+        alert('NO WORK DELETE');
+    }
+}
+
 export const AsyncStorageController = {
+    saveAllNewGames: saveAllNewGames,
+
+    deleteAllNewGames: deleteAllNewGames,
+
     saveData: saveData,
     /**
      * Takes a Current Game Object to save.

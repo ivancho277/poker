@@ -43,7 +43,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction }) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -51,7 +51,7 @@ export const GameController = (props) => {
                             <Text>DONE</Text>
                             {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                             <Text>Position: {liveGame.position} </Text>
-                            <View><Text>Current Tags: <Text style={{fontWeight: 'bold'}}> {liveGame.tags.join(', ')}</Text> </Text></View>
+                            <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
                             <View>{liveGame.actions.map((action, index) => {
                                 return <Text key={index}>{action.actionName}: {action.count}  </Text>
                             })}</View>
@@ -66,8 +66,8 @@ export const GameController = (props) => {
                                         </View>
                                     )
                                 })}
-                            </View>   
-                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { console.log("Should save here") }}>Save Game</AntDesign.Button>
+                            </View>
+                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames() }}>Save Game</AntDesign.Button>
 
                             <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>{showActionInput ? "Minimize" : "Add Action"}</AntDesign.Button>
                             {showActionInput ?
@@ -85,8 +85,9 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
+                            <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log() }}>{"Console Log new Storage"}</AntDesign.Button>
                         </View>
-                        <View style={{marginTop:  5 }}>
+                        <View style={{ marginTop: 5 }}>
                             <Radio position={liveGame.position} setPosition={updatePosition} />
                         </View>
                     </View>

@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 
 import { MyContext } from '../stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
-import * as storageController from './AsyncStorageController.js';
+import * as storageController from './storageAPI/AsyncStorageController.js';
 import * as calculations from './statscalculation.js';
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
