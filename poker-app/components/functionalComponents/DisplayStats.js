@@ -12,7 +12,7 @@ export function DisplayStats() {
 
     return (
         
-            <Card style={{ width: '95%', padding: 10, marginTop: 5, alignSelf: 'center' }} elevation={9}  >
+            <Card style={{ width: '95%', padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
                 <Card.Title title="My Stats!" subtitle="Totals" />
                 <ScrollView>
                     <Card.Content>

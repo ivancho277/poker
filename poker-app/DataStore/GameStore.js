@@ -9,7 +9,7 @@ import {
     defaults
 } from 'react-sweet-state';
 import { produce } from 'immer';
-import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
+import { StorageAPI as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
 import {
     isValidTag,
@@ -185,6 +185,10 @@ const removeAction = action => ({ getState, setState }) => {
 
 }
 
+const retrieveGamesNew = () => async ({setState}) => {
+    const savedGames = await storage.getAllNewGames();
+    return savedGames;
+}
 
 
 const resetActions = () => ({ setState }) => {
@@ -233,6 +237,7 @@ const SaveAllGames = () => ({ setState, getState }) => {
         time: liveGame.date.toDateString(),
         date: liveGame.date.getTime()
     }
+    console.log("AHAHAHAHAHAHAHAHAHAHAASDFLHKJASFDALS:DJ:L", gamesObj)
     const updatedGamesList = getState().allGamesArray.concat(gamesObj);
     setState(draft => {
         draft.allGamesArray = updatedGamesList;
@@ -240,7 +245,8 @@ const SaveAllGames = () => ({ setState, getState }) => {
     });
     console.log("LIST: ", updatedGamesList);
     console.log("STATE: ", getState().gamesObj);
-    storage.saveAllNewGames()
+    storage.saveAllNewGames(updatedGamesList);
+
     //storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
     // this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
 
@@ -358,6 +364,10 @@ const actions = {
         console.log('loadedData: ', loadedData);
     },
 
+    getGames: () => async ({dispatch}) => {
+        return await retrieveGamesNew();
+        
+    },
 
 
 

@@ -4,6 +4,7 @@ import Radio from '../Radio.js';
 import { Button } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../statscalculation.js';
+import { StorageAPI } from '../storageAPI/AsyncStorageController'
 import { AddTag } from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
@@ -26,6 +27,7 @@ export const GameController = (props) => {
     // const [actionToAdd, editActionToAdd] = useState('');
     // const [doneLoading, setDoneLoading] = useState(false);
     const [liveActions, setLiveActions] = useState();
+    const [test, setTest] = useState();
 
     useEffect(() => {
 
@@ -40,10 +42,19 @@ export const GameController = (props) => {
         actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
     }
 
+    GetDataTest = async () => {
+        const myData = await StorageAPI.getAllNewGames();
+        setTest(JSON.parse(myData));
+        setTimeout(() => {
+            console.log("new :::", JSON.parse(myData));
+        }, 0); 
+        return (JSON.parse(myData));
+    }
+
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames }) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -85,7 +96,8 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
-                            <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log() }}>{"Console Log new Storage"}</AntDesign.Button>
+                            <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
+                            <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
                         </View>
                         <View style={{ marginTop: 5 }}>
                             <Radio position={liveGame.position} setPosition={updatePosition} />

@@ -9,13 +9,13 @@ import { AsyncStorage } from 'react-native';
 const firstTimeLauching = async function () {
     try {
         let isFirstLaunch = await AsyncStorage.getItem('firstlaunch')
-        if(isFirstLaunch === undefined){
+        if (isFirstLaunch === undefined) {
             AsyncStorage.setItem('firstlaunch', 'false')
             return true;
-        } 
+        }
         return false;
-        
-    } catch (error){
+
+    } catch (error) {
         return false;
     }
 }
@@ -49,7 +49,7 @@ const saveCurrentGame = function (data) {
         AsyncStorage.setItem('currentGame', JSON.stringify(data));
         console.log(`stored a current Game!`)
         return data
-    } catch (error){
+    } catch (error) {
         console.log("error saving current game");
         return null;
     }
@@ -100,23 +100,23 @@ const retrieveData = async function () {
         if (!isEmpty(games))
             return games;
     }
-    catch(error) {
+    catch (error) {
         console.log('error retrieving data');
         return null;
     }
 }
-    
+
 /**
  *removes all saved games
  *
  */
 const removeData = function () {
-    try{
-    let empty = {};
-    AsyncStorage.setItem('key', JSON.stringify(empty));
-    console.log("REMOVED")
+    try {
+        let empty = {};
+        AsyncStorage.setItem('key', JSON.stringify(empty));
+        console.log("REMOVED")
     }
-    catch(error){
+    catch (error) {
         return null;
     }
 
@@ -131,8 +131,8 @@ const saveTags = function (data) {
     try {
         AsyncStorage.setItem('tags', JSON.stringify(data));
         console.log("SUCCESS STORING TAGS")
-    } catch(error) {
-        
+    } catch (error) {
+
         console.log("ERROR SAVING TAGS")
         return null;
     }
@@ -143,7 +143,7 @@ const saveTags = function (data) {
  *
  * @returns {String[]}
  */
-const retrieveTags =  async function () {
+const retrieveTags = async function () {
     try {
         let allTags = await AsyncStorage.getItem('tags');
         return allTags;
@@ -189,7 +189,7 @@ const retrieveActions = async function () {
     try {
         let actions = await AsyncStorage.getItem('actions');
         return actions;
-    } catch(err) {
+    } catch (err) {
         //throw Error(err);
         console.log('could not retrieve actions');
         return null;
@@ -225,7 +225,7 @@ function isEmpty(obj) {
     return true;
 }
 
-const saveAllNewGames = function(allGames){ 
+const saveAllNewGames = function (allGames) {
     try {
         AsyncStorage.setItem('games', JSON.stringify(allGames));
         console.log(`success storing ${allGames.calls}`);
@@ -237,7 +237,7 @@ const saveAllNewGames = function(allGames){
     }
 }
 
-const deleteAllNewGames = function() {
+const deleteAllNewGames = function () {
     try {
         AsyncStorage.removeItem('games', () => {
             alert('REMOVED DA GAMEZ');
@@ -247,7 +247,21 @@ const deleteAllNewGames = function() {
     }
 }
 
-export const AsyncStorageController = {
+const getAllNewGames = async function () {
+    try {
+        const games = await AsyncStorage.getItem('games');
+        return games;
+
+    }
+    catch {
+        console.log('No Saved Games');
+        return null;
+    }
+}
+
+export const StorageAPI = {
+    getAllNewGames: getAllNewGames,
+
     saveAllNewGames: saveAllNewGames,
 
     deleteAllNewGames: deleteAllNewGames,
@@ -264,7 +278,7 @@ export const AsyncStorageController = {
     removeCurrentGame: removeCurrentGame,
 
     retrieveData: retrieveData,
-    
+
     removeData: removeData,
 
     saveTags: saveTags,
@@ -280,8 +294,10 @@ export const AsyncStorageController = {
     resetActions: resetActions,
 
     firstTimeLauching: firstTimeLauching,
-    
+
     isEmpty: isEmpty
 
 }
+
+
 
