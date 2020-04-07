@@ -16,12 +16,20 @@ const isEmpty = function(obj){
     return true;
 }
 
+const countTotals = (allGames) => {
+    console.log(allGames)
+    allGames.forEach(element => {
+        console.log(element.game.data.totals)
+    });
+}
+
 
 
 
 
 module.exports = {
     objToArray: objToArray,
-    isEmpty: isEmpty
+    isEmpty: isEmpty,
+    countTotals: countTotals
 
 }

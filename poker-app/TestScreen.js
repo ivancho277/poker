@@ -26,18 +26,19 @@ export default function TestScreen() {
     useEffect(() => {
 
         //setLoading(true);
-        actions.load().then(() => {
-            // console.log("screen state::::", state);
-            //setLoading(false);
-        }).catch(err => {
-            alert('error in test load')
-        });
-
+        // actions.load().then(() => {
+        //     // console.log("screen state::::", state);
+        //     //setLoading(false);
+        // }).catch(err => {
+        //     alert('error in test load')
+        // });
+        console.log('TEST SCREEN: ', state.data.savedGames)
+        console.log('LIVE :', state.liveGame)
         //loadData();
         // return () => {
         //     cleanup
         // };
-    }, [])
+    }, [state.liveGame])
 
 
 

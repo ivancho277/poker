@@ -22,9 +22,9 @@ export default function NewSettings(){
     const [tagVal, setTagVal] = useState('');
     const [actionVal, setActionVal] = useState('');
 
-    useEffect(() => {
-        load();
-    }, []);
+    // useEffect(() => {
+    //     load();
+    // }, []);
 
     const confirmAlert = (title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) => {
         Alert.alert(

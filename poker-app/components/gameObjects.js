@@ -179,7 +179,7 @@ class Game {
             tags: [...this.tags],
             version: this.version,
             date: this.date,
-            currentStats: this.getCurrentStats()
+            //currentStats: this.getCurrentStats()
 
         }
     }

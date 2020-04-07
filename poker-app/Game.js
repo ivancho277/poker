@@ -43,9 +43,7 @@ class GameScreen extends Component {
     componentDidMount() {
 
         const { allTags, currentGame } = this.context.state
-        console.log("MONT", allTags)
-
-
+        console.log("MONT", allTags);
     }
 
     //TODO: Might need to set state from context here, or just update context instead.
@@ -54,24 +52,20 @@ class GameScreen extends Component {
         //     allTags: this.context.allTags,
         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : []
         // })
-        console.log("up", this.context.state.allTags)
-
-
+        console.log("up", this.context.state.allTags);
     }
 
     setPosition = (position) => {
         //  console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    " , position)
         this.setState({
             position: position
-        })
+        });
     }
-
 
     clearTags = () => {
         this.setState({
             tag: ''
-        })
-
+        });
     }
 
     saveToTags(tag) {

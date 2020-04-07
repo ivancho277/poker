@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, AppRegistry } from "react-native";
 import {
   createStackNavigator,
@@ -13,53 +13,63 @@ import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, ActivityIndicator, Colors } from 'react-native-paper';
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
 // import Menu from 'react-native--storage-dev-menu-item';
 import TestScreen from './TestScreen';
 import SettingsNew from './SettingsNew';
-import { Dispatch } from './stateContext/Dispatch'
+import { UseGameStore } from './DataStore/GameStore'
+import { COLOR } from "react-native-material-ui";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isReady: true
-    };
-  }
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isReady: true
+//     };
+//   }
 
-  // async componentDidMount() {
-  //   await Font.loadAsync({
-  //     Roboto: require("native-base/Fonts/Roboto.ttf"),
-  //     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-  //     ...Ionicons.font
-  //   });
-  //   this.setState({ isReady: true });
-  // }
+// async componentDidMount() {
+//   await Font.loadAsync({
+//     Roboto: require("native-base/Fonts/Roboto.ttf"),
+//     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+//     ...Ionicons.font
+//   });
+//   this.setState({ isReady: true });
+// }
 
-  render() {
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
+const App = () => {
+  const [state, {load}] = UseGameStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    load().then(res => {
+      setLoading(false)
+    });
+  }, [])
 
 
-    return (
-      // <Root>
-      //   <Container>
 
-      <GlobalState>
-        <PaperProvider>
-          <AppContainer />
-        </PaperProvider>
-      </GlobalState>
+  
+    // <Root>
+    //   <Container>
+    return (loading ? 
+    <ActivityIndicator animating={true} color={Colors.blue400 } />
+    :
+    <GlobalState>
+      <PaperProvider>
+        <AppContainer />
+      </PaperProvider>
+    </GlobalState>
 
-      //   </Container>
-      // </Root>
-    );
-  }
+    //   </Container>
+    // </Root>
+    )
+  
 }
+
 export default App;
 
 const AppSwitchNavigator = createStackNavigator({

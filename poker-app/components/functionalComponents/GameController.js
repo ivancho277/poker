@@ -29,12 +29,11 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
     const [test, setTest] = useState();
 
-    useEffect(() => {
-
-        console.log("Time curr", currentTime)
-        console.log("Time prev", previousTime)
-        console.log("liveGame:  ", liveGame);
-    }, [liveGame,])
+    // useEffect(() => {
+    //     console.log("Time curr", currentTime)
+    //     console.log("Time prev", previousTime)
+    //     console.log("liveGame:  ", liveGame);
+    // }, [])
 
 
     onActionClick = (action, actionIndex) => {
@@ -47,14 +46,17 @@ export const GameController = (props) => {
         setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
-        }, 0); 
+            if (typeof(JSON.parse(myData)) === "Array") {
+                console.log("length::: ", JSON.parse(myData).length);
+            }
+        }, 0);
         return (JSON.parse(myData));
     }
 
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames }) => (
+            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame }) => (
                 //debugger
                 (liveGame !== null || !calculations.isEmpty(liveGame)) ?
                     <View>
@@ -78,7 +80,7 @@ export const GameController = (props) => {
                                     )
                                 })}
                             </View>
-                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames() }}>Save Game</AntDesign.Button>
+                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames(); resetLiveGame(); }}>Save Game</AntDesign.Button>
 
                             <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>{showActionInput ? "Minimize" : "Add Action"}</AntDesign.Button>
                             {showActionInput ?

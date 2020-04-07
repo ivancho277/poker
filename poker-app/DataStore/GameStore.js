@@ -38,16 +38,16 @@ defaults.middlewares.add(logger);
 
 
 
-
-
 const initialState = {
     data: {
         allGames: null,
+        savedGames: null,
         currentGame: null,
         allTags: null,
         actions: null
     },
-    allGamesArray: null,
+
+    allGamesArray: [],
     gamesObj: null,
     liveGame: null,
     loading: false,
@@ -80,8 +80,8 @@ const setData = data => ({ setState }) => {
     setState(draft => {
         draft.data = data;
         draft.error = false;
-        draft.allGamesArray = data.allGames.games;
-        draft.gamesObj = data.allGames;
+        draft.allGamesArray = data.savedGames;
+        draft.gamesObj = data.savedGames;
         draft.loading = false;
 
     })
@@ -94,6 +94,8 @@ const setLiveGame = actions => ({ setState }) => {
         draft.liveGame = newGame.getGameData()
     })
 };
+
+
 
 const setError = msg => ({ setState }) => {
     setState(draft => {
@@ -117,7 +119,6 @@ const addNewTag = tag => ({ getState, setState }) => {
         })
     }
 }
-
 
 
 const removeAllTags = () => ({ setState }) => {
@@ -185,7 +186,7 @@ const removeAction = action => ({ getState, setState }) => {
 
 }
 
-const retrieveGamesNew = () => async ({setState}) => {
+const retrieveGamesNew = () => async ({ setState }) => {
     const savedGames = await storage.getAllNewGames();
     return savedGames;
 }
@@ -221,30 +222,40 @@ const createGame = actions => {
 //TODO: reconfigure save all games to work from actions in store
 const SaveAllGames = () => ({ setState, getState }) => {
     //*this Game instance might actually come from contect state.
-    const liveGame = getState().liveGame
+    const { liveGame, allGamesArray } = getState()
     //const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
     const totals = liveGame.actions.map(action => {
         return { [action.actionName]: action.count }
     });
     // const gameStats = liveGame.getCurrentStats();
-    const tagsForCurrentGame = liveGame.tags.length === 0 ? liveGame.tags.concat('default') : liveGame.tags;
-    const gamesObj = {
-        gameRaw: liveGame,
-        totals: totals,
-        game: liveGame.currentStats,
-        tags: tagsForCurrentGame,
-        version: liveGame.version,
-        time: liveGame.date.toDateString(),
-        date: liveGame.date.getTime()
+    if (liveGame.tags.length === 0) {
+        setState(draft => {
+            draft.liveGame.tags = liveGame.tags.concat('default')
+        })
     }
-    console.log("AHAHAHAHAHAHAHAHAHAHAASDFLHKJASFDALS:DJ:L", gamesObj)
-    const updatedGamesList = getState().allGamesArray.concat(gamesObj);
+    const game = {
+        game: {
+            data: liveGame,
+            totals: totals,
+            savedDate: new Date().getUTCDate(),
+            saveTime: new Date().getTime()
+        }
+    }
+    console.log("AHAHAHAHAHAHAHAHAHAHAASDFLHKJASFDALS:DJ:L", game)
+
+
+    let updatedGamesList;
+    if (storage.isEmpty(getState().data.savedGames)) {
+        updatedGamesList = [game]
+    } else {
+        updatedGamesList = allGamesArray.concat(game)
+    }
     setState(draft => {
         draft.allGamesArray = updatedGamesList;
         draft.gamesObj = { games: updatedGamesList, currentVersion: VERSION }
     });
     console.log("LIST: ", updatedGamesList);
-    console.log("STATE: ", getState().gamesObj);
+    console.log("STATE: ", getState().data.savedGames);
     storage.saveAllNewGames(updatedGamesList);
 
     //storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
@@ -272,11 +283,12 @@ const CurrentGameSave = () => ({ setState, getState }) => {
 
 const fetchData = async () => {
     try {
-        const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) })
-        const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) })
-        const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) })
+        const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
+        const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? [] : JSON.parse(res) })
+        const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? [] : JSON.parse(res) })
         const CurrentGameResponse = await storage.retrieveCurrentGame().then(res => { return JSON.parse(res) })
-        return { allGames: dataResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
+        const savedGamesResponse = await storage.getAllNewGames().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
+        return { allGames: dataResponse, savedGames: savedGamesResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
     } catch {
         console.log('error fetching');
         throw Error("this is a fetch error")
@@ -346,29 +358,37 @@ const updatePosition = (newPosition) => ({ setState, getState }) => {
 
 
 const actions = {
+    /**
+     * !! LOOK AT THIS IF ITS STILL HERE
+     *  TODO: we will need to add a check for if a current game exsists in storage.
+     */
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().loading === true) return;
         dispatch(setLoading());
         const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
-        if (loadedData.currentGame !== null) {
-            //game = reInstanceCurrentGame(loadedData.currentGame)
-            dispatch(setLiveGame(loadedData.actions));
-            //return;
-        } else {
-            //game = createGame(loadedData.actions)
-            dispatch(setLiveGame(loadedData.actions));
-            //return;
-        }
+        dispatch(setLiveGame(loadedData.actions));
         dispatch(setData(loadedData));
-        console.log('loadedData: ', loadedData);
+       // console.log('loadedData: ', loadedData);
     },
 
-    getGames: () => async ({dispatch}) => {
+    loadStorage: () => async ({getState, dispatch}) => {
+        if(getState().loading === true) return;
+        dispatch(setLoading());
+        const data = await fetchData().then(response => { return respone });
+        dispatch(setData(data));
+        return data;
+    },
+    
+    getGames: () => async ({ dispatch }) => {
         return await retrieveGamesNew();
-        
+
     },
 
+    resetLiveGame: () => ({ getState, setState, dispatch }) => {
+        const { data } = getState();
+        dispatch(setLiveGame(data.actions));
+    },
 
 
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {

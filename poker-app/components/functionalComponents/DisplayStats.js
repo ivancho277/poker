@@ -9,14 +9,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 export function DisplayStats() {
     const [state, actions] = UseGameStore();
 
+    useEffect(() => {
+        
+    }, [])
+
 
     return (
-        
-            <Card style={{ width: '95%', padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
+        <View>
+            
+            <Card style={{ width: '95%', maxHeight: 400 ,padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
                 <Card.Title title="My Stats!" subtitle="Totals" />
                 <ScrollView>
                     <Card.Content>
-                        <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
+                        <Paragraph>
+                        <Text>All Saved: {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
+                        </Paragraph>
+
+                        {/* <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
                             <DataTable>
                                 <DataTable.Header>
                                     <DataTable.Title>Dessert</DataTable.Title>
@@ -43,11 +52,12 @@ export function DisplayStats() {
                                     label="1-2 of 6"
                                 />
                             </DataTable>
-                        </View>
+                        </View> */}
                     </Card.Content>
                 </ScrollView>
             </Card>
-        
+        </View>
+
 
     )
 }
