@@ -8,7 +8,7 @@ const objToArray = (obj) => {
     return objArray
 }
 
-const isEmpty = function(obj){
+const isEmpty = function (obj) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key))
             return false;
@@ -17,10 +17,18 @@ const isEmpty = function(obj){
 }
 
 const countTotals = (allGames) => {
-    console.log(allGames)
-    allGames.forEach(element => {
-        console.log(element.game.data.totals)
-    });
+    try {
+        console.log(allGames)
+        allGames.forEach(element => {
+            if(element !== undefined){
+            console.log("element start: ", element.game.totals)
+            }
+
+
+        });
+    } catch {
+
+    }
 }
 
 
