@@ -19,10 +19,11 @@ const isEmpty = function (obj) {
 const countTotals = (allGames) => {
     try {
         console.log(allGames)
+        const finalTotals = {}
         allGames.forEach(element => {
-            if(element !== undefined){
             console.log("element start: ", element.game.totals)
-            }
+            element.game.totals.forEach
+            
 
 
         });

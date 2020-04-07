@@ -113,7 +113,6 @@ class HomeScreen extends Component {
                     <Text>POKER TRACKER</Text>
                 </View>
                 }
-
                         <View>
                             {state.loading ? <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
