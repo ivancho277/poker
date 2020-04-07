@@ -259,6 +259,39 @@ const getAllNewGames = async function () {
     }
 }
 
+const getTotals = async function () {
+    try {
+        const totals = AsyncStorage.getItem('totals');
+        return totals;
+    } catch {
+        console.log("no totals");
+        return null;
+    }
+}
+
+const setTotals = function(actionsArr) {
+    try {
+        const totals = {};
+        actionsArr.forEach(action => {
+            totals.action = 0;
+        });
+    } catch {   
+        console.log('Not Able to setTotals')
+
+    }
+    
+}
+
+const updateTotals = async function() {
+
+
+} 
+
+const deleteTotals = function (){ 
+
+
+}
+
 export const StorageAPI = {
     getAllNewGames: getAllNewGames,
 
