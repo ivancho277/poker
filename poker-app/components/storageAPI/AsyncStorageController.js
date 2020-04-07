@@ -269,30 +269,45 @@ const getTotals = async function () {
     }
 }
 
-const setTotals = function(actionsArr) {
+const setTotals = function (actionsArr) {
     try {
         const totals = {};
         actionsArr.forEach(action => {
-            totals.action = 0;
+            totals[action] = 0;
         });
-    } catch {   
+        console.log("SET TOTALS: ", totals)
+    } catch {
         console.log('Not Able to setTotals')
 
     }
-    
+
 }
 
-const updateTotals = async function() {
+const updateTotals = async function () {
 
 
-} 
+}
 
-const deleteTotals = function (){ 
-
+const deleteTotals = function () {
+    try {
+        AsyncStorage.removeItem('totals', () => {
+            alert('Totals removed');
+        });
+    } catch {
+        console.log('totals not removed.')
+    }
 
 }
 
 export const StorageAPI = {
+    setTotals: setTotals,
+
+    getTotals: getTotals,
+
+    updateTotals: updateTotals,
+
+    deleteTotals: deleteTotals,
+
     getAllNewGames: getAllNewGames,
 
     saveAllNewGames: saveAllNewGames,
