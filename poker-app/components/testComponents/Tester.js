@@ -4,7 +4,7 @@ import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/Gam
 import { Card } from 'react-native-paper';
 import { StoreLoader } from '../HOCs/StoreLoader';
 import { ScrollView } from 'react-native-gesture-handler';
-import {StorageAPI as Storage} from '../storageAPI/AsyncStorageController';
+import { StorageAPI as Storage } from '../storageAPI/AsyncStorageController';
 
 
 export const TestComponent = () => {
@@ -19,7 +19,7 @@ export const TestComponent = () => {
                         <ScrollView>
                             <Card.Title title="New Saved Data:" />
                             <Card.Content>
-                            <Text>YA! {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
+                                <Text>YA! {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
                             </Card.Content>
                         </ScrollView>
                     </Card>
@@ -50,15 +50,22 @@ export const Tester = () => {
      */
     return (
         <View>
-
-
-
             {!state.loading ?
 
                 <View>
-                   <Text>Test new CRUD operations for running totals</Text>
-                    <Button title="test press" onPress={() => {console.log(Storage.setInitialTotals(state.data.actions))}}>Press to test</Button>
-                    <Button title="check live Totals" onPress={() => {console.log("liveGame.totals")}} />
+                    <Text>Test new CRUD operations for running totals</Text>
+                    <Button title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
+                    <Button title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }} />
+                    <Button title="test update totals" onPress={() => { console.log(Storage.updateTotals(actions.getGameTotals())) }}></Button>
+                    <Button title="get storage totals" onPress={() => {
+                        setTimeout( async () => {
+                            let theData = await Storage.getTotals();
+                            setTimeout(() => {
+                                console.log(JSON.parse(theData))    
+                            }, 0);
+                            console.log(JSON.parse(theData))
+                        }, 0);
+                    }}>Press to test</Button>
                 </View>
                 :
                 <View>

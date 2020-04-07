@@ -275,7 +275,7 @@ const setInitialTotals = function (actionsArr) {
         actionsArr.forEach(action => {
             totals[action] = 0;
         });
-        AsyncStorage.setItem('items', JSON.stringify(totals));
+        AsyncStorage.setItem('totals', JSON.stringify(totals));
         console.log("SET TOTALS: ", totals)
     } catch {
         console.log('Not Able to setTotals')
@@ -285,7 +285,7 @@ const setInitialTotals = function (actionsArr) {
 
 const setTotals = function (totals) {
     try {
-        AsyncStorage.setItem('items', totals);
+        AsyncStorage.setItem('totals', totals);
     } catch {
         console.log('cant set Totals');
     }
@@ -294,15 +294,27 @@ const setTotals = function (totals) {
 const updateTotals = async function (gameTotalsToAdd) {
     try {
         getTotals().then(res => {
-            const savedTotals = JSON.parse(res)
+            const savedTotals = JSON.parse(res);
+            console.log(savedTotals);
             console.log('update FUN: ', savedTotals)
             gameTotalsToAdd.forEach(action => {
-                console.log("Updated FUN2: ", action)
-                if (!action) {
-
+                console.log("Updated FUN2: ", Object.keys(action)[0])
+                let name = Object.keys(action)[0];
+                for (const key in savedTotals) {
+                    if (savedTotals.hasOwnProperty(key)) {
+                        console.log("NAME: ", savedTotals[name])
+                        if(!savedTotals[name] && savedTotals[name] !== undefined){
+                            savedTotals[name] = action[name];
+                            console.log("ARHGAHSDSF:LKJAFSD:")
+                        }
+                        else {
+                            savedTotals[name] = savedTotals[name] + action[name]
+                        }
+                    }
                 }
 
             });
+        console.log("WHAT I NEED: ", savedTotals)            
         })
     } catch {
 
@@ -325,7 +337,7 @@ export const StorageAPI = {
     setTotals: setTotals,
 
     setInitialTotals: setInitialTotals,
-    
+
     getTotals: getTotals,
 
     updateTotals: updateTotals,

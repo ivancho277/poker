@@ -369,20 +369,28 @@ const actions = {
         //     console.log("load action: ", loadedData);
         dispatch(setLiveGame(loadedData.actions));
         dispatch(setData(loadedData));
-       // console.log('loadedData: ', loadedData);
+        // console.log('loadedData: ', loadedData);
     },
 
-    loadStorage: () => async ({getState, dispatch}) => {
-        if(getState().loading === true) return;
+    loadStorage: () => async ({ getState, dispatch }) => {
+        if (getState().loading === true) return;
         dispatch(setLoading());
         const data = await fetchData().then(response => { return respone });
         dispatch(setData(data));
         return data;
     },
-    
+
     getGames: () => async ({ dispatch }) => {
         return await retrieveGamesNew();
 
+    },
+
+    getGameTotals: () => ({ getState, setState }) => {
+        const { liveGame } = getState();
+        const totals = liveGame.actions.map(action => {
+            return { [action.actionName]: action.count }
+        });
+        return totals;
     },
 
     resetLiveGame: () => ({ getState, setState, dispatch }) => {

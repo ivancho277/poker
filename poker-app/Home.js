@@ -107,9 +107,7 @@ class HomeScreen extends Component {
             <GameSubscriber>
                 {(state, actions) => (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-                        {<View>
-
-                            <Button  title="test press" onPress={() => {console.log(storage.StorageAPI.setInitialTotals(state.data.actions))}}>Press to test</Button>
+                        {<View>                           
                     <Text>POKER TRACKER</Text>
                 </View>
                 }
