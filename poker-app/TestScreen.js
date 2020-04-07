@@ -67,14 +67,14 @@ export default function TestScreen() {
                             <Card title='TestComponent with Subscriber'>
                                 <Text> Subscriber test </Text>
                                 <ScrollView>
-                                    <TestComponent></TestComponent>
+                                <Tester></Tester>
                                 </ScrollView>
                             </Card>
 
                             <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
-                                    <Tester></Tester>
+                                <TestComponent></TestComponent>
                                 </ScrollView>
                             </Card>
                         </ScrollView>

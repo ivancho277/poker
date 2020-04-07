@@ -269,30 +269,42 @@ const getTotals = async function () {
     }
 }
 
-const setTotals = function (actionsArr) {
+const setInitialTotals = function (actionsArr) {
     try {
         const totals = {};
         actionsArr.forEach(action => {
             totals[action] = 0;
         });
-        AsyncStorage.setItem('items');
+        AsyncStorage.setItem('items', JSON.stringify(totals));
         console.log("SET TOTALS: ", totals)
     } catch {
         console.log('Not Able to setTotals')
 
     }
+}
 
+const setTotals = function (totals) {
+    try {
+        AsyncStorage.setItem('items', totals);
+    } catch {
+        console.log('cant set Totals');
+    }
 }
 
 const updateTotals = async function (gameTotalsToAdd) {
-    try{
+    try {
         getTotals().then(res => {
-            gameTotals.forEach(action => {
-                if(!)
-                
+            const savedTotals = JSON.parse(res)
+            console.log('update FUN: ', savedTotals)
+            gameTotalsToAdd.forEach(action => {
+                console.log("Updated FUN2: ", action)
+                if (!action) {
+
+                }
+
             });
         })
-    }catch {
+    } catch {
 
     }
 
@@ -312,6 +324,8 @@ const deleteTotals = function () {
 export const StorageAPI = {
     setTotals: setTotals,
 
+    setInitialTotals: setInitialTotals,
+    
     getTotals: getTotals,
 
     updateTotals: updateTotals,

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, Button } from 'react-native'
-import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore'
-import { Card } from 'react-native-paper'
-import { StoreLoader } from '../HOCs/StoreLoader'
-import { ScrollView } from 'react-native-gesture-handler'
-
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button } from 'react-native';
+import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore';
+import { Card } from 'react-native-paper';
+import { StoreLoader } from '../HOCs/StoreLoader';
+import { ScrollView } from 'react-native-gesture-handler';
+import {StorageAPI as Storage} from '../storageAPI/AsyncStorageController';
 
 
 export const TestComponent = () => {
@@ -45,6 +45,9 @@ export const Tester = () => {
 
 
 
+    /**
+     * Todo: need to make an action that returns the totals array in actions
+     */
     return (
         <View>
 
@@ -53,11 +56,9 @@ export const Tester = () => {
             {!state.loading ?
 
                 <View>
-                    <Text>FROM STORE: {state.loading.toString()}</Text>
-                    <Text>STATE: {JSON.stringify(state, undefined, 4)}</Text>
-                    <Text>Test sweet state.</Text>
-                    <Text />
-                    <Button title='test ren' onClick={console.log(state.data)} />
+                   <Text>Test new CRUD operations for running totals</Text>
+                    <Button title="test press" onPress={() => {console.log(Storage.setInitialTotals(state.data.actions))}}>Press to test</Button>
+                    <Button title="check live Totals" onPress={() => {console.log("liveGame.totals")}} />
                 </View>
                 :
                 <View>
