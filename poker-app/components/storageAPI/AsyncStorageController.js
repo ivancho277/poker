@@ -275,6 +275,7 @@ const setTotals = function (actionsArr) {
         actionsArr.forEach(action => {
             totals[action] = 0;
         });
+        AsyncStorage.setItem('items');
         console.log("SET TOTALS: ", totals)
     } catch {
         console.log('Not Able to setTotals')
@@ -283,8 +284,17 @@ const setTotals = function (actionsArr) {
 
 }
 
-const updateTotals = async function () {
+const updateTotals = async function (gameTotalsToAdd) {
+    try{
+        getTotals().then(res => {
+            gameTotals.forEach(action => {
+                if(!)
+                
+            });
+        })
+    }catch {
 
+    }
 
 }
 
