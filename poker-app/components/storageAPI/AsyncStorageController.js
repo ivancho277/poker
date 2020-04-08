@@ -300,9 +300,17 @@ const setInitialTotals = function (actionsArr) {
 
 const setTotals = function (totals) {
     try {
-        AsyncStorage.setItem('totals', totals);
+        AsyncStorage.setItem('totals', JSON.stringify(totals));
     } catch {
         console.log('cant set Totals');
+    }
+}
+
+const setPositionTotals = function(positionTotals) {
+    try {
+        AsyncStorage.setItem('position_totals', JSON.stringify(positionTotals))
+    } catch {
+        console.log('could not do it');
     }
 }
 
@@ -317,14 +325,20 @@ const updateTotals = async function (liveGame) {
                  * here we need to just add game data to both totals at the correct actions. 
                  * TODO: keep running total on actions that exsist and create a new one and assign it to be equal to the value in this game to start                
                  */
-                console.log('LIVE YO YO: ', actions)
-
-
-
+                console.log('LIVE YO YO: ', actions);
                 console.log('update: POSTOTS: ', savedPositionTotals);
-                console.log('update TOTS: ', savedTotals)
-
-
+                console.log('update TOTS: ', savedTotals);
+                actions.forEach(action => {
+                    console.log(action.actionName)
+                    if(savedTotals.hasOwnProperty(action.actionName)){
+                        savedTotals[action.actionName] += action.count
+                    } else {
+                        saveTotals[action.actionName] = action.count
+                    }
+                })
+                console.log("AFTER TOTS", savedTotals);
+                setTotals(savedTotals);
+                
             })
 
 
