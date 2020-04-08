@@ -5,6 +5,7 @@ import { Card } from 'react-native-paper';
 import { StoreLoader } from '../HOCs/StoreLoader';
 import { ScrollView } from 'react-native-gesture-handler';
 import { StorageAPI as Storage } from '../storageAPI/AsyncStorageController';
+import { Colors, ActivityIndicator } from 'react-native-paper';
 
 
 export const TestComponent = () => {
@@ -54,9 +55,9 @@ export const Tester = () => {
 
                 <View>
                     <Text>Test new CRUD operations for running totals</Text>
-                    <Button title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
-                    <Button title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }} />
-                    <Button title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
+                    <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
+                    <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }} />
+                    <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
                     <Button title="get storage totals" onPress={() => {
                         setTimeout( async () => {
                             let theData = await Storage.getTotals();

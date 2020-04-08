@@ -335,9 +335,18 @@ const updateTotals = async function (liveGame) {
                     } else {
                         saveTotals[action.actionName] = action.count
                     }
+                    if(savedPositionTotals.hasOwnProperty(action.actionName)){
+                        for(position in savedPositionTotals[action.actionName]){
+                            savedPositionTotals[action.actionName][position] += action.countPerPosition[position]
+                        }
+                    } else {
+                        savedPositionTotals[action.actionName] = action.countPerPosition;
+                    }
                 })
+                console.log("Lets hope it works: ", savedPositionTotals);
                 console.log("AFTER TOTS", savedTotals);
                 setTotals(savedTotals);
+                setPositionTotals(savedPositionTotals);
                 
             })
 
