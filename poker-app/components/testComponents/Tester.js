@@ -56,12 +56,14 @@ export const Tester = () => {
                     <Text>Test new CRUD operations for running totals</Text>
                     <Button title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
                     <Button title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }} />
-                    <Button title="test update totals" onPress={() => { console.log(Storage.updateTotals(actions.getGameTotals())) }}></Button>
+                    <Button title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
                     <Button title="get storage totals" onPress={() => {
                         setTimeout( async () => {
                             let theData = await Storage.getTotals();
+                            let moreDataPOS = await Storage.getTotalsByPosition();
                             setTimeout(() => {
                                 console.log(JSON.parse(theData))    
+                                console.log(JSON.parse(moreDataPOS))
                             }, 0);
                             console.log(JSON.parse(theData))
                         }, 0);

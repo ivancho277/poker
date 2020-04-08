@@ -269,14 +269,29 @@ const getTotals = async function () {
     }
 }
 
+const getTotalsByPosition = async function () {
+    try {
+        const totalsByPosition = AsyncStorage.getItem('position_totals');
+        return totalsByPosition;
+    } catch {
+        console.log("no position totals");
+        return null;
+    }
+}
+
+
 const setInitialTotals = function (actionsArr) {
     try {
         const totals = {};
+        const totalsByPosition = {};
         actionsArr.forEach(action => {
             totals[action] = 0;
+            totalsByPosition[action] = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
         });
         AsyncStorage.setItem('totals', JSON.stringify(totals));
+        AsyncStorage.setItem('position_totals', JSON.stringify(totalsByPosition));
         console.log("SET TOTALS: ", totals)
+        console.log("TOTSPOS: ", totalsByPosition);
     } catch {
         console.log('Not Able to setTotals')
 
@@ -291,50 +306,51 @@ const setTotals = function (totals) {
     }
 }
 
-const updateTotals = async function (gameTotalsToAdd) {
+const updateTotals = async function (liveGame) {
     try {
+        const { actions } = liveGame;
         getTotals().then(res => {
             const savedTotals = JSON.parse(res);
-            console.log(savedTotals);
-            console.log('update FUN: ', savedTotals)
-            gameTotalsToAdd.forEach(action => {
-                console.log("Updated FUN2: ", Object.keys(action)[0])
-                let name = Object.keys(action)[0];
-                for (const key in savedTotals) {
-                    if (savedTotals.hasOwnProperty(key)) {
-                        console.log("NAME: ", savedTotals[name])
-                        if(!savedTotals[name] && savedTotals[name] !== undefined){
-                            savedTotals[name] = action[name];
-                            console.log("ARHGAHSDSF:LKJAFSD:")
-                        }
-                        else {
-                            savedTotals[name] = savedTotals[name] + action[name]
-                        }
-                    }
-                }
+            getTotalsByPosition().then(res => {
+                const savedPositionTotals = JSON.parse(res);
+                /**
+                 * here we need to just add game data to both totals at the correct actions. 
+                 * TODO: keep running total on actions that exsist and create a new one and assign it to be equal to the value in this game to start                
+                 */
+                console.log('LIVE YO YO: ', actions)
 
-            });
-        console.log("WHAT I NEED: ", savedTotals)            
+
+
+                console.log('update: POSTOTS: ', savedPositionTotals);
+                console.log('update TOTS: ', savedTotals)
+
+
+            })
+
+
         })
     } catch {
 
     }
-
 }
 
 const deleteTotals = function () {
     try {
         AsyncStorage.removeItem('totals', () => {
-            alert('Totals removed');
+            console.log('Totals removed');
+        });
+        AsyncStorage.removeItem('position_totals', () => {
+            console.log('Position Totals Removed');
         });
     } catch {
-        console.log('totals not removed.')
+        console.log('totals not removed.');
     }
-
 }
 
 export const StorageAPI = {
     setTotals: setTotals,
+
+    getTotalsByPosition: getTotalsByPosition,
 
     setInitialTotals: setInitialTotals,
 
