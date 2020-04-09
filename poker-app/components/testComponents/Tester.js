@@ -56,7 +56,8 @@ export const Tester = () => {
                 <View>
                     <Text>Test new CRUD operations for running totals</Text>
                     <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
-                    <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }} />
+                    <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }}> </Button>
+                    <Button color={Colors.deepOrange400} title="check live actions" onPress={() => { console.log("liveGame.actions: ", state.liveGame.actions) }}> </Button>
                     <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
                     <Button title="get storage totals" onPress={() => {
                         setTimeout( async () => {

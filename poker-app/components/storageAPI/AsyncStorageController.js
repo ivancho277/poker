@@ -328,29 +328,31 @@ const updateTotals = async function (liveGame) {
                 console.log('LIVE YO YO: ', actions);
                 console.log('update: POSTOTS: ', savedPositionTotals);
                 console.log('update TOTS: ', savedTotals);
+                debugger;
                 actions.forEach(action => {
                     console.log(action.actionName)
                     if(savedTotals.hasOwnProperty(action.actionName)){
+                        
                         savedTotals[action.actionName] += action.count
                     } else {
-                        saveTotals[action.actionName] = action.count
+                        savedTotals[action.actionName] = action.count;
+                        console.log("else : ", savedTotals[action.actionName]);
                     }
                     if(savedPositionTotals.hasOwnProperty(action.actionName)){
                         for(position in savedPositionTotals[action.actionName]){
+
                             savedPositionTotals[action.actionName][position] += action.countPerPosition[position]
                         }
                     } else {
                         savedPositionTotals[action.actionName] = action.countPerPosition;
+                        console.log("else else: ", savedPositionTotals[action.actionName]);
                     }
                 })
                 console.log("Lets hope it works: ", savedPositionTotals);
                 console.log("AFTER TOTS", savedTotals);
                 setTotals(savedTotals);
                 setPositionTotals(savedPositionTotals);
-                
             })
-
-
         })
     } catch {
 
