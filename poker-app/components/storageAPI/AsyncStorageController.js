@@ -314,6 +314,8 @@ const setPositionTotals = function(positionTotals) {
     }
 }
 
+
+
 const updateTotals = async function (liveGame) {
     try {
         const { actions } = liveGame;
@@ -321,10 +323,6 @@ const updateTotals = async function (liveGame) {
             const savedTotals = JSON.parse(res);
             getTotalsByPosition().then(res => {
                 const savedPositionTotals = JSON.parse(res);
-                /**
-                 * here we need to just add game data to both totals at the correct actions. 
-                 * TODO: keep running total on actions that exsist and create a new one and assign it to be equal to the value in this game to start                
-                 */
                 console.log('LIVE YO YO: ', actions);
                 console.log('update: POSTOTS: ', savedPositionTotals);
                 console.log('update TOTS: ', savedTotals);
@@ -355,10 +353,13 @@ const updateTotals = async function (liveGame) {
             })
         })
     } catch {
-
+        console.log("ERROR UPDATING TOTALS!!!!!!!!!!")
     }
 }
-
+/**
+ * *Removes running total and running total per position form storage
+ *
+ */
 const deleteTotals = function () {
     try {
         AsyncStorage.removeItem('totals', () => {
@@ -388,6 +389,7 @@ export const StorageAPI = {
     getAllNewGames: getAllNewGames,
 
     saveAllNewGames: saveAllNewGames,
+
 
     deleteAllNewGames: deleteAllNewGames,
 

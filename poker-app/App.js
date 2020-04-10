@@ -56,7 +56,7 @@ const App = () => {
     // <Root>
     //   <Container>
     return (loading ? 
-    <ActivityIndicator animating={true} color={Colors.blue400 } />
+      <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'}></ActivityIndicator>
     :
     <GlobalState>
       <PaperProvider>

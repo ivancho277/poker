@@ -41,7 +41,7 @@ class GameScreen extends Component {
 
 
     componentDidMount() {
-
+        
         const { allTags, currentGame } = this.context.state
         console.log("MONT", allTags);
     }

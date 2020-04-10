@@ -44,9 +44,13 @@ const initialState = {
         savedGames: null,
         currentGame: null,
         allTags: null,
-        actions: null
+        actions: null,
     },
-
+    calculatedData: {
+        loading: false,
+        totals: null,
+        positionTotals: null
+    },
     allGamesArray: [],
     gamesObj: null,
     liveGame: null,
@@ -69,6 +73,12 @@ const setLoading = () => ({ setState }) => {
         draft.loading = true;
     })
 };
+
+const setTotalsLoading = () => ({ setState }) => {
+    setState(draft => {
+        draft.calculatedData.loading = true;
+    })
+}
 
 const finishLoading = () => ({ setState }) => {
     setState(draft => {
@@ -342,17 +352,20 @@ const updatePosition = (newPosition) => ({ setState, getState }) => {
     setState(draft => {
         draft.liveGame.position = newPosition;
     })
-    // if (newPosition < MAX_POSITION) {
-    //     setState(draft => {
-    //         draft.liveGame.position = newPosition;
-    //     })
-    // } else {
-    //     setState(draft => {
-    //         draft.liveGame.position = MIN_POSITION;
-    //     })
-    // }
 }
 
+const loadTotalsFromStorage = async () => {
+    const totals = await storage.getTotals().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
+    const positionTotals = await storage.getTotalsByPosition().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
+    return { totals: totals, positionTotals: positionTotals }
+}
+const setTotals = (totalsObj) => ({ setState }) => {
+    setState(draft => {
+        draft.calculatedData.totals = totalsObj.totals;
+        draft.calculatedData.positionTotals = totalsObj.positionTotals;
+        draft.calculatedData.loading = false;
+    })
+}
 
 
 
@@ -458,7 +471,43 @@ const actions = {
 
     removeAllData: () => ({ dispatch }) => {
         dispatch(deleteAllSavedData());
+    },
+
+    /**
+     * *Will get our running totals from StorageAPI and set current state to them
+     * ? not sure if I should just be pulling them directly from storage here and returning them, rather than initializing values in state
+     */
+    LoadOverallTotals: () => async ({ getState, setState, dispatch }) => {
+
+    },
+
+    // getBothTotals: () => async ({ getState, setState, dispatch }) => {
+    //     const totals = await storage.getTotals();
+    //     const positionTotals = await storage.getTotalsByPosition();
+    //     const totalObj = {
+    //         totals: JSON.parse(totals),
+    //         positionTotals: JSON.parse(positionTotals)
+    //     }
+    //     setTimeout(() => {
+    //         console.log('OBJECT: ', totalObj);
+    //     }, 0);
+    //     dispatch({totalObj})
+    // },
+
+    loadTotals: () => ({ dispatch }) => {
+        dispatch(setTotalsLoading());
+        loadTotalsFromStorage().then(res => {
+            if (res) {
+                dispatch(setTotals(res));
+            }
+        })
+
+    },
+
+    getPositionTotalsFromStorage: () => ({ dispatch }) => {
+
     }
+
 
 
 

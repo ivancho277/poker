@@ -11,6 +11,7 @@ import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
 import { Colors, ActivityIndicator } from 'react-native-paper';
 import { GameSubscriber } from './DataStore/GameStore';
+import { Tables } from './constants/tables'
 // import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
 // const calculation = require('./components/statscalculation.js')
@@ -107,23 +108,28 @@ class HomeScreen extends Component {
             <GameSubscriber>
                 {(state, actions) => (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-                        {<View>                           
-                    <Text>POKER TRACKER</Text>
-                </View>
-                }
+                        {<View>
+
+                            <Text>POKER TRACKER</Text>
+                        </View>
+                        }
                         <View>
-                            {state.loading ? <ActivityIndicator animating={true} color={Colors.purple800} />
+                            {state.loading ?
+                                <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
                                 <View>
-                                    {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
-                                    
                                     <DisplayStats></DisplayStats>
 
-                                    <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
-                                    <Text>ReRender global state</Text>
-                                    <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
-                                        <Text style={{ color: Colors.red400 }}>Press me</Text>
-                                    </TouchableOpacity>
+                                    {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
+
+
+                                    <View>
+                                        <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
+                                        <Text>ReRender global state</Text>
+                                        <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                            <Text style={{ color: Colors.red400 }}>Press me</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             }
                         </View>
