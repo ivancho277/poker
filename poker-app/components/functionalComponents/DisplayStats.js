@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native'
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import { Text, Card, Paragraph, DataTable, ActivityIndicator, Colors } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { Tables } from '../../constants/tables'
 
 
 
@@ -18,8 +18,8 @@ export function DisplayStats() {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View>
-                    <Card style={{ width: '100%', maxHeight: 470, padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
+                <View style={{ width: '100%', height: 350, maxHeight: 400, flex: 1, alignContent: 'center' }}>
+                    <Card style={{ padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
                         <Card.Title title="My Stats!" subtitle="Totals" />
                         <ScrollView>
                             <Card.Content>
@@ -38,12 +38,15 @@ export function DisplayStats() {
 
                                         <DataTable>
                                             <DataTable.Header>
-                                                <DataTable.Title>Position:</DataTable.Title>
+                                                <DataTable.Title>Action:</DataTable.Title>
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
                                             </DataTable.Header>
 
-
+                                            {/* /**
+                                         * !! TODO: have to map the table rows to the calculatedData.
+                                         */
+                                            }
 
                                             <DataTable.Row>
                                                 <DataTable.Cell>Total uses</DataTable.Cell>
