@@ -33,11 +33,11 @@ const isEmpty = function(obj){
 
 
 const PositionsObjToArray = (positionObj) =>  {
-    console.log("in me:", positionObj);
+   // console.log("in me:", positionObj);
     let outterArray =  [];
     for(action in positionObj){
-         let count = 0;
-        console.log(`#${count++} : ${action}`)
+        //let count = 0;
+       // console.log(`#${count++} : ${action}`)
         let actionName = action
         actionName = [];
         console.log(actionName)

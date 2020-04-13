@@ -3,7 +3,8 @@ import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native'
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import { Text, Card, Paragraph, DataTable, ActivityIndicator, Colors } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler';
-import { Tables } from '../../constants/tables'
+import { Tables } from '../../constants/tables';
+import * as Utils from '../../utils/objectOps.js'
 
 
 
@@ -29,37 +30,28 @@ export function DisplayStats() {
                                 {state.loading ?
                                     <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                     :
-                                    <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
-                                        {state.calculatedData.loading ?
-                                            <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
-                                            :
-                                            <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text>
-                                        }
+                                    <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>                                
 
                                         <DataTable>
                                             <DataTable.Header>
                                                 <DataTable.Title>Action:</DataTable.Title>
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
-                                            </DataTable.Header>
-
-                                            {/* /**
-                                         * !! TODO: have to map the table rows to the calculatedData. should work now with new ObjOps.js in Utils
-                                         */
-                                            }
-
-                                            <DataTable.Row>
-                                                <DataTable.Cell>Total uses</DataTable.Cell>
-                                                <DataTable.Cell numeric>159</DataTable.Cell>
-                                                <DataTable.Cell numeric>6.0</DataTable.Cell>
-                                            </DataTable.Row>
-
-                                            <DataTable.Row>
-                                                <DataTable.Cell>% of total actions</DataTable.Cell>
-                                                <DataTable.Cell numeric>237</DataTable.Cell>
-                                                <DataTable.Cell numeric>8.0</DataTable.Cell>
-                                            </DataTable.Row>
-
+                                            </DataTable.Header>                            
+                                                {Utils.objToArray(state.calculatedData.totals).map((element, i) => {
+                                                    console.log("elem: ", element)
+                                                    let keysArr = Object.keys(element)
+                                                    console.log("KEYSS: ", keysArr)
+                                                    let actionKey = keysArr[0];
+                                                    console.log("WHAT: ", actionKey)
+                                                    return (
+                                                        <DataTable.Row key={`${actionKey}_Row_${i}`}>
+                                                            <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell> 
+                                                            <DataTable.Cell key={`${actionKey}_${i}`}>{element[actionKey]}</DataTable.Cell>
+                                                            <DataTable.Cell key={`${actionKey}_key2_${i}`}>% here</DataTable.Cell>   
+                                                        </DataTable.Row>
+                                                    )
+                                                })}                                                                
                                             <DataTable.Pagination
                                                 page={0}
                                                 numberOfPages={3}
@@ -67,6 +59,11 @@ export function DisplayStats() {
                                                 label="1-2 of 6"
                                             />
                                         </DataTable>
+                                        {state.calculatedData.loading ?
+                                            <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
+                                            :
+                                            <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text>
+                                        }
                                     </View>
                                 }
 
