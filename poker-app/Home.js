@@ -122,7 +122,7 @@ class HomeScreen extends Component {
 
                                     {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
 
-
+                                    
                                     <View>
                                         <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                                         <Text>ReRender global state</Text>

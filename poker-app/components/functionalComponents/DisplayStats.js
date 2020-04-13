@@ -44,7 +44,7 @@ export function DisplayStats() {
                                             </DataTable.Header>
 
                                             {/* /**
-                                         * !! TODO: have to map the table rows to the calculatedData.
+                                         * !! TODO: have to map the table rows to the calculatedData. should work now with new ObjOps.js in Utils
                                          */
                                             }
 
