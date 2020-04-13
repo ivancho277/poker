@@ -32,16 +32,22 @@ const isEmpty = function(obj){
 }
 
 
-const PositionsObjToArray = (PositionsObj) =>  {
+const PositionsObjToArray = (positionObj) =>  {
+    console.log("in me:", positionObj);
     let outterArray =  [];
-    for(action in PositionsObj){
-        let actionName = [action];
+    for(action in positionObj){
+         let count = 0;
+        console.log(`#${count++} : ${action}`)
+        let actionName = action
         actionName = [];
-        for(position in [action]) {
-            actionName.push({[position] : action[position]});
+        console.log(actionName)
+        for(position in positionObj[action]) {
+            console.log(positionObj[action][position])
+            actionName.push({[position] : positionObj[action][position]});
         }
-        outterArray.push([action])
+        outterArray.push({[action] : actionName} ) 
     }
+    return outterArray;
 }
 
 
