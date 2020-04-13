@@ -2,16 +2,15 @@ import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Button, colors } from 'react-native-elements';
 import StatsBox from './components/Statsbox'
-import SearchModal from './components/SearchModal'
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
-
-import * as storage from './components/storageAPI/AsyncStorageController.js'
 import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
 import { Colors, ActivityIndicator } from 'react-native-paper';
 import { GameSubscriber } from './DataStore/GameStore';
-import { Tables } from './constants/tables'
+import { Tables } from './constants/tables';
+import * as Utils from './utils/objectOps'
+
 // import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
 // const calculation = require('./components/statscalculation.js')
@@ -118,6 +117,7 @@ class HomeScreen extends Component {
                                 <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
                                 <View>
+                                    <Button title="test press" onPress={() => {console.log("utils test: ", Utils.objToArray(state.calculatedData.totals))}}></Button>
                                     <DisplayStats></DisplayStats>
 
                                     {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
