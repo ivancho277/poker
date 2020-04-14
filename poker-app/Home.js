@@ -8,9 +8,8 @@ import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
 import { Colors, ActivityIndicator } from 'react-native-paper';
 import { GameSubscriber } from './DataStore/GameStore';
-import { Tables } from './constants/tables';
 import * as Utils from './utils/objectOps'
-
+import * as Calculate from './components/GameCalculations/calculateStats'
 // import { useGameContext } from './stateContext/useGameContext'
 // const storage = require("./components/AsyncStorageController.js");
 // const calculation = require('./components/statscalculation.js')
@@ -117,12 +116,12 @@ class HomeScreen extends Component {
                                 <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
                                 <View>
-                                    <Button title="test press" onPress={() => {console.log("utils test: ", Utils.PositionsObjToArray(state.calculatedData.positionTotals))}}></Button>
+                                    <Button title="test press" onPress={() => {console.log("utils test: ", Calculate.sumAllGameActions(Utils.PositionsObjToArray(state.calculatedData.totals)))}}></Button>
                                     <DisplayStats></DisplayStats>
 
                                     {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
 
-                                    
+
                                     <View>
                                         <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
                                         <Text>ReRender global state</Text>
