@@ -40,9 +40,9 @@ const PositionsObjToArray = (positionObj) =>  {
        // console.log(`#${count++} : ${action}`)
         let actionName = action
         actionName = [];
-        console.log(actionName)
+       // console.log(actionName)
         for(position in positionObj[action]) {
-            console.log(positionObj[action][position])
+            //console.log("what it looks like:",positionObj[action][position])
             actionName.push({[position] : positionObj[action][position]});
         }
         outterArray.push({[action] : actionName} ) 

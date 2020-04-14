@@ -27,7 +27,15 @@ const countTotals = (allGames) => {
 
 const sumAllGameActions = (games) => {
     let sum = 0;
+    console.log("type", games)
     console.log("HERE", typeof(games))
+    if (games.length){
+        console.log('This Array: ', sum);
+        sum = games.reduce((accumulator, currentVal, i) => { console.log(Object.keys(currentVal)); let key = Object.keys(currentVal); 
+            return accumulator + currentVal[key]; }) 
+        console.log('This Array: ', sum);
+        return sum;
+    }
     if (typeof(games) === 'object' ) {
         for (action in games) {
             sum += games[action]
@@ -35,8 +43,9 @@ const sumAllGameActions = (games) => {
         console.log('This Object', sum);
         return sum;
     }
-    //!!check this later
-    if (typeof(games) === 'Array'){
+    //!!check this later 
+    if (typeof(games) === 'array'){
+        console.log('This Array: ', sum);
         sum = games.reduce((total, action) => { console.log(Object.keys(action)); total + action[Object.keys(action)[0]]} );
         console.log('This Array: ', sum);
         return sum;
