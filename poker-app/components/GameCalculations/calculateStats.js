@@ -27,27 +27,20 @@ const countTotals = (allGames) => {
 
 const sumAllGameActions = (games) => {
     let sum = 0;
-    console.log("type", games)
-    console.log("HERE", typeof(games))
-    if (games.length){
+    if (games instanceof Array){
         console.log('This Array: ', sum);
-        sum = games.reduce((accumulator, currentVal, i) => { console.log(Object.keys(currentVal)); let key = Object.keys(currentVal); 
-            return accumulator + currentVal[key]; }) 
+        let init = 0;
+        sum = games.reduce((total = 0, action) => {
+             let value = parseInt(action[Object.keys(action)[0]]); return total + value }
+             , init );
         console.log('This Array: ', sum);
         return sum;
     }
-    if (typeof(games) === 'object' ) {
+    if (typeof(games) === 'object') {
         for (action in games) {
             sum += games[action]
         }
         console.log('This Object', sum);
-        return sum;
-    }
-    //!!check this later 
-    if (typeof(games) === 'array'){
-        console.log('This Array: ', sum);
-        sum = games.reduce((total, action) => { console.log(Object.keys(action)); total + action[Object.keys(action)[0]]} );
-        console.log('This Array: ', sum);
         return sum;
     }
     return null;

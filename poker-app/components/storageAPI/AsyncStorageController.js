@@ -306,7 +306,7 @@ const setTotals = function (totals) {
     }
 }
 
-const setPositionTotals = function(positionTotals) {
+const setPositionTotals = function (positionTotals) {
     try {
         AsyncStorage.setItem('position_totals', JSON.stringify(positionTotals))
     } catch {
@@ -323,31 +323,31 @@ const updateTotals = async function (liveGame) {
             const savedTotals = JSON.parse(res);
             getTotalsByPosition().then(res => {
                 const savedPositionTotals = JSON.parse(res);
-                console.log('LIVE YO YO: ', actions);
-                console.log('update: POSTOTS: ', savedPositionTotals);
-                console.log('update TOTS: ', savedTotals);
+                //  console.log('LIVE YO YO: ', actions);
+                // console.log('update: POSTOTS: ', savedPositionTotals);
+                //  console.log('update TOTS: ', savedTotals);
                 debugger;
                 actions.forEach(action => {
-                    console.log(action.actionName)
-                    if(savedTotals.hasOwnProperty(action.actionName)){
-                        
+                    //console.log(action.actionName)
+                    if (savedTotals.hasOwnProperty(action.actionName)) {
+
                         savedTotals[action.actionName] += action.count
                     } else {
                         savedTotals[action.actionName] = action.count;
-                        console.log("else : ", savedTotals[action.actionName]);
+                        //console.log("else : ", savedTotals[action.actionName]);
                     }
-                    if(savedPositionTotals.hasOwnProperty(action.actionName)){
-                        for(position in savedPositionTotals[action.actionName]){
+                    if (savedPositionTotals.hasOwnProperty(action.actionName)) {
+                        for (position in savedPositionTotals[action.actionName]) {
 
                             savedPositionTotals[action.actionName][position] += action.countPerPosition[position]
                         }
                     } else {
                         savedPositionTotals[action.actionName] = action.countPerPosition;
-                        console.log("else else: ", savedPositionTotals[action.actionName]);
+                        // console.log("else else: ", savedPositionTotals[action.actionName]);
                     }
                 })
-                console.log("Lets hope it works: ", savedPositionTotals);
-                console.log("AFTER TOTS", savedTotals);
+                //console.log("Lets hope it works: ", savedPositionTotals);
+                //console.log("AFTER TOTS", savedTotals);
                 setTotals(savedTotals);
                 setPositionTotals(savedPositionTotals);
             })

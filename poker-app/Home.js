@@ -101,6 +101,14 @@ class HomeScreen extends Component {
         await cb().then(res => { console.log(res) })
     }
 
+    testLogger = (data) => {
+        let totalsData = Utils.objToArray(data);
+        console.log("DATA: ",totalsData);
+        let sum = Calculate.sumAllGameActions(totalsData);
+        console.log(sum)
+        return sum
+    }
+
     render() {
         return (
             <GameSubscriber>
@@ -116,7 +124,7 @@ class HomeScreen extends Component {
                                 <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
                                 <View>
-                                    <Button title="test press" onPress={() => {console.log("utils test: ", Utils.PositionsObjToArray(state.calculatedData.positionTotals))}}></Button>
+                                    <Button title="test press" onPress={() => {console.log("utils test: ", this.testLogger(state.calculatedData.totals)) }}></Button>
                                     <DisplayStats></DisplayStats>
 
                                     {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
