@@ -4,17 +4,22 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import { Text, Card, Paragraph, DataTable, ActivityIndicator, Colors } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Tables } from '../../constants/tables';
-import * as Utils from '../../utils/objectOps.js'
+import * as Utils from '../../utils/objectOps.js';
+import * as Calculate from '../GameCalculations/calculateStats'
 
 
 
 export function DisplayStats() {
     const [state, actions] = UseGameStore();
+    const [totalActions, setTotalActions] = useState();
 
     useEffect(() => {
         actions.loadTotals();
     }, [])
 
+    const calculatePercentage = (count, total) => {
+        return Math.round(count / total * 100)
+    }
 
     return (
         <GameSubscriber>
@@ -30,28 +35,28 @@ export function DisplayStats() {
                                 {state.loading ?
                                     <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                     :
-                                    <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>                                
+                                    <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
 
                                         <DataTable>
                                             <DataTable.Header>
                                                 <DataTable.Title>Action:</DataTable.Title>
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
-                                            </DataTable.Header>                            
-                                                {Utils.objToArray(state.calculatedData.totals).map((element, i) => {
-                                                    console.log("elem: ", element)
-                                                    let keysArr = Object.keys(element)
-                                                    console.log("KEYSS: ", keysArr)
-                                                    let actionKey = keysArr[0];
-                                                    console.log("WHAT: ", actionKey)
-                                                    return (
-                                                        <DataTable.Row key={`${actionKey}_Row_${i}`}>
-                                                            <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell> 
-                                                            <DataTable.Cell key={`${actionKey}_${i}`}>{element[actionKey]}</DataTable.Cell>
-                                                            <DataTable.Cell key={`${actionKey}_key2_${i}`}>% here</DataTable.Cell>   
-                                                        </DataTable.Row>
-                                                    )
-                                                })}                                                                
+                                            </DataTable.Header>
+                                            {Utils.objToArray(state.calculatedData.totals).map((element, i) => {
+                                                console.log("elem: ", element)
+                                                let keysArr = Object.keys(element)
+                                                console.log("KEYSS: ", keysArr)
+                                                let actionKey = keysArr[0];
+                                                console.log("WHAT: ", actionKey)
+                                                return (
+                                                    <DataTable.Row key={`${actionKey}_Row_${i}`}>
+                                                        <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
+                                                        <DataTable.Cell key={`${actionKey}_${i}`}>     {element[actionKey]}</DataTable.Cell>
+                                                        <DataTable.Cell key={`${actionKey}_key2_${i}`}>   {calculatePercentage(element[actionKey], Calculate.sumAllGameActions(state.calculatedData.totals) )}%</DataTable.Cell>
+                                                    </DataTable.Row>
+                                                )
+                                            })}
                                             <DataTable.Pagination
                                                 page={0}
                                                 numberOfPages={3}

@@ -21,7 +21,7 @@ const isEmpty = function (obj) {
  * !!a function to check our totals, or if data gets lost, we can re-calculate.
  */
 const countTotals = (allGames) => {
-
+    
     
 }
 
@@ -44,7 +44,6 @@ const sumAllGameActions = (games) => {
         return sum;
     }
     return null;
-
 }
 
 
