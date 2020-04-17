@@ -8,7 +8,6 @@ import {
   DrawerActions
 } from "react-navigation";
 import HomeScreen from "./Home";
-import GameScreen from "./Game";
 import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
@@ -21,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import TestScreen from './TestScreen';
 import SettingsNew from './SettingsNew';
 import { UseGameStore } from './DataStore/GameStore'
+import GameScreenNew from './GameScreenNew';
 import { COLOR } from "react-native-material-ui";
 
 // class App extends React.Component {
@@ -86,8 +86,9 @@ const AppSwitchNavigator = createStackNavigator({
       )
     })
   },
+
   Game: {
-    screen: GameScreen,
+    screen: GameScreenNew,
     navigationOptions: ({ navigation }) => ({
       title: "Game"
     })
