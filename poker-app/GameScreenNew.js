@@ -51,11 +51,11 @@ export default function GameScreenNew() {
                                     <GameController></GameController>
                                 </ScrollView>
                             </Card>
-                            <View>
+                            {/* <View>
                                 <ScrollView>
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
-                            </View>
+                            </View> */}
                             <Card title='TestComponent with Subscriber'>
                                 <Text> Subscriber test </Text>
                                 <ScrollView>
@@ -63,12 +63,12 @@ export default function GameScreenNew() {
                                 </ScrollView>
                             </Card>
 
-                            <Card title='1st tester showing data'>
+                            {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
                                 <TestComponent></TestComponent>
                                 </ScrollView>
-                            </Card>
+                            </Card> */}
                         </ScrollView>
                         {/* <Tester></Tester> */}
                     </View>
