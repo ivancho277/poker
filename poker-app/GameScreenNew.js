@@ -23,14 +23,11 @@ export default function GameScreenNew() {
 
 
     //NOTE: later I may need to check if I need to define an async function inside, and then call load and run a clean up. 
-    useEffect(() => {
-        console.log('TEST SCREEN: ', state.data.savedGames)
-        console.log('LIVE :', state.liveGame)
-        //loadData();
-        // return () => {
-        //     cleanup
-        // };
-    }, [state.liveGame])
+    // useEffect(() => {
+    //     console.log('TEST SCREEN: ', state.data.savedGames)
+    //     console.log('LIVE :', state.liveGame)
+
+    // }, [])
 
 
 
@@ -38,42 +35,41 @@ export default function GameScreenNew() {
 
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-        <GameSubscriber>
-            {(state) => (
-                state.loading ?
-                    <Text>We need to load</Text>
-                    :
-                    <View style={styles.container}>
-                        <ScrollView>
-                            <Card title='Test Controller'>
-                                <Text> FOR TESTS! </Text>
-                                <ScrollView>
-                                    <GameController></GameController>
-                                </ScrollView>
-                            </Card>
-                            {/* <View>
+
+        // state.loading ?
+        //     <Text>We need to load</Text>
+        //     :
+        <View style={styles.container}>
+            <ScrollView>
+                <Card title='Test Controller'>
+                    <Text> FOR TESTS! </Text>
+                    <ScrollView>
+                        <GameController></GameController>
+                    </ScrollView>
+                </Card>
+                {/* <View>
                                 <ScrollView>
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
                             </View> */}
-                            <Card title='TestComponent with Subscriber'>
-                                <Text> Subscriber test </Text>
-                                <ScrollView>
-                                <Tester></Tester>
-                                </ScrollView>
-                            </Card>
+                <Card title='TestComponent with Subscriber'>
+                    <Text> Subscriber test </Text>
+                    <ScrollView>
+                        <Tester></Tester>
+                    </ScrollView>
+                </Card>
 
-                            {/* <Card title='1st tester showing data'>
+                {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
                                 <TestComponent></TestComponent>
                                 </ScrollView>
                             </Card> */}
-                        </ScrollView>
-                        {/* <Tester></Tester> */}
-                    </View>
-            )}
-        </GameSubscriber>
+            </ScrollView>
+            {/* <Tester></Tester> */}
+        </View>
+
+
     )
 
 }

@@ -58,7 +58,7 @@ export const GameController = (props) => {
         <GameSubscriber>
             {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame }) => (
                 //debugger
-                (liveGame !== null || !calculations.isEmpty(liveGame)) ?
+                liveGame !== null ?
                     <View>
                         <View>
                             <Text>DONE</Text>
