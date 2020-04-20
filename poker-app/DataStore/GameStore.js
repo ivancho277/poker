@@ -133,6 +133,9 @@ const addNewTag = tag => ({ getState, setState }) => {
 
 const removeAllTags = () => ({ setState }) => {
     storage.removeTags();
+    setState(draft => {
+        draft.data.tags = [];
+    })
 }
 
 const addToAllTags = tag => ({ getState, setState }) => {
@@ -206,8 +209,9 @@ const resetActions = () => ({ setState }) => {
     storage.resetActions();
 }
 
-const deleteAllSavedData = () => {
-    storage.removeData();
+const deleteAllSavedData = () => () => {
+    storage.deleteAllNewGames();
+    storage.deleteTotals();
 }
 // const createNewActionInstances = actions => {
 //     let gameActions = actions.map(action => { return new Action(action) })
