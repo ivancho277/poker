@@ -242,11 +242,14 @@ const SaveAllGames = () => ({ setState, getState }) => {
         return { [action.actionName]: action.count }
     });
     // const gameStats = liveGame.getCurrentStats();
+    //!!this may not work, not important now though just condition under.
     if (liveGame.tags.length === 0) {
         setState(draft => {
             draft.liveGame.tags = liveGame.tags.concat('default')
         })
     }
+
+    
     const game = {
         game: {
             data: liveGame,
