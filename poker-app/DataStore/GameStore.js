@@ -249,7 +249,7 @@ const SaveAllGames = () => ({ setState, getState }) => {
         })
     }
 
-    
+
     const game = {
         game: {
             data: liveGame,
@@ -366,7 +366,9 @@ const loadTotalsFromStorage = async () => {
     const positionTotals = await storage.getTotalsByPosition().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
     return { totals: totals, positionTotals: positionTotals }
 }
-const setTotals = (totalsObj) => ({ setState }) => {
+
+const setTotals = (totalsObj) => ({ setState, getState }) => {
+    const { data } = getState();
     setState(draft => {
         draft.calculatedData.totals = totalsObj.totals;
         draft.calculatedData.positionTotals = totalsObj.positionTotals;
@@ -489,7 +491,7 @@ const actions = {
     },
 
     // getBothTotals: () => async ({ getState, setState, dispatch }) => {
-    //     const totals = await storage.getTotals();
+    //     const totals = await storage.getTotals(); 
     //     const positionTotals = await storage.getTotalsByPosition();
     //     const totalObj = {
     //         totals: JSON.parse(totals),

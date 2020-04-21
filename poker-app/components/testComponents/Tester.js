@@ -70,6 +70,8 @@ export const Tester = () => {
                             console.log(JSON.parse(theData))
                         }, 0);
                     }}>Press to test</Button>
+                    <Button title="log Data" onPress={() => {console.log("DATA:::", state.data)}}></Button>
+                    <Button title="log Calculated Data" onPress={() => {console.log("DATA:::", state.calculatedData)}}></Button>
                 </View>
                 :
                 <View>
