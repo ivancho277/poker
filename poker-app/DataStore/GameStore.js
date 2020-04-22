@@ -16,7 +16,9 @@ import {
     validActionAdd,
     validActionRemove
 } from "../utils/validators.js";
+import * as Utils from '../utils/objectOps';
 const calculation = require("../components/statscalculation.js");
+
 
 //import * as selectors from './selectors';
 
@@ -367,8 +369,8 @@ const loadTotalsFromStorage = async () => {
     return { totals: totals, positionTotals: positionTotals }
 }
 
+
 const setTotals = (totalsObj) => ({ setState, getState }) => {
-    const { data } = getState();
     setState(draft => {
         draft.calculatedData.totals = totalsObj.totals;
         draft.calculatedData.positionTotals = totalsObj.positionTotals;
@@ -503,8 +505,19 @@ const actions = {
     //     dispatch({totalObj})
     // },
 
-    loadTotals: () => ({ dispatch }) => {
+    //TODO: Better place to check if games exsist before init totals.
+    loadTotals: () => ({ dispatch, getState }) => {
         dispatch(setTotalsLoading());
+        const { data } = getState();
+
+
+        /**
+         * if our savedGames in state are empty - then initialize storage totals, and setTotals(initlaized Storage)
+         * else just setTotals to loaded Totals
+         */
+        if(Utils.isEmpty(data.savedGames)){
+            initializeStorageTotals();
+        }
         loadTotalsFromStorage().then(res => {
             if (res) {
                 dispatch(setTotals(res));
@@ -523,6 +536,11 @@ const actions = {
 
 
 
+}
+
+
+const initializeStorageTotals = () => {
+    storage.setInitialTotals();
 }
 
 

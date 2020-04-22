@@ -294,7 +294,7 @@ const setInitialTotals = function (actionsArr) {
         console.log("TOTSPOS: ", totalsByPosition);
     } catch {
         console.log('Not Able to setTotals')
-
+        
     }
 }
 

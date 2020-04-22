@@ -146,7 +146,7 @@ export default function NewSettings(){
                         <Divider />
                         <Button color='teal' onPress={() =>confirmAlert('Reset all actions', "Are you sure?", 'actions reset', actions.resetActions)} mode='contained'>Reset Actions</Button>
                         <Divider />
-                        <Button color='red' onPress={() => {confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { actions.removeAllData(); storage.removeCurrentGame(); actions.removeAllTags() }) }} mode='contained'>DELETE ALL DATA</Button>
+                        <Button color='red' onPress={() => {confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { actions.removeAllData(); actions.removeAllTags() }) }} mode='contained'>DELETE ALL DATA</Button>
 
                     </View>
                 </View>

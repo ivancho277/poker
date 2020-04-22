@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
-import { Text, Card, Paragraph, DataTable, ActivityIndicator, Colors } from 'react-native-paper'
+import { Text, Card, Paragraph, DataTable, ActivityIndicator, Colors, Subheading } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Tables } from '../../constants/tables';
 import * as Utils from '../../utils/objectOps.js';
@@ -43,20 +43,22 @@ export function DisplayStats() {
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
                                             </DataTable.Header>
-                                            {Utils.objToArray(state.calculatedData.totals).map((element, i) => {
-                                                console.log("elem: ", element)
-                                                let keysArr = Object.keys(element)
-                                                console.log("KEYSS: ", keysArr)
-                                                let actionKey = keysArr[0];
-                                                console.log("WHAT: ", actionKey)
-                                                return (
-                                                    <DataTable.Row key={`${actionKey}_Row_${i}`}>
-                                                        <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
-                                                        <DataTable.Cell key={`${actionKey}_${i}`}>     {element[actionKey]}</DataTable.Cell>
-                                                        <DataTable.Cell key={`${actionKey}_key2_${i}`}>   {calculatePercentage(element[actionKey], Calculate.sumAllGameActions(state.calculatedData.totals) )}%</DataTable.Cell>
-                                                    </DataTable.Row>
-                                                )
-                                            })}
+                                            {Utils.isEmpty(state.calculatedData.totals) ? <Subheading >You have no Saved Games</Subheading >
+                                                :
+                                                Utils.objToArray(state.calculatedData.totals).map((element, i) => {
+                                                    console.log("elem: ", element)
+                                                    let keysArr = Object.keys(element)
+                                                    console.log("KEYSS: ", keysArr)
+                                                    let actionKey = keysArr[0];
+                                                    console.log("WHAT: ", actionKey)
+                                                    return (
+                                                        <DataTable.Row key={`${actionKey}_Row_${i}`}>
+                                                            <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
+                                                            <DataTable.Cell key={`${actionKey}_${i}`}>     {element[actionKey]}</DataTable.Cell>
+                                                            <DataTable.Cell key={`${actionKey}_key2_${i}`}>   {calculatePercentage(element[actionKey], Calculate.sumAllGameActions(state.calculatedData.totals))}%</DataTable.Cell>
+                                                        </DataTable.Row>
+                                                    )
+                                                })}
                                             <DataTable.Pagination
                                                 page={0}
                                                 numberOfPages={3}
