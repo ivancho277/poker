@@ -509,20 +509,27 @@ const actions = {
     loadTotals: () => ({ dispatch, getState }) => {
         dispatch(setTotalsLoading());
         const { data } = getState();
-
-
-        /**
-         * if our savedGames in state are empty - then initialize storage totals, and setTotals(initlaized Storage)
-         * else just setTotals to loaded Totals
-         */
-        if(Utils.isEmpty(data.savedGames)){
+        if (Utils.isEmpty(data.savedGames)) {
             initializeStorageTotals();
+            loadTotalsFromStorage().then(res => {
+                if (res) {
+                    dispatch(setTotals(res));
+                }
+            })
+            return;
         }
         loadTotalsFromStorage().then(res => {
             if (res) {
                 dispatch(setTotals(res));
             }
         })
+
+    },
+
+    //!!WE BE RIGHTHUURRR
+    updateTotalsWithCurrentGame: () => ({ getState, dispatch }) => {
+        const { liveGame } = getState();
+        storage.updateTotals(liveGame);
 
     },
 
