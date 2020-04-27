@@ -202,9 +202,10 @@ const retrieveActions = async function () {
  */
 const resetActions = function () {
     try {
-        const originalAction = ['call', 'fold', 'raise'];
-        AsyncStorage.setItem('actions', JSON.stringify(originalAction))
+        const originalActions = ['call', 'fold', 'raise'];
+        AsyncStorage.setItem('actions', JSON.stringify(originalActions))
         console.log('actions reset')
+        return originalActions;
     } catch{
         console.log('Couldnt reset actions')
     }
@@ -292,6 +293,7 @@ const setInitialTotals = function (actionsArr) {
         AsyncStorage.setItem('position_totals', JSON.stringify(totalsByPosition));
         console.log("SET TOTALS: ", totals)
         console.log("TOTSPOS: ", totalsByPosition);
+        //return {totals: totals, positionTotals: totalsByPosition}
     } catch {
         console.log('Not Able to setTotals')
         
@@ -326,7 +328,7 @@ const updateTotals = async function (liveGame) {
                 //  console.log('LIVE YO YO: ', actions);
                 // console.log('update: POSTOTS: ', savedPositionTotals);
                 //  console.log('update TOTS: ', savedTotals);
-                debugger;
+               // debugger;
                 actions.forEach(action => {
                     //console.log(action.actionName)
                     if (savedTotals.hasOwnProperty(action.actionName)) {

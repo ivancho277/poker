@@ -41,13 +41,24 @@ import { COLOR } from "react-native-material-ui";
 // }
 
 const App = () => {
-  const [state, {load}] = UseGameStore();
+  const [state, {load, loadTotals}] = UseGameStore();
   const [loading, setLoading] = useState(true);
 
+  const DataLoad = async () => {
+    await loadTotals().then(async (res) => {
+      await load().then(res => {
+        console.log("!!DONE LOADING!!")
+      })
+    })
+  }
+
   useEffect(() => {
-    load().then(res => {
-      setLoading(false)
-    });
+    DataLoad().then(res => {
+      setLoading(false);
+    })
+    // load().then(res => {
+    //   setLoading(false)
+    // });
   }, [])
 
 

@@ -230,16 +230,18 @@ const createGame = actions => {
     return new Game(gameActions);
 };
 
-// const incrementAction = actionName => {
+const updateTotalsWithLiveGame = liveGame =>  {
+    storage.updateTotals(liveGame);
+    console.log("Updated broski");
+};
 
-// }
 
 
-//TODO: reconfigure save all games to work from actions in store
 const SaveAllGames = () => ({ setState, getState }) => {
     //*this Game instance might actually come from contect state.
     const { liveGame, allGamesArray } = getState()
     //const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
+    updateTotalsWithLiveGame(liveGame);
     const totals = liveGame.actions.map(action => {
         return { [action.actionName]: action.count }
     });
@@ -250,8 +252,6 @@ const SaveAllGames = () => ({ setState, getState }) => {
             draft.liveGame.tags = liveGame.tags.concat('default')
         })
     }
-
-
     const game = {
         game: {
             data: liveGame,
@@ -261,8 +261,6 @@ const SaveAllGames = () => ({ setState, getState }) => {
         }
     }
     console.log("AHAHAHAHAHAHAHAHAHAHAASDFLHKJASFDALS:DJ:L", game)
-
-
     let updatedGamesList;
     if (storage.isEmpty(getState().data.savedGames)) {
         updatedGamesList = [game]
@@ -302,33 +300,16 @@ const CurrentGameSave = () => ({ setState, getState }) => {
 
 const fetchData = async () => {
     try {
-        const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
-        const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? [] : JSON.parse(res) })
+        // const dataResponse = await storage.retrieveData().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
+        const actionsResponse = await storage.retrieveActions().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? storage.resetActions() : JSON.parse(res) })
         const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? [] : JSON.parse(res) })
         const CurrentGameResponse = await storage.retrieveCurrentGame().then(res => { return JSON.parse(res) })
         const savedGamesResponse = await storage.getAllNewGames().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
-        return { allGames: dataResponse, savedGames: savedGamesResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
+        return { allGames: savedGamesResponse, savedGames: savedGamesResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
     } catch {
         console.log('error fetching');
         throw Error("this is a fetch error")
     }
-}
-
-logTotalsByPosition = () => {
-    console.log(calculation.calculateByPosition(this.state.gamesObj));
-    return calculation.calculateByPosition(this.state.gamesObj);
-};
-
-logPercentageTotals = () => {
-    return calculation.getPercentages(this.state.gamesObj);
-}
-
-logTotals = () => {
-    return calculation.objToArray(calculation.calculateTotalStats(this.state.gamesObj))
-}
-
-logPercentByPosition = () => {
-    return calculation.calcPercentByPosition(this.state.gamesObj)
 }
 
 
@@ -506,31 +487,34 @@ const actions = {
     // },
 
     //TODO: Better place to check if games exsist before init totals.
-    loadTotals: () => ({ dispatch, getState }) => {
+    loadTotals: () => async ({ dispatch, getState }) => {
         dispatch(setTotalsLoading());
         const { data } = getState();
         if (Utils.isEmpty(data.savedGames)) {
             initializeStorageTotals();
-            loadTotalsFromStorage().then(res => {
+            await loadTotalsFromStorage().then(res => {
                 if (res) {
                     dispatch(setTotals(res));
                 }
             })
-            return;
+            return 'totals_reset';
         }
         loadTotalsFromStorage().then(res => {
             if (res) {
                 dispatch(setTotals(res));
             }
+            return 'totals';
         })
 
     },
 
-    //!!WE BE RIGHTHUURRR
-    updateTotalsWithCurrentGame: () => ({ getState, dispatch }) => {
+    /**
+     * This Action will Update Storage Running totals with what ever data is in Currently in liveGame 
+     * *Not implemented anywhere in code, SaveAllGames is updating them only.
+     */
+    updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
         storage.updateTotals(liveGame);
-
     },
 
     getPositionTotalsFromStorage: () => ({ dispatch }) => {
