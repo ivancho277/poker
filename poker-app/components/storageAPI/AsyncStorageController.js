@@ -118,7 +118,7 @@ const removeData = function () {
     }
     catch (error) {
         return null;
-    }
+    } 
 
 }
 
