@@ -491,7 +491,7 @@ const actions = {
         dispatch(setTotalsLoading());
         const { data } = getState();
         if (Utils.isEmpty(data.savedGames)) {
-            initializeStorageTotals();
+            initializeStorageTotals(data.actions);
             await loadTotalsFromStorage().then(res => {
                 if (res) {
                     dispatch(setTotals(res));
@@ -530,8 +530,9 @@ const actions = {
 }
 
 
-const initializeStorageTotals = () => {
-    storage.setInitialTotals();
+const initializeStorageTotals = (actionsArr) => {
+    storage.setInitialTotals(actionsArr);
+    console.log('SHOW ME IM HERE!');
 }
 
 

@@ -43,7 +43,7 @@ export function DisplayStats() {
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
                                             </DataTable.Header>
-                                            {Utils.isEmpty(state.calculatedData.totals) ? <Subheading >You have no Saved Games</Subheading >
+                                            {Utils.isEmpty(state.data.savedGames) ? <Subheading >You have no Saved Games</Subheading >
                                                 :
                                                 Utils.objToArray(state.calculatedData.totals).map((element, i) => {
                                                     console.log("elem: ", element)
