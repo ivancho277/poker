@@ -1,21 +1,62 @@
 import React, { Component, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import {Button} from 'react-native-elements';
+import { Button, colors } from 'react-native-elements';
 import StatsBox from './components/Statsbox'
-import SearchModal from './components/SearchModal'
-import { TextInput } from 'react-native-gesture-handler';
 import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
-
-const storage = require("./components/AsyncStorageController.js");
-const calculation = require('./components/statscalculation.js')
+import * as calculation from './components/GameCalculations/calculateStats'
+import { DisplayStats } from './components/functionalComponents/DisplayStats';
+import { Colors, ActivityIndicator } from 'react-native-paper';
+import { GameSubscriber } from './DataStore/GameStore';
+import * as Utils from './utils/objectOps'
+import * as Calculate from './components/GameCalculations/calculateStats'
+// import { useGameContext } from './stateContext/useGameContext'
+// const storage = require("./components/AsyncStorageController.js");
+// const calculation = require('./components/statscalculation.js')
 
 //  const context = useContext(MyContext)
 
 
 
-class HomeScreen extends Component {
+// const HomeScreen = () => {
+//     [state, dispatch] = useGameContext();
 
+
+//     return (
+//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+//             <View>
+//                 {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
+//                 <MyContext.Consumer>
+//                     {(context) => <Button title="test" onPress={() => { console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"])) }} />}
+//                 </MyContext.Consumer>
+//                 <Text>POKER TRACKER</Text>
+//                 {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
+//             </View>
+
+//             <View>
+//                 <View>
+//                     <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+//                 </View>
+//                 <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
+//                 <Text>ReRender global state</Text>
+
+//                 <MyContext.Consumer>
+//                     {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.modifiers.remount() }}>
+//                         <Text>Press me</Text>
+//                     </TouchableOpacity>}
+//                 </MyContext.Consumer>
+
+//             </View >
+//         </View>
+//     )
+// }
+
+// export default Home
+
+
+
+class HomeScreen extends Component {
+    //TODO: get ride of any unsed state data.
     constructor(props) {
         super(props);
         this.state = {
@@ -28,11 +69,12 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-
+        // debugger;
+        console.log("MOUNTED: ", this.context.modifiers.getGames())
     }
 
-    conextRender = (cb) => {
-        cb()
+    componentDidUpdate() {
+        console.log(this.context)
     }
 
     logTags = (allGames, tag) => {
@@ -44,6 +86,7 @@ class HomeScreen extends Component {
         }
     }
 
+    //TODO: this might be a utils method to pull out in different file
     objToArray = (obj) => {
         // let values = Object.values(obj);
         let objArray = [];
@@ -54,38 +97,61 @@ class HomeScreen extends Component {
         return objArray
     }
 
+    test = async (cb) => {
+        await cb().then(res => { console.log(res) })
+    }
+
+    testLogger = (data) => {
+        let totalsData = Utils.objToArray(data);
+        console.log("DATA: ",totalsData);
+        let sum = Calculate.sumAllGameActions(totalsData);
+        console.log(sum)
+        return sum
+    }
+
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-                <View>
-                    {/* <AntDesign name="doubleright" size={32} color="green"> </AntDesign> */}
-                    <MyContext.Consumer>
-                        {(context) => <Button title="test" onPress={() => { console.log(calculation.findManyTags(context.state.gamesObj, ["Home", "France"])) }} />}
-                    </MyContext.Consumer>
-                    <Text>POKER TRACKER</Text>
-                    {/* <SearchModal objToArray={this.objToArray} searchInput={this.renderSearchInput} logTags={this.logTags}></SearchModal> */}
-                </View>
+            <GameSubscriber>
+                {(state, actions) => (
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+                        {<View>
 
-                <View>
-                    <View>
-                        <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} />
+                            <Text>POKER TRACKER</Text>
+                        </View>
+                        }
+                        <View>
+                            {state.loading ?
+                                <ActivityIndicator animating={true} color={Colors.purple800} />
+                                :
+                                <View>
+                                    <Button title="test press" onPress={() => {console.log("utils test: ", this.testLogger(state.calculatedData.totals)) }}></Button>
+                                    <DisplayStats></DisplayStats>
+
+                                    {/* <StatsBox logTotalsByPosition={this.logTotalsByPosition} height={290} width={200} /> */}
+
+
+                                    <View>
+                                        <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
+                                        <Text>ReRender global state</Text>
+                                        <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                            <Text style={{ color: Colors.red400 }}>Press me</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            }
+                        </View>
                     </View>
-                    <Button title="Game" style={{ margin: '10px' }} onPress={() => this.props.navigation.navigate('Game')} />
-                    <Text>ReRender global state</Text>
+                )
+                }
+            </GameSubscriber>
 
-                    <MyContext.Consumer>
-                        {(context) => <TouchableOpacity onPress={() => { console.log('AhAHA', context.state); context.remount() }}>
-                            <Text>Press me</Text>
-                        </TouchableOpacity>}
-                    </MyContext.Consumer>
-                  
-                </View >
-            </View>
         )
     }
 }
 
 export default HomeScreen;
+
+HomeScreen.contextType = MyContext;
 
 const styles = StyleSheet.create({
     container: {

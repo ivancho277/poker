@@ -9,13 +9,13 @@ import { AsyncStorage } from 'react-native';
 const firstTimeLauching = async function () {
     try {
         let isFirstLaunch = await AsyncStorage.getItem('firstlaunch')
-        if(isFirstLaunch === undefined){
+        if (isFirstLaunch === undefined) {
             AsyncStorage.setItem('firstlaunch', 'false')
             return true;
-        } 
+        }
         return false;
-        
-    } catch (error){
+
+    } catch (error) {
         return false;
     }
 }
@@ -49,7 +49,7 @@ const saveCurrentGame = function (data) {
         AsyncStorage.setItem('currentGame', JSON.stringify(data));
         console.log(`stored a current Game!`)
         return data
-    } catch (error){
+    } catch (error) {
         console.log("error saving current game");
         return null;
     }
@@ -100,25 +100,25 @@ const retrieveData = async function () {
         if (!isEmpty(games))
             return games;
     }
-    catch(error) {
+    catch (error) {
         console.log('error retrieving data');
         return null;
     }
 }
-    
+
 /**
  *removes all saved games
  *
  */
 const removeData = function () {
-    try{
-    let empty = {};
-    AsyncStorage.setItem('key', JSON.stringify(empty));
-    console.log("REMOVED")
+    try {
+        let empty = {};
+        AsyncStorage.setItem('key', JSON.stringify(empty));
+        console.log("REMOVED")
     }
-    catch(error){
+    catch (error) {
         return null;
-    }
+    } 
 
 }
 
@@ -131,8 +131,8 @@ const saveTags = function (data) {
     try {
         AsyncStorage.setItem('tags', JSON.stringify(data));
         console.log("SUCCESS STORING TAGS")
-    } catch(error) {
-        
+    } catch (error) {
+
         console.log("ERROR SAVING TAGS")
         return null;
     }
@@ -143,7 +143,7 @@ const saveTags = function (data) {
  *
  * @returns {String[]}
  */
-const retrieveTags =  async function () {
+const retrieveTags = async function () {
     try {
         let allTags = await AsyncStorage.getItem('tags');
         return allTags;
@@ -189,7 +189,7 @@ const retrieveActions = async function () {
     try {
         let actions = await AsyncStorage.getItem('actions');
         return actions;
-    } catch(err) {
+    } catch (err) {
         //throw Error(err);
         console.log('could not retrieve actions');
         return null;
@@ -202,9 +202,10 @@ const retrieveActions = async function () {
  */
 const resetActions = function () {
     try {
-        const originalAction = ['call', 'fold', 'raise'];
-        AsyncStorage.setItem('actions', JSON.stringify(originalAction))
+        const originalActions = ['call', 'fold', 'raise'];
+        AsyncStorage.setItem('actions', JSON.stringify(originalActions))
         console.log('actions reset')
+        return originalActions;
     } catch{
         console.log('Couldnt reset actions')
     }
@@ -259,15 +260,140 @@ const getAllNewGames = async function () {
     }
 }
 
+const getTotals = async function () {
+    try {
+        const totals = AsyncStorage.getItem('totals');
+        return totals;
+    } catch {
+        console.log("no totals");
+        return null;
+    }
+}
+
+const getTotalsByPosition = async function () {
+    try {
+        const totalsByPosition = AsyncStorage.getItem('position_totals');
+        return totalsByPosition;
+    } catch {
+        console.log("no position totals");
+        return null;
+    }
+}
+
+
+const setInitialTotals = function (actionsArr) {
+    try {
+        const totals = {};
+        const totalsByPosition = {};
+        actionsArr.forEach(action => {
+            totals[action] = 0;
+            totalsByPosition[action] = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+        });
+        AsyncStorage.setItem('totals', JSON.stringify(totals));
+        AsyncStorage.setItem('position_totals', JSON.stringify(totalsByPosition));
+        console.log("SET TOTALS: ", totals)
+        console.log("TOTSPOS: ", totalsByPosition);
+        //return {totals: totals, positionTotals: totalsByPosition}
+    } catch {
+        console.log('Not Able to setTotals')
+        
+    }
+}
+
+const setTotals = function (totals) {
+    try {
+        AsyncStorage.setItem('totals', JSON.stringify(totals));
+    } catch {
+        console.log('cant set Totals');
+    }
+}
+
+const setPositionTotals = function (positionTotals) {
+    try {
+        AsyncStorage.setItem('position_totals', JSON.stringify(positionTotals))
+    } catch {
+        console.log('could not do it');
+    }
+}
 
 
 
-module.exports = {
-    saveAllNewGames: saveAllNewGames,
+const updateTotals = async function (liveGame) {
+    try {
+        const { actions } = liveGame;
+        getTotals().then(res => {
+            const savedTotals = JSON.parse(res);
+            getTotalsByPosition().then(res => {
+                const savedPositionTotals = JSON.parse(res);
+                //  console.log('LIVE YO YO: ', actions);
+                // console.log('update: POSTOTS: ', savedPositionTotals);
+                //  console.log('update TOTS: ', savedTotals);
+               // debugger;
+                actions.forEach(action => {
+                    //console.log(action.actionName)
+                    if (savedTotals.hasOwnProperty(action.actionName)) {
 
-    deleteAllNewGames: deleteAllNewGames,
+                        savedTotals[action.actionName] += action.count
+                    } else {
+                        savedTotals[action.actionName] = action.count;
+                        //console.log("else : ", savedTotals[action.actionName]);
+                    }
+                    if (savedPositionTotals.hasOwnProperty(action.actionName)) {
+                        for (position in savedPositionTotals[action.actionName]) {
+
+                            savedPositionTotals[action.actionName][position] += action.countPerPosition[position]
+                        }
+                    } else {
+                        savedPositionTotals[action.actionName] = action.countPerPosition;
+                        // console.log("else else: ", savedPositionTotals[action.actionName]);
+                    }
+                })
+                //console.log("Lets hope it works: ", savedPositionTotals);
+                //console.log("AFTER TOTS", savedTotals);
+                setTotals(savedTotals);
+                setPositionTotals(savedPositionTotals);
+            })
+        })
+    } catch {
+        console.log("ERROR UPDATING TOTALS!!!!!!!!!!")
+    }
+}
+/**
+ * *Removes running total and running total per position form storage
+ *
+ */
+const deleteTotals = function () {
+    try {
+        AsyncStorage.removeItem('totals', () => {
+            console.log('Totals removed');
+        });
+        AsyncStorage.removeItem('position_totals', () => {
+            console.log('Position Totals Removed');
+        });
+    } catch {
+        console.log('totals not removed.');
+    }
+}
+
+export const StorageAPI = {
+    setTotals: setTotals,
+
+    getTotalsByPosition: getTotalsByPosition,
+
+    setInitialTotals: setInitialTotals,
+
+    getTotals: getTotals,
+
+    updateTotals: updateTotals,
+
+    deleteTotals: deleteTotals,
 
     getAllNewGames: getAllNewGames,
+
+    saveAllNewGames: saveAllNewGames,
+
+
+    deleteAllNewGames: deleteAllNewGames,
 
     saveData: saveData,
     /**
@@ -281,7 +407,7 @@ module.exports = {
     removeCurrentGame: removeCurrentGame,
 
     retrieveData: retrieveData,
-    
+
     removeData: removeData,
 
     saveTags: saveTags,
@@ -297,8 +423,10 @@ module.exports = {
     resetActions: resetActions,
 
     firstTimeLauching: firstTimeLauching,
-    
+
     isEmpty: isEmpty
 
 }
+
+
 

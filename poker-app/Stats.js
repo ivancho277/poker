@@ -3,21 +3,30 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-n
 import { MyContext } from './stateContext/GlobalState'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
-const calculation = require('./components/statscalculation.js')
+import * as calculation from './components/statscalculation.js';
+import * as storage from './components/storageAPI/AsyncStorageController.js';
+import Tester from './components/testComponents/Tester';
+import { GameSubscriber } from './DataStore/store'
+//import Tester from './components/tester'
+// const calculation = require('./components/statscalculation.js')
 
-const storage = require('./components/AsyncStorageController.js');
-
+// const storage = require('./components/AsyncStorageController.js');
 export default class StatsScreen extends Component {
 
     state = {
         tagpicker: ''
     }
 
+    componentDidMount() {
+        console.log(this.context.state.allTags);
+    }
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.logTags(allGames, tag);
+        console.log(this.state.tagpicker);
+
         console.log(foundgames)
         if (tag != '') {
-            if (foundgames.length >= 1) {
+            if (foundgames.length > 0) {
                 return (
 
                     this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
@@ -28,6 +37,7 @@ export default class StatsScreen extends Component {
                 )
             }
         }
+
         else return <Text>No found Games</Text>
     }
 
@@ -78,6 +88,7 @@ export default class StatsScreen extends Component {
                     })} */}
                 </RNPickerSelect>}
             </MyContext.Consumer>
+
         )
     }
 
@@ -88,7 +99,7 @@ export default class StatsScreen extends Component {
                 <Card title='Search By Tag'
                     containerStyle={{ width: '80%' }}
                 >
-                    
+
                     {this.renderPicker()}
                     <MyContext.Consumer>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
@@ -97,10 +108,15 @@ export default class StatsScreen extends Component {
 
                 <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
 
+              
             </View>
         )
     }
 }
+
+
+StatsScreen.contextType = MyContext;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -3,7 +3,7 @@
     "name": "poker-app",
     "slug": "poker-app",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
@@ -25,7 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier" : "com.pokerstats.poker"
+      "bundleIdentifier": "com.pokerstats.poker"
     },
     "android": {
       "package": "com.pokerstats.poker"

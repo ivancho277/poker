@@ -18,35 +18,23 @@ class Radio extends Component {
     constructor(props) {
         super(props);
         state = {
-            value: 0   
+            value: 0
         }
-    }
 
-    
-    componentDidMount() {
-        console.log("Tell me when to Mount!")
-        this.setState({
-            value: this.props.position
-        });
     }
-
     positionReturn(position) {
-        this.props.setPosition(position);
+        // debugger
+        this.props.getPosition(position);
     }
 
 
-    /**
-     *
-     * @param {Number} - index of the radio_props that should be active. This is the Overall Current Games Position.
-     * @memberof Radio
-     */
-    updateIndex = (currIndex) => {
-        if (currIndex < radio_props.length) {
-            this.radioFormClear.updateIsActiveIndex(currIndex); // just pass -1 and your radio button should clear
+    updateIndex = (index) => {
+        if (index < radio_props.length - 1) {
+            this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
             this.setState({
-                value: currIndex
+                value: index
             })
-            this.positionReturn(currIndex);
+            this.positionReturn(index);
         } else {
             this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
             this.setState({
@@ -55,13 +43,10 @@ class Radio extends Component {
             this.positionReturn(0);
         }
     }
- 
-    componentDidUpdate(prevProps, prevState) {
-       if(this.state.value != this.props.position){
-           this.updateIndex(this.props.position)   
-       }  
-    }
 
+    componentWillUpdate() {
+        this.props.shouldPositionIncrement(this.updateIndex)
+    }
 
     render() {
         return (
@@ -75,12 +60,7 @@ class Radio extends Component {
                         buttonSize={10}
                         buttonOuterSize={20}
                         labelHorizontal={false}
-                        onPress={(value) => {
-                            //this.setState({value: value});
-                            //debugger;
-                            this.props.setPosition(value)
-                            console.log("I GOT PRESSEED!!:", value)
-                        }}
+                        onPress={(value) => { this.setState({ value: value }); this.positionReturn(value); }}
 
                     />
                 </View>
@@ -93,7 +73,4 @@ class Radio extends Component {
     }
 };
 
-
 export default Radio;
-
-

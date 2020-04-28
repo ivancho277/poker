@@ -74,14 +74,34 @@ module.exports = {
 
     calcPercentByPosition: function (gamesObj) {
         return percentagesByPostion(gamesObj);
+        
     },
 
     calcCurrentGamePercentages: function (gamesObj, currentGame) {
         return percentagePerPositionByTags(gamesObj, currentGame)
+    },
+
+    isEmpty: function(obj){
+        return isEmpty(obj);
+    },
+
+    objToArray: function(obj){
+        return objToArray(obj);
     }
 }
 
-function isEmpty(obj){
+
+const objToArray = (obj) => {
+    // let values = Object.values(obj);
+    let objArray = [];
+    for (key in obj) {
+        objArray.push({ [key]: obj[key] })
+    }
+    console.log('OBJECT ARRAY', objArray)
+    return objArray
+}
+
+const isEmpty = function(obj){
     for (var key in obj) {
         if (obj.hasOwnProperty(key))
             return false;
@@ -89,7 +109,7 @@ function isEmpty(obj){
     return true;
 }
 
-function CountPositions(obj) {
+const CountPositions = function(obj) {
     //go through games and find totals per position
 
     try {
@@ -125,7 +145,7 @@ function CountPositions(obj) {
 
 }
 
-function calculatePercentages(obj) {
+calculatePercentages = function(obj) {
     try {
         // debugger;
         let seperateTotals = countTotal(obj);
@@ -144,7 +164,7 @@ function calculatePercentages(obj) {
 }
 
 
-function countTotal(obj) {
+const countTotal = function(obj) {
     try {
         //debugger;
         let totals = {}
@@ -162,7 +182,7 @@ function countTotal(obj) {
         console.log('STATS', totals)
         return totals
     } catch {
-        throw console.error('cant count');
+        throw Error('cant count');
 
         alert('cant count')
     }
@@ -174,7 +194,7 @@ function countTotal(obj) {
  * @param {object} allgames 
  * @param {string} tag 
  */
-function SearchTag(allgames, tag) {
+const SearchTag = function(allgames, tag) {
     //console.log("FUNCTION",allgames, "TAGwE: ", tag)
     let foundGamesWithTag = allgames.games.filter((game => {
         if (game.tags.includes(tag)) {
@@ -184,12 +204,12 @@ function SearchTag(allgames, tag) {
     return foundGamesWithTag;
 }
 
-function checkversion(OldVersion) {
+const checkversion = function(OldVersion) {
     let currentVersion = '1.0.3';
 
 }
 
-function findManytags(allgames, tagarr) {
+const findManytags = function(allgames, tagarr) {
     //console.log("inside: ", allgames);
     //console.log("more inside: ", tagarr)
     let foundgames = allgames.games.filter(game => {
@@ -240,7 +260,7 @@ function totalsPerAction(allgames) {
     }
 }
 
-function totalsPerPosition(allgames) {
+const totalsPerPosition = function(allgames) {
     let perAction = totalsPerAction(allgames);
     let positionTotals = {}
     for (action in perAction) {
@@ -257,7 +277,7 @@ function totalsPerPosition(allgames) {
     return positionTotals;
 }
 
-function percentagesByPostion(allgames) {
+const percentagesByPostion = function(allgames) {
     let perAction = totalsPerAction(allgames);
     let perPosition = totalsPerPosition(allgames);
     // console.log('me: ', perPosition)
@@ -277,7 +297,13 @@ function percentagesByPostion(allgames) {
     return percentages;
 }
 
-function percentagePerPositionByTags(allgames, currentGame) {
+
+
+const newPercentagesByPosition = function(allGames){
+
+}
+
+const percentagePerPositionByTags = function(allgames, currentGame) {
     try {
         let currentTags = [...currentGame.tags];
         console.log(findManytags(allgames, ['Moon', "France"]))
@@ -300,6 +326,9 @@ function percentagePerPositionByTags(allgames, currentGame) {
 
 
 }
+
+
+
 
 
 

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button, ImageBackground } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Divider from 'react-native-divider';
-const calculation = require('./statscalculation.js');
-const storage = require("./AsyncStorageController.js");
+import * as calculation from './statscalculation.js'
+import * as storage from './storageAPI/AsyncStorageController.js'
+// const calculation = require('./statscalculation.js');
+// const storage = require("./AsyncStorageController.js");
 
 
 let table = {
@@ -18,21 +20,20 @@ let table = {
     "8": "D+6",
 }
 
-export default class Statsbox extends Component {
+export default class LiveStatsbox extends Component {
     //will pull saved information about users stats and display them back in the box.   
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
+            loading: false,
             gamesObj: {},
-            searchedTag: {},
             displayChange: false,
         }
     }
 
 
     componentDidMount() {
-        this.setState({gamesObj: this.props.getGamesObj, loading: false})
+        //this.setState({loading: false})
         // storage.retrieveData().then((res) => {
         //     if (res != undefined) {
         //         console.log(JSON.parse(res));
@@ -54,30 +55,31 @@ export default class Statsbox extends Component {
 
     logTotalsByPosition() {
         //console.log(calculation.calculateByPosition(this.state.gamesObj));
-        return calculation.calculateByPosition(this.state.gamesObj);
+        return calculation.calculateByPosition(this.props.gamesObj);
     }
 
     logPercentagesByPosition() {
-        return calculation.calcPercentByPosition(this.state.gamesObj);
+        return calculation.calcPercentByPosition(this.props.gamesObj);
     }
 
 
 
     currentPositionDisplay(position) {
         //let allGames = this.logTotalsByPosition();
-        let allGames = this.logPercentagesByPosition();
-        if (this.isEmpty(allGames)) {
+        const {logTotals} = this.props
+
+        if (this.isEmpty(logTotals)) {
             return <Text>No Saved Games</Text>
         }
         else {
             console.log("POSITION")
-            console.log(allGames)
+            console.log(logTotals)
             console.log(position)
-            let allGamesArray = Object.keys(allGames).map(key => {
+            let allGamesArray = Object.keys(logTotals).map(key => {
                 let newkey = String(key)
                 console.log(newkey)
                 newkey = { key: key }
-                return Object.assign(newkey, allGames[key]);
+                return Object.assign(newkey, logTotals[key]);
             })
             console.log("HAHAHAHAA")
             console.log(allGamesArray)
@@ -109,17 +111,21 @@ export default class Statsbox extends Component {
     }
     componentDidUpdate() {
         console.log("MOOOO")
-        console.log(this.props.currentGame)
+        console.log(this.props.currentActions)
         //  console.log("WHAT ARE PROPS", this.props.position)
     }
-
+    /**
+     * * Fix this .map of undefined. Check how we are getting currentGame to here.
+     * 
+     * @param {integer} position 
+     */
     currentGameDisplay(position) {
         console.log("SEE HERE")
-        console.log(this.props.currentGame)
-        if (!this.isEmpty(this.props.currentGame)) {
+        console.log(this.props.currentActions)
+        if (this.props.currentGame != null) {
             return <Text>
 
-                {this.props.currentGame.map(game => {
+                {this.props.currentActions.map(game => {
                     return `${game.actionName}: ${game.countPerPosition[position]}   `
                 })}
 
@@ -140,7 +146,7 @@ export default class Statsbox extends Component {
                         <ActivityIndicator size='small' color='#0000ff' />
                     </View>
                     :
-                    this.isEmpty(this.props.currentGame) && this.isEmpty(this.state.gamesObj)
+                    this.isEmpty(this.props.currentActions) && this.isEmpty(this.props.gamesObj)
                         ?
                         <Divider>Nothing in storage</Divider>
                         :

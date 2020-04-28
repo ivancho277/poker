@@ -5,17 +5,19 @@ import { MyContext } from '../stateContext/GlobalState';
 import Divider from "react-native-divider";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 //import { ScrollView } from 'react-native-gesture-handler';
+import * as calculation from './statscalculation.js';
+import * as storage from './storageAPI/AsyncStorageController.js'
 
-const calculation = require('./statscalculation.js');
-const storage = require("./AsyncStorageController.js");
-const cardImg = require('../images/ace_diamond.jpg');
+// const calculation = require('./statscalculation.js');
+// const storage = require("./AsyncStorageController.js");
+// const cardImg = require('../images/ace_diamond.jpg');
 
 
 export default function Statsbox(props) {
     //will pull saved information about users stats and display them back in the box.   
     const [isOnPositionStats, setPositionStats] = useState(false);
 
-
+    //!moving this to statsCalculation file
     const isEmpty = (obj) => {
         for (var key in obj) {
             if (obj.hasOwnProperty(key))
@@ -28,6 +30,8 @@ export default function Statsbox(props) {
         console.log("Changed to " + isOn);
     }
 
+
+    //!moving this to statsCalculation file
     const objToArray = (obj) => {
         // let values = Object.values(obj);
         let objArray = [];
@@ -66,7 +70,7 @@ export default function Statsbox(props) {
                                         {/* <Text style={{fontSize: 16, opacity: 1, textAlign: 'center'}}> */}
                                         <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
-                                                {calculation.getPercentages(context.state.gamesObj).map((action, i) => {
+                                                {context.stats.totalPercentages().map((action, i) => {
                                                     return <ListItem key={i} bottomDivider title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}% `} />
                                                 })}
                                                 <Text>{'\n'}</Text>
@@ -96,7 +100,7 @@ export default function Statsbox(props) {
                                         {/* <Text style={{opacity: 1, textAlign: 'center', fontSize: 16 }} > */}
                                         <SafeAreaView style={{ height: props.height }}>
                                             <ScrollView>
-                                                {objToArray(calculation.calculateTotalStats(context.state.gamesObj)).map((action, i) => {
+                                                {context.stats.totals().map((action, i) => {
                                                     return <ListItem bottomDivider key={i} title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} />
                                                 })}
                                                 <Text>{'\n'}</Text>
