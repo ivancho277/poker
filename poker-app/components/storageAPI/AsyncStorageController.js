@@ -118,7 +118,7 @@ const removeData = function () {
     }
     catch (error) {
         return null;
-    } 
+    }
 
 }
 
@@ -296,7 +296,7 @@ const setInitialTotals = function (actionsArr) {
         //return {totals: totals, positionTotals: totalsByPosition}
     } catch {
         console.log('Not Able to setTotals')
-        
+
     }
 }
 
@@ -328,11 +328,10 @@ const updateTotals = async function (liveGame) {
                 //  console.log('LIVE YO YO: ', actions);
                 // console.log('update: POSTOTS: ', savedPositionTotals);
                 //  console.log('update TOTS: ', savedTotals);
-               // debugger;
+                // debugger;
                 actions.forEach(action => {
                     //console.log(action.actionName)
                     if (savedTotals.hasOwnProperty(action.actionName)) {
-
                         savedTotals[action.actionName] += action.count
                     } else {
                         savedTotals[action.actionName] = action.count;
@@ -374,6 +373,25 @@ const deleteTotals = function () {
         console.log('totals not removed.');
     }
 }
+
+const setInitialPositionCount = () => {
+    try {
+        const initPCount = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
+        AsyncStorage.setItem('Pcount', JSON.stringify(initPCount));
+        console.log("Position Count Set")
+    }
+    catch {
+        console.log('could not set Position Count');
+    }
+}
+ const setPositionCount = (Pcount) => {
+     try {
+        AsyncStorage.setItem('Pcount', JSON.stringify(initPCount));
+        console.log('Success Setting Position Count')
+     } catch {
+        console.log('Counld NOT SET PCOUNT!')
+     }
+ }
 
 export const StorageAPI = {
     setTotals: setTotals,

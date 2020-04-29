@@ -51,7 +51,8 @@ const initialState = {
     calculatedData: {
         loading: false,
         totals: null,
-        positionTotals: null
+        positionTotals: null,
+        positionCount: null,
     },
     allGamesArray: [],
     gamesObj: null,
