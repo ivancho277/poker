@@ -415,7 +415,8 @@ const setInitialPositionCount = () => {
         return null;
     }
 
-
+ 
+    
  }
  export const StorageAPI = {
     getPositionCount: getPositionCount,

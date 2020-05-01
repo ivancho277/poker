@@ -383,8 +383,9 @@ const setTotals = (totalsObj) => ({ setState, getState }) => {
  */
 const incrementPositionCount = (position) => ({ getState, setState }) => {
     const { positionCount } = getState().calculatedData;
+    console.log("what is happen: ", position)
     setState(draft => {
-        draft.calculatedData.positionCount[position] = positionCount[position] + 1;
+        draft.calculatedData.positionCount[position] += 1;
     })
     console.log('POSITION-COUNT: position passed: ', position);
 }
@@ -428,6 +429,8 @@ const actions = {
         return totals;
     },
 
+
+
     resetLiveGame: () => ({ getState, setState, dispatch }) => {
         const { data } = getState();
         dispatch(setLiveGame(data.actions));
@@ -435,8 +438,10 @@ const actions = {
 
 
     onActionClick: (clickedAction, index) => ({ getState, setState, dispatch }) => {
+        const { position } = getState().liveGame;
         dispatch(setCurrentTime());
         dispatch(incrementLiveAction(index));
+        dispatch(incrementPositionCount(position))
         dispatch(incrementPosition());
     },
 
@@ -545,6 +550,7 @@ const actions = {
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
         storage.updateTotals(liveGame);
+
     },
 
     getPositionTotalsFromStorage: () => ({ dispatch }) => {
