@@ -272,7 +272,7 @@ const getTotals = async function () {
 
 const getTotalsByPosition = async function () {
     try {
-        const totalsByPosition = AsyncStorage.getItem('position_totals');
+        const totalsByPosition = await AsyncStorage.getItem('position_totals');
         return totalsByPosition;
     } catch {
         console.log("no position totals");
@@ -369,6 +369,9 @@ const deleteTotals = function () {
         AsyncStorage.removeItem('position_totals', () => {
             console.log('Position Totals Removed');
         });
+        AsyncStorage.removeItem('Pcount', () => {
+            console.log('Position Counters removed');
+        })
     } catch {
         console.log('totals not removed.');
     }
@@ -393,7 +396,36 @@ const setInitialPositionCount = () => {
      }
  }
 
-export const StorageAPI = {
+ const deletePositionCount = () => {
+     try {
+        AsyncStorage.removeItem('Pcount', () => {
+            console.log('Removed Position Count');
+        })
+     } catch {
+        console.log('Could not remove Position Count')
+     }
+ }
+
+ const getPositionCount = async () => {
+    try {
+        let PositionCount = await AsyncStorage.getItem('Pcount')
+        return PositionCount;
+    } catch {
+        console.error('Could not get Position count');
+        return null;
+    }
+
+
+ }
+ export const StorageAPI = {
+    getPositionCount: getPositionCount,
+
+    deletePositionCount: deletePositionCount,
+    
+    setPositionCount: setPositionCount,
+
+    setInitialPositionCount: setInitialPositionCount,
+
     setTotals: setTotals,
 
     getTotalsByPosition: getTotalsByPosition,

@@ -83,6 +83,7 @@ const setTotalsLoading = () => ({ setState }) => {
     })
 }
 
+
 const finishLoading = () => ({ setState }) => {
     setState(draft => {
         draft.loading = false;
@@ -231,7 +232,7 @@ const createGame = actions => {
     return new Game(gameActions);
 };
 
-const updateTotalsWithLiveGame = liveGame =>  {
+const updateTotalsWithLiveGame = liveGame => {
     storage.updateTotals(liveGame);
     console.log("Updated broski");
 };
@@ -345,19 +346,47 @@ const updatePosition = (newPosition) => ({ setState, getState }) => {
     })
 }
 
-const loadTotalsFromStorage = async () => {
+/**
+ *
+ *
+ * @returns {Object} 
+ */
+const fetchTotalsFromStorage = async () => {
     const totals = await storage.getTotals().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
     const positionTotals = await storage.getTotalsByPosition().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
-    return { totals: totals, positionTotals: positionTotals }
+    const positionCount = await storage.getPositionCount().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} })
+    return { totals: totals, positionTotals: positionTotals, positionCount: positionCount }
 }
 
 
+
+/**
+ *
+ *
+ * @param {Object} totalsObj
+ */
 const setTotals = (totalsObj) => ({ setState, getState }) => {
     setState(draft => {
         draft.calculatedData.totals = totalsObj.totals;
         draft.calculatedData.positionTotals = totalsObj.positionTotals;
+        draft.calculatedData.positionCount = totalsObj.positionCount;
         draft.calculatedData.loading = false;
+    });
+}
+
+
+
+/**
+ *
+ * * 
+ * @param {number} position
+ */
+const incrementPositionCount = (position) => ({ getState, setState }) => {
+    const { positionCount } = getState().calculatedData;
+    setState(draft => {
+        draft.calculatedData.positionCount[position] = positionCount[position] + 1;
     })
+    console.log('POSITION-COUNT: position passed: ', position);
 }
 
 
@@ -492,15 +521,15 @@ const actions = {
         dispatch(setTotalsLoading());
         const { data } = getState();
         if (Utils.isEmpty(data.savedGames)) {
-            initializeStorageTotals(data.actions);
-            await loadTotalsFromStorage().then(res => {
+            initializeAllCalculatedData(data.actions);
+            await fetchTotalsFromStorage().then(res => {
                 if (res) {
                     dispatch(setTotals(res));
                 }
             })
             return 'totals_reset';
         }
-        loadTotalsFromStorage().then(res => {
+        fetchTotalsFromStorage().then(res => {
             if (res) {
                 dispatch(setTotals(res));
             }
@@ -531,11 +560,21 @@ const actions = {
 }
 
 
+const initializePositionCount = () => {
+    storage.setInitialPositionCount();
+}
+
+
 const initializeStorageTotals = (actionsArr) => {
     storage.setInitialTotals(actionsArr);
     console.log('SHOW ME IM HERE!');
 }
 
+const initializeAllCalculatedData = (actionsArr) => {
+    initializePositionCount();
+    initializeStorageTotals(actionsArr);
+
+}
 
 export const Store = createStore({
     initialState,
