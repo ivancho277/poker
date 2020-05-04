@@ -527,7 +527,7 @@ const actions = {
     //TODO: Better place to check if games exsist before init totals.
     loadTotals: () => async ({ dispatch, getState }) => {
         dispatch(setTotalsLoading());
-        const { data } = getState();
+        const { data, loading } = getState();
         if (Utils.isEmpty(data.savedGames)) {
             initializeAllCalculatedData(data.actions);
             await fetchTotalsFromStorage().then(res => {

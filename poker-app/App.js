@@ -45,9 +45,9 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const DataLoad = async () => {
-    await loadTotals().then(async (res) => {
-      await load().then(res => {
-        console.log("!!DONE LOADING!!")
+    await load().then(async (res) => {
+      await loadTotals().then(res => {
+        console.log("!!DONE LOADING!!");
       })
     })
   }
