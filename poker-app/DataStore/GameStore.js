@@ -241,9 +241,12 @@ const updateTotalsWithLiveGame = liveGame => {
 
 const SaveAllGames = () => ({ setState, getState }) => {
     //*this Game instance might actually come from contect state.
-    const { liveGame, allGamesArray } = getState()
+    const { liveGame, allGamesArray } = getState();
+    const { positionCount } = getState().calculatedData;
     //const GameToSave = new Game(this.props.currentActions, this.props.tags, this.props.position, "1.0.5", new Date())
     updateTotalsWithLiveGame(liveGame);
+    storage.setPositionCount(positionCount);
+    console.log('LOOK AT ME NOW!!! :::', positionCount);
     const totals = liveGame.actions.map(action => {
         return { [action.actionName]: action.count }
     });
@@ -532,14 +535,18 @@ const actions = {
                     dispatch(setTotals(res));
                 }
             })
+            alert('RESET');
             return 'totals_reset';
+        } else {
+            fetchTotalsFromStorage().then(res => {
+                if (res) {
+                    alert("in fetch callback");
+                    dispatch(setTotals(res));
+                }
+                alert('before return NO RESET!!!')
+                return 'totals';
+            })
         }
-        fetchTotalsFromStorage().then(res => {
-            if (res) {
-                dispatch(setTotals(res));
-            }
-            return 'totals';
-        })
 
     },
 
@@ -550,7 +557,6 @@ const actions = {
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
         storage.updateTotals(liveGame);
-
     },
 
     getPositionTotalsFromStorage: () => ({ dispatch }) => {
@@ -560,14 +566,15 @@ const actions = {
 
 
 
-
-
-
 }
 
 
 const initializePositionCount = () => {
     storage.setInitialPositionCount();
+}
+
+const savePositionCount = () => {
+
 }
 
 
