@@ -7,7 +7,7 @@ import {
   createDrawerNavigator,
   DrawerActions
 } from "react-navigation";
-import HomeScreen from "./Home";
+import HomeScreenNew from "./HomeNew";
 import StatsScreen from "./Stats";
 import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,7 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 // import Menu from 'react-native--storage-dev-menu-item';
 import TestScreen from './TestScreen';
 import SettingsNew from './SettingsNew';
-import { UseGameStore } from './DataStore/GameStore'
+import { UseGameStore, GameSubscriber } from './DataStore/GameStore'
 import GameScreenNew from './GameScreenNew';
 import { COLOR } from "react-native-material-ui";
 
@@ -41,51 +41,65 @@ import { COLOR } from "react-native-material-ui";
 // }
 
 const App = () => {
-  const [state, {load, loadTotals}] = UseGameStore();
+  const [state, { load, loadTotals }] = UseGameStore();
   const [loading, setLoading] = useState(true);
 
-  const DataLoad = async () => {
-    await load().then(async (res) => {
-      await loadTotals().then(res => {
-        console.log("!!DONE LOADING!!");
-      })
-    })
-  }
+  // const DataLoad = async () => {
+  //   await load().then(async (res) => {
+  //     await loadTotals().then(res => {
+  //       alert("!!DONE LOADING!!");
+  //     })
+  //   })
+  // }
 
-  useEffect(() => {
-    DataLoad().then(res => {
-      setLoading(false);
-    })
-    // load().then(res => {
-    //   setLoading(false)
-    // });
-  }, [])
+  // useEffect(() => {
+  //   async function DataLoad() {
+  //     await load().then(async (res) => {
+  //       await loadTotals().then(res => {
+  //         setLoading(false);
+  //         alert("!!DONE LOADING!!");
+  //       })
+  //     })
+
+  //   }
+  //   DataLoad();
+  //   // load().then(res => {
+  //   //   setLoading(false)
+  //   // });
+  // }, []);
 
 
 
-  
-    // <Root>
-    //   <Container>
-    return (loading ? 
-      <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'}></ActivityIndicator>
-    :
-    <GlobalState>
-      <PaperProvider>
-        <AppContainer />
-      </PaperProvider>
-    </GlobalState>
+
+  // <Root>
+  //   <Container>
+  // return (loading ?
+  //   <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'}></ActivityIndicator>
+  //   :
+  return (
+    // <GlobalState>
+    <GameSubscriber>
+      {(state, actions) => (
+        <PaperProvider>
+          <AppContainer />
+        </PaperProvider>
+
+      )
+      }
+    </GameSubscriber>
+    // </GlobalState>
 
     //   </Container>
     // </Root>
-    )
   
+  )
 }
 
 export default App;
 
 const AppSwitchNavigator = createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: HomeScreenNew,
     navigationOptions: ({ navigation }) => ({
       title: "Home", // Title to appear in status bar
       headerLeft: (

@@ -119,7 +119,7 @@ class HomeScreen extends Component {
                         </View>
                         }
                         <View>
-                            {state.loading && state.calculatedData.loading?
+                            {state.data.loading && state.calculatedData.loading?
                                 <ActivityIndicator animating={true} color={Colors.purple800} />
                                 :
 

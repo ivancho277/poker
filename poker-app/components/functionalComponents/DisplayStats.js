@@ -9,12 +9,12 @@ import * as Calculate from '../GameCalculations/calculateStats'
 
 
 
-export function DisplayStats() {
+export function DisplayStats(props) {
     const [state, actions] = UseGameStore();
     const [totalActions, setTotalActions] = useState();
 
     useEffect(() => {
-        actions.loadTotals();
+        //actions.loadTotals();
     }, [])
 
     const calculatePercentage = (count, total) => {
@@ -32,7 +32,7 @@ export function DisplayStats() {
                                 {/* <Paragraph>
                                     <Text>All Saved: {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
                                 </Paragraph> */}
-                                {state.loading ?
+                                {state.calculatedData.loading ? 
                                     <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                     :
                                     <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
@@ -69,7 +69,10 @@ export function DisplayStats() {
                                         {state.calculatedData.loading ?
                                             <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                             :
-                                            <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text>
+                                            <View>
+                                               
+                                                <Text>All Saved: {JSON.stringify(props.calculatedData, undefined, 4)}</Text>
+                                            </View>
                                         }
                                     </View>
                                 }

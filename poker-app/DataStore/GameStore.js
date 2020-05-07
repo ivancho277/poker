@@ -30,7 +30,8 @@ const logger = storeState => next => action => {
     console.log('Updating(gamesObj)..: ', storeState.getState());
     next(action);
     console.log("action: ", action.toString());
-    console.log("result!!: ");
+    console.log("result!!: ", storeState.getState());
+    
     //console.log('UPDATED>> :', storeState.getState());
 }
 
@@ -42,6 +43,7 @@ defaults.middlewares.add(logger);
 
 const initialState = {
     data: {
+        loading: false,
         allGames: null,
         savedGames: null,
         currentGame: null,
@@ -71,22 +73,23 @@ const setCurrentTime = () => ({ setState }) => {
     })
 }
 
-const setLoading = () => ({ setState }) => {
+const setDataLoading = () => ({ setState }) => {
     setState(draft => {
-        draft.loading = true;
+        draft.data.loading = true
+       // draft.loading = true;
     })
 };
 
-const setTotalsLoading = () => ({ setState }) => {
+const setCalculatedDataLoading = () => ({ setState }) => {
     setState(draft => {
         draft.calculatedData.loading = true;
     })
 }
 
 
-const finishLoading = () => ({ setState }) => {
+const endDataLoading = () => ({ setState }) => {
     setState(draft => {
-        draft.loading = false;
+        draft.data.loading = false;
     })
 }
 
@@ -96,7 +99,7 @@ const setData = data => ({ setState }) => {
         draft.error = false;
         draft.allGamesArray = data.savedGames;
         draft.gamesObj = data.savedGames;
-        draft.loading = false;
+        draft.data.loading = false;
 
     })
 };
@@ -358,6 +361,7 @@ const fetchTotalsFromStorage = async () => {
     const totals = await storage.getTotals().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
     const positionTotals = await storage.getTotalsByPosition().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} });
     const positionCount = await storage.getPositionCount().then(res => { return JSON.parse(res) !== null ? JSON.parse(res) : {} })
+    console.log('POSITION COUNT: =====>', positionCount);
     return { totals: totals, positionTotals: positionTotals, positionCount: positionCount }
 }
 
@@ -368,7 +372,7 @@ const fetchTotalsFromStorage = async () => {
  *
  * @param {Object} totalsObj
  */
-const setTotals = (totalsObj) => ({ setState, getState }) => {
+const setCalculatedData = (totalsObj) => ({ setState, getState }) => {
     setState(draft => {
         draft.calculatedData.totals = totalsObj.totals;
         draft.calculatedData.positionTotals = totalsObj.positionTotals;
@@ -398,12 +402,12 @@ const incrementPositionCount = (position) => ({ getState, setState }) => {
 
 const actions = {
     /**
-     * !! LOOK AT THIS IF ITS STILL HERE
+     * !! This will be Original Load method
      *  TODO: we will need to add a check for if a current game exsists in storage.
      */
     load: () => async ({ getState, setState, dispatch }) => {
-        if (getState().loading === true) return;
-        dispatch(setLoading());
+        if (getState().data.loading === true) return;
+        dispatch(setDataLoading());
         const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
         dispatch(setLiveGame(loadedData.actions));
@@ -411,17 +415,20 @@ const actions = {
         // console.log('loadedData: ', loadedData);
     },
 
-    loadStorage: () => async ({ getState, dispatch }) => {
-        if (getState().loading === true) return;
-        dispatch(setLoading());
-        const data = await fetchData().then(response => { return respone });
+
+
+
+
+    loadData: () => async ({ getState, dispatch }) => {
+        if (getState().data.loading === true) return;
+        dispatch(setDataLoading());
+        const data = await fetchData().then(response => { return response });
         dispatch(setData(data));
         return data;
     },
 
     getGames: () => async ({ dispatch }) => {
-        return await retrieveGamesNew();
-
+        disptach(retrieveGamesNew());
     },
 
     getGameTotals: () => ({ getState, setState }) => {
@@ -526,24 +533,27 @@ const actions = {
 
     //TODO: Better place to check if games exsist before init totals.
     loadTotals: () => async ({ dispatch, getState }) => {
-        dispatch(setTotalsLoading());
+        if(getState().calculatedData.loading == true) return true;
+        dispatch(setCalculatedDataLoading());
         const { data, loading } = getState();
+        
         if (Utils.isEmpty(data.savedGames)) {
             initializeAllCalculatedData(data.actions);
             await fetchTotalsFromStorage().then(res => {
                 if (res) {
-                    dispatch(setTotals(res));
+                    dispatch(setCalculatedData(res));
+                    alert('RESET');
                 }
             })
-            alert('RESET');
+            //alert('RESET');
             return 'totals_reset';
         } else {
             fetchTotalsFromStorage().then(res => {
                 if (res) {
                     alert("in fetch callback");
-                    dispatch(setTotals(res));
+                    dispatch(setCalculatedData(res));
                 }
-                alert('before return NO RESET!!!')
+                //alert('before return NO RESET!!!')
                 return 'totals';
             })
         }

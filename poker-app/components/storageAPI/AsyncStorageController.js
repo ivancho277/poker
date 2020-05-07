@@ -389,7 +389,7 @@ const setInitialPositionCount = () => {
 }
  const setPositionCount = (Pcount) => {
      try {
-        AsyncStorage.setItem('Pcount', JSON.stringify(initPCount));
+        AsyncStorage.setItem('Pcount', JSON.stringify(Pcount));
         console.log('Success Setting Position Count')
      } catch {
         console.log('Counld NOT SET PCOUNT!')
@@ -413,7 +413,7 @@ const setInitialPositionCount = () => {
     } catch {
         console.error('Could not get Position count');
         return null;
-    }
+     }
 
  
     

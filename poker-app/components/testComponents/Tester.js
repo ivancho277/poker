@@ -51,7 +51,7 @@ export const Tester = () => {
      */
     return (
         <View>
-            {!state.loading ?
+            {!state.calculatedData.loading ?
 
                 <View>
                     <Text>Test new CRUD operations for running totals</Text>
