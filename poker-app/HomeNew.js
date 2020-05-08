@@ -16,6 +16,16 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
     const [state, actions] = UseGameStore();
     const [loadingData, setLoadingData] = useState(true);
      
+    manualReload = async () => {
+        setLoadingData(true);
+        await actions.load().then(async (res) => {
+            await actions.loadTotals().then(res => {
+                let response = res;
+                console.log('MANUL LOAD RES:', response );
+                setLoadingData(false);
+            }) 
+        })
+    }
 
     useEffect(() => {
         async function dataLoad(){
@@ -65,9 +75,12 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
                                 <View>
                                     <Button title="Game" style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
                                     <Text>ReRender global state</Text>
-                                    <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                    <TouchableOpacity onPress={() => { manualReload() }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity>
+                                    {/* <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                        <Text style={{ color: Colors.red400 }}>Press me</Text>
+                                    </TouchableOpacity> */}
                                 </View>
                             </View>
                         }
