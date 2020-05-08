@@ -28,7 +28,7 @@ const countTotals = (allGames) => {
 const sumAllGameActions = (games) => {
     let sum = 0;
     if (games instanceof Array){
-        console.log('This Array: ', sum);
+        //console.log('This Array: ', sum);
         let init = 0;
         sum = games.reduce((total = 0, action) => {
              let value = parseInt(action[Object.keys(action)[0]]); return total + value }

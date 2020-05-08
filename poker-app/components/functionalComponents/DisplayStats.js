@@ -46,11 +46,11 @@ export function DisplayStats(props) {
                                             {Utils.isEmpty(state.data.savedGames) ? <Subheading >You have no Saved Games</Subheading >
                                                 :
                                                 Utils.objToArray(state.calculatedData.totals).map((element, i) => {
-                                                    console.log("elem: ", element)
+                                                   // console.log("elem: ", element)
                                                     let keysArr = Object.keys(element)
-                                                    console.log("KEYSS: ", keysArr)
+                                                    // console.log("KEYSS: ", keysArr)
                                                     let actionKey = keysArr[0];
-                                                    console.log("WHAT: ", actionKey)
+                                                    // console.log("WHAT: ", actionKey)
                                                     return (
                                                         <DataTable.Row key={`${actionKey}_Row_${i}`}>
                                                             <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
