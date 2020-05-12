@@ -9,6 +9,7 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
+import { Switch } from 'react-native-paper';
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -20,6 +21,7 @@ import { DisplayStats } from './components/functionalComponents/DisplayStats'
 export default function GameScreenNew() {
     const [state, actions] = UseGameStore();
     const [loading, setLoading] = useState(state.loading);
+    const [testOn, setTestOn] = useState(state.testModeOn)
 
 
     //NOTE: later I may need to check if I need to define an async function inside, and then call load and run a clean up. 
@@ -28,7 +30,14 @@ export default function GameScreenNew() {
     //     console.log('LIVE :', state.liveGame)
 
     // }, [])
+    useEffect(() => {
+        console.log("reload dat game")
+    }, [])
 
+
+    const toggleTestMode = () => {
+
+    }
 
 
     //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING
@@ -39,10 +48,11 @@ export default function GameScreenNew() {
         // state.loading ?
         //     <Text>We need to load</Text>
         //     :
+
         <View style={styles.container}>
             <ScrollView>
-                <Card title='Test Controller'>
-                    <Text> FOR TESTS! </Text>
+                <Card title='Track your game!'>
+                    <Text> Current Game Info: </Text>
                     <ScrollView>
                         <GameController></GameController>
                     </ScrollView>
@@ -52,12 +62,28 @@ export default function GameScreenNew() {
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
                             </View> */}
-                <Card title='TestComponent with Subscriber'>
-                    <Text> Subscriber test </Text>
-                    <ScrollView>
-                        <Tester></Tester>
-                    </ScrollView>
+                <Card title='Testing Buttons'>
+                    <View style={{ justifyContent: 'center' }}>
+                        
+                        <Text>Toggle test Buttons</Text><Switch
+                            style={{alignContent: 'center'}}
+                            value={state.testModeOn}
+                            onValueChange={actions.TestModeSwitch}
+                        />
+                    </View>
+                    {state.testModeOn ?
+                        <ScrollView>
+                            <Tester></Tester>
+                        </ScrollView>
+                        :
+                       <View></View>
+
+
+
+                    }
                 </Card>
+
+
 
                 {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
@@ -68,6 +94,8 @@ export default function GameScreenNew() {
             </ScrollView>
             {/* <Tester></Tester> */}
         </View>
+
+
 
 
     )

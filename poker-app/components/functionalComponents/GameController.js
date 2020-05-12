@@ -9,7 +9,7 @@ import { AddTag } from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
-
+import * as Utils from '../../utils/objectOps.js';
 
 
 
@@ -19,7 +19,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [{ liveGame, loading, currentTime, previousTime }, actions] = UseGameStore();
+    const [state, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('')
     // const [loading, setLoading] = useState(true);
@@ -58,7 +58,7 @@ export const GameController = (props) => {
         <GameSubscriber>
             {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame }) => (
                 //debugger
-                liveGame !== null ?
+                (liveGame !== null && !data.loading) ?
                     <View>
                         <View>
                             <Text>DONE</Text>
@@ -98,8 +98,8 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
-                            <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
-                            <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
+                            {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
+                            <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                         </View>
                         <View style={{ marginTop: 5 }}>
                             <Radio position={liveGame.position} setPosition={updatePosition} />

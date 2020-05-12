@@ -31,7 +31,7 @@ const logger = storeState => next => action => {
     next(action);
     console.log("action: ", action.toString());
     console.log("result!!: ", storeState.getState());
-    
+
     //console.log('UPDATED>> :', storeState.getState());
 }
 
@@ -64,7 +64,8 @@ const initialState = {
     MAX_POSITION: 8,
     MIN_POSITION: 0,
     currentTime: new Date(),
-    previousTime: new Date()
+    previousTime: new Date(),
+    testModeOn: false,
 };
 
 const setCurrentTime = () => ({ setState }) => {
@@ -76,7 +77,7 @@ const setCurrentTime = () => ({ setState }) => {
 const setDataLoading = () => ({ setState }) => {
     setState(draft => {
         draft.data.loading = true
-       // draft.loading = true;
+        // draft.loading = true;
     })
 };
 
@@ -533,10 +534,10 @@ const actions = {
 
     //TODO: Better place to check if games exsist before init totals.
     loadTotals: () => async ({ dispatch, getState }) => {
-        if(getState().calculatedData.loading == true) return true;
+        if (getState().calculatedData.loading == true) return true;
         dispatch(setCalculatedDataLoading());
         const { data, loading } = getState();
-        
+
         if (Utils.isEmpty(data.savedGames)) {
             initializeAllCalculatedData(data.actions);
             await fetchTotalsFromStorage().then(res => {
@@ -571,6 +572,13 @@ const actions = {
 
     getPositionTotalsFromStorage: () => ({ dispatch }) => {
 
+    },
+
+    TestModeSwitch: () => ({ getState, setState }) => {
+        const { testModeOn } = getState();
+        setState(draft => {
+            draft.testModeOn = !testModeOn;
+        })
     }
 
 

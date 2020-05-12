@@ -9,12 +9,6 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
-
-
-
-
-
-
 export default function NewSettings(){
     const [{data, loading} , {load}] = UseGameStore();
     const [action, setAction] = useState('');

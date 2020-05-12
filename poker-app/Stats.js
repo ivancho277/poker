@@ -11,6 +11,26 @@ import { GameSubscriber } from './DataStore/store'
 // const calculation = require('./components/statscalculation.js')
 
 // const storage = require('./components/AsyncStorageController.js');
+
+// export default function StatsScreen(props){
+
+
+
+
+
+
+
+
+// }
+
+
+
+
+
+
+
+
+
 export default class StatsScreen extends Component {
 
     state = {

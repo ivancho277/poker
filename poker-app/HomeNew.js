@@ -70,7 +70,7 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
                             :
                             <View>
                                 <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button>
-                                <DisplayStats calculatedData={state.calculatedData} data={state.data}></DisplayStats>
+                                <DisplayStats></DisplayStats>
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
                                 <View>
                                     <Button title="Game" style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />

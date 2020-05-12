@@ -71,7 +71,7 @@ export function DisplayStats(props) {
                                             :
                                             <View>
                                                
-                                                <Text>All Saved: {JSON.stringify(props.calculatedData, undefined, 4)}</Text>
+                                                <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text>
                                             </View>
                                         }
                                     </View>

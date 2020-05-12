@@ -5,7 +5,9 @@ import { Card } from 'react-native-paper';
 import { StoreLoader } from '../HOCs/StoreLoader';
 import { ScrollView } from 'react-native-gesture-handler';
 import { StorageAPI as Storage } from '../storageAPI/AsyncStorageController';
-import { Colors, ActivityIndicator } from 'react-native-paper';
+import { Colors, ActivityIndicator, Switch } from 'react-native-paper';
+import { AntDesign } from '@expo/vector-icons';
+import { StorageAPI } from '../storageAPI/AsyncStorageController'
 
 
 export const TestComponent = () => {
@@ -14,7 +16,7 @@ export const TestComponent = () => {
         <GameSubscriber>
             {(state) => (
                 <View>
-                    <Text>Subscriber test</Text>
+                    <Text>Subscriber testachka</Text>
                     <Text>1. {state.loading.toString()}</Text>
                     <Card>
                         <ScrollView>
@@ -44,6 +46,17 @@ export const Tester = () => {
     //     //actions.load();
     // }, [])
 
+    GetDataTest = async () => {
+        const myData = await StorageAPI.getAllNewGames();
+        setTest(JSON.parse(myData));
+        setTimeout(() => {
+            console.log("new :::", JSON.parse(myData));
+            if (typeof (JSON.parse(myData)) === "Array") {
+                console.log("length::: ", JSON.parse(myData).length);
+            }
+        }, 0);
+        return (JSON.parse(myData));
+    }
 
 
     /**
@@ -51,33 +64,35 @@ export const Tester = () => {
      */
     return (
         <View>
-            {!state.calculatedData.loading ?
+            {/* {!state.calculatedData.loading ? */}
 
-                <View>
-                    <Text>Test new CRUD operations for running totals</Text>
-                    <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}>Press to test</Button>
-                    <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }}> </Button>
-                    <Button color={Colors.deepOrange400} title="check live actions" onPress={() => { console.log("liveGame.actions: ", state.liveGame.actions) }}> </Button>
-                    <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
-                    <Button title="get storage totals" onPress={() => {
-                        setTimeout( async () => {
-                            let theData = await Storage.getTotals();
-                            let moreDataPOS = await Storage.getTotalsByPosition();
-                            setTimeout(() => {
-                                console.log(JSON.parse(theData))    
-                                console.log(JSON.parse(moreDataPOS))
-                            }, 0);
+            <View>
+                <Text style={{textAlign:'center', textDecorationLine:'underline'}}> Switch to show Testing buttons </Text>
+                <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}></Button>
+                <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }}> </Button>
+                <Button color={Colors.deepOrange400} title="check live actions" onPress={() => { console.log("liveGame.actions: ", state.liveGame.actions) }}> </Button>
+                <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
+                <Button title="get storage totals" onPress={() => {
+                    setTimeout(async () => {
+                        let theData = await Storage.getTotals();
+                        let moreDataPOS = await Storage.getTotalsByPosition();
+                        setTimeout(() => {
                             console.log(JSON.parse(theData))
+                            console.log(JSON.parse(moreDataPOS))
                         }, 0);
-                    }}>Press to test</Button>
-                    <Button title="log Data" onPress={() => {console.log("DATA:::", state.data)}}></Button>
-                    <Button title="log Calculated Data" onPress={() => {console.log("DATA:::", state.calculatedData)}}></Button>
-                </View>
-                :
+                        console.log(JSON.parse(theData))
+                    }, 0);
+                }}></Button>
+                <Button title="log Data" onPress={() => { console.log("DATA:::", state.data) }}></Button>
+                <Button title="log Calculated Data" onPress={() => { console.log("DATA:::", state.calculatedData) }}></Button>
+                <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
+                <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
+            </View>
+            {/* :
                 <View>
                     <Text>Loading...</Text>
-                </View>
-            }
+                </View> */}
+
 
 
 
