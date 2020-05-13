@@ -60,6 +60,7 @@ const initialState = {
     gamesObj: null,
     liveGame: null,
     loading: false,
+    liveGameLoading: false,
     error: null,
     MAX_POSITION: 8,
     MIN_POSITION: 0,
@@ -87,6 +88,17 @@ const setCalculatedDataLoading = () => ({ setState }) => {
     })
 }
 
+const setLiveGameLoading = () => ({setState}) => {
+    setState(draft => {
+        draft.liveGameLoading = true;
+    })
+}
+
+const endLiveLoading = () => ({setState}) => {
+    setState(draft => {
+        draft.liveGameLoading = false;
+    })
+}
 
 const endDataLoading = () => ({ setState }) => {
     setState(draft => {
@@ -106,11 +118,12 @@ const setData = data => ({ setState }) => {
 };
 
 
-const setLiveGame = actions => ({ setState }) => {
+const setLiveGame = actions => ({ setState, dispatch }) => {
     const newGame = createGame(actions)
     setState(draft => {
         draft.liveGame = newGame.getGameData()
     })
+    dispatch(endLiveLoading());
 };
 
 
@@ -409,6 +422,7 @@ const actions = {
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().data.loading === true) return;
         dispatch(setDataLoading());
+        dispatch(setLiveGameLoading());
         const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
         dispatch(setLiveGame(loadedData.actions));
@@ -419,7 +433,7 @@ const actions = {
 
 
 
-
+    //!!I dont believe this is being used at them moment anywhere, just the above action is our main loadData();
     loadData: () => async ({ getState, dispatch }) => {
         if (getState().data.loading === true) return;
         dispatch(setDataLoading());
@@ -439,7 +453,10 @@ const actions = {
         });
         return totals;
     },
-
+    
+    endLiveLoading: () => ({dispatch}) => {
+        disptach(endLiveLoading());
+    },
 
 
     resetLiveGame: () => ({ getState, setState, dispatch }) => {

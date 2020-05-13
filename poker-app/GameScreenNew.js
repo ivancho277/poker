@@ -41,7 +41,7 @@ export default function GameScreenNew() {
 
 
     //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING
-
+    
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
 

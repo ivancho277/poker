@@ -10,6 +10,7 @@ import { AddTag } from './AddTag'
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 import * as Utils from '../../utils/objectOps.js';
+import { ActivityIndicator, Colors  } from 'react-native-paper';
 
 
 
@@ -29,11 +30,11 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
     const [test, setTest] = useState();
 
-    // useEffect(() => {
-    //     console.log("Time curr", currentTime)
-    //     console.log("Time prev", previousTime)
-    //     console.log("liveGame:  ", liveGame);
-    // }, [])
+    useEffect(() => {
+        // console.log("Time curr", currentTime)
+        // console.log("Time prev", previousTime)
+        console.log("liveGame:  ", state.liveGame);
+    }, [state.liveGameLoading])
 
 
     onActionClick = (action, actionIndex) => {
@@ -46,7 +47,7 @@ export const GameController = (props) => {
         setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
-            if (typeof(JSON.parse(myData)) === "Array") {
+            if (typeof (JSON.parse(myData)) === "Array") {
                 console.log("length::: ", JSON.parse(myData).length);
             }
         }, 0);
@@ -56,7 +57,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame }) => (
+            {({ liveGame, liveGameLoading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
                 //debugger
                 (liveGame !== null && !data.loading) ?
                     <View>
@@ -98,12 +99,17 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
+                            {liveGameLoading ?
+                                <ActivityIndicator animating={true} color={Colors.purple800} /> 
+                                :
+                                <View style={{ marginTop: 5 }}>
+                                    <Radio position={liveGame.position} setPosition={updatePosition} />
+                                </View>
+                            }
                             {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                         </View>
-                        <View style={{ marginTop: 5 }}>
-                            <Radio position={liveGame.position} setPosition={updatePosition} />
-                        </View>
+
                     </View>
                     :
                     <View>

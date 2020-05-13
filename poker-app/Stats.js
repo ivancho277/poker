@@ -6,13 +6,18 @@ import RNPickerSelect from 'react-native-picker-select';
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
-import { GameSubscriber } from './DataStore/store'
+import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
 // const storage = require('./components/AsyncStorageController.js');
 
-// export default function StatsScreen(props){
+
+
+// export function StatsScreen(props) {
+//     const [tagpicker, settagpicker] = useState();
+//     const [state, actions] = UseGameStore();
+
 
 
 
@@ -27,18 +32,14 @@ import { GameSubscriber } from './DataStore/store'
 
 
 
-
-
-
-
-export default class StatsScreen extends Component {
+class StatsScreen extends Component {
 
     state = {
         tagpicker: ''
     }
 
     componentDidMount() {
-        console.log(this.context.state.allTags);
+        // console.log(this.context.state.allTags);
     }
     renderFoundGames = (allGames, tag) => {
         let foundgames = this.logTags(allGames, tag);
@@ -88,9 +89,9 @@ export default class StatsScreen extends Component {
 
 
     renderPicker() {
-        return (
-            <MyContext.Consumer>
-                {(context) => <RNPickerSelect
+        return <GameSubscriber>
+                {({data}, actions) =>
+                 <RNPickerSelect
                     selectedValue={this.state.tagpicker}
                     style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
 
@@ -99,17 +100,15 @@ export default class StatsScreen extends Component {
                         this.setState({ tagpicker: itemValue });
 
                     }}
-                    items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
-
-
+                    items={data.tags != null ? data.tags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
                 >
-                    {/* {context.state.allTags.map((tag, i) => {
+                    {/* {data.tags.map((tag, i) => {
                         return <RNPickerSelect.Item label={tag} value={tag} key={i} />
                     })} */}
                 </RNPickerSelect>}
-            </MyContext.Consumer>
+            </GameSubscriber>
 
-        )
+        
     }
 
     render() {
@@ -121,9 +120,9 @@ export default class StatsScreen extends Component {
                 >
 
                     {this.renderPicker()}
-                    <MyContext.Consumer>
+                    {/* <GameSubscriber>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
-                    </MyContext.Consumer>
+                    </GameSubscriber> */}
                 </Card>
 
                 <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
@@ -134,8 +133,9 @@ export default class StatsScreen extends Component {
     }
 }
 
+export default StatsScreen;
 
-StatsScreen.contextType = MyContext;
+
 
 const styles = StyleSheet.create({
     container: {

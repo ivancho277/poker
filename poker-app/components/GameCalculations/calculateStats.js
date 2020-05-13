@@ -25,6 +25,17 @@ const countTotals = (allGames) => {
     
 }
 
+
+const searchBytag = (tag, games) => {
+
+}
+
+const searchByManyTags = (tagsArray, games) => {
+
+}
+
+
+
 const sumAllGameActions = (games) => {
     let sum = 0;
     if (games instanceof Array){

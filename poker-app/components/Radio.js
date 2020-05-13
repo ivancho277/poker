@@ -23,11 +23,12 @@ class Radio extends Component {
     }
 
     
-    componentDidMount() {
+    async componentDidMount() {
         console.log("Tell me when to Mount!")
         this.setState({
             value: this.props.position
         });
+        console.log("radioProps:", this.props.position)
     }
 
     positionReturn(position) {
@@ -56,10 +57,17 @@ class Radio extends Component {
         }
     }
  
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps, prevState) {
        if(this.state.value != this.props.position){
            this.updateIndex(this.props.position)   
-       }  
+       } 
+       if(prevState == null){
+        console.log('IN THE IFFFFF() ()( !!!!>>><<<<<>>>><<<><><><>')
+           this.updateIndex(this.props.position);
+       }
+       
+       console.log('prevPOS: ' , prevProps);
+       console.log('prevState: ' , prevState);
     }
 
 
