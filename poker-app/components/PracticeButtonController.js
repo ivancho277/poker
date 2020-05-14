@@ -217,7 +217,7 @@ export default class PracticeButtonController extends Component {
 
 
     //!!!!!!!!!!! OLD SAVE
-    //TODO: find out where is best to put the next two save methods, global state or in Game screen component.
+    
     saveAllGames = (shouldReturn = false) => {
         let date = new Date();
         //let thisgame = new Game(this.props.currentActions. this.)

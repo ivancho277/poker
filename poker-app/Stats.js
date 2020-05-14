@@ -7,6 +7,7 @@ import * as Calculate from './components/GameCalculations/calculateStats.js'
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
+import { Chip } from 'react-native-paper';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -62,6 +63,25 @@ class StatsScreen extends Component {
         else return <Text>No found Games</Text>
     }
 
+    renderChips = (tags) => {
+        if (tags !== null) {
+            if (tags.length > 0) {
+                return tags.map(tag => {
+                   return <Chip key={tag} onPress={() => console.log(`you pressed ${tag}`)}>{tag}</Chip>
+                })
+            }
+        }
+        else {
+            return <Chip> We got nothing boss. </Chip>
+        }
+    }
+
+
+
+    renderGamesFound = (games) => {
+
+    }
+
     logTags = (allGames, tag) => {
         console.log('MY TAG', tag)
         if (allGames != undefined) {
@@ -110,8 +130,8 @@ class StatsScreen extends Component {
 
 
     }
-    
- 
+
+
     render() {
         return <GameSubscriber>
             {({ data, calculatedData }, actions) =>
@@ -126,6 +146,10 @@ class StatsScreen extends Component {
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
                     </GameSubscriber> */}
                     </Card>
+
+                    <View>
+                        {this.renderChips(data.tags)}
+                    </View>
 
                     <Button title="Search By Tag" onPress={() => Calculate.searchBytag(this.state.tagpicker, data.allGames)}></Button>
 

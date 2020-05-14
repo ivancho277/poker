@@ -61,7 +61,7 @@ export class GlobalState extends Component {
 
 
   }
-  //TODO: thing about order here, what happens when?
+  // thing about order here, what happens when?
   async getDataFromStorage() {
     console.log("==========")
     await this.setAllGames().then(res => { console.log("SET ALL"); });
@@ -134,7 +134,6 @@ export class GlobalState extends Component {
   
 
 
-  //TODO: thesen 2 methods might need some edge case checks.
   createActions = (game) => {
     let createdActions = game.actions.map(action => {
       return new Action(action.actionName, action.count, action.countPerPosition)
@@ -185,9 +184,8 @@ export class GlobalState extends Component {
       });
   };
 
-  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators
   updateActions = action => { };
-  //TODO: finish writing this funtion, use validators
+  //finish writing this funtion, use validators
   updateTags = tag => { };
 
   updateGames = (newGamesObj) => {
@@ -227,7 +225,6 @@ export class GlobalState extends Component {
 
 
 
-  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen
   resetActions = () => {
     resetActions();
     this.setActions();
@@ -364,7 +361,6 @@ export class GlobalState extends Component {
 
   }
 
-  //TODO: remember to add new funtions to context provider
   render() {
     return (
       <MyContext.Provider

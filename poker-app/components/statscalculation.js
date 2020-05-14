@@ -15,7 +15,7 @@ module.exports = {
     findManyTags(allgames, tags) {
         return findManytags(allgames, tags)
     },
-
+    
     /**
      * 
      * @param {object} games 

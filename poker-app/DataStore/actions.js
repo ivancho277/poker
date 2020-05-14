@@ -24,7 +24,7 @@
 //  */
 // defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
-// //TODO: this is middleware.
+// this is middleware.
 // const logger = storeState => next => action => {
 //     console.log('Updating(gamesObj)..: ', storeState.getState());
 //     next(action);

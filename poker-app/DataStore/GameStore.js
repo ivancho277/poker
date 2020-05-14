@@ -25,7 +25,7 @@ const calculation = require("../components/statscalculation.js");
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
-//TODO: this is middleware.
+//NOTE: this is middleware.
 const logger = storeState => next => action => {
     console.log('Updating(gamesObj)..: ', storeState.getState());
     next(action);
@@ -301,7 +301,9 @@ const SaveAllGames = () => ({ setState, getState }) => {
     // this.props.updateGames({ games: updatedGamesList, currentVersion: '1.0.5' })
 
 }
-//TODO:  reconfigure save current game to work from actions in store 
+
+
+//TODO:  WRITE THIS FUNCTION TO WORK WITH CURRENT DATA STRUCTURE.
 const CurrentGameSave = () => ({ setState, getState }) => {
     const date = new Date();
     //const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);

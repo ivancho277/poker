@@ -86,7 +86,6 @@ class HomeScreen extends Component {
         }
     }
 
-    //TODO: this might be a utils method to pull out in different file
     objToArray = (obj) => {
         // let values = Object.values(obj);
         let objArray = [];

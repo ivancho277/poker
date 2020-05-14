@@ -38,10 +38,9 @@ export default function GameScreenNew() {
     const toggleTestMode = () => {
 
     }
-
-
-    //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING
     
+
+    //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING 
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
 
