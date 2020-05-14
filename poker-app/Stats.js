@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-n
 import { MyContext } from './stateContext/GlobalState'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
-import * as calculation from './components/statscalculation.js';
+import * as Calculate from './components/GameCalculations/calculateStats.js'
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
@@ -90,8 +90,8 @@ class StatsScreen extends Component {
 
     renderPicker() {
         return <GameSubscriber>
-                {({data}, actions) =>
-                 <RNPickerSelect
+            {({ data }, actions) =>
+                <RNPickerSelect
                     selectedValue={this.state.tagpicker}
                     style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
 
@@ -106,30 +106,33 @@ class StatsScreen extends Component {
                         return <RNPickerSelect.Item label={tag} value={tag} key={i} />
                     })} */}
                 </RNPickerSelect>}
-            </GameSubscriber>
+        </GameSubscriber>
 
-        
+
     }
-
+    
+ 
     render() {
-        return (
-            // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-            <View style={styles.container}>
-                <Card title='Search By Tag'
-                    containerStyle={{ width: '80%' }}
-                >
+        return <GameSubscriber>
+            {({ data, calculatedData }, actions) =>
+                // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
+                <View style={styles.container}>
+                    <Card title='Search By Tag'
+                        containerStyle={{ width: '80%' }}
+                    >
 
-                    {this.renderPicker()}
-                    {/* <GameSubscriber>
+                        {this.renderPicker()}
+                        {/* <GameSubscriber>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
                     </GameSubscriber> */}
-                </Card>
+                    </Card>
 
-                <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
+                    <Button title="Search By Tag" onPress={() => Calculate.searchBytag(this.state.tagpicker, data.allGames)}></Button>
 
-              
-            </View>
-        )
+
+                </View>
+            }
+        </GameSubscriber>
     }
 }
 

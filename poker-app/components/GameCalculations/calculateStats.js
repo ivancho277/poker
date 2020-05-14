@@ -27,7 +27,15 @@ const countTotals = (allGames) => {
 
 
 const searchBytag = (tag, games) => {
-
+    console.log('Tag:::', tag);
+    console.log('allGames',games);
+    const foundGames = games.filter(savedGame => {
+        if(savedGame.game.data.tags.includes(tag)){
+            return savedGame;
+        }
+    });
+    console.log(foundGames);
+    return foundGames.length > 0 ? foundGames : null;
 }
 
 const searchByManyTags = (tagsArray, games) => {
@@ -66,5 +74,7 @@ module.exports = {
     isEmpty: isEmpty,
     countTotals: countTotals,
     sumAllGameActions: sumAllGameActions,
+    searchBytag: searchBytag,
+    searchByManyTags: searchByManyTags,
 
 }
