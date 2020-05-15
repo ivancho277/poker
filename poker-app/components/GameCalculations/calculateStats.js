@@ -29,6 +29,7 @@ const countTotals = (allGames) => {
 const searchBytag = (tag, games) => {
     //console.log('Tag:::', tag);
     //console.log('allGames',games);
+    
     const foundGames = games.filter(savedGame => {
         if (savedGame.game.data.tags.includes(tag)) {
             return savedGame;

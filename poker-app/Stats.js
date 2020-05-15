@@ -36,7 +36,8 @@ import { Chip } from 'react-native-paper';
 class StatsScreen extends Component {
 
     state = {
-        tagpicker: ''
+        tagpicker: '',
+        selectedTags: []
     }
 
     componentDidMount() {
@@ -67,7 +68,7 @@ class StatsScreen extends Component {
         if (tags !== null) {
             if (tags.length > 0) {
                 return tags.map(tag => {
-                   return <Chip key={tag} onPress={() => console.log(`you pressed ${tag}`)}>{tag}</Chip>
+                    return <Chip key={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => console.log(`you pressed ${tag}`)}>{tag}</Chip>
                 })
             }
         }
@@ -127,8 +128,13 @@ class StatsScreen extends Component {
                     })} */}
                 </RNPickerSelect>}
         </GameSubscriber>
+    }
 
-
+    onSearchPress(tagToSearch, allGameData) {
+        //Calculate.searchBytag(tagToSearch, allGameData)
+        this.setState({
+            selectedTags: this.state.selectedTags.concat(tagToSearch) 
+        }, () => {console.log(this.state.selectedTags)})
     }
 
 
@@ -146,12 +152,14 @@ class StatsScreen extends Component {
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
                     </GameSubscriber> */}
                     </Card>
-
                     <View>
-                        {this.renderChips(data.tags)}
+                        <Text style={{alignContent: 'flex-end', textAlign: 'center'}} >Selected tags: Click to unselect</Text>
+                        <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
+                            {this.renderChips(this.state.selectedTags)}
+                        </View>
                     </View>
 
-                    <Button title="Search By Tag" onPress={() => Calculate.searchBytag(this.state.tagpicker, data.allGames)}></Button>
+                    <Button title="Search By Tag" onPress={() => this.onSearchPress(this.state.tagpicker, data.allGames)}></Button>
 
 
                 </View>
