@@ -331,7 +331,6 @@ export default class PracticeButtonController extends Component {
         return true;
     }
 
-    //FIXME: need to send to context
     saveActions(action) {
         if (action != "") {
             let newActions = this.state.actionStrings.concat(action);
@@ -341,7 +340,6 @@ export default class PracticeButtonController extends Component {
 
     }
 
-    //FIXME: need to have current game actions coming from parent component, not from this state, and increment it in parent component
     render() {
         return (
             this.state.doneLoading ?

@@ -46,7 +46,6 @@ class GameScreen extends Component {
         console.log("MONT", allTags);
     }
 
-    //TODO: Might need to set state from context here, or just update context instead.
     componentDidUpdate() {
         // this.setState({
         //     allTags: this.context.allTags,

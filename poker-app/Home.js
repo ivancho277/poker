@@ -56,7 +56,6 @@ import * as Calculate from './components/GameCalculations/calculateStats'
 
 
 class HomeScreen extends Component {
-    //TODO: get ride of any unsed state data.
     constructor(props) {
         super(props);
         this.state = {

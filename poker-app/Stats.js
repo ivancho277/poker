@@ -68,8 +68,10 @@ class StatsScreen extends Component {
         if (tags !== null) {
             if (tags.length > 0) {
                 return tags.map(tag => {
-                    return <Chip key={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => console.log(`you pressed ${tag}`)}>{tag}</Chip>
+                    return <Chip key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag) }>{tag}</Chip>
                 })
+            } else {
+                return <Text style={{textAlign: 'auto', fontStyle: 'italic', }}>Chosen tags...</Text>
             }
         }
         else {
@@ -137,6 +139,13 @@ class StatsScreen extends Component {
         }, () => {console.log(this.state.selectedTags)})
     }
 
+    onChipPress(tagtoremove) {
+        const updateedTagsArray = this.state.selectedTags.filter(tag => tag !== tagtoremove);
+        this.setState({
+            selectedTags: updateedTagsArray
+        })
+    } 
+
 
     render() {
         return <GameSubscriber>
@@ -148,16 +157,17 @@ class StatsScreen extends Component {
                     >
 
                         {this.renderPicker()}
-                        {/* <GameSubscriber>
-                        {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
-                    </GameSubscriber> */}
-                    </Card>
-                    <View>
+                        <View>
                         <Text style={{alignContent: 'flex-end', textAlign: 'center'}} >Selected tags: Click to unselect</Text>
                         <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
                             {this.renderChips(this.state.selectedTags)}
                         </View>
                     </View>
+                        {/* <GameSubscriber>
+                        {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
+                    </GameSubscriber> */}
+                    </Card>
+                  
 
                     <Button title="Search By Tag" onPress={() => this.onSearchPress(this.state.tagpicker, data.allGames)}></Button>
 

@@ -58,7 +58,6 @@ export default class SettingsScreen extends Component {
   }
 
 
-  //TODO: need some kind of save button here, also after finishing globalState funtions use them here to update global state state.
 
   render() {
     return (
