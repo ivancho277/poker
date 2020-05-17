@@ -111,11 +111,9 @@ const isEmpty = function(obj){
 
 const CountPositions = function(obj) {
     //go through games and find totals per position
-
     try {
         let finalStats = {}
         //debugger;
-
         obj.games.forEach(game => {
             for (action in game.game) {
                 //console.log(action + " " + game.game)
@@ -135,8 +133,6 @@ const CountPositions = function(obj) {
             }
 
         })
-
-
         console.log("STATS", finalStats)
         return finalStats;
     } catch {
