@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { MyContext } from './stateContext/GlobalState'
-import { Card, ListItem, Icon, Button } from 'react-native-elements'
+import { ListItem, Icon, Button } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as Calculate from './components/GameCalculations/calculateStats.js'
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
-import { Chip, Snackbar, } from 'react-native-paper';
-import {ValidationSnackbar} from './components/functionalComponents/ValidationSnackBar';
+import { Chip, Snackbar, Card } from 'react-native-paper';
+import { ValidationSnackbar } from './components/functionalComponents/ValidationSnackBar';
+import { ScrollView } from 'react-native-gesture-handler';
+
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -26,26 +28,6 @@ class StatsScreen extends Component {
     componentDidMount() {
         // console.log(this.context.state.allTags);
     }
-    // renderFoundGames = (allGames, tag) => {
-    //     let foundgames = this.logTags(allGames, tag);
-    //     console.log(this.state.tagpicker);
-
-    //     console.log(foundgames)
-    //     if (tag != '') {
-    //         if (foundgames.length > 0) {
-    //             return (
-
-    //                 this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
-    //                     return <ListItem title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} key={i} />
-    //                 })
-
-
-    //             )
-    //         }
-    //     }
-
-    //     else return <Text>No found Games</Text>
-    // }
 
     renderChips = (tags) => {
         if (tags !== null) {
@@ -63,9 +45,24 @@ class StatsScreen extends Component {
     }
 
 
+    renderGamesFound = (tagsArray, games) => {
+        return (
+            <View style={{ maxHeight: 400 }}>
+                <Card>
+                    <Card.Title title='Found Games' subtitle="sub" />
+                    <Card.Content>
+                        <ScrollView>
+                            {tagsArray.length > 0 ? <Text>{JSON.stringify(Calculate.searchByManyTags(tagsArray, games), undefined, 4)}</Text> : <Text>Select some tags!</Text>}
+                        </ScrollView>
+                    </Card.Content>
+                </Card>
+            </View>
+        )
+        // if (this.state.selectedTags.length > 0) {
+        //     Calculate.searchByManyTags(tagsArray, games);
 
-    renderGamesFound = (games) => {
-
+        // }
+        // else
     }
 
     logTags = (allGames, tag) => {
@@ -146,35 +143,43 @@ class StatsScreen extends Component {
         return <GameSubscriber>
             {({ data, calculatedData }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-                <View style={styles.container}>
-                    <Card title='Search By Tag'
-                        containerStyle={{ width: '80%' }}
-                    >
 
-                        {this.renderPicker()}
-                        <View>
-                            <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
-                            <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
-                                {this.renderChips(this.state.selectedTags)}
+                <View>
+
+                    <Card elevation={10}>
+                        <Card.Title title='Search by Tags' />
+                        <Card.Content>
+
+                            {this.renderPicker()}
+                            <Button title="add Tag" onPress={() => this.onSearchPress(this.state.tagpicker, data.allGames)}></Button>
+                            <View>
+                                <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
+                                <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
+                                    {this.renderChips(this.state.selectedTags)}
+                                </View>
                             </View>
-                        </View>
+                        </Card.Content>
                         {/* <GameSubscriber>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
                     </GameSubscriber> */}
                     </Card>
 
+                    <View>
+                        {this.renderGamesFound(this.state.selectedTags, data.allGames)}
+                    </View>
 
-                    <Button title="Search By Tag" onPress={() => this.onSearchPress(this.state.tagpicker, data.allGames)}></Button>
 
-                    <ValidationSnackbar 
-                        message={`Sorry, you have already add ${this.state.lastRemovedTag}`}
+
+                    <ValidationSnackbar
+                        message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
                         visible={this.state.showSnack}
                         onDismiss={this._hideSnack}
                     />
 
-                    
-
                 </View>
+
+
+
             }
         </GameSubscriber>
     }

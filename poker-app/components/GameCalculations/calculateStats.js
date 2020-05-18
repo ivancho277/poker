@@ -29,7 +29,7 @@ const countTotals = (allGames) => {
 const searchBytag = (tag, games) => {
     //console.log('Tag:::', tag);
     //console.log('allGames',games);
-    
+
     const foundGames = games.filter(savedGame => {
         if (savedGame.game.data.tags.includes(tag)) {
             return savedGame;
@@ -46,11 +46,11 @@ const searchBytag = (tag, games) => {
  */
 const searchByManyTags = (tagsArray, games) => {
     const foundGames = games.filter(savedGame => {
-        if (tagsArray.every(tag => { return savedGame.game.data.tags.includes(tag) >= 0 })) {
+        if (tagsArray.every(tag => { return (savedGame.game.data.tags.indexOf(tag) >= 0) })) {
             return savedGame;
         }
     });
-    console.log(foundGames);
+    console.log("MANY TAGS:", foundGames);
     return foundGames.length > 0 ? foundGames : null;
 }
 
