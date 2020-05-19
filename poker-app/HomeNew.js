@@ -1,8 +1,6 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Button, colors } from 'react-native-elements';
-import StatsBox from './components/Statsbox'
-import { MyContext } from './stateContext/GlobalState';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';

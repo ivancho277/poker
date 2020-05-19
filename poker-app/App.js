@@ -9,7 +9,6 @@ import {
 } from "react-navigation";
 import HomeScreenNew from "./HomeNew";
 import StatsScreen from "./Stats";
-import { GlobalState } from "./stateContext/GlobalState";
 import { AntDesign } from "@expo/vector-icons";
 import { AppLoading } from "expo";
 import { Provider as PaperProvider, ActivityIndicator, Colors } from 'react-native-paper';

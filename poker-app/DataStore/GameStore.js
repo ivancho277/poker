@@ -1,6 +1,5 @@
 import React, { Component, Children, useState } from 'react';
 import { VERSION } from '../constants/version';
-import { GlobalState } from '../stateContext/GlobalState';
 import {
     createStore,
     createContainer,

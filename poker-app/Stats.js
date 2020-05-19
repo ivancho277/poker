@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
-import { MyContext } from './stateContext/GlobalState'
 import { ListItem, Icon, Button } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import * as Calculate from './components/GameCalculations/calculateStats.js'
