@@ -43,15 +43,14 @@ class StatsScreen extends Component {
         }
     }
 
-
     renderGamesFound = (tagsArray, games) => {
         return (
             <View style={{ maxHeight: 400 }}>
                 <Card>
-                    <Card.Title title='Found Games' subtitle="sub" />
+                    <Card.Title title='Found Games' subtitle="Game data for selected tags will appear here..." />
                     <Card.Content>
                         <ScrollView>
-                            {tagsArray.length > 0 ? <Text>{JSON.stringify(Calculate.searchByManyTags(tagsArray, games), undefined, 4)}</Text> : <Text>Select some tags!</Text>}
+                            {tagsArray.length > 0 ? <Text>{ console.log("here it is:",Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games)))} look at console}</Text> : <Text>Select some tags!</Text>}
                         </ScrollView>
                     </Card.Content>
                 </Card>
@@ -63,32 +62,6 @@ class StatsScreen extends Component {
         // }
         // else
     }
-
-    logTags = (allGames, tag) => {
-        console.log('MY TAG', tag)
-        if (allGames != undefined) {
-            if (tag === "") {
-                return calculation.findTag(allGames, 'default');
-            } else {
-                return calculation.findTag(allGames, tag);
-            }
-        }
-        else {
-            return null;
-        }
-    }
-
-    objToArray = (obj) => {
-        // let values = Object.values(obj);
-        let objArray = [];
-        for (key in obj) {
-            objArray.push({ [key]: obj[key] })
-        }
-        console.log('OBJECT ARRAY', objArray)
-        return objArray
-    }
-
-
 
     renderPicker() {
         return <GameSubscriber>
@@ -142,7 +115,6 @@ class StatsScreen extends Component {
         return <GameSubscriber>
             {({ data, calculatedData }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-
                 <View>
 
                     <Card elevation={10}>
@@ -150,7 +122,7 @@ class StatsScreen extends Component {
                         <Card.Content>
 
                             {this.renderPicker()}
-                            <Button title="add Tag" onPress={() => this.onSearchPress(this.state.tagpicker, data.allGames)}></Button>
+                            <Button title="add Tag" onPress={() => {this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') :this.onSearchPress(this.state.tagpicker, data.allGames)}  }></Button>
                             <View>
                                 <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
                                 <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>

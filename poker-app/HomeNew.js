@@ -4,39 +4,39 @@ import { Button, colors } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
-import { Colors, ActivityIndicator } from 'react-native-paper';
+import { Colors, ActivityIndicator, Snackbar } from 'react-native-paper';
 import * as Utils from './utils/objectOps'
 import * as Calculate from './components/GameCalculations/calculateStats'
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
 
 
- export default function HomeScreenNew(props){
+export default function HomeScreenNew(props) {
     const [state, actions] = UseGameStore();
     const [loadingData, setLoadingData] = useState(true);
-     
+
     manualReload = async () => {
         setLoadingData(true);
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {
                 let response = res;
-                console.log('MANUL LOAD RES:', response );
+                console.log('MANUL LOAD RES:', response);
                 setLoadingData(false);
-            }) 
+            })
         })
     }
 
     useEffect(() => {
-        async function dataLoad(){
-        return await actions.load().then(async (res) => {
-            return await actions.loadTotals().then(res => {
-              setLoadingData(false);
-              return true;
+        async function dataLoad() {
+            return await actions.load().then(async (res) => {
+                return await actions.loadTotals().then(res => {
+                    setLoadingData(false);
+                    return true;
+                })
             })
-          })
         }
         dataLoad().then(res => {
-            if(res){
-                alert("HOME : ")
+            if (res) {
+                console.log("hey boys we loaded.")
             }
         })
     }, []);
@@ -58,16 +58,15 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
         <GameSubscriber>
             {(state, actions) => (
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-                    {<View>
-                        <Text>POKER TRACKER</Text>
-                    </View>
-                    }
+
+                    
                     <View>
                         {state.calculatedData.loading ?
-                            <ActivityIndicator animating={true} color={Colors.purple800} /> 
+                            <ActivityIndicator animating={true} color={Colors.purple800} />
                             :
                             <View>
-                                <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button>
+                                {/* <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button> */}
+                                <Text style={{textAlign: 'center', fontWeight: '500'}}>POKER TRACKER</Text>
                                 <DisplayStats></DisplayStats>
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
                                 <View>

@@ -17,8 +17,7 @@ const isEmpty = function (obj) {
 }
 
 /**
- * !!We may not really need this at the moment, as we are keeping a running total. Although may be good to write and keep as 
- * !!a function to check our totals, or if data gets lost, we can re-calculate.
+ * NOTE: counts Total number of all actions together;
  */
 const countTotals = (allGames) => {
 
@@ -54,9 +53,45 @@ const searchByManyTags = (tagsArray, games) => {
     return foundGames.length > 0 ? foundGames : null;
 }
 
+const sumGamesTotals = (games) => {
+    if (games === null) {
+        return 'no games'
+    }
+    console.log('sumFUNT:', games)
+    if (games instanceof Array) {
+        if (games.length > 0) {
+            let accum = 0;
+            let total = 0;
+            let sum = games.reduce((accum = 0, _game) => {
+               // debugger;
+               console.log("count:", accum)
+                let innerSum = _game.game.data.actions.reduce((total = 0, action) => {
+                    return total + action.count;
+                }, total);
+                console.log('inner SUM: ', innerSum);
+                return accum + innerSum;
+            }, accum);
+            return sum;
+        } else {
+            return 'no array games'
+        }
+    }
+}
+
+const sumGamesPositions = (games) => {
+
+}
 
 
+
+
+/**
+ * NOTE: this sums the caclulated data actions
+ */
 const sumAllGameActions = (games) => {
+    if (games === null) {
+        return 'no games'
+    }
     let sum = 0;
     if (games instanceof Array) {
         //console.log('This Array: ', sum);
@@ -80,8 +115,6 @@ const sumAllGameActions = (games) => {
 
 
 
-
-
 module.exports = {
     objToArray: objToArray,
     isEmpty: isEmpty,
@@ -89,5 +122,5 @@ module.exports = {
     sumAllGameActions: sumAllGameActions,
     searchBytag: searchBytag,
     searchByManyTags: searchByManyTags,
-
+    sumGamesTotals: sumGamesTotals,
 }
