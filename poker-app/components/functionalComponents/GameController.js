@@ -10,7 +10,7 @@ import { AddTag } from './AddTag'
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 import * as Utils from '../../utils/objectOps.js';
-import { ActivityIndicator, Colors  } from 'react-native-paper';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 
 
@@ -20,7 +20,7 @@ import { ActivityIndicator, Colors  } from 'react-native-paper';
 
 
 export const GameController = (props) => {
-    const [state, actions] = UseGameStore();
+    const [{ data, liveGame, liveGameLoading }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('')
     // const [loading, setLoading] = useState(true);
@@ -33,8 +33,8 @@ export const GameController = (props) => {
     useEffect(() => {
         // console.log("Time curr", currentTime)
         // console.log("Time prev", previousTime)
-        console.log("liveGame:  ", state.liveGame);
-    }, [state.liveGameLoading])
+        console.log("liveGame:  ", liveGame);
+    }, [])
 
 
     onActionClick = (action, actionIndex) => {
@@ -54,12 +54,20 @@ export const GameController = (props) => {
         return (JSON.parse(myData));
     }
 
+    const RenderRadio = (props) => {
+        
+            return  <Radio position={props.position} setPosition={props.updatePositionCallBack} />
+        
+          
+    }
+    
+
     // debugger
     return (
         <GameSubscriber>
             {({ liveGame, liveGameLoading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
                 //debugger
-                (liveGame !== null && !data.loading) ?
+                (liveGame !== null && !data.liveGameLoading) ?
                     <View>
                         <View>
                             <Text>DONE</Text>
@@ -99,13 +107,18 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
-                            {liveGameLoading ?
-                                <ActivityIndicator animating={true} color={Colors.purple800} /> 
-                                :
+                          
+                 {               /**
+                                 * FIXME: need to make this work and render correctly
+                                 * TODO: Make this work
+                                 * NOTE: should not use function, but rather JSX <> notation, and pass in props.
+                                 */}
                                 <View style={{ marginTop: 5 }}>
-                                    <Radio position={liveGame.position} setPosition={updatePosition} />
+                                    {/* {<RenderRadio position={liveGame.position} updatePositionCallBack={updatePosition}  />} */}
+                                    <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} />
+                                    {/* <Text>IS IT HERE?</Text> */}
                                 </View>
-                            }
+                            
                             {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                         </View>

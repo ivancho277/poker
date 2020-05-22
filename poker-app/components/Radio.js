@@ -18,11 +18,11 @@ class Radio extends Component {
     constructor(props) {
         super(props);
         state = {
-            value: 0   
+            value: 0
         }
     }
 
-    
+
     async componentDidMount() {
         console.log("Tell me when to Mount!")
         this.setState({
@@ -56,42 +56,48 @@ class Radio extends Component {
             this.positionReturn(0);
         }
     }
- 
+
     async componentDidUpdate(prevProps, prevState) {
-       if(this.state.value != this.props.position){
-           this.updateIndex(this.props.position)   
-       } 
-       if(prevState == null){
-        console.log('IN THE IFFFFF() ()( !!!!>>><<<<<>>>><<<><><><>')
-           this.updateIndex(this.props.position);
-       }
-       
-       console.log('prevPOS: ' , prevProps);
-       console.log('prevState: ' , prevState);
+        if (this.state.value != this.props.position) {
+            this.updateIndex(this.props.position)
+        }
+        if (prevState == null) {
+            console.log('IN THE IFFFFF() ()( !!!!>>><<<<<>>>><<<><><><>')
+            this.updateIndex(this.props.position);
+        }
+
+        console.log('prevPOS: ', prevProps);
+        console.log('prevState: ', prevState);
     }
 
 
     render() {
         return (
             <View>
-                <View style={{ flexDirection: 'row' }}>
-                    <RadioForm
-                        ref={ref => this.radioFormClear = ref}
-                        radio_props={radio_props}
-                        initial={0}
-                        formHorizontal={true}
-                        buttonSize={10}
-                        buttonOuterSize={20}
-                        labelHorizontal={false}
-                        onPress={(value) => {
-                            //this.setState({value: value});
-                            //debugger;
-                            this.props.setPosition(value)
-                            console.log("I GOT PRESSEED!!:", value)
-                        }}
+                {this.props.liveLoading ?
 
-                    />
-                </View>
+                    <Text> Loading Bizzznitch</Text>
+                    :
+                    <View style={{ flexDirection: 'row' }}>
+                        <RadioForm
+                            ref={ref => this.radioFormClear = ref}
+                            radio_props={radio_props}
+                            initial={0}
+                            formHorizontal={true}
+                            buttonSize={10}
+                            buttonOuterSize={20}
+                            labelHorizontal={false}
+                            onPress={(value) => {
+                                //this.setState({value: value});
+                                //debugger;
+                                this.props.setPosition(value)
+                                console.log("I GOT PRESSEED!!:", value)
+                            }}
+
+                        />
+                    </View>
+                }
+
 
                 <View>
                     {/* <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} /> */}
