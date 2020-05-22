@@ -569,7 +569,7 @@ const actions = {
         } else {
             fetchTotalsFromStorage().then(res => {
                 if (res) {
-                    alert("in fetch callback");
+                    //alert("in fetch callback");
                     dispatch(setCalculatedData(res));
                 }
                 //alert('before return NO RESET!!!')

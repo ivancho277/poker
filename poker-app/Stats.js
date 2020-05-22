@@ -50,7 +50,21 @@ class StatsScreen extends Component {
                     <Card.Title title='Found Games' subtitle="Game data for selected tags will appear here..." />
                     <Card.Content>
                         <ScrollView>
-                            {tagsArray.length > 0 ? <Text>{ console.log("here it is:",Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games)))} look at console}</Text> : <Text>Select some tags!</Text>}
+                            {tagsArray.length > 0 ?
+                                <View>
+                                    <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
+                                    <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
+                                    <Text>Games per POS: {console.log('last log: ', Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)) )}</Text>
+                                </View>
+                                :
+                                <View>
+                                    <Text>Select some tags!</Text>
+                                    <Text>More data</Text>
+                                </View>
+
+
+                            }
+
                         </ScrollView>
                     </Card.Content>
                 </Card>
@@ -122,7 +136,7 @@ class StatsScreen extends Component {
                         <Card.Content>
 
                             {this.renderPicker()}
-                            <Button title="add Tag" onPress={() => {this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') :this.onSearchPress(this.state.tagpicker, data.allGames)}  }></Button>
+                            <Button title="add Tag" onPress={() => { this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') : this.onSearchPress(this.state.tagpicker, data.allGames) }}></Button>
                             <View>
                                 <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
                                 <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>

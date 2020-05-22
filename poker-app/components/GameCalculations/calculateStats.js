@@ -53,6 +53,13 @@ const searchByManyTags = (tagsArray, games) => {
     return foundGames.length > 0 ? foundGames : null;
 }
 
+
+
+
+
+/**
+ * NOTE: Sums up recieved array of games found;
+ */
 const sumGamesTotals = (games) => {
     if (games === null) {
         return 'no games'
@@ -63,8 +70,8 @@ const sumGamesTotals = (games) => {
             let accum = 0;
             let total = 0;
             let sum = games.reduce((accum = 0, _game) => {
-               // debugger;
-               console.log("count:", accum)
+                // debugger;
+                console.log("count:", accum)
                 let innerSum = _game.game.data.actions.reduce((total = 0, action) => {
                     return total + action.count;
                 }, total);
@@ -77,9 +84,47 @@ const sumGamesTotals = (games) => {
         }
     }
 }
-
+/**
+ * TODO: write function to sum up found games per pos.
+ */
 const sumGamesPositions = (games) => {
+    if(games === null || games === undefined){
+        return null;
+    }
+    const totalsPerPosition = {};
+    games.forEach(_game => {
+        _game.game.data.actions.forEach(action => {
+            console.log("YE:", action.countPerPosition);
+            console.log("YE:", action.actionName);
+            if(totalsPerPosition[action.actionName]){
+                
+            }
+        })
+    })
+}
 
+/**
+ * TODO: handle null case error.
+ */
+const sumUpGameTotals = (games) => {
+    if(games === null || games === undefined){
+        return null;
+    }
+    const sumTotals = {};
+    games.forEach(_game => {
+        _game.game.totals.forEach(action => {
+            let actionKey = Object.keys(action)[0];
+            let actionVal = action[actionKey];
+            if (sumTotals[actionKey]) {
+                //console.log(actionKey + "  " + actionVal);
+                sumTotals[actionKey] += actionVal;
+            }
+            else {
+                sumTotals[actionKey] = actionVal;
+            }
+        })
+    })
+    return sumTotals;
 }
 
 
@@ -123,4 +168,8 @@ module.exports = {
     searchBytag: searchBytag,
     searchByManyTags: searchByManyTags,
     sumGamesTotals: sumGamesTotals,
+    sumUpGameTotals: sumUpGameTotals,
+    sumGamesPositions: sumGamesPositions,
+
+
 }
