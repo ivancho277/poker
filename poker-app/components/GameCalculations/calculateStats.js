@@ -94,13 +94,23 @@ const sumGamesPositions = (games) => {
     const totalsPerPosition = {};
     games.forEach(_game => {
         _game.game.data.actions.forEach(action => {
-            console.log("YE:", action.countPerPosition);
-            console.log("YE:", action.actionName);
-            if(totalsPerPosition[action.actionName]){
-                
+            let name = action.actionName;
+            let positionObj = {}
+            Object.assign(positionObj,action.countPerPosition)
+            console.log("YE:", positionObj);
+            console.log("YE:", name);
+            console.log('What is your value? ', totalsPerPosition[name])
+            if(totalsPerPosition[name]){
+                for(key in totalsPerPosition[name]){
+                    console.log('Why: ', totalsPerPosition[name][key])
+                    totalsPerPosition[name][key] = totalsPerPosition[name][key] + positionObj[key]; 
+                }
+            } else {
+                totalsPerPosition[name] = positionObj
             }
         })
     })
+    return totalsPerPosition;
 }
 
 /**

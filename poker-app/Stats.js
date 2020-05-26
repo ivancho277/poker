@@ -45,28 +45,30 @@ class StatsScreen extends Component {
 
     renderGamesFound = (tagsArray, games) => {
         return (
-            <View style={{ maxHeight: 400 }}>
+            <View style={{ maxHeight: 400, marginBottom: 20, paddingBottom: 30 }}>
                 <Card>
                     <Card.Title title='Found Games' subtitle="Game data for selected tags will appear here..." />
-                    <Card.Content>
-                        <ScrollView>
-                            {tagsArray.length > 0 ?
-                                <View>
-                                    <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
-                                    <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
-                                    <Text>Games per POS: {console.log('last log: ', Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)) )}</Text>
-                                </View>
-                                :
-                                <View>
-                                    <Text>Select some tags!</Text>
-                                    <Text>More data</Text>
-                                </View>
+                    <ScrollView>
+                        <Card.Content>
+                            <ScrollView>
+                                {tagsArray.length > 0 ?
+                                    <View>
+                                        <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
+                                        <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
+                                        <Text>Games per POS: {JSON.stringify(Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)), undefined, 5)}</Text>
+                                    </View>
+                                    :
+                                    <View>
+                                        <Text>Select some tags!</Text>
+                                        <Text>More data</Text>
+                                    </View>
 
 
-                            }
+                                }
 
-                        </ScrollView>
-                    </Card.Content>
+                            </ScrollView>
+                        </Card.Content>
+                    </ScrollView>
                 </Card>
             </View>
         )
