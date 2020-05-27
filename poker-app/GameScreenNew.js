@@ -33,6 +33,16 @@ export default function GameScreenNew() {
         console.log("reload dat game")
     }, [])
 
+    manualReload = async () => {
+        setLoadingData(true);
+        await actions.load().then(async (res) => {
+            await actions.loadTotals().then(res => {
+                let response = res;
+                console.log('MANUL LOAD RES:', response);
+                setLoadingData(false);
+            })
+        })
+    }
 
     const toggleTestMode = () => {
 

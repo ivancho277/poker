@@ -87,13 +87,13 @@ const setCalculatedDataLoading = () => ({ setState }) => {
     })
 }
 
-const setLiveGameLoading = () => ({setState}) => {
+const setLiveGameLoading = () => ({ setState }) => {
     setState(draft => {
         draft.liveGameLoading = true;
     })
 }
 
-const endLiveLoading = () => ({setState}) => {
+const endLiveLoading = () => ({ setState }) => {
     setState(draft => {
         draft.liveGameLoading = false;
     })
@@ -307,14 +307,12 @@ const CurrentGameSave = () => ({ setState, getState }) => {
     const date = new Date();
     //const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
     const currentgame = getState().liveGame;
+    const calcData = getState().calcData;
     const gamesObj = {
-        rawGameData: currentgame,
+        liveGameData: currentgame,
         date: date.toDateString(),
         time: date.getTime(),
-        tags: currentgame.getTags(),
-        currentGame: currentgame.getCurrentStats(),
-        actions: currentgame.getAllActions(),
-        actionStrings: currentgame.getActionsAsList()
+        calcData: calcData,
     }
     storage.saveCurrentGame(gamesObj);
     //this.props.context.modifiers.updateCurrentGame(gamesObj)
@@ -398,6 +396,7 @@ const setCalculatedData = (totalsObj) => ({ setState, getState }) => {
 
 
 
+//TODO: Since We are updating the local positionCount as we play, and only save to storage when we save and end, then when we load a currentgame we need to load that pCount, also when we end a game and don't save we should do another load from Storage to set the totals back to what they were 
 /**
  *
  * * 
@@ -410,6 +409,39 @@ const incrementPositionCount = (position) => ({ getState, setState }) => {
         draft.calculatedData.positionCount[position] += 1;
     })
     console.log('POSITION-COUNT: position passed: ', position);
+}
+
+
+const loadPositionCount = async () => {
+    const pCount = await storage.getPositionCount().then((res => {
+        if (res) {
+            return JSON.parse(res);
+        } else {
+            alert('this really should not happen, call the developer and complain if it does....');
+            return null;
+        }
+    }));
+    return pCount;
+}
+
+
+const setPositionCount = (pCount) => ({ setState }) => {
+    setState(draft => {
+        draft.calculatedData.positionCount = pCount
+    });
+}
+
+const reloadandSetPositionCount = async () => {
+    await loadPositionCount().then(res => {
+        if (res) {
+            console.log('Did i make it here?')
+            setPositionCount(res);
+            return res;
+        } else 
+        {
+            return null;
+        }
+    })
 }
 
 
@@ -454,15 +486,18 @@ const actions = {
         });
         return totals;
     },
-    
-    endLiveLoading: () => ({dispatch}) => {
+
+    endLiveLoading: () => ({ dispatch }) => {
         disptach(endLiveLoading());
     },
 
 
-    resetLiveGame: () => ({ getState, setState, dispatch }) => {
+    resetLiveGame: () => async ({ getState, setState, dispatch }) => {
         const { data } = getState();
-        dispatch(setLiveGame(data.actions));
+        await reloadandSetPositionCount().then(res => {
+            dispatch(setLiveGame(data.actions));
+            return res;
+        })
     },
 
 
@@ -576,9 +611,7 @@ const actions = {
                 return 'totals';
             })
         }
-
     },
-
     /**
      * This Action will Update Storage Running totals with what ever data is in Currently in liveGame 
      * *Not implemented anywhere in code, SaveAllGames is updating them only.

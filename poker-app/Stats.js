@@ -61,11 +61,8 @@ class StatsScreen extends Component {
                                     <View>
                                         <Text>Select some tags!</Text>
                                         <Text>More data</Text>
-                                    </View>
-
-
+                                    </View> 
                                 }
-
                             </ScrollView>
                         </Card.Content>
                     </ScrollView>
