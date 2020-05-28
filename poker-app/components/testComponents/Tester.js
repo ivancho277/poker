@@ -48,7 +48,7 @@ export const Tester = () => {
 
     GetDataTest = async () => {
         const myData = await StorageAPI.getAllNewGames();
-        setTest(JSON.parse(myData));
+       // setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
             if (typeof (JSON.parse(myData)) === "Array") {
@@ -57,6 +57,15 @@ export const Tester = () => {
         }, 0);
         return (JSON.parse(myData));
     }
+
+    getCurrentGame = async () => {
+        const CurrGame = await StorageAPI.retrieveCurrentGame();
+        setTimeout(() => {
+            console.log("What Saved LIVEGAME:::", JSON.parse(CurrGame));
+        }, 0);
+        return JSON.parse(CurrGame);
+    }
+
     manualReload = async () => {
         //setLoadingData(true);
         await actions.load().then(async (res) => {
@@ -97,6 +106,8 @@ export const Tester = () => {
                         }}></Button>
                         <Button title="log Data" onPress={() => { console.log("DATA:::", state.data) }}></Button>
                         <Button title="log Calculated Data" onPress={() => { console.log("DATA:::", state.calculatedData) }}></Button>
+                        <Button title="log currentGame (from Storage)" onPress={() => { getCurrentGame(); }}></Button>
+                        <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { actions.removeCurrentGameFromStorage() }}><Text>Remove CurrentGame from Storage</Text></AntDesign.Button>
                         <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                         <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
                         <AntDesign.Button name={'reload1'} backgroundColor="red" onPress={() => { actions.resetLiveGame(); manualReload(); }}><Text>Reset Live Game</Text></AntDesign.Button>
