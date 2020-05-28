@@ -281,7 +281,6 @@ const SaveAllGames = () => ({ setState, getState }) => {
             saveTime: new Date().getTime()
         }
     }
-    console.log("AHAHAHAHAHAHAHAHAHAHAASDFLHKJASFDALS:DJ:L", game)
     let updatedGamesList;
     if (storage.isEmpty(getState().data.savedGames)) {
         updatedGamesList = [game]
@@ -292,8 +291,8 @@ const SaveAllGames = () => ({ setState, getState }) => {
         draft.allGamesArray = updatedGamesList;
         draft.gamesObj = { games: updatedGamesList, currentVersion: VERSION }
     });
-    console.log("LIST: ", updatedGamesList);
-    console.log("STATE: ", getState().data.savedGames);
+    //console.log("LIST: ", updatedGamesList);
+    //console.log("STATE: ", getState().data.savedGames);
     storage.saveAllNewGames(updatedGamesList);
 
     //storage.saveData({ games: updatedGamesList, currentVersion: VERSION })
@@ -307,17 +306,21 @@ const CurrentGameSave = () => ({ setState, getState }) => {
     const date = new Date();
     //const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
     const currentgame = getState().liveGame;
-    const calcData = getState().calcData;
-    const gamesObj = {
+    const calcData = getState().calculatedData;
+    const currentGameObj = {
         liveGameData: currentgame,
         date: date.toDateString(),
         time: date.getTime(),
         calcData: calcData,
     }
-    storage.saveCurrentGame(gamesObj);
+    console.log("What am I saving?", currentGameObj);
+    storage.saveCurrentGame(currentGameObj);
     //this.props.context.modifiers.updateCurrentGame(gamesObj)
 }
 
+const removeCurrentGame = () => ({setState}) => {
+    storage.removeCurrentGame();
+}
 
 const fetchData = async () => {
     try {
@@ -437,8 +440,7 @@ const reloadandSetPositionCount = async () => {
             console.log('Did i make it here?')
             setPositionCount(res);
             return res;
-        } else 
-        {
+        } else {
             return null;
         }
     })
@@ -507,6 +509,8 @@ const actions = {
         dispatch(incrementLiveAction(index));
         dispatch(incrementPositionCount(position))
         dispatch(incrementPosition());
+        dispatch(CurrentGameSave());
+        
     },
 
 
@@ -519,6 +523,10 @@ const actions = {
         dispatch(incrementPosition());
     },
 
+    removeCurrentGameFromStorage: () => ({ dispatch }) => {
+        dispatch(removeCurrentGame());
+    },
+
 
     updateGames: updateGames = () => ({ getState, setState, dispatch }) => {
 
@@ -526,6 +534,7 @@ const actions = {
 
     saveAllGames: () => ({ getState, setState, dispatch }) => {
         dispatch(SaveAllGames());
+        dispatch(removeCurrentGame());
     },
 
     saveCurrentGame: () => ({ getState, setState, dispatch }) => {
