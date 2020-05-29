@@ -241,7 +241,8 @@ const saveAllNewGames = function (allGames) {
 const deleteAllNewGames = function () {
     try {
         AsyncStorage.removeItem('games', () => {
-            alert('REMOVED DA GAMEZ');
+            //alert('REMOVED DA GAMEZ');
+            return 'removed'
         })
     } catch {
         alert('NO WORK DELETE');

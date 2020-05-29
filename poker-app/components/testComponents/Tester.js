@@ -8,7 +8,7 @@ import { StorageAPI as Storage } from '../storageAPI/AsyncStorageController';
 import { Colors, ActivityIndicator, Switch } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 import { StorageAPI } from '../storageAPI/AsyncStorageController'
-
+import { ConfirmDialog } from '../functionalComponents/ConfirmDialog';
 
 export const TestComponent = () => {
 
@@ -41,6 +41,10 @@ const innerComponent = () => {
 export const Tester = () => {
 
     const [state, actions] = UseGameStore();
+    const [isVisible, setIsVisible] = useState(false);
+
+    _showDialog = () => { setIsVisible(true) };
+    _hideDialog = () => { setIsVisible(false) };    
     // const [loading, setLoading] = useState(false);
     // useEffect(() => {
     //     //actions.load();
@@ -109,8 +113,10 @@ export const Tester = () => {
                         <Button title="log currentGame (from Storage)" onPress={() => { getCurrentGame(); }}></Button>
                         <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { actions.removeCurrentGameFromStorage() }}><Text>Remove CurrentGame from Storage</Text></AntDesign.Button>
                         <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
-                        <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
+                        <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { _showDialog(); StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
                         <AntDesign.Button name={'reload1'} backgroundColor="red" onPress={() => { actions.resetLiveGame(); manualReload(); }}><Text>Reset Live Game</Text></AntDesign.Button>
+
+                        <ConfirmDialog title="Warning" message="Deleting games alone is just for testing, Running totals will not be removed and calculations will be incorect. Please Reset Data in settings to fix." isVisible={isVisible} show={_showDialog} hide={_hideDialog} />
                     </View>
                     {/* :
                 <View>

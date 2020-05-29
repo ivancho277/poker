@@ -478,7 +478,7 @@ const actions = {
     },
 
     getGames: () => async ({ dispatch }) => {
-        disptach(retrieveGamesNew());
+        dispatch(retrieveGamesNew());
     },
 
     getGameTotals: () => ({ getState, setState }) => {
@@ -490,7 +490,7 @@ const actions = {
     },
 
     endLiveLoading: () => ({ dispatch }) => {
-        disptach(endLiveLoading());
+        dispatch(endLiveLoading());
     },
 
 
@@ -571,6 +571,10 @@ const actions = {
 
     removeAllData: () => ({ dispatch }) => {
         dispatch(deleteAllSavedData());
+    },
+
+    removeGamesDataOnly: () => ({ dispatch }) => {
+        
     },
 
     /**
