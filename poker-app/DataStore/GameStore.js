@@ -116,6 +116,21 @@ const setData = data => ({ setState }) => {
     })
 };
 
+/**
+ * !!Where I am at............  so i should just need to check what fetch data is returning for current game, but i guess i can still do this. not sure whats better?
+ */
+const loadCurrentGameAsLive = async () => ({setState}) => {
+    await storage.retrieveCurrentGame().then(res => {
+        if(res){
+            console.log("live:", JSON.parse(res).liveGameData);
+            console.log("calced:", JSON.parse(res).calcData);
+            // setState(draft => {
+            //     draft.liveGame = JSON.parse(res).liveGameData;
+            //     draft.calculatedData = JSON.parse(res).calcData;
+            // })
+        }
+    })
+}
 
 const setLiveGame = actions => ({ setState, dispatch }) => {
     const newGame = createGame(actions)
@@ -477,6 +492,12 @@ const actions = {
         return data;
     },
 
+
+    loadCurrentGame: () => async ({dispatch}) => {
+        dispatch(loadCurrentGameAsLive());
+
+    },
+
     getGames: () => async ({ dispatch }) => {
         dispatch(retrieveGamesNew());
     },
@@ -512,6 +533,7 @@ const actions = {
         dispatch(CurrentGameSave());
         
     },
+    
 
 
 
