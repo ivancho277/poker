@@ -112,32 +112,69 @@ const setData = data => ({ setState }) => {
         draft.allGamesArray = data.savedGames;
         draft.gamesObj = data.savedGames;
         draft.data.loading = false;
-
     })
 };
+
+
+const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
+    const { calculatedData } = getState();
+    const { actions, currentGame } = getState().data
+    console.log("THIS IS WHAT CURGAME I AM IF", currentGame)
+    if (currentGame) {
+        console.log("Seting Current: ", currentGame.liveGameData);
+        console.log("Curr Calc::::", currentGame.calcData);
+        //NOTE:Set State here, liveGame and Calculated data...
+        dispatch(setCurrentGameToLive());
+    } else {
+        console.log("No Current Game Present");
+        dispatch(setNewLiveGame(actions))
+    }
+}
+
+setCurrentGameToLive = () => ({ setState, getState }) => {
+    const { currentGame } = getState().data;
+    console.log("this here currGame::::::", currentGame.liveGameData);
+    console.log("this here currGameCalc::::::", currentGame.calcData);
+    if (currentGame) {
+        setState(draft => {
+            draft.liveGame = currentGame.liveGameData;
+            draft.calculatedData.positionCount = currentGame.calcData.positionCount;
+        })
+    } else {
+        console.error("I Messed up error, Something I did got you to this point where you shouldn't have got to, now shits all fucked up.")
+    }
+
+}
 
 /**
  * !!Where I am at............  so i should just need to check what fetch data is returning for current game, but i guess i can still do this. not sure whats better?
  */
-const loadCurrentGameAsLive = async () => ({setState}) => {
-    await storage.retrieveCurrentGame().then(res => {
-        if(res){
+const fetchCurrentGame = async () => {
+    return await storage.retrieveCurrentGame().then(res => {
+        if (res) {
             console.log("live:", JSON.parse(res).liveGameData);
-            console.log("calced:", JSON.parse(res).calcData);
+            console.log("cancellced:", JSON.parse(res).calcData);
             // setState(draft => {
             //     draft.liveGame = JSON.parse(res).liveGameData;
             //     draft.calculatedData = JSON.parse(res).calcData;
             // })
         }
+        return res;
     })
 }
 
-const setLiveGame = actions => ({ setState, dispatch }) => {
-    const newGame = createGame(actions)
+// const setLiveGame = () => ({setState, getState}) => {
+
+// }
+
+const setNewLiveGame = actions => ({ getState, setState, dispatch }) => {
+    const newGame = createGame(actions);
+    // console.log('LOOOK AT MY GAME BITCH:::::::', currentGame);
     setState(draft => {
         draft.liveGame = newGame.getGameData()
     })
     dispatch(endLiveLoading());
+
 };
 
 
@@ -316,7 +353,6 @@ const SaveAllGames = () => ({ setState, getState }) => {
 }
 
 
-//TODO:  WRITE THIS FUNCTION TO WORK WITH CURRENT DATA STRUCTURE.
 const CurrentGameSave = () => ({ setState, getState }) => {
     const date = new Date();
     //const currentgame = new Game(game.currentActions, game.tags, game.position, "1.0.5", date);
@@ -333,7 +369,7 @@ const CurrentGameSave = () => ({ setState, getState }) => {
     //this.props.context.modifiers.updateCurrentGame(gamesObj)
 }
 
-const removeCurrentGame = () => ({setState}) => {
+const removeCurrentGame = () => ({ setState }) => {
     storage.removeCurrentGame();
 }
 
@@ -344,7 +380,7 @@ const fetchData = async () => {
         const tagsResponse = await storage.retrieveTags().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? [] : JSON.parse(res) })
         const CurrentGameResponse = await storage.retrieveCurrentGame().then(res => { return JSON.parse(res) })
         const savedGamesResponse = await storage.getAllNewGames().then(res => { return JSON.parse(res) === null || JSON.parse(res) === undefined ? {} : JSON.parse(res) })
-        return { allGames: savedGamesResponse, savedGames: savedGamesResponse, actions: actionsResponse, tags: tagsResponse, CurrentGame: CurrentGameResponse }
+        return { allGames: savedGamesResponse, savedGames: savedGamesResponse, actions: actionsResponse, tags: tagsResponse, currentGame: CurrentGameResponse }
     } catch {
         console.log('error fetching');
         throw Error("this is a fetch error")
@@ -464,6 +500,7 @@ const reloadandSetPositionCount = async () => {
 
 
 
+
 const actions = {
     /**
      * !! This will be Original Load method
@@ -472,10 +509,10 @@ const actions = {
     load: () => async ({ getState, setState, dispatch }) => {
         if (getState().data.loading === true) return;
         dispatch(setDataLoading());
-        dispatch(setLiveGameLoading());
+        //dispatch(setLiveGameLoading());
         const loadedData = await fetchData().then(response => { return response });
         //     console.log("load action: ", loadedData);
-        dispatch(setLiveGame(loadedData.actions));
+        //dispatch(setNewLiveGame(loadedData.actions));
         dispatch(setData(loadedData));
         // console.log('loadedData: ', loadedData);
     },
@@ -493,10 +530,11 @@ const actions = {
     },
 
 
-    loadCurrentGame: () => async ({dispatch}) => {
-        dispatch(loadCurrentGameAsLive());
+    loadCurrentGame: () => async ({ dispatch }) => {
+        dispatch(fetchCurrentGame());
 
     },
+
 
     getGames: () => async ({ dispatch }) => {
         dispatch(retrieveGamesNew());
@@ -518,7 +556,7 @@ const actions = {
     resetLiveGame: () => async ({ getState, setState, dispatch }) => {
         const { data } = getState();
         await reloadandSetPositionCount().then(res => {
-            dispatch(setLiveGame(data.actions));
+            dispatch(setNewLiveGame(data.actions));
             return res;
         })
     },
@@ -531,9 +569,12 @@ const actions = {
         dispatch(incrementPositionCount(position))
         dispatch(incrementPosition());
         dispatch(CurrentGameSave());
-        
+
     },
-    
+
+    setCurrentORNewLiveGame: () => ({ dispatch }) => {
+        dispatch(setCurrentORNewLiveGame());
+    },
 
 
 
@@ -596,7 +637,7 @@ const actions = {
     },
 
     removeGamesDataOnly: () => ({ dispatch }) => {
-        
+
     },
 
     /**

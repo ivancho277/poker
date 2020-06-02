@@ -30,6 +30,7 @@ export default function GameScreenNew() {
 
     // }, [])
     useEffect(() => {
+        actions.setCurrentORNewLiveGame();
         console.log("reload dat game")
     }, [])
 
