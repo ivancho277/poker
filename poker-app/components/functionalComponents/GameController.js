@@ -39,7 +39,8 @@ export const GameController = (props) => {
 
     onActionClick = (action, actionIndex) => {
         // setCurrentTime(new Date())
-        actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
+        actions.onActionClick(action, actionIndex);
+        
     }
 
     GetDataTest = async () => {
@@ -89,7 +90,7 @@ export const GameController = (props) => {
                                     )
                                 })}
                             </View>
-                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames(); resetLiveGame(); }}>Save Game</AntDesign.Button>
+                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames(); resetLiveGame(); props.reload().then(() => {props.goHome()}) }}>Save Game</AntDesign.Button>
 
                             <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>{showActionInput ? "Minimize" : "Add Action"}</AntDesign.Button>
                             {showActionInput ?

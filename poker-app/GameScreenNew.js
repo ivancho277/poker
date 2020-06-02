@@ -17,7 +17,7 @@ import { Switch } from 'react-native-paper';
 
 
 
-export default function GameScreenNew() {
+export default function GameScreenNew(props) {
     const [state, actions] = UseGameStore();
     const [loading, setLoading] = useState(state.loading);
     const [testOn, setTestOn] = useState(state.testModeOn)
@@ -34,7 +34,7 @@ export default function GameScreenNew() {
         console.log("reload dat game")
     }, [])
 
-    manualReload = async () => {
+    manualReload= async () => {
         //setLoadingData(true);
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {
@@ -48,6 +48,11 @@ export default function GameScreenNew() {
     const toggleTestMode = () => {
 
     }
+
+    const goHome = () => {
+        props.navigation.navigate("Home");
+    }
+
     
 
     //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING 
@@ -63,7 +68,7 @@ export default function GameScreenNew() {
                 <Card title='Track your game!'>
                     <Text> Current Game Info: </Text>
                     <ScrollView>
-                        <GameController></GameController>
+                        <GameController goHome={goHome} reload={manualReload}></GameController>
                     </ScrollView>
                 </Card>
                 {/* <View>
