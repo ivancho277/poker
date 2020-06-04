@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
 import { Switch } from 'react-native-paper';
+import GameFAB from './components/functionalComponents/GameFAB'
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -96,6 +97,7 @@ export default function GameScreenNew(props) {
 
                     }
                 </Card>
+                <GameFAB />
 
 
 
