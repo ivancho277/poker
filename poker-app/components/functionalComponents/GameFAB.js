@@ -10,7 +10,7 @@ export default function GameFAB(props) {
     return (
         <Provider>
             <Portal>
-                <FAB.Group
+                <FAB
                     open={open}
                     icon={open ? 'calendar-today' : 'plus'}
                     actions={[
