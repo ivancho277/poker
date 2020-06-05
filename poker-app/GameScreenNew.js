@@ -96,8 +96,9 @@ export default function GameScreenNew(props) {
 
 
                     }
+                    <GameFAB />
                 </Card>
-                <GameFAB />
+                
 
 
 

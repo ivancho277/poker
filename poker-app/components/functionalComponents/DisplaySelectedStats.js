@@ -14,47 +14,38 @@ export function DisplaySelectedStats(props) {
     const [state, actions] = UseGameStore();
     const [totalActions, setTotalActions] = useState();
 
+
     useEffect(() => {
         //actions.loadTotals();
-    }, [])
+    }, [props.foundGames])
 
     const calculatePercentage = (count, total) => {
         return Math.round(count / total * 100)
     }
 
+
+    /**
+     * 
+     */
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View style={{ width: '100%', height: 350, maxHeight: 400, flex: 1, alignContent: 'center' }}>
-                    <Card style={{ padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
-                        <Card.Title title="My Stats!" subtitle="Totals" />
-                        <ScrollView>
-                            <Card.Content>
-                                {/* <Paragraph>
-                                    <Text>All Saved: {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
-                                </Paragraph> */}
-                                {state.calculatedData.loading ?
-                                    <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
-                                    :
-                                    <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
-                                        <Header>Found Games: {props.foundGames.length}</Header>
-                                        <DataTable>
-                                            <DataTable.Header>
-                                                <DataTable.Title>Action:</DataTable.Title>
-                                                <DataTable.Title numeric>Totals</DataTable.Title>
-                                                <DataTable.Title numeric>Total %</DataTable.Title>
-                                            </DataTable.Header>
+                <View style={{ width: '100%', height: 350, maxHeight: 400 }}>
+                    <Card style={{ width: '90%',padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
+                        <Card.Title title="Display my stats" subtitle="Yes" />
+                        <Card.Content>
+                            <Paragraph>Number of found Games: {props.numFoundGames}</Paragraph>
+                            <DataTable>
+                                <DataTable.Header>
+                                    <DataTable.Title>Action:</DataTable.Title>
+                                    <DataTable.Title numeric>Totals</DataTable.Title>
+                                    <DataTable.Title numeric>% of all Games</DataTable.Title>
+                                </DataTable.Header>
+                                {/* {Object.entries()
 
-                                        </DataTable>
-                                            
-                                    </View>
-
-                                            
-                               
-                                }
-
-                            </Card.Content>
-                        </ScrollView>
+                                } */}
+                            </DataTable>
+                        </Card.Content>
                     </Card>
                 </View>
             )
@@ -63,5 +54,5 @@ export function DisplaySelectedStats(props) {
 
 
 
-            )
-            }
+    )
+}
