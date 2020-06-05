@@ -135,7 +135,7 @@ class StatsScreen extends Component {
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
                 <View>
                     <View style={{ margin: 5 }}>
-                        <DisplaySelectedStats numFoundGames={this.state.foundGames.length} foundGames={this.state.foundGames} ></DisplaySelectedStats>
+                        <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
                     </View>
                     <View>
                         <Card elevation={10}>

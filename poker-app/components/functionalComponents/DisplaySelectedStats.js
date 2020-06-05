@@ -34,7 +34,7 @@ export function DisplaySelectedStats(props) {
                     <Card style={{ width: '90%',padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
                         <Card.Title title="Display my stats" subtitle="Yes" />
                         <Card.Content>
-                            <Paragraph>Number of found Games: {props.numFoundGames}</Paragraph>
+                            <Paragraph>Number of found Games: {props.foundGames !== null ? props.foundGames.length : "No games found."}</Paragraph>
                             <DataTable>
                                 <DataTable.Header>
                                     <DataTable.Title>Action:</DataTable.Title>
