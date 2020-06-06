@@ -31,11 +31,11 @@ class StatsScreen extends Component {
         // console.log(this.context.state.allTags);
     }
 
-    renderChips = (tags) => {
+    renderChips = (tags, games) => {
         if (tags !== null) {
             if (tags.length > 0) {
                 return tags.map(tag => {
-                    return <Chip key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag)}>{tag}</Chip>
+                    return <Chip key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag, games)}>{tag}</Chip>
                 })
             } else {
                 return <Text style={{ textAlign: 'auto', fontStyle: 'italic', }}>Chosen tags...</Text>
@@ -120,8 +120,10 @@ class StatsScreen extends Component {
             this._setFoundGames(Calculate.searchByManyTags(newSelected, games))
         }
     }
-    onChipPress(tagtoremove) {
-        const updateedTagsArray = this.state.selectedTags.filter(tag => tag !== tagtoremove);
+    onChipPress(tagtoremove, games) {
+        let updateedTagsArray = this.state.selectedTags.filter(tag => tag !== tagtoremove);
+        console.log("pleeeeese tell me this works!", Calculate.searchByManyTags(updateedTagsArray, games) ); 
+        this._setFoundGames(Calculate.searchByManyTags(updateedTagsArray, games ))
         this.setState({
             selectedTags: updateedTagsArray,
             lastRemovedTag: tagtoremove
@@ -147,7 +149,7 @@ class StatsScreen extends Component {
                                 <View>
                                     <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
                                     <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
-                                        {this.renderChips(this.state.selectedTags)}
+                                        {this.renderChips(this.state.selectedTags, data.allGames)}
                                     </View>
                                 </View>
                             </Card.Content>

@@ -44,13 +44,18 @@ const searchBytag = (tag, games) => {
  * TODO: test this function 
  */
 const searchByManyTags = (tagsArray, games) => {
-    const foundGames = games.filter(savedGame => {
-        if (tagsArray.every(tag => { return (savedGame.game.data.tags.indexOf(tag) >= 0) })) {
-            return savedGame;
+    if (tagsArray instanceof Array) {
+        if(tagsArray.length === 0){
+            return [];
         }
-    });
-    console.log("MANY TAGS:", foundGames);
-    return foundGames.length > 0 ? foundGames : null;
+        const foundGames = games.filter(savedGame => {
+            if (tagsArray.every(tag => { return (savedGame.game.data.tags.indexOf(tag) >= 0) })) {
+                return savedGame;
+            }
+        });
+        console.log("MANY TAGS:", foundGames);
+        return foundGames.length > 0 ? foundGames : null;
+    }
 }
 
 
@@ -88,7 +93,7 @@ const sumGamesTotals = (games) => {
  * TODO: write function to sum up found games per pos.
  */
 const sumGamesPositions = (games) => {
-    if(games === null || games === undefined){
+    if (games === null || games === undefined) {
         return null;
     }
     const totalsPerPosition = {};
@@ -96,14 +101,14 @@ const sumGamesPositions = (games) => {
         _game.game.data.actions.forEach(action => {
             let name = action.actionName;
             let positionObj = {}
-            Object.assign(positionObj,action.countPerPosition)
+            Object.assign(positionObj, action.countPerPosition)
             console.log("YE:", positionObj);
             console.log("YE:", name);
             console.log('What is your value? ', totalsPerPosition[name])
-            if(totalsPerPosition[name]){
-                for(key in totalsPerPosition[name]){
+            if (totalsPerPosition[name]) {
+                for (key in totalsPerPosition[name]) {
                     console.log('Why: ', totalsPerPosition[name][key])
-                    totalsPerPosition[name][key] = totalsPerPosition[name][key] + positionObj[key]; 
+                    totalsPerPosition[name][key] = totalsPerPosition[name][key] + positionObj[key];
                 }
             } else {
                 totalsPerPosition[name] = positionObj
@@ -117,7 +122,7 @@ const sumGamesPositions = (games) => {
  * TODO: handle null case error.
  */
 const sumUpGameTotals = (games) => {
-    if(games === null || games === undefined){
+    if (games === null || games === undefined) {
         return null;
     }
     const sumTotals = {};
