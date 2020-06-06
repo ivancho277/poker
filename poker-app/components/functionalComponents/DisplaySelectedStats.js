@@ -41,9 +41,12 @@ export function DisplaySelectedStats(props) {
                                     <DataTable.Title numeric>Totals</DataTable.Title>
                                     <DataTable.Title numeric>% of all Games</DataTable.Title>
                                 </DataTable.Header>
-                                {/* {Object.entries()
-
-                                } */}
+                                { props.foundGames ? <Subheading>No found Games</Subheading>
+                                    :
+                                    props.foundGames.map(element => {
+                                       return <Text> {JSON.stringify(element, undefined, 3)} </Text>
+                                    })
+                                } 
                             </DataTable>
                         </Card.Content>
                     </Card>
