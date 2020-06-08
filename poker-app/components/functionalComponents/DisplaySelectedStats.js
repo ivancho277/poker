@@ -19,6 +19,15 @@ export function DisplaySelectedStats(props) {
         //actions.loadTotals();
     }, [props.foundGames])
 
+    const calculatePercentageVsAllGames = (foundGames, allGames) => {
+
+    }
+
+    const calculatePercentageOnFoundOnly = (foundGames) => {
+        let totalNumber = Calculate.sumGamesTotals(foundGames);
+
+    }
+
     const calculatePercentage = (count, total) => {
         return Math.round(count / total * 100)
     }
@@ -30,41 +39,47 @@ export function DisplaySelectedStats(props) {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                
-                    <Card style={{ width: '90%', padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
-                        <Card.Title title="Display my stats" subtitle="Yes" />
-                        <Card.Content>
-                            <Paragraph>Number of found Games: {props.foundGames !== null ? props.foundGames.length : "No games found."}</Paragraph>
-                            <DataTable>
-                                <DataTable.Header>
-                                    <DataTable.Title>Action:</DataTable.Title>
-                                    <DataTable.Title numeric>Totals</DataTable.Title>
-                                    <DataTable.Title numeric>% of all Games</DataTable.Title>
-                                </DataTable.Header>
-                                <ScrollView>
-                                    {(props.foundGames === null || props.foundGames.length === 0) ? <Subheading>No found Games</Subheading>
-                                        :
-                                        // for(let [key, value] of Object.entries(props.foundGames)){
 
-                                        // }
-                                        props.foundGames.map(element => {
-                                            let keysArr = Object.keys(element);
-                                            let gameKey = keysArr[0]
-                                            return (
-                                            element[gameKey].totals.map(total => {
-                                            return <Text>{JSON.stringify(total)}</Text>
-                                            })
-                                            // <DataTable.Row key={`${}`}>
-                                            
-                                            // </DataTable.Row>
-                                        )
-                                    })
-                                    }
-                                </ScrollView>
-                            </DataTable>
-                        </Card.Content>
-                    </Card>
-               
+                <Card style={{ width: '90%', padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
+                    <Card.Title title="Display my stats" subtitle="Yes" />
+                    <Card.Content>
+                        <Paragraph>Number of found Games: {props.foundGames !== null ? props.foundGames.length : "No games found."}</Paragraph>
+                        <DataTable>
+                            <DataTable.Header>
+                                <DataTable.Title>Action:</DataTable.Title>
+                                <DataTable.Title numeric>Totals</DataTable.Title>
+                                <DataTable.Title numeric>% of all Games</DataTable.Title>
+                            </DataTable.Header>
+                            <ScrollView>
+                                {(props.foundGames === null || props.foundGames.length === 0) ? <Subheading>No found Games</Subheading>
+                                    :
+                                    // for(let [key, value] of Object.entries(props.foundGames)){
+
+                                    // }
+                                    <View>
+                                        <Text>{JSON.stringify(Calculate.sumGamesTotals(props.foundGames))}</Text>
+                                        <Text>{JSON.stringify(Calculate.sumUpGameTotals(props.foundGames))}</Text>
+                                    </View>
+
+
+                                    //     props.foundGames.map(element => {
+                                    //         let keysArr = Object.keys(element);
+                                    //         let gameKey = keysArr[0]
+                                    //         return (
+                                    //         element[gameKey].totals.map(total => {
+                                    //         return <Text>{JSON.stringify(total)}</Text>
+                                    //         })
+                                    //         // <DataTable.Row key={`${}`}>
+
+                                    //         // </DataTable.Row>
+                                    //     )
+                                    // })
+                                }
+                            </ScrollView>
+                        </DataTable>
+                    </Card.Content>
+                </Card>
+
             )
             }
         </GameSubscriber>
