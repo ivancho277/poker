@@ -25,7 +25,7 @@ class StatsScreen extends Component {
         foundGames: []
     }
 
-    _setFoundGames = (found) => { this.setState({ foundGames: found }),() => {console.log("set it it it")} }
+    _setFoundGames = (found) => { this.setState({ foundGames: found }), () => { console.log("set it it it") } }
 
     componentDidMount() {
         // console.log(this.context.state.allTags);
@@ -122,8 +122,8 @@ class StatsScreen extends Component {
     }
     onChipPress(tagtoremove, games) {
         let updateedTagsArray = this.state.selectedTags.filter(tag => tag !== tagtoremove);
-        console.log("pleeeeese tell me this works!", Calculate.searchByManyTags(updateedTagsArray, games) ); 
-        this._setFoundGames(Calculate.searchByManyTags(updateedTagsArray, games ))
+        console.log("pleeeeese tell me this works!", Calculate.searchByManyTags(updateedTagsArray, games));
+        this._setFoundGames(Calculate.searchByManyTags(updateedTagsArray, games))
         this.setState({
             selectedTags: updateedTagsArray,
             lastRemovedTag: tagtoremove
@@ -135,43 +135,45 @@ class StatsScreen extends Component {
         return <GameSubscriber>
             {({ data, calculatedData }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-                <View>
-                    <View style={{ margin: 5 }}>
-                        <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
-                    </View>
+                <ScrollView>
                     <View>
-                        <Card elevation={10}>
-                            <Card.Title title='Search by Tags' />
-                            <Card.Content>
+                        <View style={{ alignContent: 'space-around', margin: 5 }}>
+                            <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
+                        </View>
+                        <View>
+                            <Card elevation={10}>
+                                <Card.Title title='Search by Tags' />
+                                <Card.Content>
 
-                                {this.renderPicker()}
-                                <Button title="add Tag" onPress={() => { this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') : this.onSearchPress(this.state.tagpicker, data.allGames) }}></Button>
-                                <View>
-                                    <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
-                                    <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
-                                        {this.renderChips(this.state.selectedTags, data.allGames)}
+                                    {this.renderPicker()}
+                                    <Button title="add Tag" onPress={() => { this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') : this.onSearchPress(this.state.tagpicker, data.allGames) }}></Button>
+                                    <View>
+                                        <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
+                                        <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
+                                            {this.renderChips(this.state.selectedTags, data.allGames)}
+                                        </View>
                                     </View>
-                                </View>
-                            </Card.Content>
-                            {/* <GameSubscriber>
+                                </Card.Content>
+                                {/* <GameSubscriber>
                         {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
                     </GameSubscriber> */}
-                        </Card>
+                            </Card>
 
-                        <View>
-                            {this.renderGamesFound(this.state.selectedTags, data.allGames)}
+                            <View>
+                                {this.renderGamesFound(this.state.selectedTags, data.allGames)}
+                            </View>
+
+
+
+                            <ValidationSnackbar
+                                message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
+                                visible={this.state.showSnack}
+                                onDismiss={this._hideSnack}
+                            />
+
                         </View>
-
-
-
-                        <ValidationSnackbar
-                            message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
-                            visible={this.state.showSnack}
-                            onDismiss={this._hideSnack}
-                        />
-
                     </View>
-                </View>
+                </ScrollView>
 
 
 

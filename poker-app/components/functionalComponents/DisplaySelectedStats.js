@@ -30,8 +30,8 @@ export function DisplaySelectedStats(props) {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View style={{ width: '100%', height: 350, maxHeight: 400 }}>
-                    <Card style={{ width: '90%',padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
+                
+                    <Card style={{ width: '90%', padding: 10, margin: 5, alignSelf: 'center' }} elevation={9}  >
                         <Card.Title title="Display my stats" subtitle="Yes" />
                         <Card.Content>
                             <Paragraph>Number of found Games: {props.foundGames !== null ? props.foundGames.length : "No games found."}</Paragraph>
@@ -41,16 +41,30 @@ export function DisplaySelectedStats(props) {
                                     <DataTable.Title numeric>Totals</DataTable.Title>
                                     <DataTable.Title numeric>% of all Games</DataTable.Title>
                                 </DataTable.Header>
-                                { props.foundGames ? <Subheading>No found Games</Subheading>
-                                    :
-                                    props.foundGames.map(element => {
-                                       return <Text> {JSON.stringify(element, undefined, 3)} </Text>
+                                <ScrollView>
+                                    {(props.foundGames === null || props.foundGames.length === 0) ? <Subheading>No found Games</Subheading>
+                                        :
+                                        // for(let [key, value] of Object.entries(props.foundGames)){
+
+                                        // }
+                                        props.foundGames.map(element => {
+                                            let keysArr = Object.keys(element);
+                                            let gameKey = keysArr[0]
+                                            return (
+                                            element[gameKey].totals.map(total => {
+                                            return <Text>{JSON.stringify(total)}</Text>
+                                            })
+                                            // <DataTable.Row key={`${}`}>
+                                            
+                                            // </DataTable.Row>
+                                        )
                                     })
-                                } 
+                                    }
+                                </ScrollView>
                             </DataTable>
                         </Card.Content>
                     </Card>
-                </View>
+               
             )
             }
         </GameSubscriber>
