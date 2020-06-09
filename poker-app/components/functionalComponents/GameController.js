@@ -9,7 +9,8 @@ import { AddTag } from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
-
+import * as Utils from '../../utils/objectOps.js';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 
 
@@ -19,7 +20,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
 
 
 export const GameController = (props) => {
-    const [{ liveGame, loading, currentTime, previousTime }, actions] = UseGameStore();
+    const [{ data, liveGame, liveGameLoading }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('')
     // const [loading, setLoading] = useState(true);
@@ -29,16 +30,17 @@ export const GameController = (props) => {
     const [liveActions, setLiveActions] = useState();
     const [test, setTest] = useState();
 
-    // useEffect(() => {
-    //     console.log("Time curr", currentTime)
-    //     console.log("Time prev", previousTime)
-    //     console.log("liveGame:  ", liveGame);
-    // }, [])
+    useEffect(() => {
+        // console.log("Time curr", currentTime)
+        // console.log("Time prev", previousTime)
+        console.log("liveGame:  ", liveGame);
+    }, [])
 
 
     onActionClick = (action, actionIndex) => {
         // setCurrentTime(new Date())
-        actions.onActionClick(action, actionIndex) //!OnActionClick needs to setPrevious time to CurrentTime
+        actions.onActionClick(action, actionIndex);
+        
     }
 
     GetDataTest = async () => {
@@ -46,19 +48,27 @@ export const GameController = (props) => {
         setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
-            if (typeof(JSON.parse(myData)) === "Array") {
+            if (typeof (JSON.parse(myData)) === "Array") {
                 console.log("length::: ", JSON.parse(myData).length);
             }
         }, 0);
         return (JSON.parse(myData));
     }
 
+    const RenderRadio = (props) => {
+        
+            return  <Radio position={props.position} setPosition={props.updatePositionCallBack} />
+        
+          
+    }
+    
+
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, loading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame }) => (
+            {({ liveGame, liveGameLoading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
                 //debugger
-                liveGame !== null ?
+                (liveGame !== null && !data.liveGameLoading) ?
                     <View>
                         <View>
                             <Text>DONE</Text>
@@ -80,7 +90,7 @@ export const GameController = (props) => {
                                     )
                                 })}
                             </View>
-                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames(); resetLiveGame(); }}>Save Game</AntDesign.Button>
+                            <AntDesign.Button name="save" backgroundColor="purple" onPress={() => { saveAllGames(); resetLiveGame(); props.reload().then(() => {props.goHome()}) }}>Save Game</AntDesign.Button>
 
                             <AntDesign.Button name={showActionInput ? "minuscircleo" : "pluscircleo"} backgroundColor="#3b5998" onPress={() => { setShowActionInput(!showActionInput) }}>{showActionInput ? "Minimize" : "Add Action"}</AntDesign.Button>
                             {showActionInput ?
@@ -98,12 +108,22 @@ export const GameController = (props) => {
                                 <View></View>
                             }
                             <AddTag allTags={data.allTags}></AddTag>
-                            <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
-                            <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button>
+                          
+                 {               /**
+                                 * FIXME: need to make this work and render correctly
+                                 * TODO: Make this work
+                                 * NOTE: should not use function, but rather JSX <> notation, and pass in props.
+                                 */}
+                                <View style={{ marginTop: 5 }}>
+                                    {/* {<RenderRadio position={liveGame.position} updatePositionCallBack={updatePosition}  />} */}
+                                    <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} />
+                                    {/* <Text>IS IT HERE?</Text> */}
+                                </View>
+                            
+                            {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
+                            <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                         </View>
-                        <View style={{ marginTop: 5 }}>
-                            <Radio position={liveGame.position} setPosition={updatePosition} />
-                        </View>
+
                     </View>
                     :
                     <View>

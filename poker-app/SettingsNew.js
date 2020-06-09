@@ -3,17 +3,10 @@ import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList
 // import { Button } from 'react-native-elements';
 const storage = require('./components/storageAPI/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-import { MyContext } from './stateContext/GlobalState'
 import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 
 const editOptions = ["Edit Actions", 'Edit Tags']
-
-
-
-
-
-
 
 export default function NewSettings(){
     const [{data, loading} , {load}] = UseGameStore();

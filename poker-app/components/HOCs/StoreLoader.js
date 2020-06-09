@@ -1,6 +1,5 @@
 import React, { Component, useState, useEffect } from 'react'
 import { Text, View } from 'react-native'
-import { MyContext } from '../../stateContext/GlobalState'
 import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore';
 
 

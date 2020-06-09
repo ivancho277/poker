@@ -9,12 +9,12 @@ import * as Calculate from '../GameCalculations/calculateStats'
 
 
 
-export function DisplayStats() {
+export function DisplayStats(props) {
     const [state, actions] = UseGameStore();
     const [totalActions, setTotalActions] = useState();
 
     useEffect(() => {
-        actions.loadTotals();
+        //actions.loadTotals();
     }, [])
 
     const calculatePercentage = (count, total) => {
@@ -32,7 +32,7 @@ export function DisplayStats() {
                                 {/* <Paragraph>
                                     <Text>All Saved: {JSON.stringify(state.data.savedGames, undefined, 4)}</Text>
                                 </Paragraph> */}
-                                {state.loading ?
+                                {state.calculatedData.loading ? 
                                     <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                     :
                                     <View style={{ borderColor: 'black', borderWidth: 2, borderStyle: 'solid' }}>
@@ -46,11 +46,11 @@ export function DisplayStats() {
                                             {Utils.isEmpty(state.data.savedGames) ? <Subheading >You have no Saved Games</Subheading >
                                                 :
                                                 Utils.objToArray(state.calculatedData.totals).map((element, i) => {
-                                                    console.log("elem: ", element)
+                                                   // console.log("elem: ", element)
                                                     let keysArr = Object.keys(element)
-                                                    console.log("KEYSS: ", keysArr)
+                                                    // console.log("KEYSS: ", keysArr)
                                                     let actionKey = keysArr[0];
-                                                    console.log("WHAT: ", actionKey)
+                                                    // console.log("WHAT: ", actionKey)
                                                     return (
                                                         <DataTable.Row key={`${actionKey}_Row_${i}`}>
                                                             <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
@@ -69,7 +69,10 @@ export function DisplayStats() {
                                         {state.calculatedData.loading ?
                                             <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                             :
-                                            <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text>
+                                            <View>
+                                                <Text> All Game Data </Text>
+                                                {/* <Text>All Saved: {JSON.stringify(state.calculatedData, undefined, 4)}</Text> */}
+                                            </View>
                                         }
                                     </View>
                                 }

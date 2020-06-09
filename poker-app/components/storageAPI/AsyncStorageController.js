@@ -118,7 +118,7 @@ const removeData = function () {
     }
     catch (error) {
         return null;
-    } 
+    }
 
 }
 
@@ -241,7 +241,8 @@ const saveAllNewGames = function (allGames) {
 const deleteAllNewGames = function () {
     try {
         AsyncStorage.removeItem('games', () => {
-            alert('REMOVED DA GAMEZ');
+            //alert('REMOVED DA GAMEZ');
+            return 'removed'
         })
     } catch {
         alert('NO WORK DELETE');
@@ -272,7 +273,7 @@ const getTotals = async function () {
 
 const getTotalsByPosition = async function () {
     try {
-        const totalsByPosition = AsyncStorage.getItem('position_totals');
+        const totalsByPosition = await AsyncStorage.getItem('position_totals');
         return totalsByPosition;
     } catch {
         console.log("no position totals");
@@ -296,7 +297,7 @@ const setInitialTotals = function (actionsArr) {
         //return {totals: totals, positionTotals: totalsByPosition}
     } catch {
         console.log('Not Able to setTotals')
-        
+
     }
 }
 
@@ -328,11 +329,10 @@ const updateTotals = async function (liveGame) {
                 //  console.log('LIVE YO YO: ', actions);
                 // console.log('update: POSTOTS: ', savedPositionTotals);
                 //  console.log('update TOTS: ', savedTotals);
-               // debugger;
+                // debugger;
                 actions.forEach(action => {
                     //console.log(action.actionName)
                     if (savedTotals.hasOwnProperty(action.actionName)) {
-
                         savedTotals[action.actionName] += action.count
                     } else {
                         savedTotals[action.actionName] = action.count;
@@ -370,12 +370,64 @@ const deleteTotals = function () {
         AsyncStorage.removeItem('position_totals', () => {
             console.log('Position Totals Removed');
         });
+        AsyncStorage.removeItem('Pcount', () => {
+            console.log('Position Counters removed');
+        })
     } catch {
         console.log('totals not removed.');
     }
 }
 
-export const StorageAPI = {
+const setInitialPositionCount = () => {
+    try {
+        const initPCount = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
+        AsyncStorage.setItem('Pcount', JSON.stringify(initPCount));
+        console.log("Position Count Set")
+    }
+    catch {
+        console.log('could not set Position Count');
+    }
+}
+ const setPositionCount = (Pcount) => {
+     try {
+        AsyncStorage.setItem('Pcount', JSON.stringify(Pcount));
+        console.log('Success Setting Position Count')
+     } catch {
+        console.log('Counld NOT SET PCOUNT!')
+     }
+ }
+
+ const deletePositionCount = () => {
+     try {
+        AsyncStorage.removeItem('Pcount', () => {
+            console.log('Removed Position Count');
+        })
+     } catch {
+        console.log('Could not remove Position Count')
+     }
+ }
+
+ const getPositionCount = async () => {
+    try {
+        let PositionCount = await AsyncStorage.getItem('Pcount')
+        return PositionCount;
+    } catch {
+        console.error('Could not get Position count');
+        return null;
+     }
+
+ 
+    
+ }
+ export const StorageAPI = {
+    getPositionCount: getPositionCount,
+
+    deletePositionCount: deletePositionCount,
+    
+    setPositionCount: setPositionCount,
+
+    setInitialPositionCount: setInitialPositionCount,
+
     setTotals: setTotals,
 
     getTotalsByPosition: getTotalsByPosition,

@@ -1,76 +1,100 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
-import { MyContext } from './stateContext/GlobalState'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { ListItem, Icon, Button } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
-import * as calculation from './components/statscalculation.js';
+import * as Calculate from './components/GameCalculations/calculateStats.js'
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
-import { GameSubscriber } from './DataStore/store'
+import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
+import { Chip, Snackbar, Card } from 'react-native-paper';
+import { ValidationSnackbar } from './components/functionalComponents/ValidationSnackBar';
+import { ScrollView } from 'react-native-gesture-handler';
+import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
+import { Switch } from 'react-native-paper';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
 // const storage = require('./components/AsyncStorageController.js');
-export default class StatsScreen extends Component {
+
+class StatsScreen extends Component {
 
     state = {
-        tagpicker: ''
+        tagpicker: '',
+        selectedTags: [],
+        showSnack: false,
+        lastRemovedTag: '',
+        foundGames: []
     }
+
+    _setFoundGames = (found) => { this.setState({ foundGames: found }), () => { console.log("set it it it") } }
 
     componentDidMount() {
-        console.log(this.context.state.allTags);
-    }
-    renderFoundGames = (allGames, tag) => {
-        let foundgames = this.logTags(allGames, tag);
-        console.log(this.state.tagpicker);
-
-        console.log(foundgames)
-        if (tag != '') {
-            if (foundgames.length > 0) {
-                return (
-
-                    this.objToArray(calculation.calculateTotalStats({ games: foundgames })).map((action, i) => {
-                        return <ListItem title={`${[Object.keys(action)]}s: ${action[Object.keys(action)[0]]}`} key={i} />
-                    })
-
-
-                )
-            }
-        }
-
-        else return <Text>No found Games</Text>
+        // console.log(this.context.state.allTags);
     }
 
-    logTags = (allGames, tag) => {
-        console.log('MY TAG', tag)
-        if (allGames != undefined) {
-            if (tag === "") {
-                return calculation.findTag(allGames, 'default');
+    renderChips = (tags, games) => {
+        if (tags !== null) {
+            if (tags.length > 0) {
+                return tags.map(tag => {
+                    return <Chip key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag, games)}>{tag}</Chip>
+                })
             } else {
-                return calculation.findTag(allGames, tag);
+                return <Text style={{ textAlign: 'auto', fontStyle: 'italic', }}>Chosen tags...</Text>
             }
         }
         else {
-            return null;
+            return <Chip> We got nothing boss. </Chip>
         }
     }
 
-    objToArray = (obj) => {
-        // let values = Object.values(obj);
-        let objArray = [];
-        for (key in obj) {
-            objArray.push({ [key]: obj[key] })
-        }
-        console.log('OBJECT ARRAY', objArray)
-        return objArray
+    renderGamesFound = (tagsArray, games, teston, testswitch_cb) => {
+        return (
+            <View style={{ maxHeight: 400, marginBottom: 20, paddingBottom: 30 }}>
+                <Card>
+                    <Card.Title title='Testing Raw Data' subtitle="Game data for selected tags will appear here..." />
+                    <ScrollView>
+                        <Card.Content>
+                            <View style={{flex: 1}}>
+                            <Text>Toggle to see raw data for testing</Text>
+                                <Switch
+                                    style={{ alignContent: 'center' }}
+                                    value={teston}
+                                    onValueChange={testswitch_cb}
+                                />
+                            </View>
+                            <ScrollView>
+                                {teston ?
+                                    tagsArray.length > 0 ?
+                                        <View>
+                                            <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
+                                            <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
+                                            <Text>Games per POS: {JSON.stringify(Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)), undefined, 5)}</Text>
+                                        </View>
+                                        :
+                                        <View>
+                                            <Text>Select some tags!</Text>
+                                            <Text>More data</Text>
+                                        </View>
+                                    :
+                                    <Text style={{color:'red'}}>Note: test mode will stay on everywhere</Text>
+                                }
+                            </ScrollView>
+                        </Card.Content>
+                    </ScrollView>
+                </Card>
+            </View>
+        )
+        // if (this.state.selectedTags.length > 0) {
+        //     Calculate.searchByManyTags(tagsArray, games);
+
+        // }
+        // else
     }
-
-
 
     renderPicker() {
-        return (
-            <MyContext.Consumer>
-                {(context) => <RNPickerSelect
+        return <GameSubscriber>
+            {({ data }, actions) =>
+                <RNPickerSelect
                     selectedValue={this.state.tagpicker}
                     style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
 
@@ -79,43 +103,94 @@ export default class StatsScreen extends Component {
                         this.setState({ tagpicker: itemValue });
 
                     }}
-                    items={context.state.allTags != undefined ? context.state.allTags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
-
-
+                    items={data.tags != null ? data.tags.map((tag, i) => { return { label: tag, value: tag } }) : { label: 'No Tags', value: null }}
                 >
-                    {/* {context.state.allTags.map((tag, i) => {
+                    {/* {data.tags.map((tag, i) => {
                         return <RNPickerSelect.Item label={tag} value={tag} key={i} />
                     })} */}
                 </RNPickerSelect>}
-            </MyContext.Consumer>
-
-        )
+        </GameSubscriber>
     }
 
+    _hideSnack = () => {
+        this.setState({
+            showSnack: false
+        })
+    }
+
+    onSearchPress(tagToSearch, games) {
+        //Calculate.searchBytag(tagToSearch, allGameData)
+        if (this.state.selectedTags.includes(tagToSearch)) {
+            this.setState({
+                showSnack: true
+            })
+        } else {
+            let newSelected = this.state.selectedTags.concat(tagToSearch)
+            this.setState({
+                selectedTags: newSelected,
+            }, () => { console.log(this.state.selectedTags) })
+            this._setFoundGames(Calculate.searchByManyTags(newSelected, games))
+        }
+    }
+    onChipPress(tagtoremove, games) {
+        let updateedTagsArray = this.state.selectedTags.filter(tag => tag !== tagtoremove);
+        console.log("pleeeeese tell me this works!", Calculate.searchByManyTags(updateedTagsArray, games));
+        this._setFoundGames(Calculate.searchByManyTags(updateedTagsArray, games))
+        this.setState({
+            selectedTags: updateedTagsArray,
+            lastRemovedTag: tagtoremove
+        })
+    }
+
+
     render() {
-        return (
-            // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-            <View style={styles.container}>
-                <Card title='Search By Tag'
-                    containerStyle={{ width: '80%' }}
-                >
+        return <GameSubscriber>
+            {({ data, calculatedData, testModeOn }, actions) =>
+                // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
+                <ScrollView>
+                    <View>
+                        <View style={{ alignContent: 'space-around', margin: 5 }}>
+                            <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
+                        </View>
+                        <View>
+                            <Card elevation={10}>
+                                <Card.Title title='Search by Tags' />
+                                <Card.Content>
 
-                    {this.renderPicker()}
-                    <MyContext.Consumer>
-                        {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
-                    </MyContext.Consumer>
-                </Card>
+                                    {this.renderPicker()}
+                                    <Button title="add Tag" onPress={() => { this.state.tagpicker === "" || this.state.tagpicker === null ? console.log('Nothing picked') : this.onSearchPress(this.state.tagpicker, data.allGames) }}></Button>
+                                    <View>
+                                        <Text style={{ alignContent: 'flex-end', textAlign: 'center' }} >Selected tags: Click to unselect</Text>
+                                        <View style={{ flex: 0, flexDirection: 'row', borderColor: 'black', borderStyle: 'solid', borderWidth: 2, padding: 15 }}>
+                                            {this.renderChips(this.state.selectedTags, data.allGames)}
+                                        </View>
+                                    </View>
+                                </Card.Content>
 
-                <Button title="Search By Tag" onPress={() => alert('hi')}></Button>
+                            </Card>
+                            <View>
+                                {this.renderGamesFound(this.state.selectedTags, data.allGames, testModeOn, actions.TestModeSwitch)}
+                            </View>
+                            <ValidationSnackbar
+                                message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
+                                visible={this.state.showSnack}
+                                onDismiss={this._hideSnack}
+                            />
 
-              
-            </View>
-        )
+                        </View>
+                    </View>
+                </ScrollView>
+
+
+
+            }
+        </GameSubscriber>
     }
 }
 
+export default StatsScreen;
 
-StatsScreen.contextType = MyContext;
+
 
 const styles = StyleSheet.create({
     container: {
