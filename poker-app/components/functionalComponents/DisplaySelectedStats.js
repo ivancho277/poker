@@ -7,6 +7,7 @@ import { Tables } from '../../constants/tables';
 import * as Utils from '../../utils/objectOps.js';
 import * as Calculate from '../GameCalculations/calculateStats'
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import { keyframes } from 'styled-components';
 
 
 
@@ -58,7 +59,21 @@ export function DisplaySelectedStats(props) {
                                     // }
                                     <View>
                                         <Text>{JSON.stringify(Calculate.sumGamesTotals(props.foundGames))}</Text>
-                                        <Text>{JSON.stringify(Calculate.sumUpGameTotals(props.foundGames))}</Text>
+                                        {Object.entries(Calculate.sumUpGameTotals(props.foundGames)).map(element => {
+                                            let printout = element
+                                            console.log(printout)
+                                            return <DataTable.Row key={`row_${printout[0]}`}>
+                                                <DataTable.Cell key={`${printout[0]}`}>{printout[0]}</DataTable.Cell>
+                                                <DataTable.Cell key={`countOf_${printout[0]}`}>{printout[1]}</DataTable.Cell>
+                                        <DataTable.Cell key={`percentOf_${printout[0]}`}>{calculatePercentage(printout[1], Calculate.sumGamesTotals(props.foundGames))}%</DataTable.Cell>
+                                                
+                                            </DataTable.Row>
+                                        }) 
+
+                                        
+                                        
+                                        
+                                        }
                                     </View>
 
 
