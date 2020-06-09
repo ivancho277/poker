@@ -9,7 +9,8 @@ import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
 import { Chip, Snackbar, Card } from 'react-native-paper';
 import { ValidationSnackbar } from './components/functionalComponents/ValidationSnackBar';
 import { ScrollView } from 'react-native-gesture-handler';
-import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats'
+import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
+import { Switch } from 'react-native-paper';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -46,25 +47,36 @@ class StatsScreen extends Component {
         }
     }
 
-    renderGamesFound = (tagsArray, games) => {
+    renderGamesFound = (tagsArray, games, teston, testswitch_cb) => {
         return (
             <View style={{ maxHeight: 400, marginBottom: 20, paddingBottom: 30 }}>
                 <Card>
-                    <Card.Title title='Found Games' subtitle="Game data for selected tags will appear here..." />
+                    <Card.Title title='Testing Raw Data' subtitle="Game data for selected tags will appear here..." />
                     <ScrollView>
                         <Card.Content>
+                            <View style={{flex: 1}}>
+                            <Text>Toggle to see raw data for testing</Text>
+                                <Switch
+                                    style={{ alignContent: 'center' }}
+                                    value={teston}
+                                    onValueChange={testswitch_cb}
+                                />
+                            </View>
                             <ScrollView>
-                                {tagsArray.length > 0 ?
-                                    <View>
-                                        <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
-                                        <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
-                                        <Text>Games per POS: {JSON.stringify(Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)), undefined, 5)}</Text>
-                                    </View>
+                                {teston ?
+                                    tagsArray.length > 0 ?
+                                        <View>
+                                            <Text>Total # of actions: {Calculate.sumGamesTotals(Calculate.searchByManyTags(tagsArray, games))}</Text>
+                                            <Text>Found Games totals of each action: {JSON.stringify(Calculate.sumUpGameTotals(Calculate.searchByManyTags(tagsArray, games)), undefined, 4)}</Text>
+                                            <Text>Games per POS: {JSON.stringify(Calculate.sumGamesPositions(Calculate.searchByManyTags(tagsArray, games)), undefined, 5)}</Text>
+                                        </View>
+                                        :
+                                        <View>
+                                            <Text>Select some tags!</Text>
+                                            <Text>More data</Text>
+                                        </View>
                                     :
-                                    <View>
-                                        <Text>Select some tags!</Text>
-                                        <Text>More data</Text>
-                                    </View>
+                                    <Text style={{color:'red'}}>Note: test mode will stay on everywhere</Text>
                                 }
                             </ScrollView>
                         </Card.Content>
@@ -133,7 +145,7 @@ class StatsScreen extends Component {
 
     render() {
         return <GameSubscriber>
-            {({ data, calculatedData }, actions) =>
+            {({ data, calculatedData, testModeOn }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
                 <ScrollView>
                     <View>
@@ -154,17 +166,11 @@ class StatsScreen extends Component {
                                         </View>
                                     </View>
                                 </Card.Content>
-                                {/* <GameSubscriber>
-                        {(context) => this.renderFoundGames(context.state.gamesObj, this.state.tagpicker)}
-                    </GameSubscriber> */}
+
                             </Card>
-
                             <View>
-                                {this.renderGamesFound(this.state.selectedTags, data.allGames)}
+                                {this.renderGamesFound(this.state.selectedTags, data.allGames, testModeOn, actions.TestModeSwitch)}
                             </View>
-
-
-
                             <ValidationSnackbar
                                 message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
                                 visible={this.state.showSnack}

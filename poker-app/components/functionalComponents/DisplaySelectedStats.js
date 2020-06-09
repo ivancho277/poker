@@ -48,8 +48,8 @@ export function DisplaySelectedStats(props) {
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Action:</DataTable.Title>
-                                <DataTable.Title numeric>Totals</DataTable.Title>
-                                <DataTable.Title numeric>% of all Games</DataTable.Title>
+                                <DataTable.Title >Totals</DataTable.Title>
+                                <DataTable.Title >% of all Games</DataTable.Title>
                             </DataTable.Header>
                             <ScrollView>
                                 {(props.foundGames === null || props.foundGames.length === 0) ? <Subheading>No found Games</Subheading>
@@ -58,21 +58,21 @@ export function DisplaySelectedStats(props) {
 
                                     // }
                                     <View>
-                                        <Text>{JSON.stringify(Calculate.sumGamesTotals(props.foundGames))}</Text>
+                                        {/* <Text>{JSON.stringify(Calculate.sumGamesTotals(props.foundGames))}</Text> */}
                                         {Object.entries(Calculate.sumUpGameTotals(props.foundGames)).map(element => {
                                             let printout = element
                                             console.log(printout)
                                             return <DataTable.Row key={`row_${printout[0]}`}>
                                                 <DataTable.Cell key={`${printout[0]}`}>{printout[0]}</DataTable.Cell>
-                                                <DataTable.Cell key={`countOf_${printout[0]}`}>{printout[1]}</DataTable.Cell>
-                                        <DataTable.Cell key={`percentOf_${printout[0]}`}>{calculatePercentage(printout[1], Calculate.sumGamesTotals(props.foundGames))}%</DataTable.Cell>
-                                                
-                                            </DataTable.Row>
-                                        }) 
+                                                <DataTable.Cell key={`countOf_${printout[0]}`}>       {printout[1]}</DataTable.Cell>
+                                                <DataTable.Cell key={`percentOf_${printout[0]}`}>        {calculatePercentage(printout[1], Calculate.sumGamesTotals(props.foundGames))}%</DataTable.Cell>
 
-                                        
-                                        
-                                        
+                                            </DataTable.Row>
+                                        })
+
+
+
+
                                         }
                                     </View>
 
