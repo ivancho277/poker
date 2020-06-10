@@ -57,24 +57,36 @@ export const GameController = (props) => {
         return (JSON.parse(myData));
     }
 
+    const calculatePercentage = (count, total) => {
+        return Math.round(count / total * 100)
+    }
+
     /**
      * !!Ended Here
      * TODO: finish this and fix error.
      */
     const renderBasicLiveData = (liveGame, allgames) => {
         let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
-        console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
+        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : "no games with current tags";
+
+        console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundsum);
+
         return (<Surface style={styles.surface}>
+            <Text>Position: {liveGame.position} </Text>
+            <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
             <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
                 {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                <Text>Position: {liveGame.position} </Text>
-                <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
                 <View>{liveGame.actions.map((action, index) => {
                     return <Text key={index}>{action.actionName}: {action.count}  </Text>
                 })}</View>
-                <View>
-                </View>
             </View>
+            <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
+                {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                <View>{liveGame.actions.map((action, index) => {
+                    return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
+                })}</View>
+            </View>
+
         </Surface>
         )
     }
