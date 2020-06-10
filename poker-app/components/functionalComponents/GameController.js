@@ -11,7 +11,7 @@ import { AddTag } from './AddTag'
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
 
 
 
@@ -67,24 +67,30 @@ export const GameController = (props) => {
      */
     const renderBasicLiveData = (liveGame, allgames) => {
         let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
-        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : "no games with current tags";
+        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : allgames;
 
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
             <Text>Position: {liveGame.position} </Text>
             <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
-            <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
-                {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                <View>{liveGame.actions.map((action, index) => {
-                    return <Text key={index}>{action.actionName}: {action.count}  </Text>
-                })}</View>
-            </View>
-            <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
-                {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                <View>{liveGame.actions.map((action, index) => {
-                    return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
-                })}</View>
+            <View style={{ flexDirection: 'row' }}>
+
+
+                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                    <Subheading style={{textDecorationLine:'underline'}}>Totals</Subheading>
+                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                    <View>{liveGame.actions.map((action, index) => {
+                        return <Text key={index}>{action.actionName}: {action.count}  </Text>
+                    })}</View>
+                </View>
+                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
+                <Subheading style={{textDecorationLine:'underline'}}>Same Tag</Subheading>
+                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                    <View>{liveGame.actions.map((action, index) => {
+                        return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
+                    })}</View>
+                </View>
             </View>
 
         </Surface>
@@ -164,6 +170,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 8,
+        display: 'flex'
+
     },
 });
 
