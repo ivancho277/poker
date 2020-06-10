@@ -8,7 +8,8 @@ import { StorageAPI } from '../storageAPI/AsyncStorageController'
 import { AddTag } from './AddTag'
 // const storageController = require('./AsyncStorageController.js')
 // const calculations = require('./statscalculation.js')
-import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore'
+import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
+import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text } from 'react-native-paper';
 
@@ -22,7 +23,8 @@ import { ActivityIndicator, Colors, Surface, Text } from 'react-native-paper';
 export const GameController = (props) => {
     const [{ data, liveGame, liveGameLoading }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
-    const [action, setAction] = useState('')
+    const [action, setAction] = useState('');
+    const [currentTags, setCurrentTags] = useState([]);
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
@@ -55,35 +57,37 @@ export const GameController = (props) => {
         return (JSON.parse(myData));
     }
 
-    const RenderRadio = (props) => {
-
-        return <Radio position={props.position} setPosition={props.updatePositionCallBack} />
-
-
+    /**
+     * !!Ended Here
+     * TODO: finish this and fix error.
+     */
+    const renderBasicLiveData = (liveGame, allgames) => {
+        let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
+        console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
+        return (<Surface style={styles.surface}>
+            <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
+                {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                <Text>Position: {liveGame.position} </Text>
+                <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
+                <View>{liveGame.actions.map((action, index) => {
+                    return <Text key={index}>{action.actionName}: {action.count}  </Text>
+                })}</View>
+                <View>
+                </View>
+            </View>
+        </Surface>
+        )
     }
 
 
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, liveGameLoading, data }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
+            {({ liveGame, liveGameLoading, data, allGamesArray }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
                 //debugger
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
-                        <Surface style={styles.surface}>
-                            <View style={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4}}>
-                                {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                                <Text>Position: {liveGame.position} </Text>
-                                <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
-                                <View>{liveGame.actions.map((action, index) => {
-                                    return <Text key={index}>{action.actionName}: {action.count}  </Text>
-                                })}</View>
-                                <View>
-
-
-                                </View>
-                            </View>
-                        </Surface>
+                        {renderBasicLiveData(liveGame, allGamesArray)}
                         <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                             {liveGame.actions.map((action, index) => {
                                 return (
