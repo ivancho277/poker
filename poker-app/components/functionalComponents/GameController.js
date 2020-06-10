@@ -71,7 +71,7 @@ export const GameController = (props) => {
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
                         <Surface style={styles.surface}>
-                            <View>
+                            <View style={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4}}>
                                 {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                                 <Text>Position: {liveGame.position} </Text>
                                 <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
