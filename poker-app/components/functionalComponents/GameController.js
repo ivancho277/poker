@@ -26,6 +26,7 @@ export const GameController = (props) => {
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('');
     const [currentTags, setCurrentTags] = useState([]);
+    const [currentTotalSum, setCurrentTotalSum] = useState(0);
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
@@ -40,7 +41,12 @@ export const GameController = (props) => {
         console.log("liveGame:  ", liveGame);
     }, [])
 
-    
+    addActionValues = (actions) => {
+        let accum = 0;
+        return actions.reduce((accum, action) => {
+            return accum + action.count;
+        }, accum);
+    }
 
 
     onActionClick = (action, actionIndex) => {
@@ -147,6 +153,7 @@ export const GameController = (props) => {
                             <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} />
                             {/* <Text>IS IT HERE?</Text> */}
                         </View>
+                        <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button>
 
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
