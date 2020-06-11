@@ -12,6 +12,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
+import { Tables } from '../../constants/tables.js';
 
 
 
@@ -35,14 +36,16 @@ export const GameController = (props) => {
     useEffect(() => {
         // console.log("Time curr", currentTime)
         // console.log("Time prev", previousTime)
+        //actions.gameStart();
         console.log("liveGame:  ", liveGame);
     }, [])
+
+    
 
 
     onActionClick = (action, actionIndex) => {
         // setCurrentTime(new Date())
         actions.onActionClick(action, actionIndex);
-
     }
 
     GetDataTest = async () => {
@@ -72,20 +75,20 @@ export const GameController = (props) => {
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
-            <Text>Position: {liveGame.position} </Text>
+            <Text style={{fontStyle: 'italic'}}>Position: {Tables.positionsObject[liveGame.position]} </Text>
             <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
             <View style={{ flexDirection: 'row' }}>
 
 
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
-                    <Subheading style={{textDecorationLine:'underline'}}>Totals</Subheading>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>Totals</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     <View>{liveGame.actions.map((action, index) => {
                         return <Text key={index}>{action.actionName}: {action.count}  </Text>
                     })}</View>
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
-                <Subheading style={{textDecorationLine:'underline'}}>Same Tag</Subheading>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>Same Tag</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     <View>{liveGame.actions.map((action, index) => {
                         return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>

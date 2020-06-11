@@ -127,7 +127,12 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         dispatch(setCurrentGameToLive());
     } else {
         console.log("No Current Game Present");
-        dispatch(setNewLiveGame(actions))
+        dispatch(setNewLiveGame(actions));
+        /**
+         * NOTE: 6/10/2020 - this is what I have added may need to change a bit.
+         * TODO: 6/10/2020 - working on this bad boy
+         */
+        dispatch(gameAlreadyStarted());
     }
 }
 
@@ -146,9 +151,7 @@ setCurrentGameToLive = () => ({ setState, getState }) => {
 
 }
 
-/**
- * !!Where I am at............  so i should just need to check what fetch data is returning for current game, but i guess i can still do this. not sure whats better?
- */
+
 const fetchCurrentGame = async () => {
     return await storage.retrieveCurrentGame().then(res => {
         if (res) {
@@ -497,7 +500,11 @@ const reloadandSetPositionCount = async () => {
     })
 }
 
-
+const gameAlreadyStarted = () => ({ setState }) => {
+    setState(draft => {
+        draft.liveGame.newGame = true;
+    })
+}
 
 
 
@@ -517,7 +524,9 @@ const actions = {
         // console.log('loadedData: ', loadedData);
     },
 
-
+    gameStart: () => ({ dispatch }) => {
+        dispatch(gameAlreadyStarted())
+    },
 
 
     //!!I dont believe this is being used at them moment anywhere, just the above action is our main loadData();
