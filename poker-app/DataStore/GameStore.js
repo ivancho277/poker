@@ -116,6 +116,8 @@ const setData = data => ({ setState }) => {
 };
 
 
+// NOTE: 6/11/2020 - this is what I have added may need to change a bit.
+// TODO: 6/11/2020 - working on this bad Boy
 const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
     const { calculatedData } = getState();
     const { actions, currentGame } = getState().data
@@ -125,14 +127,11 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         console.log("Curr Calc::::", currentGame.calcData);
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
+        dispatch(firstMoveMade());
     } else {
         console.log("No Current Game Present");
         dispatch(setNewLiveGame(actions));
-        /**
-         * NOTE: 6/10/2020 - this is what I have added may need to change a bit.
-         * TODO: 6/10/2020 - working on this bad boy
-         */
-        dispatch(gameAlreadyStarted());
+        //dispatch(firstMoveMade());
     }
 }
 
@@ -500,9 +499,15 @@ const reloadandSetPositionCount = async () => {
     })
 }
 
-const gameAlreadyStarted = () => ({ setState }) => {
+const firstMoveMade = () => ({ setState }) => {
     setState(draft => {
-        draft.liveGame.newGame = true;
+        draft.liveGame.firstMoveMade = true;
+    })
+}
+
+const resetFirstMoveNotMade = () => ({ setState }) => {
+    setState(draft => {
+        draft.liveGame.firstMoveMade = false;
     })
 }
 
@@ -525,7 +530,7 @@ const actions = {
     },
 
     gameStart: () => ({ dispatch }) => {
-        dispatch(gameAlreadyStarted())
+        dispatch(firstMoveMade())
     },
 
 

@@ -180,7 +180,7 @@ class Game {
             tags: [...this.tags],
             version: this.version,
             date: this.date,
-            newGame: false,
+            firstMoveMade: false,
             //currentStats: this.getCurrentStats()
 
         }
