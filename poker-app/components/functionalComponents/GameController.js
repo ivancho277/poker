@@ -72,13 +72,16 @@ export const GameController = (props) => {
 
     /**
      * !!Ended Here
-     * TODO: finish this and fix error.
+     * TODO: 6/11/2020 finish this and fix error.
      */
     const renderBasicLiveData = (liveGame, allgames) => {
-        let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
-        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : allgames;
+        
 
-        console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundsum);
+        let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
+        console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
+        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : Calculate.sumGamesTotals(allgames);
+
+        console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
             <Text style={{fontStyle: 'italic'}}>Position: {Tables.positionsObject[liveGame.position]} </Text>

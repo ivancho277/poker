@@ -85,7 +85,7 @@ const sumGamesTotals = (games) => {
             }, accum);
             return sum;
         } else {
-            return 'no array games'
+            return null;
         }
     }
 }
