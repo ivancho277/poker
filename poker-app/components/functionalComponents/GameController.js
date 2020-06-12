@@ -76,15 +76,17 @@ export const GameController = (props) => {
      */
     const renderBasicLiveData = (liveGame, allgames) => {
         
-
-        let foundGames = liveGame.tags ? Calculate.searchByManyTags(liveGame.tags, allgames) : null;
+        console.log("ITS RAINING TAGS: ", allgames);
+        console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
+        let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
-        let foundsum = foundGames ? Calculate.sumGamesTotals(foundGames) : Calculate.sumGamesTotals(allgames);
+        let foundsum =  foundGames === null ? Calculate.sumGamesTotals(allgames) : Calculate.sumGamesTotals(foundGames);
 
         console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
             <Text style={{fontStyle: 'italic'}}>Position: {Tables.positionsObject[liveGame.position]} </Text>
+            <Text style={{color: 'red'}}>Note: if no tags selected, % will be out of all games</Text>
             <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
             <View style={{ flexDirection: 'row' }}>
 

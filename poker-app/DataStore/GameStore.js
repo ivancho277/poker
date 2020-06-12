@@ -570,6 +570,7 @@ const actions = {
     resetLiveGame: () => async ({ getState, setState, dispatch }) => {
         const { data } = getState();
         await reloadandSetPositionCount().then(res => {
+            dispatch(removeCurrentGame())
             dispatch(setNewLiveGame(data.actions));
             return res;
         })

@@ -43,7 +43,8 @@ export function DisplayStats(props) {
                                                 <DataTable.Title numeric>Totals</DataTable.Title>
                                                 <DataTable.Title numeric>Total %</DataTable.Title>
                                             </DataTable.Header>
-                                            {Utils.isEmpty(state.data.savedGames) ? <Subheading >You have no Saved Games</Subheading >
+                                            {Utils.isEmpty(state.data.savedGames) ? <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} /> 
+                                            // <Subheading >You have no Saved Games</Subheading >
                                                 :
                                                 Utils.objToArray(state.calculatedData.totals).map((element, i) => {
                                                    // console.log("elem: ", element)
