@@ -81,7 +81,7 @@ export const GameController = (props) => {
         let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
         let foundsum =  foundGames === null ? Calculate.sumGamesTotals(allgames) : Calculate.sumGamesTotals(foundGames);
-
+        foundsum = foundsum + addActionValues(liveGame.actions) 
         console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
