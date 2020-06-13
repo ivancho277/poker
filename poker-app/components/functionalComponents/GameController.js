@@ -72,21 +72,28 @@ export const GameController = (props) => {
 
     /**
      * !!Ended Here
-     * TODO: 6/11/2020 finish this and fix error.
+     * TODO: 6/13/2020 fixed a few problems, last one is to not have '%Nan' show up on first game played with no data previously there
      */
     const renderBasicLiveData = (liveGame, allgames) => {
-        
+        //!!This means we have no games in storage.
+        let storageIsEmpty = false;
+        if (allgames instanceof Object) {
+            allgames = [];
+            if (addActionValues(liveGame.actions) === 0) {
+                storageIsEmpty = true;
+            } 
+        }
         console.log("ITS RAINING TAGS: ", allgames);
         console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
         let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
-        let foundsum =  foundGames === null ? Calculate.sumGamesTotals(allgames) : Calculate.sumGamesTotals(foundGames);
-        foundsum = foundsum + addActionValues(liveGame.actions) 
+        let foundsum = foundGames === null ? Calculate.sumGamesTotals(allgames) : Calculate.sumGamesTotals(foundGames);
+        foundsum = foundsum + addActionValues(liveGame.actions)
         console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
-            <Text style={{fontStyle: 'italic'}}>Position: {Tables.positionsObject[liveGame.position]} </Text>
-            <Text style={{color: 'red'}}>Note: if no tags selected, % will be out of all games</Text>
+            <Text style={{ fontStyle: 'italic' }}>Position: {Tables.positionsObject[liveGame.position]} </Text>
+            <Text style={{ color: 'red' }}>Note: if no tags selected, % will be out of all games</Text>
             <View><Text>Current Tags: <Text style={{ fontWeight: 'bold' }}> {liveGame.tags.join(', ')}</Text> </Text></View>
             <View style={{ flexDirection: 'row' }}>
 
@@ -101,9 +108,11 @@ export const GameController = (props) => {
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Same Tag</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    <View>{liveGame.actions.map((action, index) => {
-                        return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
-                    })}</View>
+                    {storageIsEmpty ? <Text>No Saved games</Text>
+                        :
+                        <View>{liveGame.actions.map((action, index) => {
+                            return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
+                        })}</View> }
                 </View>
             </View>
 
