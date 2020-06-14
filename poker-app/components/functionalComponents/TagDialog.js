@@ -5,14 +5,27 @@ import { AntDesign } from "@expo/vector-icons";
 import { Dialog, Portal, Text, Button, RadioButton, TextInput } from 'react-native-paper';
 
 
-// function RadioTagButtonGroupd(props) {
-//     const [allTags, setAllTags] = useState([]);
+function RadioTagButtonGroup(props) {
+    const [allTags, setAllTags] = useState(props.tagsArr);
+    const [value, setValue] = useState('')
 
-//     return (
-//         <Text>Hey</Text>
-//     )
+    return (
+        <RadioButton.Group
+            onValueChange={value => setValue(value)}
+            value={value}
+        >
+            {
 
-// }
+                
+                <RadioButton.Item label={} />
+
+
+            }
+
+        </RadioButton.Group>
+    )
+
+}
 
 
 
@@ -42,7 +55,7 @@ export default function TagDialog(props) {
                     </Dialog.Content>
                     <Dialog.ScrollArea>
 
-
+                        <RadioTagButtonGroup></RadioTagButtonGroup>
 
                     </Dialog.ScrollArea>
                     <Dialog.Actions>
