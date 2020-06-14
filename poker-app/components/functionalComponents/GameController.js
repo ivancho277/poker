@@ -72,7 +72,7 @@ export const GameController = (props) => {
 
     /**
      * !!Ended Here
-     * TODO: 6/13/2020 fixed a few problems, last one is to not have '%Nan' show up on first game played with no data previously there
+     * TODO: 6/13/2020 this seems to work as is now
      */
     const renderBasicLiveData = (liveGame, allgames) => {
         //!!This means we have no games in storage.
@@ -167,8 +167,8 @@ export const GameController = (props) => {
                             <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} />
                             {/* <Text>IS IT HERE?</Text> */}
                         </View>
-                        <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button>
-
+                        {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button> */}
+                        <AntDesign.Button name={'reload1'} backgroundColor="red" onPress={() => { actions.resetLiveGame(); props.reload(); }}><Text>Reset Live Game</Text></AntDesign.Button>
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                     </View>
