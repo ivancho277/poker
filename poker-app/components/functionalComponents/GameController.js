@@ -157,7 +157,7 @@ export const GameController = (props) => {
                             <View></View>
                         }
                         {/* <AddTag allTags={data.allTags}></AddTag> */}
-                        <TagDialog></TagDialog>
+                        <TagDialog alltags={data.allTags}></TagDialog>
                         {               /**
                                  * FIXME: need to make this work and render correctly
                                  * TODO: Make this work

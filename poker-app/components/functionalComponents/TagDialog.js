@@ -6,20 +6,26 @@ import { Dialog, Portal, Text, Button, RadioButton, TextInput } from 'react-nati
 
 
 function RadioTagButtonGroup(props) {
-    const [allTags, setAllTags] = useState(props.tagsArr);
-    const [value, setValue] = useState('')
+    const [allTags, setAllTags] = useState(props.alltags);
+    const [value, setValue] = useState('');
+    const [{ data }, actions] = UseGameStore();
+
+    useEffect(() => {
+        return () => {
+            console.log('updated tags Dialog')
+        }
+    }, [data]);
 
     return (
         <RadioButton.Group
-            onValueChange={value => setValue(value)}
+            onValueChange={value => {setValue(value); props.setTag(value)}}
             value={value}
         >
-            {
-
-                
-                <RadioButton.Item label={'one'} />
-
-
+            {(props.alltags === undefined || props.alltags.length === 0) ? <Text>No Tags</Text>
+                :
+                props.alltags.map(tag => {
+                    <RadioButton.Item label={tag} value={tag} key={`key_${tag}`} />
+                })
             }
 
         </RadioButton.Group>
@@ -34,9 +40,12 @@ function RadioTagButtonGroup(props) {
 export default function TagDialog(props) {
     const [visible, setVisible] = useState(false);
     const [tagtext, setTagText] = useState('');
+    const [alltags, setAllTags] = useState(props.allTags);
+    const [, { addTagToCurrentGame, addTagToAll }] = UseGameStore();
 
     const _hideDialog = () => { setVisible(false); }
     const _showDialog = () => { setVisible(true); }
+    
     return (
         <View>
             <AntDesign.Button name='tags' onPress={() => { _showDialog() }}>Add Tag</AntDesign.Button>
@@ -45,22 +54,22 @@ export default function TagDialog(props) {
                     visible={visible}
                     onDismiss={_hideDialog}
                 >
-                    <Dialog.Title>Select a Tag</Dialog.Title>
+                    <Dialog.Title>Select a Tag or add a new one.</Dialog.Title>
                     <Dialog.Content>
                         <TextInput
-                            label='Select tag...'
+                            label='Type a new tag...'
                             value={tagtext}
                             onChangeText={tagtext => setTagText(tagtext)}
                         />
                     </Dialog.Content>
                     <Dialog.ScrollArea>
 
-                        <RadioTagButtonGroup></RadioTagButtonGroup>
+                        <RadioTagButtonGroup setTag={setTagText} alltags={alltags}></RadioTagButtonGroup>
 
                     </Dialog.ScrollArea>
                     <Dialog.Actions>
-                        <Button onPress={() => console.log("Cancel")}>Cancel</Button>
-                        <Button onPress={() => console.log("Ok")}>Ok</Button>
+                        <Button onPress={() => _hideDialog()}>Cancel</Button>
+                        <Button onPress={() => {console.log(tagtext)}}>Ok</Button>
                     </Dialog.Actions>
 
                 </Dialog>
