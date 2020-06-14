@@ -12,6 +12,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
+import  TagDialog  from './TagDialog';
 import { Tables } from '../../constants/tables.js';
 
 
@@ -81,7 +82,7 @@ export const GameController = (props) => {
             allgames = [];
             if (addActionValues(liveGame.actions) === 0) {
                 storageIsEmpty = true;
-            } 
+            }
         }
         console.log("ITS RAINING TAGS: ", allgames);
         console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
@@ -112,7 +113,7 @@ export const GameController = (props) => {
                         :
                         <View>{liveGame.actions.map((action, index) => {
                             return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
-                        })}</View> }
+                        })}</View>}
                 </View>
             </View>
 
@@ -155,8 +156,8 @@ export const GameController = (props) => {
                             :
                             <View></View>
                         }
-                        <AddTag allTags={data.allTags}></AddTag>
-
+                        {/* <AddTag allTags={data.allTags}></AddTag> */}
+                        <TagDialog></TagDialog>
                         {               /**
                                  * FIXME: need to make this work and render correctly
                                  * TODO: Make this work
