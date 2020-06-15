@@ -12,7 +12,7 @@ function RadioTagButtonGroup(props) {
 
     useEffect(() => {
         return () => {
-            console.log('updated tags Dialog')
+            console.log('updated tags Dialog', props.alltags)
         }
     }, [data]);
 
@@ -64,12 +64,12 @@ export default function TagDialog(props) {
                     </Dialog.Content>
                     <Dialog.ScrollArea>
 
-                        <RadioTagButtonGroup setTag={setTagText} alltags={alltags}></RadioTagButtonGroup>
+                        <RadioTagButtonGroup setTag={setTagText} alltags={props.alltags}></RadioTagButtonGroup>
 
                     </Dialog.ScrollArea>
                     <Dialog.Actions>
                         <Button onPress={() => _hideDialog()}>Cancel</Button>
-                        <Button onPress={() => {console.log(tagtext)}}>Ok</Button>
+                        <Button onPress={() => {console.log(tagtext) ; addTagToCurrentGame(tagtext); addTagToAll(tagtext) ; setTagText('')}}>Ok</Button>
                     </Dialog.Actions>
 
                 </Dialog>
