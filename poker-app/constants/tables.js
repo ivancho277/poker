@@ -18,20 +18,26 @@ const positionsArray = [
     {3: "D+1"},
     {4: "D+2"},
     {5: "D+3"},
-    {6: "D+3"},
-    {7: "D+4"},
-    {8: "D+5"},
+    {6: "D+4"},
+    {7: "D+5"},
+    {8: "D+6"},
 ]
 
-const simplePositionArr = [
-    "Big Blind",
-    "Small Blind",
-    "Dealer",
-    
+const simplePositionsArr = [
+    {0: "BB"},
+    {1: "SB"},
+    {2: "D"},
+    {3: "D+1"},
+    {4: "D+2"},
+    {5: "D+3"},
+    {6: "D+4"},
+    {7: "D+5"},
+    {8: "D+6"}, 
 ]
 
 export const Tables = {
     positionsObject: positionsObject,
-    positionsArray: positionsArray
+    positionsArray: positionsArray,
+    simplePositionsArr: simplePositionsArr,
 } 
 
