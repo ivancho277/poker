@@ -17,18 +17,26 @@ function RadioTagButtonGroup(props) {
     }, [data]);
 
     return (
-        <RadioButton.Group
-            onValueChange={value => {setValue(value); props.setTag(value)}}
-            value={value}
-        >
-            {(props.alltags === undefined || props.alltags.length === 0) ? <Text>No Tags</Text>
-                :
-                props.alltags.map(tag => {
-                    <RadioButton.Item label={tag} value={tag} key={`key_${tag}`} />
-                })
-            }
+        <GameSubscriber>
+            {({ data }, actions) => (
+                <RadioButton.Group
+                    onValueChange={value => { setValue(value); props.setTag(value) }}
+                    value={value}
+                >
+                    {
 
-        </RadioButton.Group>
+                        data.tags.map((tag, i) => {
+                            return <View key={i}>
+                                <Text>{tag}</Text>
+                                <RadioButton.Item label={tag} value={tag} />
+                            </View>
+                        })
+                    }
+
+                </RadioButton.Group>
+            )
+            }
+        </GameSubscriber>
     )
 
 }
@@ -45,7 +53,7 @@ export default function TagDialog(props) {
 
     const _hideDialog = () => { setVisible(false); }
     const _showDialog = () => { setVisible(true); }
-    
+
     return (
         <View>
             <AntDesign.Button name='tags' onPress={() => { _showDialog() }}>Add Tag</AntDesign.Button>
@@ -61,15 +69,16 @@ export default function TagDialog(props) {
                             value={tagtext}
                             onChangeText={tagtext => setTagText(tagtext)}
                         />
+
+                        <Dialog.ScrollArea>
+
+                            <RadioTagButtonGroup setTag={setTagText} alltags={props.alltags} />
+
+                        </Dialog.ScrollArea>
                     </Dialog.Content>
-                    <Dialog.ScrollArea>
-
-                        <RadioTagButtonGroup setTag={setTagText} alltags={props.alltags}></RadioTagButtonGroup>
-
-                    </Dialog.ScrollArea>
                     <Dialog.Actions>
                         <Button onPress={() => _hideDialog()}>Cancel</Button>
-                        <Button onPress={() => {console.log(tagtext) ; addTagToCurrentGame(tagtext); addTagToAll(tagtext) ; setTagText('')}}>Ok</Button>
+                        <Button onPress={() => { console.log(tagtext); addTagToCurrentGame(tagtext); addTagToAll(tagtext); setTagText('') }}>Ok</Button>
                     </Dialog.Actions>
 
                 </Dialog>
