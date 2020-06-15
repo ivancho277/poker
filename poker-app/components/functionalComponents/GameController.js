@@ -74,12 +74,19 @@ export const GameController = (props) => {
     /**
      * !!Ended Here
      * TODO: 6/13/2020 this seems to work as is now
+     * 
+     * 
      */
+    //TODO: 6/15/2020 this still is having issues. we need to have is show no found games when none, unless it is start. Then show vs all games
     const renderBasicLiveData = (liveGame, allgames) => {
         //!!This means we have no games in storage.
         let storageIsEmpty = false;
-        if (allgames instanceof Object) {
-            allgames = [];
+        console.log('ALL GAMES:', allgames)
+        console.log('Checkit::::::', (allgames instanceof Array))
+        if (!(allgames instanceof Array)) {
+            if(Utils.isEmpty(allgames)){
+                allgames = [];
+            }
             if (addActionValues(liveGame.actions) === 0) {
                 storageIsEmpty = true;
             }
@@ -157,7 +164,7 @@ export const GameController = (props) => {
                             <View></View>
                         }
                         {/* <AddTag allTags={data.allTags}></AddTag> */}
-                        <TagDialog alltags={data.allTags}></TagDialog>
+                        <TagDialog></TagDialog>
                         {               /**
                                  * FIXME: need to make this work and render correctly
                                  * TODO: Make this work
@@ -173,7 +180,7 @@ export const GameController = (props) => {
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                     </View>
-
+                    
 
                     :
                     <View>

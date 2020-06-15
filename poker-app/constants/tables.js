@@ -23,6 +23,13 @@ const positionsArray = [
     {8: "D+5"},
 ]
 
+const simplePositionArr = [
+    "Big Blind",
+    "Small Blind",
+    "Dealer",
+    
+]
+
 export const Tables = {
     positionsObject: positionsObject,
     positionsArray: positionsArray

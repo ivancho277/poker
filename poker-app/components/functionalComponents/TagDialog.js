@@ -24,15 +24,12 @@ function RadioTagButtonGroup(props) {
                     value={value}
                 >
                     {
-
                         data.tags.map((tag, i) => {
                             return <View key={i}>
-                                <Text>{tag}</Text>
                                 <RadioButton.Item label={tag} value={tag} />
                             </View>
                         })
                     }
-
                 </RadioButton.Group>
             )
             }

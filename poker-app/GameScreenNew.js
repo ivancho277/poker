@@ -10,6 +10,7 @@ import { GameController } from './components/functionalComponents/GameController
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
 import { Switch } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB'
+import { RadioTable } from './components/functionalComponents/RadioTable'
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -35,7 +36,7 @@ export default function GameScreenNew(props) {
         console.log("reload dat game")
     }, [])
 
-    manualReload= async () => {
+    manualReload = async () => {
         //setLoadingData(true);
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {
@@ -54,7 +55,7 @@ export default function GameScreenNew(props) {
         props.navigation.navigate("Home");
     }
 
-    
+
 
     //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING 
     return (
@@ -63,55 +64,62 @@ export default function GameScreenNew(props) {
         // state.loading ?
         //     <Text>We need to load</Text>
         //     :
-
-        <View style={styles.container}>
-            <ScrollView>
-                <Card title='Track your game!'>
-                    <Text> Current Game Info: </Text>
-                    <ScrollView>
-                        <GameController goHome={goHome} reload={manualReload}></GameController>
-                    </ScrollView>
-                </Card>
-                {/* <View>
+        <ScrollView>
+            <View style={styles.container}>
+                <ScrollView>
+                    <Card title='Track your game!'>
+                        <Text> Current Game Info: </Text>
+                        <ScrollView>
+                            <GameController goHome={goHome} reload={manualReload}></GameController>
+                            <RadioTable />
+                        </ScrollView>
+                    </Card>
+                    {/* <View>
                                 <ScrollView>
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
                             </View> */}
-                <Card title='Testing Buttons'>
-                    <View style={{ justifyContent: 'center' }}>
-                        
-                        <Text>Toggle test Buttons</Text><Switch
-                            style={{alignContent: 'center'}}
-                            value={state.testModeOn}
-                            onValueChange={actions.TestModeSwitch}
-                        />
-                    </View>
-                    {state.testModeOn ?
-                        <ScrollView>
+
+                   
+
+                    <Card title='Testing Buttons'>
+                        <View style={{ justifyContent: 'center' }}>
+
+                            <Text>Toggle test Buttons</Text><Switch
+                                style={{ alignContent: 'center' }}
+                                value={state.testModeOn}
+                                onValueChange={actions.TestModeSwitch}
+                            />
+                        </View>
+
+                        {state.testModeOn ?
+                            // <ScrollView>
                             <Tester></Tester>
-                        </ScrollView>
-                        :
-                       <View></View>
+                            // </ScrollView>
+                            :
+                            <View></View>
 
 
 
-                    }
-                    {/* <GameFAB /> */}
-                </Card>
-                
+                        }
+                        {/* <GameFAB /> */}
+                    </Card>
 
 
 
-                {/* <Card title='1st tester showing data'>
+
+                    {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
                                 <TestComponent></TestComponent>
                                 </ScrollView>
                             </Card> */}
-            </ScrollView>
-            {/* <Tester></Tester> */}
-        </View>
 
+                    {/* <Tester></Tester> */}
+                </ScrollView>
+
+            </View>
+        </ScrollView>
 
 
 
