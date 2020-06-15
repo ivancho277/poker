@@ -15,17 +15,25 @@ export function RadioTable(props) {
         <GameSubscriber>
             {(state, actions) => (
                 <RadioButton.Group
-                    onValueChange={value => { setValue(value); console.log(value)}}
+                    onValueChange={value => { setValue(value); console.log(value) }}
                     value={value}
                 >
                     <View style={styles.oval}>
 
 
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
-                            <RadioButton.Item label={Tables.simplePositionsArr[0][0]} value={0} />
-                            <RadioButton.Item label={Tables.simplePositionsArr[1][1]} value={1} />
-                            <RadioButton.Item label={Tables.simplePositionsArr[2][2]} value={2} />
-                            <RadioButton.Item label={Tables.simplePositionsArr[3][3]} value={3} />
+                            <View style={{position: 'absolute', top: 10, left: 5}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[0][0]} value={1} />
+                            </View>
+                            <View style={{position: 'absolute', top: 0, left: 80}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[1][1]} value={2} />
+                            </View>
+                            <View style={{position: 'absolute', top: 0, left: 160}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[2][2]} value={3} />
+                            </View>
+                            <View style={{position: 'absolute', top: 10, right: 5}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[3][3]} value={4} />
+                            </View>
                             {/* {Tables.simplePositionsArr.map((position, i) => {
                                 return (<View style={{ flex: 0, flexDirection: 'column' }} key={i}>
                                     {console.log('WTF!!!!!!', Object.values(position)[0])}
@@ -36,7 +44,7 @@ export function RadioTable(props) {
                             }) */}
 
 
-                            
+
                         </View>
 
 
