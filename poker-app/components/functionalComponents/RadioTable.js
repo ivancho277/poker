@@ -8,7 +8,7 @@ import { Tables } from '../../constants/tables.js'
 
 // { width: 340, height: 200, backgroundColor: 'green', borderRadius: 100, alignItems: 'center', margin: 10, opacity: .5, position: 'relative' }
 export function RadioTable(props) {
-    const [state, actions] = UseGameStore();
+    const [state, {}] = UseGameStore();
     const [value, setValue] = useState();
 
     useEffect(() => {
@@ -27,10 +27,10 @@ export function RadioTable(props) {
     }, [props.liveGame])
 
 
-    _updateSelectedValue = value => {
-
+    // _updateSelectedValue = value => {
+    //     return 'hey'
         
-    }
+    // }
 
     return (
         <GameSubscriber>
@@ -38,37 +38,47 @@ export function RadioTable(props) {
                 <RadioButton.Group
                     onValueChange={value => { setValue(value); console.log(value) }}
                     value={value}
+                                                                     
                 >
                     <View style={styles.oval}>
 
 
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
-                            <View style={{ position: 'absolute', top: 15, left: 0 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[0][0]} value={1} />
+                            <View style={{ position: 'absolute', top: 35, left: 5, flexDirection:'row-reverse' }}>
+                                <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} value={1} />
                             </View>
-                            <View style={{ position: 'absolute', top: 0, left: 60 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[1][1]} value={2} />
+                            <View style={{ position: 'absolute', top: 0, left: 60 ,flexDirection:'row-reverse'}}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[1][1]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[1][1]} value={2} />
                             </View>
-                            <View style={{ position: 'absolute', top: 0, left: 160 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[2][2]} value={3} />
+                            <View style={{ position: 'absolute', top: 0, left: 160,flexDirection:'row-reverse' }}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[2][2]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[2][2]} value={3} />
                             </View>
-                            <View style={{ position: 'absolute', top: 15, right: 0 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[3][3]} value={4} />
+                            <View style={{ position: 'absolute', top: 15, right: 30 }}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[3][3]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[3][3]} value={4} />
                             </View>
-                            <View style={{ position: 'absolute', bottom: 60, right: -20 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[4][4]} value={5} />
+                            <View style={{ position: 'absolute', bottom: 70, right: 0}}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[4][4]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[4][4]} value={5} />
                             </View>
-                            <View style={{ position: 'absolute', bottom: 10, right: 0 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[5][5]} value={6} />
+                            <View style={{ position: 'absolute', bottom: 10, right: 30 }}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[5][5]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[5][5]} value={6} />
                             </View>
-                            <View style={{ position: 'absolute', bottom: 0, left: 160 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[6][6]} value={7} />
+                            <View style={{ position: 'absolute', bottom: 0, left: 160,flexDirection:'row-reverse' }}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[6][6]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[6][6]} value={7} />
                             </View>
-                            <View style={{ position: 'absolute', bottom: 0, left: 60 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[7][7]} value={8} />
+                            <View style={{ position: 'absolute', bottom: 0, left: 60 ,flexDirection:'row-reverse'}}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[7][7]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[7][7]} value={8} />
                             </View>
-                            <View style={{ position: 'absolute', bottom: 50, left: -20 }}>
-                                <RadioButton.Item label={Tables.simplePositionsArr[8][8]} value={9} />
+                            <View style={{ position: 'absolute', bottom: 40, left: 5,flexDirection:'row-reverse'}}>
+                            <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[8][8]}</Text>
+                                <RadioButton color={'red'}  uncheckedColor={'white'} label={Tables.simplePositionsArr[8][8]} value={9} />
                             </View>
                             {/* {Tables.simplePositionsArr.map((position, i) => {
                                 return (<View style={{ flex: 0, flexDirection: 'column' }} key={i}>
