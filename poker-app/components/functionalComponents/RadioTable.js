@@ -22,17 +22,32 @@ export function RadioTable(props) {
 
 
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
-                            <View style={{position: 'absolute', top: 10, left: 5}}>
+                            <View style={{position: 'absolute', top: 15, left: 0}}>
                                 <RadioButton.Item label={Tables.simplePositionsArr[0][0]} value={1} />
                             </View>
-                            <View style={{position: 'absolute', top: 0, left: 80}}>
+                            <View style={{position: 'absolute', top: 0, left: 60}}>
                                 <RadioButton.Item label={Tables.simplePositionsArr[1][1]} value={2} />
                             </View>
                             <View style={{position: 'absolute', top: 0, left: 160}}>
                                 <RadioButton.Item label={Tables.simplePositionsArr[2][2]} value={3} />
                             </View>
-                            <View style={{position: 'absolute', top: 10, right: 5}}>
+                            <View style={{position: 'absolute', top: 15, right: 0}}>
                                 <RadioButton.Item label={Tables.simplePositionsArr[3][3]} value={4} />
+                            </View>
+                            <View style={{position: 'absolute', bottom: 60, right: -20}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[4][4]} valu5={5} />
+                            </View>
+                            <View style={{position: 'absolute', bottom: 10, right: 0}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[5][5]} value={6} />
+                            </View>
+                            <View style={{position: 'absolute', bottom: 0, left: 160}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[6][6]} value={7} />
+                            </View>
+                            <View style={{position: 'absolute', bottom: 0, left: 60}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[7][7]} value={8} />
+                            </View>
+                            <View style={{position: 'absolute', bottom: 50, left: -20}}>
+                                <RadioButton.Item label={Tables.simplePositionsArr[8][8]} value={8} />
                             </View>
                             {/* {Tables.simplePositionsArr.map((position, i) => {
                                 return (<View style={{ flex: 0, flexDirection: 'column' }} key={i}>
