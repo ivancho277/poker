@@ -20,12 +20,17 @@ export function RadioTable(props) {
                 return;
             }
         } else {
-            console.log("am i here 3")
-            setValue(1)
+            console.log("am i here 3");
+            setValue(1);
         }
 
     }, [props.liveGame])
 
+
+    _updateSelectedValue = value => {
+
+        
+    }
 
     return (
         <GameSubscriber>
