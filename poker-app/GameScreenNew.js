@@ -71,7 +71,11 @@ export default function GameScreenNew(props) {
                         <Text> Current Game Info: </Text>
                         <ScrollView>
                             <GameController goHome={goHome} reload={manualReload}></GameController>
-                            <RadioTable />
+                            <GameSubscriber>
+                                {({liveGame}, actions) => (
+                                <RadioTable liveGame={liveGame} />
+                                )}
+                            </GameSubscriber>
                         </ScrollView>
                     </Card>
                     {/* <View>
@@ -80,7 +84,7 @@ export default function GameScreenNew(props) {
                                 </ScrollView>
                             </View> */}
 
-                   
+
 
                     <Card title='Testing Buttons'>
                         <View style={{ justifyContent: 'center' }}>
