@@ -24,14 +24,16 @@ export function RadioTable(props) {
             //console.log("am i here 3");
             setValue(1);
         }
-
     }, [props.liveGame])
 
-
-    // _updateSelectedValue = value => {
-    //     return 'hey'
-
-    // }
+    const calculatePercentage = (count, total) => {
+        return Math.round(count / total * 100)
+    }    
+    const percentOfActionByPosition = (position) => {
+        console.log(state.calculatedData)
+        //TODO: 6/17/2020 Create and object that has the % of all actions for this position.
+        return calculatePercentage(state.calculatedData.positionTotals[position] / state.calculatedData.positionCount[position])
+    }
 
     return (
         <GameSubscriber>
@@ -43,7 +45,7 @@ export function RadioTable(props) {
                     <View style={styles.oval}>
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
                             <View style={{ position: 'absolute', top: 35, left: 5, flexDirection: 'row-reverse' }}>
-                                    <Tooltip popover={<Text>Info here</Text>}>
+                                    <Tooltip onOpen={percentOfActionByPosition(1, 1)} popover={<Text>Info here: % of total }</Text>}>
                                         <Text style={{ fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>
                                     </Tooltip>
 
