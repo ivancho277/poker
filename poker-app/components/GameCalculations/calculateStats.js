@@ -67,9 +67,10 @@ const searchByManyTags = (tagsArray, games) => {
  */
 const sumGamesTotals = (games) => {
     if (games === null) {
+        
         return 'no games'
     }
-    console.log('sumFUNT:', games)
+    //console.log('sumFUNT:', games)
     if (games instanceof Array) {
         if (games.length > 0) {
             let accum = 0;
