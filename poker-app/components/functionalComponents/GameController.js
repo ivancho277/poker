@@ -172,7 +172,7 @@ export const GameController = (props) => {
                                  */}
                         <View style={{ marginTop: 5 }}>
                             {/* {<RenderRadio position={liveGame.position} updatePositionCallBack={updatePosition}  />} */}
-                            <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} />
+                            {/* <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} /> */}
                             {/* <Text>IS IT HERE?</Text> */}
                         </View>
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button> */}

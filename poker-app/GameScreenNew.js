@@ -72,8 +72,8 @@ export default function GameScreenNew(props) {
                         <ScrollView>
                             <GameController goHome={goHome} reload={manualReload}></GameController>
                             <GameSubscriber>
-                                {({liveGame}, actions) => (
-                                <RadioTable liveGame={liveGame} />
+                                {({liveGame}, {updatePosition }) => (
+                                <RadioTable liveGame={liveGame} setLivePosition={updatePosition} />
                                 )}
                             </GameSubscriber>
                         </ScrollView>
