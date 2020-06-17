@@ -28,12 +28,23 @@ export function RadioTable(props) {
 
     const calculatePercentage = (count, total) => {
         return Math.round(count / total * 100)
-    }    
+    }
     const percentOfActionByPosition = (position) => {
         console.log(state.calculatedData)
         //TODO: 6/17/2020 Create and object that has the % of all actions for this position.
-        return calculatePercentage(state.calculatedData.positionTotals[position] / state.calculatedData.positionCount[position])
+        let arr = []
+        if (state.calculatedData.positionCount && state.liveGame) {
+            arr = state.liveGame.actions.map(action => {
+                let obj = action.actionName;
+                return Object.assign(obj, calculatePercentage(action.count, state.calculatedData.positionCount[position]));
+            })
+        }
+
+        return arr
+
     }
+
+
 
     return (
         <GameSubscriber>
@@ -45,9 +56,9 @@ export function RadioTable(props) {
                     <View style={styles.oval}>
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
                             <View style={{ position: 'absolute', top: 35, left: 5, flexDirection: 'row-reverse' }}>
-                                    <Tooltip onOpen={percentOfActionByPosition(1, 1)} popover={<Text>Info here: % of total }</Text>}>
-                                        <Text style={{ fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>
-                                    </Tooltip>
+                                <Tooltip height={115} popover={<Text>Info here: % of total {percentOfActionByPosition(0)}</Text>}>
+                                    <Text style={{ fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>
+                                </Tooltip>
 
                                 <RadioButton color={'red'} uncheckedColor={'white'} value={1} />
                             </View>
