@@ -13,14 +13,14 @@ export function RadioTable(props) {
 
     useEffect(() => {
         if (props.liveGame !== null) {
-            console.log("am i here 1")
+           // console.log("am i here 1")
             if (value !== props.liveGame.position + 1) {
-                console.log("am i here 2")
+               // console.log("am i here 2")
                 setValue(props.liveGame.position + 1);
                 return;
             }
         } else {
-            console.log("am i here 3");
+            //console.log("am i here 3");
             setValue(1);
         }
 
@@ -37,12 +37,9 @@ export function RadioTable(props) {
             {(state, actions) => (
                 <RadioButton.Group
                     onValueChange={value => { setValue(value); props.setLivePosition(value - 1) ;console.log(value) }}
-                    value={value}
-                                                                     
+                    value={value}                       
                 >
                     <View style={styles.oval}>
-
-
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
                             <View style={{ position: 'absolute', top: 35, left: 5, flexDirection:'row-reverse' }}>
                                 <Text style={{fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>

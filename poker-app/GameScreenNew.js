@@ -41,7 +41,7 @@ export default function GameScreenNew(props) {
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {
                 let response = res;
-                console.log('MANUL LOAD RES:', response);
+                //console.log('MANUL LOAD RES:', response);
                 //setLoadingData(false);
             })
         })

@@ -4,7 +4,7 @@ const objToArray = (obj) => {
     for (key in obj) {
         objArray.push({ [key]: obj[key] })
     }
-    console.log('OBJECT ARRAY', objArray)
+  //  console.log('OBJECT ARRAY', objArray)
     return objArray
 }
 
@@ -34,7 +34,7 @@ const searchBytag = (tag, games) => {
             return savedGame;
         }
     });
-    console.log(foundGames);
+    //console.log(foundGames);
     return foundGames.length > 0 ? foundGames : null;
 }
 
@@ -53,7 +53,7 @@ const searchByManyTags = (tagsArray, games) => {
                 return savedGame;
             }
         });
-        console.log("MANY TAGS:", foundGames);
+        //console.log("MANY TAGS:", foundGames);
         return foundGames.length > 0 ? foundGames : null;
     }
 }
@@ -76,11 +76,11 @@ const sumGamesTotals = (games) => {
             let total = 0;
             let sum = games.reduce((accum = 0, _game) => {
                 // debugger;
-                console.log("count:", accum)
+             //   console.log("count:", accum)
                 let innerSum = _game.game.data.actions.reduce((total = 0, action) => {
                     return total + action.count;
                 }, total);
-                console.log('inner SUM: ', innerSum);
+                //console.log('inner SUM: ', innerSum);
                 return accum + innerSum;
             }, accum);
             return sum;
@@ -102,12 +102,12 @@ const sumGamesPositions = (games) => {
             let name = action.actionName;
             let positionObj = {}
             Object.assign(positionObj, action.countPerPosition)
-            console.log("YE:", positionObj);
-            console.log("YE:", name);
-            console.log('What is your value? ', totalsPerPosition[name])
+         //   console.log("YE:", positionObj);
+        //    console.log("YE:", name);
+        //    console.log('What is your value? ', totalsPerPosition[name])
             if (totalsPerPosition[name]) {
                 for (key in totalsPerPosition[name]) {
-                    console.log('Why: ', totalsPerPosition[name][key])
+                  //  console.log('Why: ', totalsPerPosition[name][key])
                     totalsPerPosition[name][key] = totalsPerPosition[name][key] + positionObj[key];
                 }
             } else {
@@ -160,14 +160,14 @@ const sumAllGameActions = (games) => {
             let value = parseInt(action[Object.keys(action)[0]]); return total + value
         }
             , init);
-        console.log('This Array: ', sum);
+     //   console.log('This Array: ', sum);
         return sum;
     }
     if (typeof (games) === 'object') {
         for (action in games) {
             sum += games[action]
         }
-        console.log('This Object', sum);
+       // console.log('This Object', sum);
         return sum;
     }
     return null;

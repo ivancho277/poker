@@ -97,7 +97,7 @@ const objToArray = (obj) => {
     for (key in obj) {
         objArray.push({ [key]: obj[key] })
     }
-    console.log('OBJECT ARRAY', objArray)
+    //console.log('OBJECT ARRAY', objArray)
     return objArray
 }
 
@@ -133,7 +133,7 @@ const CountPositions = function(obj) {
             }
 
         })
-        console.log("STATS", finalStats)
+        //console.log("STATS", finalStats)
         return finalStats;
     } catch {
         console.log("Cant calculate positions")
@@ -146,12 +146,12 @@ calculatePercentages = function(obj) {
         // debugger;
         let seperateTotals = countTotal(obj);
         let totalActions = Object.values(seperateTotals).reduce((a, i) => a + i);
-        console.log(totalActions)
+      //  console.log(totalActions)
         const totalsArray = []
         for (action in seperateTotals) {
             totalsArray.push({ [action]: Math.round(seperateTotals[action] / totalActions * 100) })
         }
-        console.log(totalsArray)
+    //    console.log(totalsArray)
         return totalsArray;
 
     } catch{

@@ -81,8 +81,8 @@ export const GameController = (props) => {
     const renderBasicLiveData = (liveGame, allgames) => {
         //!!This means we have no games in storage.
         let storageIsEmpty = false;
-        console.log('ALL GAMES:', allgames)
-        console.log('Checkit::::::', (allgames instanceof Array))
+        //console.log('ALL GAMES:', allgames)
+        //console.log('Checkit::::::', (allgames instanceof Array))
         if (!(allgames instanceof Array)) {
             if(Utils.isEmpty(allgames)){
                 allgames = [];
@@ -91,13 +91,13 @@ export const GameController = (props) => {
                 storageIsEmpty = true;
             }
         }
-        console.log("ITS RAINING TAGS: ", allgames);
-        console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
+        //console.log("ITS RAINING TAGS: ", allgames);
+        //console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
         let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;
         console.log("WHERE HAVE ALL THE GOOD TAGS GONE, AND WHERE ARE ALL THE GODS!!: ", foundGames);
         let foundsum = foundGames === null ? Calculate.sumGamesTotals(allgames) : Calculate.sumGamesTotals(foundGames);
         foundsum = foundsum + addActionValues(liveGame.actions)
-        console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
+        //console.log("WHERE'S THE STREETWISE HERCULES, TO BEAT THE RISING ODDS!!: ", foundsum);
 
         return (<Surface style={styles.surface}>
             <Text style={{ fontStyle: 'italic' }}>Position: {Tables.positionsObject[liveGame.position]} </Text>
@@ -107,14 +107,14 @@ export const GameController = (props) => {
 
 
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>Totals</Subheading>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>% for this game</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     <View>{liveGame.actions.map((action, index) => {
-                        return <Text key={index}>{action.actionName}: {action.count}  </Text>
+                        return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions)) } %  </Text>
                     })}</View>
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>Same Tag</Subheading>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     {storageIsEmpty ? <Text>No Saved games</Text>
                         :
