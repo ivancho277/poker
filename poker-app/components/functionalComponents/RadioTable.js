@@ -43,11 +43,9 @@ export function RadioTable(props) {
                     <View style={styles.oval}>
                         <View style={{ width: '100%', height: '100%', flexWrap: 'wrap' }} >
                             <View style={{ position: 'absolute', top: 35, left: 5, flexDirection: 'row-reverse' }}>
-                                <Tooltip popover={<Text>Info here</Text>}>
                                     <Tooltip popover={<Text>Info here</Text>}>
                                         <Text style={{ fontSize: 13, textAlign: 'center' }}>{Tables.simplePositionsArr[0][0]}</Text>
                                     </Tooltip>
-                                </Tooltip>
 
                                 <RadioButton color={'red'} uncheckedColor={'white'} value={1} />
                             </View>

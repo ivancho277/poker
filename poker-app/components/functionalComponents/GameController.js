@@ -165,15 +165,7 @@ export const GameController = (props) => {
                         }
                         {/* <AddTag allTags={data.allTags}></AddTag> */}
                         <TagDialog></TagDialog>
-                        {               /**
-                                 * FIXME: need to make this work and render correctly
-                                 * TODO: Make this work
-                                 * NOTE: should not use function, but rather JSX <> notation, and pass in props.
-                                 */}
                         <View style={{ marginTop: 5 }}>
-                            {/* {<RenderRadio position={liveGame.position} updatePositionCallBack={updatePosition}  />} */}
-                            {/* <Radio liveLoading={liveGameLoading} position={liveGame.position} setPosition={updatePosition} /> */}
-                            {/* <Text>IS IT HERE?</Text> */}
                         </View>
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button> */}
                         <AntDesign.Button name={'reload1'} backgroundColor="red" onPress={() => { actions.resetLiveGame(); props.reload(); }}><Text>Reset Live Game</Text></AntDesign.Button>
