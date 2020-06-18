@@ -18,7 +18,7 @@ export function DisplayStats(props) {
     }, [])
 
     const calculatePercentage = (count, total) => {
-        return Math.round(count / total * 100)
+        return Math.round(count / total * 100);
     }
 
     return (

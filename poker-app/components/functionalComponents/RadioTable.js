@@ -39,9 +39,7 @@ export function RadioTable(props) {
                 return Object.assign(obj, calculatePercentage(action.count, state.calculatedData.positionCount[position]));
             })
         }
-
-        return arr
-
+        return arr;
     }
 
 

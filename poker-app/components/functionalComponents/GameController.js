@@ -12,7 +12,7 @@ import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
-import  TagDialog  from './TagDialog';
+import TagDialog from './TagDialog';
 import { Tables } from '../../constants/tables.js';
 
 
@@ -68,6 +68,7 @@ export const GameController = (props) => {
     }
 
     const calculatePercentage = (count, total) => {
+
         return Math.round(count / total * 100)
     }
 
@@ -84,7 +85,7 @@ export const GameController = (props) => {
         //console.log('ALL GAMES:', allgames)
         //console.log('Checkit::::::', (allgames instanceof Array))
         if (!(allgames instanceof Array)) {
-            if(Utils.isEmpty(allgames)){
+            if (Utils.isEmpty(allgames)) {
                 allgames = [];
             }
             if (addActionValues(liveGame.actions) === 0) {
@@ -109,9 +110,12 @@ export const GameController = (props) => {
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
                     <Subheading style={{ textDecorationLine: 'underline' }}>% for this game</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    <View>{liveGame.actions.map((action, index) => {
-                        return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions)) } %  </Text>
-                    })}</View>
+                    {addActionValues(liveGame.actions) == 0 ? <Text style={{ color: 'green' }}>Start Playing</Text>
+                        :
+                        <View>{liveGame.actions.map((action, index) => {
+                            return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions))} %  </Text>
+                        })}</View>
+                    }
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
                     <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>
@@ -172,7 +176,7 @@ export const GameController = (props) => {
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                     </View>
-                    
+
 
                     :
                     <View>
