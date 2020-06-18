@@ -173,15 +173,32 @@ const sumAllGameActions = (games) => {
     }
     return null;
 }
+const calculatePercentage = (count, total) => {
+
+    return Math.round(count / total * 100)
+}
 
 const getPercentagesByPositionInAction = (posTotals, posCounts, currentPosition) => {
     console.log('PosTotals::::', posTotals);
     console.log('PosCounts::::', posCounts);
     let percentageArray = [];
-    for(key in posTotals) {
-        let action = key
-        console.log(action)
+    
+    for (position in posCounts) {
+        let obj = {};
+        console.log('position:::', position)
+        let actionName;
+        for (action in posTotals) {
+            actionName = action
+            !([action] in obj) && (obj[action] = {});
+            obj[action][position] = calculatePercentage(posTotals[action][position], posCounts[position]);
+            console.log('OBJ:.;.;.;.;.;.;.', obj);
+            // console.log(`Action::::: ${ calculatePercentage(posTotals[action][position], posCounts[position] )} %` )
+            console.log("posTotals{action}:::::", action)
+            // console.log("Count[posi]:::::", posCounts[position])
+        }
+        percentageArray.push(obj);
     }
+    console.log(percentageArray);
 }
 
 module.exports = {
