@@ -14,6 +14,7 @@ import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
 import TagDialog from './TagDialog';
 import { Tables } from '../../constants/tables.js';
+import { getPercentages } from '../statscalculation.js';
 
 
 
@@ -67,8 +68,12 @@ export const GameController = (props) => {
         return (JSON.parse(myData));
     }
 
-    const calculatePercentage = (count, total) => {
+    const getPercentagesForPositionsDisplay = (position) => {
+        let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+        return  Object.entries(dataArray[position]);
+    }
 
+    const calculatePercentage = (count, total) => {
         return Math.round(count / total * 100)
     }
 
@@ -135,8 +140,10 @@ export const GameController = (props) => {
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     
                         <View style={{maxHeight: 80}}>
-                            <Button title="press" onPress={() => {Calculate.getPercentagesByPositionInAction(calculatedData.positionTotals, calculatedData.positionCount)}}>press</Button>   
-                            
+                            {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
+                            {getPercentagesForPositionsDisplay(liveGame.position).map(action => {
+                                return  (<Text>{`${action[0]}: ${Object.values(action[1])}%`} </Text> )
+                            })   }
                          </View>
                     
                 </View>
