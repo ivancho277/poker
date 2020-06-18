@@ -68,7 +68,6 @@ export default function GameScreenNew(props) {
             <View style={styles.container}>
                 <ScrollView>
                     <Card title='Track your game!'>
-                        <Text> Current Game Info: </Text>
                         <ScrollView>
                             <GameController goHome={goHome} reload={manualReload}></GameController>
                             <GameSubscriber>

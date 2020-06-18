@@ -23,7 +23,7 @@ import { Tables } from '../../constants/tables.js';
 
 
 export const GameController = (props) => {
-    const [{ data, liveGame, liveGameLoading }, actions] = UseGameStore();
+    const [{ data, liveGame, liveGameLoading, calculatedData }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('');
     const [currentTags, setCurrentTags] = useState([]);
@@ -116,6 +116,29 @@ export const GameController = (props) => {
                             return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions))} %  </Text>
                         })}</View>
                     }
+                </View>
+                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>
+                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                    {storageIsEmpty ? <Text>No Saved games</Text>
+                        :
+                        <View>{liveGame.actions.map((action, index) => {
+                            return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
+                        })}</View>}
+                </View>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+
+
+                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{color: 'blue', fontWeight: 'bold'}}> {liveGame.position} </Text> </Subheading>
+                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                    
+                        <View style={{maxHeight: 80}}>
+                            <Button title="press" onPress={() => {Calculate.getPercentagesByPositionInAction(calculatedData.positionTotals, calculatedData.positionCount)}}>press</Button>   
+                            
+                         </View>
+                    
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
                     <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>

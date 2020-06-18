@@ -174,7 +174,11 @@ const sumAllGameActions = (games) => {
     return null;
 }
 
-
+const getPercentagesByPositionInAction = (PosTotals, PosCounts) => {
+    console.log('PosTotals::::', PosTotals )
+    console.log('PosCounts::::', PosCounts );
+    return 'hi'
+}
 
 module.exports = {
     objToArray: objToArray,
@@ -186,6 +190,7 @@ module.exports = {
     sumGamesTotals: sumGamesTotals,
     sumUpGameTotals: sumUpGameTotals,
     sumGamesPositions: sumGamesPositions,
+    getPercentagesByPositionInAction: getPercentagesByPositionInAction,
 
 
 }
