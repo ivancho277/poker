@@ -105,7 +105,7 @@ export default function GameScreenNew(props) {
 
 
                         }
-                        {/* <GameFAB /> */}
+                        
                     </Card>
 
 
@@ -120,7 +120,7 @@ export default function GameScreenNew(props) {
 
                     {/* <Tester></Tester> */}
                 </ScrollView>
-
+                <GameFAB />        
             </View>
         </ScrollView>
 

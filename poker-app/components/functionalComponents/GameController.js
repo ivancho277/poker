@@ -136,6 +136,7 @@ export const GameController = (props) => {
 
 
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                    <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{color: 'blue', fontWeight: 'bold'}}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     
@@ -146,15 +147,6 @@ export const GameController = (props) => {
                             })   }
                          </View>
                     
-                </View>
-                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>
-                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    {storageIsEmpty ? <Text>No Saved games</Text>
-                        :
-                        <View>{liveGame.actions.map((action, index) => {
-                            return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, foundsum)}%  </Text>
-                        })}</View>}
                 </View>
             </View>
 

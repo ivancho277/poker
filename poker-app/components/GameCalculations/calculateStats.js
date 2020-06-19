@@ -84,6 +84,7 @@ const sumGamesTotals = (games) => {
                 //console.log('inner SUM: ', innerSum);
                 return accum + innerSum;
             }, accum);
+            
             return sum;
         } else {
             return null;

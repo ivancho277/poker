@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import {StyleSheet} from 'react-native'
 import { FAB, Portal, Provider } from 'react-native-paper';
 
 export default function GameFAB(props) {
     const [open, setOpen] = useState(false);
 
 
-    _onStateChange = () => setOpen(open);
+    _onStateChange = () => setOpen(!open);
 
     return (
         <Provider>
             <Portal>
-                <FAB
+                <FAB.Group
+                    style={styles.fab}
                     open={open}
+                    small
                     icon={open ? 'calendar-today' : 'plus'}
                     actions={[
                         { icon: 'plus', label: 'Ignore for now', onPress: () => console.log('Pressed add') },
@@ -33,3 +36,17 @@ export default function GameFAB(props) {
         </Provider>
     )
 }
+
+const styles = StyleSheet.create({
+    fab: {
+      position: 'absolute',
+      margin: 16,
+      right: 0,
+      bottom: 0,
+      borderColor: 'black',
+      borderWidth: 1,
+      borderStyle: 'solid'
+      
+    },
+  })
+  
