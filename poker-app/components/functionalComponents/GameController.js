@@ -119,7 +119,7 @@ export const GameController = (props) => {
                         :
                         <View>{liveGame.actions.map((action, index) => {
                             return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions))} %  </Text>
-                        })}</View>
+                        })}</View> 
                     }
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
@@ -166,7 +166,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, liveGameLoading, data, allGamesArray }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading }) => (
+            {({ liveGame, liveGameLoading, data, allGamesArray }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading,  }) => (
                 //debugger
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
@@ -198,7 +198,7 @@ export const GameController = (props) => {
                             <View></View>
                         }
                         {/* <AddTag allTags={data.allTags}></AddTag> */}
-                        <TagDialog></TagDialog>
+                        <TagDialog allTags={data.tags}></TagDialog>
                         <View style={{ marginTop: 5 }}>
                         </View>
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log("my current sum:", addActionValues(liveGame.actions)) }}>{"Console Log sum"}</AntDesign.Button> */}

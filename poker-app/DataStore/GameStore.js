@@ -703,18 +703,20 @@ const actions = {
             })
         }
     },
+
+
     /**
      * This Action will Update Storage Running totals with what ever data is in Currently in liveGame 
      * *Not implemented anywhere in code, SaveAllGames is updating them only.
      */
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
-        storage.updateTotals(liveGame);
+storage.updateTotals(liveGame);
     },
 
-    getPositionTotalsFromStorage: () => ({ dispatch }) => {
+getPositionTotalsFromStorage: () => ({ dispatch }) => {
 
-    },
+},
 
     TestModeSwitch: () => ({ getState, setState }) => {
         const { testModeOn } = getState();

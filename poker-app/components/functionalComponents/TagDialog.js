@@ -8,7 +8,7 @@ import { Dialog, Portal, Text, Button, RadioButton, TextInput } from 'react-nati
 function RadioTagButtonGroup(props) {
     const [allTags, setAllTags] = useState(props.alltags);
     const [value, setValue] = useState('');
-    const [{ data }, actions] = UseGameStore();
+    const [{ data,  }, actions] = UseGameStore();
 
     useEffect(() => {
         return () => {
@@ -26,7 +26,7 @@ function RadioTagButtonGroup(props) {
                     {
                         data.tags.map((tag, i) => {
                             return <View key={i}>
-                                <RadioButton.Item label={tag} value={tag} />
+                                <RadioButton.Item label={tag} value={tag} status={props.currentTags.includes(tag) ? 'checked' : "unchecked"  } />
                             </View>
                         })
                     }
@@ -45,11 +45,16 @@ function RadioTagButtonGroup(props) {
 export default function TagDialog(props) {
     const [visible, setVisible] = useState(false);
     const [tagtext, setTagText] = useState('');
+    const [savedATag, setSavedATag] = useState(false);
     const [alltags, setAllTags] = useState(props.allTags);
-    const [, { addTagToCurrentGame, addTagToAll }] = UseGameStore();
+    const [{liveGame}, { addTagToCurrentGame, addTagToAll }] = UseGameStore();
+    const [localCurrentTags, setLocalCurrentTags] = useState(liveGame.tags)
 
     const _hideDialog = () => { setVisible(false); }
     const _showDialog = () => { setVisible(true); }
+    const _savedATag = () => { setSavedATag(true); }
+    const _finishedSavingTag = () => { setSavedATag(false); }
+    const _addToLocalTags = (tag) => {setLocalCurrentTags(localCurrentTags.concat(tag))}
 
     return (
         <View>
@@ -69,13 +74,13 @@ export default function TagDialog(props) {
 
                         <Dialog.ScrollArea>
 
-                            <RadioTagButtonGroup setTag={setTagText} alltags={props.alltags} />
+                            <RadioTagButtonGroup setTag={setTagText} alltags={props.alltags} savedATag={savedATag} doneSaving={_finishedSavingTag}  currentTags={localCurrentTags}/>
 
                         </Dialog.ScrollArea>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={() => _hideDialog()}>Cancel</Button>
-                        <Button onPress={() => { console.log(tagtext); addTagToCurrentGame(tagtext); addTagToAll(tagtext); setTagText('') }}>Ok</Button>
+                        <Button onPress={() => _hideDialog()}>Back</Button>
+                        <Button onPress={() => { console.log(tagtext); addTagToCurrentGame(tagtext); addTagToAll(tagtext); _addToLocalTags(tagtext); setTagText(''); }}>Add</Button>
                     </Dialog.Actions>
 
                 </Dialog>
