@@ -139,7 +139,7 @@ export const GameController = (props) => {
                     <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{color: 'blue', fontWeight: 'bold'}}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    
+                    {/* TODO: 6.19.2020 ---- no key here! */}
                         <View style={{maxHeight: 80}}>
                             {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
                             {getPercentagesForPositionsDisplay(liveGame.position).map(action => {

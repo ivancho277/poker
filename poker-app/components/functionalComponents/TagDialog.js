@@ -41,7 +41,7 @@ function RadioTagButtonGroup(props) {
 
 
 
-
+//TODO: 6/19/2020 --- Having an error 'cannot read property .concat() of undefined when we add anything with add btn
 export default function TagDialog(props) {
     const [visible, setVisible] = useState(false);
     const [tagtext, setTagText] = useState('');
