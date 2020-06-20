@@ -120,7 +120,7 @@ export default function GameScreenNew(props) {
 
                     {/* <Tester></Tester> */}
                 </ScrollView>
-                <GameFAB />        
+                <GameFAB reload={manualReload} goHome={goHome} />        
             </View>
         </ScrollView>
 
