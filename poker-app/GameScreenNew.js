@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
-import { ListItem, Button, Icon } from 'react-native-elements'
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
@@ -8,10 +8,9 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
-import { Switch, Card, Divider, Title } from 'react-native-paper';
+import { Switch } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB'
 import { RadioTable } from './components/functionalComponents/RadioTable'
-
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -77,45 +76,13 @@ export default function GameScreenNew(props) {
                                 )}
                             </GameSubscriber>
                         </ScrollView>
-                        {/* <GameFAB reload={manualReload} goHome={goHome} /> */}
+
                     </Card>
                     {/* <View>
                                 <ScrollView>
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
                             </View> */}
-
-
-                    <View style={{ flexDirection: 'column', display: 'flex' }}>
-                        <Card>
-                            <Card.Content>
-                                <Title>Testing Buttons</Title>
-                                <Divider />
-                                <ScrollView>
-
-                                    <Text>Toggle test Buttons {'\n'}</Text>
-
-                                    <View style={{ alignItems: 'baseline', justifyContent: 'center'}}>
-                                        <Switch
-                                            value={state.testModeOn}
-                                            onValueChange={actions.TestModeSwitch}
-                                        />
-                                    </View>
-
-                                    {state.testModeOn ?
-                                        // <ScrollView>
-                                        <Tester></Tester>
-                                        // </ScrollView>
-                                        :
-                                        <View></View>
-                                    }
-                                </ScrollView>
-                            </Card.Content>
-                        </Card>
-
-                    </View>
-
-
                     {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
@@ -126,6 +93,29 @@ export default function GameScreenNew(props) {
                     {/* <Tester></Tester> */}
                 </ScrollView>
                 <GameFAB reload={manualReload} goHome={goHome} />
+                <View style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Card  title='Testing Buttons'>
+                        <View style={{justifyContent: 'space-around',  display: 'flex'}}>
+                            <Text>Toggle test Buttons</Text><Switch
+                                style={{ alignContent: 'center' }}
+                                value={state.testModeOn}
+                                onValueChange={actions.TestModeSwitch}
+                            />
+
+
+                            {state.testModeOn ?
+                                // <ScrollView>
+                                <Tester></Tester>
+                                // </ScrollView>
+                                :
+                                <View></View>
+
+
+
+                            }
+                        </View>
+                    </Card>
+                </View>
             </View>
         </ScrollView>
 

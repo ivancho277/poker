@@ -42,15 +42,15 @@ export const Tester = () => {
 
     const [state, actions] = UseGameStore();
     const [isVisible, setIsVisible] = useState(false);
-
-    _showDialog = () => { setIsVisible(true) };
-    _hideDialog = () => { setIsVisible(false) };    
+    const [showTestDialog, setShowTestDialog] = useState(false);
+    const _showDialog = () => { setIsVisible(true) };
+    const _hideDialog = () => { setIsVisible(false) };    
     // const [loading, setLoading] = useState(false);
     // useEffect(() => {
     //     //actions.load();
     // }, [])
 
-    GetDataTest = async () => {
+    const GetDataTest = async () => {
         const myData = await StorageAPI.getAllNewGames();
        // setTest(JSON.parse(myData));
         setTimeout(() => {
@@ -62,7 +62,7 @@ export const Tester = () => {
         return (JSON.parse(myData));
     }
 
-    getCurrentGame = async () => {
+    const getCurrentGame = async () => {
         const CurrGame = await StorageAPI.retrieveCurrentGame();
         setTimeout(() => {
             console.log("What Saved LIVEGAME:::", JSON.parse(CurrGame));
@@ -70,7 +70,7 @@ export const Tester = () => {
         return JSON.parse(CurrGame);
     }
 
-    manualReload = async () => {
+    const manualReload = async () => {
         //setLoadingData(true);
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {

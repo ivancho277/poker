@@ -84,7 +84,7 @@ const sumGamesTotals = (games) => {
                 //console.log('inner SUM: ', innerSum);
                 return accum + innerSum;
             }, accum);
-            
+
             return sum;
         } else {
             return null;
@@ -162,7 +162,7 @@ const sumAllGameActions = (games) => {
             let value = parseInt(action[Object.keys(action)[0]]); return total + value
         }
             , init);
-          console.log('This Array: ', sum);
+        console.log('This Array: ', sum);
         return sum;
     }
     if (typeof (games) === 'object') {
@@ -197,10 +197,28 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
             // console.log("posTotals{action}:::::", action)
             // console.log("Count[posi]:::::", posCounts[position])
         }
-        percentageArray.push( obj );
+        percentageArray.push(obj);
     }
     console.log(percentageArray);
     return percentageArray;
+}
+
+const sumPositionCount = (games) => {
+    let actionCountPerPosition = sumGamesPositions(games);
+    console.log('actionCountPerPosition: %o', actionCountPerPosition);
+    let positionCount = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+    for(action in actionCountPerPosition){
+        for(position in actionCountPerPosition[action]){
+            console.log('[ation]:%o', action);
+            console.log('action: %o', action);
+            console.log('position: %o', position);
+            console.log('[action][position]: %o', actionCountPerPosition[action][position]);
+            positionCount[position] = positionCount[position] + actionCountPerPosition[action][position]; 
+        }
+        
+    }
+    console.log('positionCount: %o', positionCount);
+
 }
 
 module.exports = {
@@ -214,6 +232,6 @@ module.exports = {
     sumUpGameTotals: sumUpGameTotals,
     sumGamesPositions: sumGamesPositions,
     percentagesPerPositionForEachAction: percentagesPerPositionForEachAction,
-
+    sumPositionCount: sumPositionCount,
 
 }

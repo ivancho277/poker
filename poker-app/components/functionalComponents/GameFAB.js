@@ -30,9 +30,9 @@ export default function GameFAB(props) {
                             icon={open ? 'chevron-down' : 'chevron-up'}
                             actions={[
                                 { icon: 'restart', color: 'red', label: 'Discard Game', onPress: () => { resetLiveGame(); props.reload();}  },
-                                { icon: 'tag-plus', label: 'Add Tag', onPress: () => { _openTagDialog(); console.log("opening?.", openAddTag) } },
-                                { icon: 'plus-circle', label: 'Add Action', onPress: () => {  _openActionDialog() ;console.log('peep pewww'); } },
-                                { icon: 'content-save-all', label: 'Save', onPress: () => {saveAllGames(); resetLiveGame(); props.reload().then(() => { props.goHome() }) } },
+                                { icon: 'tag-plus', color: 'blue' ,label: 'Add Tag', onPress: () => { _openTagDialog(); console.log("opening?.", openAddTag) } },
+                                { icon: 'plus-circle', color: 'blue' ,label: 'Add Action', onPress: () => {  _openActionDialog() ;console.log('peep pewww'); } },
+                                { icon: 'content-save-all', color: 'green' ,label: 'Save', onPress: () => {saveAllGames(); resetLiveGame(); props.reload().then(() => { props.goHome() }) } },
                             ]}
                             onStateChange={_onStateChange}
                             onPress={() => {
