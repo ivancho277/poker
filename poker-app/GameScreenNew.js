@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { ListItem, Button, Icon } from 'react-native-elements'
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
@@ -8,9 +8,10 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
-import { Switch } from 'react-native-paper';
+import { Switch, Card, Divider, Title } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB'
 import { RadioTable } from './components/functionalComponents/RadioTable'
+
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -71,11 +72,12 @@ export default function GameScreenNew(props) {
                         <ScrollView>
                             <GameController goHome={goHome} reload={manualReload}></GameController>
                             <GameSubscriber>
-                                {({liveGame}, {updatePosition }) => (
-                                <RadioTable liveGame={liveGame} setLivePosition={updatePosition} />
+                                {({ liveGame }, { updatePosition }) => (
+                                    <RadioTable liveGame={liveGame} setLivePosition={updatePosition} />
                                 )}
                             </GameSubscriber>
                         </ScrollView>
+                        {/* <GameFAB reload={manualReload} goHome={goHome} /> */}
                     </Card>
                     {/* <View>
                                 <ScrollView>
@@ -84,31 +86,34 @@ export default function GameScreenNew(props) {
                             </View> */}
 
 
+                    <View style={{ flexDirection: 'column', display: 'flex' }}>
+                        <Card>
+                            <Card.Content>
+                                <Title>Testing Buttons</Title>
+                                <Divider />
+                                <ScrollView>
 
-                    <Card title='Testing Buttons'>
-                        <View style={{ justifyContent: 'center' }}>
+                                    <Text>Toggle test Buttons {'\n'}</Text>
 
-                            <Text>Toggle test Buttons</Text><Switch
-                                style={{ alignContent: 'center' }}
-                                value={state.testModeOn}
-                                onValueChange={actions.TestModeSwitch}
-                            />
-                        </View>
+                                    <View style={{ alignItems: 'baseline', justifyContent: 'center'}}>
+                                        <Switch
+                                            value={state.testModeOn}
+                                            onValueChange={actions.TestModeSwitch}
+                                        />
+                                    </View>
 
-                        {state.testModeOn ?
-                            // <ScrollView>
-                            <Tester></Tester>
-                            // </ScrollView>
-                            :
-                            <View></View>
+                                    {state.testModeOn ?
+                                        // <ScrollView>
+                                        <Tester></Tester>
+                                        // </ScrollView>
+                                        :
+                                        <View></View>
+                                    }
+                                </ScrollView>
+                            </Card.Content>
+                        </Card>
 
-
-
-                        }
-                        
-                    </Card>
-
-
+                    </View>
 
 
                     {/* <Card title='1st tester showing data'>
@@ -120,7 +125,7 @@ export default function GameScreenNew(props) {
 
                     {/* <Tester></Tester> */}
                 </ScrollView>
-                <GameFAB reload={manualReload} goHome={goHome} />        
+                <GameFAB reload={manualReload} goHome={goHome} />
             </View>
         </ScrollView>
 

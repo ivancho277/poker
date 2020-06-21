@@ -61,12 +61,9 @@ export default function GameFAB(props) {
 const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderStyle: 'solid',
+        margin: 3,
+        right: -5,
+        bottom: -5,
         color: "black"
 
     },

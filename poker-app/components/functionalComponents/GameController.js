@@ -70,7 +70,7 @@ export const GameController = (props) => {
 
     const getPercentagesForPositionsDisplay = (position) => {
         let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
-        return  Object.entries(dataArray[position]);
+        return Object.entries(dataArray[position]);
     }
 
     const calculatePercentage = (count, total) => {
@@ -119,7 +119,7 @@ export const GameController = (props) => {
                         :
                         <View>{liveGame.actions.map((action, index) => {
                             return <Text key={index}>{action.actionName}: {calculatePercentage(action.count, addActionValues(liveGame.actions))} %  </Text>
-                        })}</View> 
+                        })}</View>
                     }
                 </View>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
@@ -137,19 +137,35 @@ export const GameController = (props) => {
 
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
                     <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{color: 'blue', fontWeight: 'bold'}}> {liveGame.position} </Text> </Subheading>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     {/* TODO: 6.19.2020 ---- no key here! */}
-                        <View style={{maxHeight: 80}}>
-                            {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                            {getPercentagesForPositionsDisplay(liveGame.position).map(action => {
-                                return  (<Text>{`${action[0]}: ${Object.values(action[1])}%`} </Text> )
-                            })   }
-                         </View>
-                    
+                    <View style={{ maxHeight: 80 }}>
+                        {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
+                        {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                            return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
+                        })}
+                    </View>
+
                 </View>
             </View>
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
 
+                    <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
+                    <Text style={{ fontSize: 10}}>For current tags</Text>
+                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
+                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                    {/* TODO: 6.19.2020 ---- no key here! */}
+                    <View style={{ maxHeight: 80 }}>
+                        {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
+                        {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                            return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
+                        })}
+                    </View>
+
+                </View>
+            </View>
         </Surface>
         )
     }
@@ -158,7 +174,7 @@ export const GameController = (props) => {
     // debugger
     return (
         <GameSubscriber>
-            {({ liveGame, liveGameLoading, data, allGamesArray }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading,  }) => (
+            {({ liveGame, liveGameLoading, data, allGamesArray }, { updatePosition, incrementPosition, addNewAction, saveAllGames, getGames, resetLiveGame, endLiveLoading, }) => (
                 //debugger
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
