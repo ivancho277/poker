@@ -15,6 +15,7 @@ import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-nati
 import TagDialog from './TagDialog';
 import { Tables } from '../../constants/tables.js';
 import { getPercentages } from '../statscalculation.js';
+import { sumUpGameTotals } from '../GameCalculations/calculateStats.js';
 
 
 
@@ -24,7 +25,7 @@ import { getPercentages } from '../statscalculation.js';
 
 
 export const GameController = (props) => {
-    const [{ data, liveGame, liveGameLoading, calculatedData }, actions] = UseGameStore();
+    const [{ data, liveGame, allGamesArray, calculatedData }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('');
     const [currentTags, setCurrentTags] = useState([]);
@@ -159,9 +160,11 @@ export const GameController = (props) => {
                     {/* TODO: 6.19.2020 ---- no key here! */}
                     <View style={{ maxHeight: 80 }}>
                         {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                        {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                        <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button>
+                        <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumGamesTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray) ))}}></Button>
+                        {/* {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
                             return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
-                        })}
+                        })} */}
                     </View>
 
                 </View>

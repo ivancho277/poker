@@ -156,20 +156,20 @@ const sumAllGameActions = (games) => {
     }
     let sum = 0;
     if (games instanceof Array) {
-        //console.log('This Array: ', sum);
+        console.log('This Array: ', games);
         let init = 0;
         sum = games.reduce((total = 0, action) => {
             let value = parseInt(action[Object.keys(action)[0]]); return total + value
         }
             , init);
-        //   console.log('This Array: ', sum);
+          console.log('This Array: ', sum);
         return sum;
     }
     if (typeof (games) === 'object') {
         for (action in games) {
             sum += games[action]
         }
-        // console.log('This Object', sum);
+        console.log('This Object', sum);
         return sum;
     }
     return null;
@@ -192,9 +192,9 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
             actionName = action
             !([action] in obj) && (obj[action] = {});
             obj[action][position] = calculatePercentage(posTotals[action][position], posCounts[position]);
-            console.log('OBJ:.;.;.;.;.;.;.', obj);
+            // console.log('OBJ:.;.;.;.;.;.;.', obj);
             // console.log(`Action::::: ${ calculatePercentage(posTotals[action][position], posCounts[position] )} %` )
-            console.log("posTotals{action}:::::", action)
+            // console.log("posTotals{action}:::::", action)
             // console.log("Count[posi]:::::", posCounts[position])
         }
         percentageArray.push( obj );
