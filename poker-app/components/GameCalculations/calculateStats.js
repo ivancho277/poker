@@ -203,21 +203,23 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
     return percentageArray;
 }
 
+//TODO: 6/21/202 Sunday, finish this funct. and implement in Game Display.
 const sumPositionCount = (games) => {
     let actionCountPerPosition = sumGamesPositions(games);
     console.log('actionCountPerPosition: %o', actionCountPerPosition);
     let positionCount = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
     for(action in actionCountPerPosition){
         for(position in actionCountPerPosition[action]){
-            console.log('[ation]:%o', action);
-            console.log('action: %o', action);
-            console.log('position: %o', position);
-            console.log('[action][position]: %o', actionCountPerPosition[action][position]);
+            // console.log('[ation]:%o', action);
+            // console.log('action: %o', action);
+            // console.log('position: %o', position);
+            // console.log('[action][position]: %o', actionCountPerPosition[action][position]);
             positionCount[position] = positionCount[position] + actionCountPerPosition[action][position]; 
         }
         
     }
-    console.log('positionCount: %o', positionCount);
+    // console.log('positionCount: %o', positionCount);
+    return positionCount;
 
 }
 

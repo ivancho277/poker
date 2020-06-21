@@ -73,6 +73,11 @@ export const GameController = (props) => {
         let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
         return Object.entries(dataArray[position]);
     }
+    const getPercentagesForPositionsDisplayBYTAG = (position) => {
+        let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
+        let dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+        return Object.entries(dataArray[position]);
+    }
 
     const calculatePercentage = (count, total) => {
         return Math.round(count / total * 100)
@@ -133,40 +138,38 @@ export const GameController = (props) => {
                         })}</View>}
                 </View>
             </View>
-            <View style={{ flexDirection: 'row' }}>
-
-
+            <View style={{ flexDirection: 'column' }}>
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+
                     <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
+                    <Text style={{ fontSize: 10 }}>For current tags</Text>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     {/* TODO: 6.19.2020 ---- no key here! */}
                     <View>
                         {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                        {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                        {/* <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button> */}
+                        {/* <Button title='Test the Data' onPress={() => {console.log("Count ME:", Calculate.sumPositionCount(Calculate.searchByManyTags(liveGame.tags, allGamesArray) ))}}></Button> */}
+                        {getPercentagesForPositionsDisplayBYTAG(liveGame.position).map((action, i) => {
                             return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
                         })}
                     </View>
 
                 </View>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                <View>
+                    <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                        <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
+                        <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
+                        {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+                        {/* TODO: 6.19.2020 ---- no key here! */}
+                        <View>
+                            {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
+                            {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                                return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
+                            })}
+                        </View>
 
-                    <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
-                    <Text style={{ fontSize: 10}}>For current tags</Text>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
-                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    {/* TODO: 6.19.2020 ---- no key here! */}
-                    <View style={{ maxHeight: 80 }}>
-                        {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                        <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button>
-                        <Button title='Test the Data' onPress={() => {console.log("Count ME:", Calculate.sumPositionCount(Calculate.searchByManyTags(liveGame.tags, allGamesArray) ))}}></Button>
-                        {/* {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
-                            return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
-                        })} */}
                     </View>
-
                 </View>
             </View>
         </Surface>
