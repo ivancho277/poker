@@ -11,6 +11,7 @@ import { ValidationSnackbar } from './components/functionalComponents/Validation
 import { ScrollView } from 'react-native-gesture-handler';
 import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
 import { Switch } from 'react-native-paper';
+import { DataGraph } from './components/functionalComponents/DataGraph.js';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -171,11 +172,14 @@ class StatsScreen extends Component {
                             <View>
                                 {this.renderGamesFound(this.state.selectedTags, data.allGames, testModeOn, actions.TestModeSwitch)}
                             </View>
+                           <DataGraph />
+
                             <ValidationSnackbar
                                 message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
                                 visible={this.state.showSnack}
                                 onDismiss={this._hideSnack}
                             />
+                            
 
                         </View>
                     </View>

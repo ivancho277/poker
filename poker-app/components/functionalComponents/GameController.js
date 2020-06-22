@@ -44,7 +44,7 @@ export const GameController = (props) => {
         console.log("liveGame:  ", liveGame);
     }, [])
 
-    addActionValues = (actions) => {
+    const addActionValues = (actions) => {
         let accum = 0;
         return actions.reduce((accum, action) => {
             return accum + action.count;
@@ -52,12 +52,12 @@ export const GameController = (props) => {
     }
 
 
-    onActionClick = (action, actionIndex) => {
+    const onActionClick = (action, actionIndex) => {
         // setCurrentTime(new Date())
         actions.onActionClick(action, actionIndex);
     }
 
-    GetDataTest = async () => {
+    const GetDataTest = async () => {
         const myData = await StorageAPI.getAllNewGames();
         setTest(JSON.parse(myData));
         setTimeout(() => {

@@ -11,7 +11,8 @@ import { DisplayStats } from './components/functionalComponents/DisplayStats'
 import { Switch, Card, Button } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB';
 import { RadioTable } from './components/functionalComponents/RadioTable';
-import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog'
+import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog';
+import { StackedBarChart } from 'react-native-chart-kit'
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -40,7 +41,7 @@ export default function GameScreenNew(props) {
     //     console.log('LIVE :', state.liveGame)
 
     // }, [])
-    //TODO: we need to also make sure that there are saved games in general before showing dialog!
+    //TODO: 6/22/2020 we need to also make sure that there are saved games in general before showing dialog!
     useEffect(() => {
         actions.setCurrentORNewLiveGame();
         if (state.data.currentGame) {
@@ -123,28 +124,28 @@ export default function GameScreenNew(props) {
                     <GameFAB reload={manualReload} goHome={goHome} />
                     <View style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
                         <Card>
-                            <Card.Title  title='Testing Buttons' />
+                            <Card.Title title='Testing Buttons' />
                             <Card.Content>
-                            <View  style={{flex: 1, alignItems: 'flex-start', marginTop: 10}}>
-                                <Text>Toggle test Buttons</Text>
-                                <Switch    
-                                    style={{marginTop: 10}}
-                                    value={state.testModeOn}
-                                    onValueChange={actions.TestModeSwitch}
-                                />
+                                <View style={{ flex: 1, alignItems: 'flex-start', marginTop: 10 }}>
+                                    <Text>Toggle test Buttons</Text>
+                                    <Switch
+                                        style={{ marginTop: 10 }}
+                                        value={state.testModeOn}
+                                        onValueChange={actions.TestModeSwitch}
+                                    />
 
 
-                                {state.testModeOn ?
-                                    // <ScrollView>
-                                    <Tester></Tester>
-                                    // </ScrollView>
-                                    :
-                                    <View></View>
+                                    {state.testModeOn ?
+                                        // <ScrollView>
+                                        <Tester></Tester>
+                                        // </ScrollView>
+                                        :
+                                        <View></View>
 
 
 
-                                }
-                            </View>
+                                    }
+                                </View>
                             </Card.Content>
                         </Card>
                     </View>

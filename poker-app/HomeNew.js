@@ -8,6 +8,7 @@ import { Colors, ActivityIndicator, Snackbar, Title } from 'react-native-paper';
 import * as Utils from './utils/objectOps'
 import * as Calculate from './components/GameCalculations/calculateStats'
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
+import { ChipButton } from './components/functionalComponents/ChipButton'
 
 
 export default function HomeScreenNew(props) {
@@ -59,28 +60,30 @@ export default function HomeScreenNew(props) {
             {(state, actions) => (
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
-                    
+
                     <View>
                         {state.calculatedData.loading ?
                             <ActivityIndicator animating={true} color={Colors.purple800} />
                             :
                             <View>
                                 {/* <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button> */}
-                                <Title style={{textAlign: 'center', fontWeight: '500'}}>POKER TRACKER</Title>
+                                <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
                                 <DisplayStats></DisplayStats>
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
-                                <View style={{flex: 1, marginTop: 15}}>
+                                <View style={{ flex: 1, marginTop: 15 }}>
 
-                                    <Button title="Begin Tracking A Game!" icon={{name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
+                                    <Button title="Begin Tracking A Game!" icon={{ name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
 
                                     <Text>ReRender global state</Text>
                                     <TouchableOpacity onPress={() => { manualReload() }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity>
+                                    
                                     {/* <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity> */}
                                 </View>
+                                {/* <ChipButton name='call' /> */}
                             </View>
                         }
                     </View>
