@@ -128,10 +128,13 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
         dispatch(firstMoveMade());
+       
+        
     } else {
         console.log("No Current Game Present");
         dispatch(setNewLiveGame(actions));
         //dispatch(firstMoveMade());
+        
     }
 }
 

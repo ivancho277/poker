@@ -9,8 +9,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
 import { Switch } from 'react-native-paper';
-import GameFAB from './components/functionalComponents/GameFAB'
-import { RadioTable } from './components/functionalComponents/RadioTable'
+import GameFAB from './components/functionalComponents/GameFAB';
+import { RadioTable } from './components/functionalComponents/RadioTable';
+import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog'
 
 //import StoreLoader from '../components/HOCs/StoreLoader'
 // import  Tester  from './components/testComponents/Tester'
@@ -22,7 +23,15 @@ import { RadioTable } from './components/functionalComponents/RadioTable'
 export default function GameScreenNew(props) {
     const [state, actions] = UseGameStore();
     const [loading, setLoading] = useState(state.loading);
-    const [testOn, setTestOn] = useState(state.testModeOn)
+    const [testOn, setTestOn] = useState(state.testModeOn);
+    const [isAskLoadVisible, setIsAskLoadVisible] = useState(false);
+
+    const _showLoadDialog = () => { setIsAskLoadVisible(true) }
+    const _hideLoadDialog = () => { setIsAskLoadVisible(false) }
+    const _startNewGame = () => { actions.resetLiveGame(); manualReload() }
+    const _continueCurrentGame = () => { console.log("continue"); }
+
+
 
 
     //NOTE: later I may need to check if I need to define an async function inside, and then call load and run a clean up. 
@@ -31,9 +40,14 @@ export default function GameScreenNew(props) {
     //     console.log('LIVE :', state.liveGame)
 
     // }, [])
+    //TODO: we need to also make sure that there are saved games in general before showing dialog!
     useEffect(() => {
         actions.setCurrentORNewLiveGame();
-        console.log("reload dat game")
+        if (state.data.currentGame) {
+            _showLoadDialog()
+        }
+        console.log('state.currentGame: %o', state.data.currentGame);
+
     }, [])
 
     manualReload = async () => {
@@ -76,7 +90,16 @@ export default function GameScreenNew(props) {
                                 )}
                             </GameSubscriber>
                         </ScrollView>
-
+                        <LoadCurrentDialog
+                            isVisible={isAskLoadVisible}
+                            title="Do you want to Load last Game?"
+                            message={'You have an unfinished previous Game, do you want to continue playing or start new game? '}
+                            hide={_hideLoadDialog}
+                            confirmFunction={_continueCurrentGame}
+                            confirmText="Load Game"
+                            declineFunction={_startNewGame}
+                            declineText="Start New Game"
+                        />
                     </Card>
                     {/* <View>
                                 <ScrollView>
@@ -94,8 +117,8 @@ export default function GameScreenNew(props) {
                 </ScrollView>
                 <GameFAB reload={manualReload} goHome={goHome} />
                 <View style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Card  title='Testing Buttons'>
-                        <View style={{justifyContent: 'space-around',  display: 'flex'}}>
+                    <Card title='Testing Buttons'>
+                        <View style={{ justifyContent: 'space-around', display: 'flex' }}>
                             <Text>Toggle test Buttons</Text><Switch
                                 style={{ alignContent: 'center' }}
                                 value={state.testModeOn}
