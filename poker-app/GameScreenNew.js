@@ -71,15 +71,17 @@ export default function GameScreenNew(props) {
 
 
 
-    //NOTE: CHECK CONDITIONAL TO MAKE SURE DATA IS LOADED BEFORE RENDERING 
+    //TODO: Fix position of Fab.
+    //TODO: fix position of switch
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
 
         // state.loading ?
         //     <Text>We need to load</Text>
         //     :
+        <View style={styles.container}>
         <ScrollView>
-            <View style={styles.container}>
+            <View>
                 <ScrollView>
                     <Card title='Track your game!'>
                         <ScrollView>
@@ -116,9 +118,9 @@ export default function GameScreenNew(props) {
                     {/* <Tester></Tester> */}
                 </ScrollView>
                 <GameFAB reload={manualReload} goHome={goHome} />
-                <View style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <View style={{ display: 'flex', flexDirection: 'column' }}>
                     <Card title='Testing Buttons'>
-                        <View style={{ justifyContent: 'space-around', display: 'flex' }}>
+                        <View style={{ display: 'flex', flexDirection: 'column'}} >
                             <Text>Toggle test Buttons</Text><Switch
                                 style={{ alignContent: 'center' }}
                                 value={state.testModeOn}
@@ -141,7 +143,8 @@ export default function GameScreenNew(props) {
                 </View>
             </View>
         </ScrollView>
-
+            <GameFAB reload={manualReload} goHome={goHome} />
+            </View>
 
 
     )
