@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { ListItem, Icon } from 'react-native-elements'
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
@@ -8,7 +8,7 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
 import { DisplayStats } from './components/functionalComponents/DisplayStats'
-import { Switch } from 'react-native-paper';
+import { Switch, Card, Button } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB';
 import { RadioTable } from './components/functionalComponents/RadioTable';
 import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog'
@@ -80,71 +80,78 @@ export default function GameScreenNew(props) {
         //     <Text>We need to load</Text>
         //     :
         <View style={styles.container}>
-        <ScrollView>
-            <View>
-                <ScrollView>
-                    <Card title='Track your game!'>
-                        <ScrollView>
-                            <GameController goHome={goHome} reload={manualReload}></GameController>
-                            <GameSubscriber>
-                                {({ liveGame }, { updatePosition }) => (
-                                    <RadioTable liveGame={liveGame} setLivePosition={updatePosition} />
-                                )}
-                            </GameSubscriber>
-                        </ScrollView>
-                        <LoadCurrentDialog
-                            isVisible={isAskLoadVisible}
-                            title="Do you want to Load last Game?"
-                            message={'You have an unfinished previous Game, do you want to continue playing or start new game? '}
-                            hide={_hideLoadDialog}
-                            confirmFunction={_continueCurrentGame}
-                            confirmText="Load Game"
-                            declineFunction={_startNewGame}
-                            declineText="Start New Game"
-                        />
-                    </Card>
-                    {/* <View>
+            <ScrollView>
+                <View>
+                    <ScrollView>
+                        <Card>
+                            <Card.Title title="Track your game!" />
+                            <Card.Content>
+                                <ScrollView>
+                                    <GameController goHome={goHome} reload={manualReload}></GameController>
+                                    <GameSubscriber>
+                                        {({ liveGame }, { updatePosition }) => (
+                                            <RadioTable liveGame={liveGame} setLivePosition={updatePosition} />
+                                        )}
+                                    </GameSubscriber>
+                                </ScrollView>
+                                <LoadCurrentDialog
+                                    isVisible={isAskLoadVisible}
+                                    title="Do you want to Load last Game?"
+                                    message={'You have an unfinished previous Game, do you want to continue playing or start new game? '}
+                                    hide={_hideLoadDialog}
+                                    confirmFunction={_continueCurrentGame}
+                                    confirmText="Load Game"
+                                    declineFunction={_startNewGame}
+                                    declineText="Start New Game"
+                                />
+                            </Card.Content>
+                        </Card>
+                        {/* <View>
                                 <ScrollView>
                                     <DisplayStats></DisplayStats>
                                 </ScrollView>
                             </View> */}
-                    {/* <Card title='1st tester showing data'>
+                        {/* <Card title='1st tester showing data'>
                                 <Text> Card showing all data </Text>
                                 <ScrollView>
                                 <TestComponent></TestComponent>
                                 </ScrollView>
                             </Card> */}
 
-                    {/* <Tester></Tester> */}
-                </ScrollView>
-                <GameFAB reload={manualReload} goHome={goHome} />
-                <View style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Card title='Testing Buttons'>
-                        <View style={{ display: 'flex', flexDirection: 'column'}} >
-                            <Text>Toggle test Buttons</Text><Switch
-                                style={{ alignContent: 'center' }}
-                                value={state.testModeOn}
-                                onValueChange={actions.TestModeSwitch}
-                            />
+                        {/* <Tester></Tester> */}
+                    </ScrollView>
+                    <GameFAB reload={manualReload} goHome={goHome} />
+                    <View style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
+                        <Card>
+                            <Card.Title  title='Testing Buttons' />
+                            <Card.Content>
+                            <View  style={{flex: 1, alignItems: 'flex-start', marginTop: 10}}>
+                                <Text>Toggle test Buttons</Text>
+                                <Switch    
+                                    style={{marginTop: 10}}
+                                    value={state.testModeOn}
+                                    onValueChange={actions.TestModeSwitch}
+                                />
 
 
-                            {state.testModeOn ?
-                                // <ScrollView>
-                                <Tester></Tester>
-                                // </ScrollView>
-                                :
-                                <View></View>
+                                {state.testModeOn ?
+                                    // <ScrollView>
+                                    <Tester></Tester>
+                                    // </ScrollView>
+                                    :
+                                    <View></View>
 
 
 
-                            }
-                        </View>
-                    </Card>
+                                }
+                            </View>
+                            </Card.Content>
+                        </Card>
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
             <GameFAB reload={manualReload} goHome={goHome} />
-            </View>
+        </View>
 
 
     )

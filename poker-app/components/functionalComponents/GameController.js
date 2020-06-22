@@ -145,7 +145,6 @@ export const GameController = (props) => {
                     <Text style={{ fontSize: 10 }}>For current tags</Text>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    {/* TODO: 6.19.2020 ---- no key here! */}
                     <View>
                         {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
                         {/* <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button> */}
