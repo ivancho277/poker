@@ -83,7 +83,7 @@ export default function HomeScreenNew(props) {
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity> */}
                                 </View>
-                                {/* <ChipButton name='call' /> */}
+                                <ChipButton name='call' />
                             </View>
                         }
                     </View>

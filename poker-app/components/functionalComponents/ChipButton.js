@@ -6,30 +6,31 @@ import { Button, Paragraph, Dialog, Portal, Text } from 'react-native-paper';
 export function ChipButton(props) {
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={()=>{alert(`you chose ${props.name}`)}}>
-          <Image style={styles.image} source={require("../../assets/noun_PokerChip.png")}/>
-        </TouchableOpacity>
-    <Text>{props.name}</Text>
-      </View>
+        <View>
+            <TouchableOpacity style={styles.button} onPress={() => { alert(`you chose ${props.name}`) }}>
+                <Image style={styles.image} source={require("../../assets/noun_PokerChip.png")} />
+                <Text style={styles.text}>{props.name}</Text>
+            </TouchableOpacity>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      width: 3,
-      height: 3,
-      alignItems: 'center',
-      justifyContent: 'center',
+    text: {
+        position: 'absolute',
+        right: 55,
+        top: 55
     },
     button: {
-    backgroundColor: 'green',
-      borderRadius: 20,
-      padding: 10,
-      marginBottom: 5
+        backgroundColor: 'green',
+        height: 130,
+        width: 130,
+        borderRadius: 90,
+
     },
     image: {
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        width: 130,
+        height: 130
     }
-  });
+});
