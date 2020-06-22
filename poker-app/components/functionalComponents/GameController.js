@@ -159,6 +159,7 @@ export const GameController = (props) => {
                 <View>
                     <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
                         <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
+                        <Text style={{ fontSize: 10 }}>Compared to all games</Text>
                         <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                         {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                         {/* TODO: 6.19.2020 ---- no key here! */}

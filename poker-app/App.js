@@ -11,7 +11,7 @@ import HomeScreenNew from "./HomeNew";
 import StatsScreen from "./Stats";
 import { AntDesign } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import { Provider as PaperProvider, ActivityIndicator, Colors } from 'react-native-paper';
+import { Provider as PaperProvider, ActivityIndicator, Colors, DefaultTheme } from 'react-native-paper';
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
@@ -22,64 +22,31 @@ import { UseGameStore, GameSubscriber } from './DataStore/GameStore'
 import GameScreenNew from './GameScreenNew';
 import { COLOR } from "react-native-material-ui";
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       isReady: true
-//     };
-//   }
-
-// async componentDidMount() {
-//   await Font.loadAsync({
-//     Roboto: require("native-base/Fonts/Roboto.ttf"),
-//     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-//     ...Ionicons.font
-//   });
-//   this.setState({ isReady: true });
-// }
+const theme = {  
+  ...DefaultTheme,
+  roundness: 10,
+  colors: {
+    ...DefaultTheme,
+    primary: '#7FB7BE',
+    accent: '#BC2C1A',
+    surface: '#DACC3E',
+    backdrop: '#7D1538',
+    background: '#D3F3EE'
+  },
+  font: {
+    ...DefaultTheme
+  }
+}
 
 const App = () => {
   const [state, { load, loadTotals }] = UseGameStore();
   const [loading, setLoading] = useState(true);
 
-  // const DataLoad = async () => {
-  //   await load().then(async (res) => {
-  //     await loadTotals().then(res => {
-  //       alert("!!DONE LOADING!!");
-  //     })
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   async function DataLoad() {
-  //     await load().then(async (res) => {
-  //       await loadTotals().then(res => {
-  //         setLoading(false);
-  //         alert("!!DONE LOADING!!");
-  //       })
-  //     })
-
-  //   }
-  //   DataLoad();
-  //   // load().then(res => {
-  //   //   setLoading(false)
-  //   // });
-  // }, []);
-
-
-
-
-  // <Root>
-  //   <Container>
-  // return (loading ?
-  //   <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'}></ActivityIndicator>
-  //   :
   return (
     // <GlobalState>
     <GameSubscriber>
       {(state, actions) => (
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <AppContainer />
         </PaperProvider>
 
