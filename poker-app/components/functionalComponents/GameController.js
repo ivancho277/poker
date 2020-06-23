@@ -11,7 +11,7 @@ import { AddTag } from './AddTag'
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js'
 import * as Utils from '../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton } from 'react-native-paper';
 import TagDialog from './TagDialog';
 import { Tables } from '../../constants/tables.js';
 import { getPercentages } from '../statscalculation.js';
@@ -38,9 +38,6 @@ export const GameController = (props) => {
     const [test, setTest] = useState();
 
     useEffect(() => {
-        // console.log("Time curr", currentTime)
-        // console.log("Time prev", previousTime)
-        //actions.gameStart();
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
         if (allGamesArray.length >= 0) {

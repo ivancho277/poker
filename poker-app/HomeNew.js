@@ -1,5 +1,5 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Button, colors, Header } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculation from './components/GameCalculations/calculateStats'
@@ -67,7 +67,10 @@ export default function HomeScreenNew(props) {
                             :
                             <View>
                                 {/* <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button> */}
-                                <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
+                                <View style={{ height: 150, justifyContent: 'center' }}>
+                                    <Image source={require('./assets/noun_statsChip.png')} style={{ width: 70, height:70, resizeMode: 'contain' }} />
+                                    <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
+                                </View>
                                 <DisplayStats></DisplayStats>
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
                                 <View style={{ flex: 1, marginTop: 15 }}>
@@ -78,12 +81,12 @@ export default function HomeScreenNew(props) {
                                     <TouchableOpacity onPress={() => { manualReload() }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity>
-                                    
+
                                     {/* <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity> */}
                                 </View>
-                                
+
                             </View>
                         }
                     </View>

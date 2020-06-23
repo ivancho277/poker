@@ -124,10 +124,10 @@ export default function GameScreenNew(props) {
                     <GameFAB reload={manualReload} goHome={goHome} />
                     <View style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
                         <Card>
-                            <Card.Title title='Testing Buttons' />
+                            <Card.Title title='     Testing Buttons' />
                             <Card.Content>
                                 <View style={{ flex: 1, alignItems: 'flex-start', marginTop: 10 }}>
-                                    <Text>Toggle test Buttons</Text>
+                                    <Text> Toggle test Buttons</Text>
                                     <Switch
                                         style={{ marginTop: 10 }}
                                         value={state.testModeOn}
