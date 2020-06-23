@@ -20,7 +20,7 @@ import TestScreen from './TestScreen';
 import SettingsNew from './SettingsNew';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore'
 import GameScreenNew from './GameScreenNew';
-import { COLOR } from "react-native-material-ui";
+
 
 const theme = {  
   ...DefaultTheme,

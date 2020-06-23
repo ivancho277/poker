@@ -29,8 +29,7 @@ export const GameController = (props) => {
     const [{ data, liveGame, allGamesArray, calculatedData }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('');
-    const [currentTags, setCurrentTags] = useState([]);
-    const [currentTotalSum, setCurrentTotalSum] = useState(0);
+    const [isThereSavedData, setIsThereSavedData] = useState(true);
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
@@ -43,6 +42,10 @@ export const GameController = (props) => {
         // console.log("Time prev", previousTime)
         //actions.gameStart();
         console.log("liveGame:  ", liveGame);
+        console.log('allGamesArray: %o', allGamesArray);
+        if (allGamesArray.length) {
+            setIsThereSavedData(false);
+        }
     }, [])
 
     const addActionValues = (actions) => {
@@ -129,6 +132,7 @@ export const GameController = (props) => {
                         })}</View>
                     }
                 </View>
+
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4 }}>
                     <Subheading style={{ textDecorationLine: 'underline' }}>% for Same Tag</Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
@@ -139,42 +143,52 @@ export const GameController = (props) => {
                         })}</View>}
                 </View>
             </View>
-            <View style={{ flexDirection: 'column' }}>
-                <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
 
-                    <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
-                    <Text style={{ fontSize: 10 }}>For current tags:</Text>
-                    <Text style={{ fontSize: 8 , color: 'red' }}>Will only show if current tags match any past tags.</Text>
-                    <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
-                    {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                    <View>
-                        {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                        {/* <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button> */}
-                        {/* <Button title='Test the Data' onPress={() => {console.log("Count ME:", Calculate.sumPositionCount(Calculate.searchByManyTags(liveGame.tags, allGamesArray) ))}}></Button> */}
-                        {getPercentagesForPositionsDisplayBYTAG(liveGame.position).map((action, i) => {
-                            return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
-                        })}
-                    </View>
 
-                </View>
-                <View>
+            {isThereSavedData ?
+
+                <View style={{ flexDirection: 'column' }}>
                     <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+
                         <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
-                        <Text style={{ fontSize: 10 }}>Compared to all games</Text>
+                        <Text style={{ fontSize: 10 }}>For current tags:</Text>
+                        <Text style={{ fontSize: 8, color: 'red' }}>Will only show if current tags match any past tags.</Text>
                         <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                         {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
-                        
                         <View>
                             {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
-                            {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                            {/* <Button title='Test the Data' onPress={() => {console.log("TEST:", Calculate.sumAllGameActions(Calculate.sumUpGameTotals(Calculate.searchByManyTags(liveGame.tags, allGamesArray)) ))}}></Button> */}
+                            {/* <Button title='Test the Data' onPress={() => {console.log("Count ME:", Calculate.sumPositionCount(Calculate.searchByManyTags(liveGame.tags, allGamesArray) ))}}></Button> */}
+                            {getPercentagesForPositionsDisplayBYTAG(liveGame.position).map((action, i) => {
                                 return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
                             })}
                         </View>
 
                     </View>
+                    <View>
+                        <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
+                            <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
+                            <Text style={{ fontSize: 10 }}>Compared to all games</Text>
+                            <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
+                            {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
+
+                            <View>
+                                {/* <Button title="press" onPress={() => { console.log(getPercentagesForPositionsDisplay(liveGame.position) ) }}>press</Button>    */}
+                                {getPercentagesForPositionsDisplay(liveGame.position).map((action, i) => {
+                                    return (<Text key={`${action[0]}_${i}`}>{`${action[0]}: ${Object.values(action[1])}%`} </Text>)
+                                })}
+                            </View>
+
+                        </View>
+                    </View>
                 </View>
-            </View>
+                :
+                <Text>Data will show here when we have some saved.</Text>
+            }
+
         </Surface>
+
+
         )
     }
 
@@ -189,15 +203,15 @@ export const GameController = (props) => {
                         {renderBasicLiveData(liveGame, allGamesArray)}
                         {/* <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}> */}
                         <View>
-                            <Surface style={{elevation: 8, backgroundColor:'#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%'}}>
-                            {liveGame.actions.map((action, index) => {
-                                return (
-                                    <View key={index}>
-                                        {/* <Button containerStyle={{ padding: 3 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} /> */}
-                                        <ChipButton key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
-                                    </View>
-                                )
-                            })}
+                            <Surface style={{ elevation: 8, backgroundColor: '#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                                {liveGame.actions.map((action, index) => {
+                                    return (
+                                        <View key={index}>
+                                            {/* <Button containerStyle={{ padding: 3 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} /> */}
+                                            <ChipButton key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
+                                        </View>
+                                    )
+                                })}
                             </Surface>
                         </View>
                         {/* <AddTag allTags={data.allTags}></AddTag> */}

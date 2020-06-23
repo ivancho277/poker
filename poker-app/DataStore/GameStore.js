@@ -109,7 +109,7 @@ const setData = data => ({ setState }) => {
     setState(draft => {
         draft.data = data;
         draft.error = false;
-        draft.allGamesArray = (data.savedGames);
+        draft.allGamesArray = Utils.isEmpty(data.savedGames ? [] : (data.savedGames));
         draft.gamesObj = data.savedGames;
         draft.data.loading = false;
     })
@@ -182,16 +182,12 @@ const setNewLiveGame = actions => ({ getState, setState, dispatch }) => {
 
 };
 
-
-
 const setError = msg => ({ setState }) => {
     setState(draft => {
         //dispatch(setData(loadedData));
         draft.error = 'Error with loading';
     });
 }
-
-
 
 /**
  * * Storage Action

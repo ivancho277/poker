@@ -45,7 +45,7 @@ const searchBytag = (tag, games) => {
  */
 const searchByManyTags = (tagsArray, games) => {
     if (tagsArray instanceof Array) {
-        if (tagsArray.length === 0) {
+        if (tagsArray.length === 0 || games.length === 0) {
             return [];
         }
         const foundGames = games.filter(savedGame => {
@@ -56,6 +56,7 @@ const searchByManyTags = (tagsArray, games) => {
         //console.log("MANY TAGS:", foundGames);
         return foundGames.length > 0 ? foundGames : null;
     }
+    
 }
 
 
