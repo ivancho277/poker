@@ -16,6 +16,7 @@ import TagDialog from './TagDialog';
 import { Tables } from '../../constants/tables.js';
 import { getPercentages } from '../statscalculation.js';
 import { sumUpGameTotals } from '../GameCalculations/calculateStats.js';
+import { ChipButton } from './ChipButton';
 
 
 
@@ -142,7 +143,8 @@ export const GameController = (props) => {
                 <View style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1, padding: 4, margin: 4, }}>
 
                     <Text style={{ textDecorationLine: 'underline' }}> How you have played current Position </Text>
-                    <Text style={{ fontSize: 10 }}>For current tags</Text>
+                    <Text style={{ fontSize: 10 }}>For current tags:</Text>
+                    <Text style={{ fontSize: 8 , color: 'red' }}>Will only show if current tags match any past tags.</Text>
                     <Subheading style={{ textDecorationLine: 'underline' }}>Current Position: <Text style={{ color: 'blue', fontWeight: 'bold' }}> {liveGame.position} </Text> </Subheading>
                     {/* <Text>{JSON.stringify(liveGame, undefined, 4)}</Text> */}
                     <View>
@@ -185,14 +187,18 @@ export const GameController = (props) => {
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
                         {renderBasicLiveData(liveGame, allGamesArray)}
-                        <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
+                        {/* <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}> */}
+                        <View>
+                            <Surface style={{elevation: 8, backgroundColor:'#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%'}}>
                             {liveGame.actions.map((action, index) => {
                                 return (
                                     <View key={index}>
-                                        <Button containerStyle={{ padding: 3 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
+                                        {/* <Button containerStyle={{ padding: 3 }} key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} /> */}
+                                        <ChipButton key={action.actionName} title={`${action.actionName}`} onPress={() => { onActionClick(action, index); }} />
                                     </View>
                                 )
                             })}
+                            </Surface>
                         </View>
                         {/* <AddTag allTags={data.allTags}></AddTag> */}
                         <TagDialog allTags={data.tags}></TagDialog>
@@ -218,6 +224,7 @@ export const GameController = (props) => {
 
 const styles = StyleSheet.create({
     surface: {
+        backgroundColor: '#D3F3EE',
         padding: 8,
         margin: 8,
         height: 'auto',

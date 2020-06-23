@@ -24,14 +24,14 @@ import { COLOR } from "react-native-material-ui";
 
 const theme = {  
   ...DefaultTheme,
-  roundness: 10,
+  roundness: 69,
   colors: {
     ...DefaultTheme,
     primary: '#7FB7BE',
     accent: '#BC2C1A',
-    surface: '#DACC3E',
-    backdrop: '#7D1538',
-    background: '#D3F3EE'
+    surface: '#D3F3EE',
+    backdrop: '#7FB7BE',
+    background: '#7FB7BE'
   },
   font: {
     ...DefaultTheme

@@ -44,7 +44,7 @@ export default function GameScreenNew(props) {
     //TODO: 6/22/2020 we need to also make sure that there are saved games in general before showing dialog!
     useEffect(() => {
         actions.setCurrentORNewLiveGame();
-        if (state.data.currentGame) {
+        if (state.data.currentGame && state.allGamesArray) {
             _showLoadDialog()
         }
         console.log('state.currentGame: %o', state.data.currentGame);
@@ -84,8 +84,8 @@ export default function GameScreenNew(props) {
             <ScrollView>
                 <View>
                     <ScrollView>
-                        <Card>
-                            <Card.Title title="Track your game!" />
+                        <Card style={{backgroundColor: '#7FB7BE'}}>
+                            <Card.Title style={{alignItems: 'center'}} title="      Track your game!" />
                             <Card.Content>
                                 <ScrollView>
                                     <GameController goHome={goHome} reload={manualReload}></GameController>

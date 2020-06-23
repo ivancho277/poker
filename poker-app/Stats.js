@@ -172,7 +172,7 @@ class StatsScreen extends Component {
                             <View>
                                 {this.renderGamesFound(this.state.selectedTags, data.allGames, testModeOn, actions.TestModeSwitch)}
                             </View>
-                           <DataGraph />
+                           {/* <DataGraph /> */}
 
                             <ValidationSnackbar
                                 message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
