@@ -109,7 +109,7 @@ const setData = data => ({ setState }) => {
     setState(draft => {
         draft.data = data;
         draft.error = false;
-        draft.allGamesArray = Utils.isEmpty(data.savedGames ? [] : (data.savedGames));
+        draft.allGamesArray = Utils.isEmpty(data.savedGames) ? [] : (data.savedGames);
         draft.gamesObj = data.savedGames;
         draft.data.loading = false;
     })

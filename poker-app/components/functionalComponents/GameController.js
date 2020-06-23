@@ -29,7 +29,7 @@ export const GameController = (props) => {
     const [{ data, liveGame, allGamesArray, calculatedData }, actions] = UseGameStore();
     const [showActionInput, setShowActionInput] = useState(false);
     const [action, setAction] = useState('');
-    const [isThereSavedData, setIsThereSavedData] = useState(true);
+    const [isThereSavedData, setIsThereSavedData] = useState(false);
     // const [loading, setLoading] = useState(true);
     // const [actionInputOpen, setActionInput] = useState(false);
     // const [actionToAdd, editActionToAdd] = useState('');
@@ -43,8 +43,8 @@ export const GameController = (props) => {
         //actions.gameStart();
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
-        if (allGamesArray.length) {
-            setIsThereSavedData(false);
+        if (allGamesArray.length >= 0) {
+            setIsThereSavedData(true);
         }
     }, [])
 
@@ -74,10 +74,16 @@ export const GameController = (props) => {
     }
 
     const getPercentagesForPositionsDisplay = (position) => {
+        if(allGamesArray.length === 0){
+            return [];
+        }
         let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
         return Object.entries(dataArray[position]);
     }
     const getPercentagesForPositionsDisplayBYTAG = (position) => {
+        if(allGamesArray.length === 0){
+            return [];
+        }
         let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
         let dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
         return Object.entries(dataArray[position]);
