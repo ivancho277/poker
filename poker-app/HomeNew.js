@@ -1,10 +1,10 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { Button, colors, Header } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
-import { Colors, ActivityIndicator, Snackbar, Title } from 'react-native-paper';
+import { Colors,ActivityIndicator, Snackbar, Title } from 'react-native-paper';
 import * as Utils from './utils/objectOps'
 import * as Calculate from './components/GameCalculations/calculateStats'
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
@@ -71,20 +71,22 @@ export default function HomeScreenNew(props) {
                                     <Image source={require('./assets/noun_statsChip.png')} style={{ width: 70, height:70, resizeMode: 'contain' }} />
                                     <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
                                 </View>
-                                <DisplayStats></DisplayStats>
+                                {/* <DisplayStats></DisplayStats> */}
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
-                                <View style={{ flex: 1, marginTop: 15 }}>
+                                <View style={{ flex: 1, marginTop: 15, justifyContent: 'space-between' }}>
 
-                                    <Button title="Begin Tracking A Game!" icon={{ name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
+                                    <Button title="     Begin Tracking A Game!" icon={{ name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
+                                    <Button title="     Games Config." icon={{ name: 'settings', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Settings')} />
+                                    <Button title="     Statistics" icon={{ name: 'pie-chart', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Statistics')} />
 
                                     <Text>ReRender global state</Text>
                                     <TouchableOpacity onPress={() => { manualReload() }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity>
 
-                                    {/* <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                    <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
-                                    </TouchableOpacity> */}
+                                    </TouchableOpacity>
                                 </View>
 
                             </View>

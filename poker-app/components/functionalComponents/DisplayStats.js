@@ -37,7 +37,7 @@ export function DisplayStats(props) {
                             {state.calculatedData.loading ?
                                 <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
                                 :
-                                <Surface style={{ elevation: 7, }}>
+                                <Surface style={{ elevation: 7,}}>
 
                                     <DataTable>
                                         <DataTable.Header>
@@ -62,12 +62,6 @@ export function DisplayStats(props) {
                                                     </DataTable.Row>
                                                 )
                                             })}
-                                        <DataTable.Pagination
-                                            page={0}
-                                            numberOfPages={3}
-                                            onPageChange={(page) => { console.log(page); }}
-                                            label="1-2 of 6"
-                                        />
                                     </DataTable>
                                     {state.calculatedData.loading ?
                                         <ActivityIndicator animating={true} color={Colors.deepOrange400} size={'large'} />
@@ -84,20 +78,14 @@ export function DisplayStats(props) {
             )
             }
         </GameSubscriber>
-
-
-
     )
 }
 // width: 400, display: 'flex', padding: 10, margin: 5, alignSelf: 'center' 
 
 const styles = StyleSheet.create({
     surface: {
+        flex: 1,
         padding: 8,
-        height: 400,
-        width: 350,
-        alignItems: 'center',
-        justifyContent: 'center',
         elevation: 6,
         margin: 10
     },

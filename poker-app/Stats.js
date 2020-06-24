@@ -11,6 +11,7 @@ import { ValidationSnackbar } from './components/functionalComponents/Validation
 import { ScrollView } from 'react-native-gesture-handler';
 import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
 import { Switch } from 'react-native-paper';
+import { DisplayStats } from './components/functionalComponents/DisplayStats';
 import { DataGraph } from './components/functionalComponents/DataGraph.js';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
@@ -95,6 +96,7 @@ class StatsScreen extends Component {
     renderPicker() {
         return <GameSubscriber>
             {({ data }, actions) =>
+                
                 <RNPickerSelect
                     selectedValue={this.state.tagpicker}
                     style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
@@ -149,6 +151,7 @@ class StatsScreen extends Component {
             {({ data, calculatedData, testModeOn }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
                 <ScrollView>
+                    <DisplayStats />
                     <View>
                         <View style={{ alignContent: 'space-around', margin: 5 }}>
                             <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>

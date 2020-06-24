@@ -127,9 +127,7 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         console.log("Curr Calc::::", currentGame.calcData);
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
-        dispatch(firstMoveMade());
-       
-        
+        dispatch(firstMoveMade()); 
     } else {
         console.log("No Current Game Present");
         dispatch(setNewLiveGame(actions));
