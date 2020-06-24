@@ -9,6 +9,7 @@ import { Colors, ActivityIndicator, Switch } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 import { StorageAPI } from '../storageAPI/AsyncStorageController'
 import { ConfirmDialog } from '../functionalComponents/ConfirmDialog';
+import { GameDataAccordian } from '../functionalComponents/dataDisplays/List Displays/GameDataAccordian'
 
 export const TestComponent = () => {
 
@@ -44,7 +45,7 @@ export const Tester = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [showTestDialog, setShowTestDialog] = useState(false);
     const _showDialog = () => { setIsVisible(true) };
-    const _hideDialog = () => { setIsVisible(false) };    
+    const _hideDialog = () => { setIsVisible(false) };
     // const [loading, setLoading] = useState(false);
     // useEffect(() => {
     //     //actions.load();
@@ -52,7 +53,7 @@ export const Tester = () => {
 
     const GetDataTest = async () => {
         const myData = await StorageAPI.getAllNewGames();
-       // setTest(JSON.parse(myData));
+        // setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
             if (typeof (JSON.parse(myData)) === "Array") {
@@ -93,7 +94,7 @@ export const Tester = () => {
 
                     <View>
                         <Text style={{ textAlign: 'center', textDecorationLine: 'underline' }}> Switch to show Testing buttons </Text>
-                        <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}></Button>
+                        <GameDataAccordian />
                         <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }}> </Button>
                         <Button color={Colors.deepOrange400} title="check live actions" onPress={() => { console.log("liveGame.actions: ", state.liveGame.actions) }}> </Button>
                         <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>
