@@ -60,26 +60,37 @@ export function GameDataAccordian(props) {
         return Math.round(count / total * 100)
     }
 
+
+    //!!TODO:ended here 6/25/2020
     const buildDisplayData = () => {
         let displayArray = [];
         let currentLiveData = [];
         if (addActionValues(liveGame.actions) == 0) {  //checks to see if its is first move.
             currentLiveData.push({ name: 'Start Playing!' })
-        } else {
+        } else if (liveGame.tags.length == 0) {
             liveGame.actions.forEach(element => {
                 currentLiveData.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
+                currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
             })
+            // currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
+
         }
-        return {data: currentLiveData, listTitle: 'Current Game %'};
+        else {
+
+        }
+        return { data: currentLiveData, listTitle: 'Current Game %' };
     }
 
 
+    //TODO: 6/25/2020 this should be mapping the GameDataList item Getting cant read propert .map() of undefined..
     // return <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): %o', buildDisplayData());}} />
-    return ( <GameDataListItem
-                gameDataObject={buildDisplayData()}
+    return (buildDisplayData().data.map((element, i) => {
+        return (<GameDataListItem
+            gameDataObject={element}
 
-        />
-       
+        />)
+    })
+
     )
 
 

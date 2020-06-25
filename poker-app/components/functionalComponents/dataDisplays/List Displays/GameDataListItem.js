@@ -11,7 +11,7 @@ import { AddTag } from '../../AddTag'
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider } from 'react-native-paper';
 import TagDialog from '../../TagDialog';
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
@@ -25,6 +25,7 @@ export function GameDataListItem(props) {
     const [expanded, setExpanded] = useState(true);
 
     const _handlePress = () => {
+        console.log(props.gameDataObject)
         setExpanded(!expanded);
     }
 
@@ -33,6 +34,7 @@ export function GameDataListItem(props) {
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
+        console.log('props.gameDataObjevt: %o', props.gameDataObject);
         if (allGamesArray.length >= 0) {
             setIsThereSavedData(true);
         }
@@ -71,22 +73,26 @@ export function GameDataListItem(props) {
 
 
     return (
-        // <Surface>
+        <Surface style={{ elevation: 2, flex: 1, }}>
             <List.Accordion
-                titleStyle={{lineHeight:25 ,textDecorationLine: 'underline', fontSize: 25}}
+                titleStyle={{ textDecorationLine: 'underline', fontSize: 20, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
                 title={props.gameDataObject.listTitle}
                 expanded={expanded}
                 onPress={_handlePress}
             >
                 {props.gameDataObject.data.map((element, i) => {
-                    return <List.Item
-                        style={{height: 25}}
-                        title={`${element.name}: ${element.data} %`}
-                        left={() => <List.Icon icon='cards-diamond' color='black' />}
-                    />
+                    return <View>
+                        <Divider />
+                        <List.Item
+                            key={`item_${i}`}
+                            style={{ height: 25, padding: 5, margin: 8,}}
+                            title={`${element.name}: ${element.data} %`}
+                            left={() => <List.Icon icon='cards-spade' color='black' />}
+                        />
+                    </View>
                 })}
             </List.Accordion>
-        // </Surface>
+        </Surface>
     )
 
 
