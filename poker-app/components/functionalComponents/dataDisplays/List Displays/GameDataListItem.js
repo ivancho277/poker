@@ -73,12 +73,14 @@ export function GameDataListItem(props) {
     return (
         // <Surface>
             <List.Accordion
+                titleStyle={{lineHeight:25 ,textDecorationLine: 'underline', fontSize: 25}}
                 title={props.gameDataObject.listTitle}
                 expanded={expanded}
                 onPress={_handlePress}
             >
                 {props.gameDataObject.data.map((element, i) => {
                     return <List.Item
+                        style={{height: 25}}
                         title={`${element.name}: ${element.data} %`}
                         left={() => <List.Icon icon='cards-diamond' color='black' />}
                     />
