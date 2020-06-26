@@ -34,7 +34,8 @@ export function GameDataListItem(props) {
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
-        console.log('props.gameDataObjevt: %o', props.gameDataObject);
+        console.log('props.gameDataObjevt: ', props.gameDataObject);
+       // debugger;
         if (allGamesArray.length >= 0) {
             setIsThereSavedData(true);
         }
@@ -84,34 +85,32 @@ export function GameDataListItem(props) {
                     expanded={expanded}
                     onPress={_handlePress}
                 >
-                    {props.gameDataObject.data.map((element, i) => {
-                        return (props.gameDataObject.data instanceof Array) ?
-                            <View>
+                    {!(props.gameDataObject.isDisplayByPosition) ?
+                        props.gameDataObject.data.map((element, i) => {
+                            return <View key={`item_${i}`}>
                                 <Divider />
-                                <List.Item
-                                    key={`item_${i}`}
+                                <List.Item                                    
                                     style={{ height: 15, padding: 5, margin: 8, }}
                                     titleStyle={{ fontSize: 13, lineHeight: 15 }}
                                     title={`${element.name}: ${element.data == undefined ? "data will show here" : element.data} %`}
                                     left={() => <List.Icon icon='cards-spade' color='black' />}
                                 />
                             </View>
+                        })
+                        :
+                        props.gameDataObject.data[+liveGame.position].map((elem, j) => {
+                            return (<View key={`item_$_${j}`}>
+                                <Divider />
+                                <List.Item
+                                    style={{ height: 15, padding: 5, margin: 8, }}
+                                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                    title={`${Object.keys(elem)[0]}: ${Object.values(elem)[0]} %`}
+                                    left={() => <List.Icon icon='cards-spade' color='black' />}
+                                />
+                            </View>)
+                        })
 
-                            :
-                            Object.entries(element[liveGame.position]).map((elem, j) => {
-                                <View>
-                                    <Divider />
-                                    <List.Item
-                                        key={`item_${props.element.name}`}
-                                        style={{ height: 15, padding: 5, margin: 8, }}
-                                        titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                        title={`${props.elem.name}: ${props.elem.data == undefined ? "data will show here" : props.element.data} %`}
-                                        left={() => <List.Icon icon='cards-spade' color='black' />}
-                                    />
-                                </View>
-                            })
-
-                    })}
+                    }
                 </List.Accordion>
             </Card.Content>
         </Card>

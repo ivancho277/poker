@@ -32,6 +32,7 @@ export function GameDataAccordian(props) {
             setIsThereSavedData(true);
         }
         let data = buildDisplayData();
+       // debugger;
         console.log('data: %o', data);
         if (dataToDisplay.length !== data.length) {
             setDataToDisplay(data);
@@ -66,6 +67,32 @@ export function GameDataAccordian(props) {
         return Math.round(count / total * 100)
     }
 
+    //TODO: ended here for more work on 6/26/2020
+    const positionObjectArrayToMatrix = (arr) => {
+        if (allGamesArray instanceof Array && allGamesArray.length > 0) {
+            let matrix = Object.entries(arr);
+            // console.log(matrix)
+            let middleArr = matrix.map((element, i) => {
+                let position = element[0];
+                //   let temparr = {position: element[0], data:{} }  
+                let temparr = []
+                console.log(`LOOOK AT ${position}`, Object.entries(element[1]));
+                for (let [key, value] of Object.entries(element[1])) {
+                    temparr.push({ [key]: Object.values(value)[0] })
+                    //console.log('key: %s, val: %s', key, Object.values(value)[0]);
+                }
+                return temparr;
+            })
+            return middleArr;
+        }
+        return null;
+    }
+
+
+
+
+
+
     const buildDisplayData = (position) => {
         let finaldisplayArray = [];
         let currentLivePercent = [];
@@ -78,12 +105,13 @@ export function GameDataAccordian(props) {
                 currentLivePercent.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
             })
             console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
-            percentPerPosition = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
-
+            let tempArr = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+            percentPerPosition = positionObjectArrayToMatrix(tempArr); 
+            
             //console.log("MY Damn FUcking ArrAy",holdingArray)
             //holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
-            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %' });
-            finaldisplayArray.push({ data: percentPerPosition, listTitle: 'Historical % for current position' });
+            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %', isDisplayByPosition: false});
+            finaldisplayArray.push({ data: percentPerPosition, listTitle: 'Historical % for current position', isDisplayByPosition: true });
         }
         //debugger;
         return finaldisplayArray;
@@ -91,44 +119,23 @@ export function GameDataAccordian(props) {
     }
 
 
-    //TODO: ended here for more work on 6/26/2020
-    const positionObjectArrayToMatrix = (arr) => {
-        if (allGamesArray instanceof Array && allGamesArray.length > 0) {
-            let matrix = Object.entries(Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
-            console.log(matrix)
-            let middleArr = matrix.map((element, i) => {
-                let position = element[0];
 
-                //   let temparr = {position: element[0], data:{} }  
-                let temparr = []
-                console.log(`LOOOK AT ${position}`, Object.entries(element[1]));
-                for (let [key, value] of Object.entries(element[1])) {
-                    temparr.push({ [key]: Object.values(value)[0] })
-                    console.log('key: %s, val: %s', key, Object.values(value)[0]);
-                }
-                return temparr;
-            })
-            return middleArr;
-        }
-        return null;
-    }
+    // return <View>
+    //     <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): ', buildDisplayData()); }} />
+    //     <Button title={'Test it 2'} onPress={() => { console.log('dataToDisplay: ', dataToDisplay); }} />
+    //     <Button title={'Test it 3: test returns'} onPress={() => { console.log("does it wpork?:", positionObjectArrayToMatrix()) }} />
 
-    return <View>
-        <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): ', buildDisplayData()); }} />
-        <Button title={'Test it 2'} onPress={() => { console.log('dataToDisplay: ', dataToDisplay); }} />
-        <Button title={'Test it 3: test returns'} onPress={() => { console.log("does it wpork?:", positionObjectArrayToMatrix()) }} />
+    // </View>
+    return dataToDisplay.map((element, i) => {
+        return <View>
+            <GameDataListItem
+                key={`ListSection_${i}`}
+                gameDataObject={element}
+                listTitle={element.listTitle}
 
-    </View>
-    // return dataToDisplay.map((element, i) => {
-    //     return <View>
-    //         <GameDataListItem
-    //             key={`ListSection_${i}`}
-    //             gameDataObject={element}
-    //             listTitle={element.listTitle}
-
-    //         />
-    //     </View>
-    // })
+            />
+        </View>
+    })
 
 
 }
