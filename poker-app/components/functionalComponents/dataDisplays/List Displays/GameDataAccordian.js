@@ -93,26 +93,30 @@ export function GameDataAccordian(props) {
 
     //TODO: ended here for more work on 6/26/2020
     const positionObjectArrayToMatrix = (arr) => {
-        let matrix = Object.entries(Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
-        console.log(matrix)
-        let middleArr = matrix.map((element, i) => {
-            let position = element[0];
+        if (allGamesArray instanceof Array && allGamesArray.length > 0) {
+            let matrix = Object.entries(Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
+            console.log(matrix)
+            let middleArr = matrix.map((element, i) => {
+                let position = element[0];
 
-            //   let temparr = {position: element[0], data:{} }  
-            let temparr = []
-            console.log(`LOOOK AT ${position}`, Object.entries(element[1]));
-            for (let [key, value] of Object.entries(element[1])) {
-                // temparr.push({key: value })
-                console.log('key: %s, val: %s', key, Object.values(value)[0])
-
-            }
-        })
+                //   let temparr = {position: element[0], data:{} }  
+                let temparr = []
+                console.log(`LOOOK AT ${position}`, Object.entries(element[1]));
+                for (let [key, value] of Object.entries(element[1])) {
+                    temparr.push({ [key]: Object.values(value)[0] })
+                    console.log('key: %s, val: %s', key, Object.values(value)[0]);
+                }
+                return temparr;
+            })
+            return middleArr;
+        }
+        return null;
     }
 
     return <View>
         <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): ', buildDisplayData()); }} />
         <Button title={'Test it 2'} onPress={() => { console.log('dataToDisplay: ', dataToDisplay); }} />
-        <Button title={'Test it 3: test returns'} onPress={() => { positionObjectArrayToMatrix(); }} />
+        <Button title={'Test it 3: test returns'} onPress={() => { console.log("does it wpork?:", positionObjectArrayToMatrix()) }} />
 
     </View>
     // return dataToDisplay.map((element, i) => {
