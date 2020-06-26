@@ -22,7 +22,7 @@ import { GameDataListItem } from './GameDataListItem'
 export function GameDataAccordian(props) {
     const [{ data, liveGame, allGamesArray, calculatedData }, actions] = UseGameStore();
     const [isThereSavedData, setIsThereSavedData] = useState(false);
-
+    const [dataToDisplay, setDataToDisplay] = useState([]);
 
 
     useEffect(() => {
@@ -31,7 +31,13 @@ export function GameDataAccordian(props) {
         if (allGamesArray.length >= 0) {
             setIsThereSavedData(true);
         }
-    }, [])
+        let data = buildDisplayData();
+        console.log('data: %o', data);
+        if (dataToDisplay.length !== data.length) {
+            setDataToDisplay(data);
+        }
+
+    }, [liveGame.position])
 
     const addActionValues = (actions) => {
         let accum = 0;
@@ -60,39 +66,79 @@ export function GameDataAccordian(props) {
         return Math.round(count / total * 100)
     }
 
-
-    //!!TODO:ended here 6/25/2020
-    const buildDisplayData = () => {
-        let displayArray = [];
-        let currentLiveData = [];
+    const buildDisplayData = (position) => {
+        let finaldisplayArray = [];
+        let currentLivePercent = [];
+        let percentPerPosition = [];
+        let holdingArray = [];
         if (addActionValues(liveGame.actions) == 0) {  //checks to see if its is first move.
-            currentLiveData.push({ name: 'Start Playing!' })
-        } else if (liveGame.tags.length == 0) {
+            finaldisplayArray.push({ name: 'Start Playing!' })
+        } else {
             liveGame.actions.forEach(element => {
-                currentLiveData.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
-                currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
+                currentLivePercent.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
             })
-            // currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
-
+            console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
+            percentPerPosition = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+            console.log("MY Damn FUcking ArrAy",holdingArray)
+            holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
+            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %' });
+            finaldisplayArray.push({ data: holdingArray, listTitle: 'Historical % for current position' });
         }
-        else {
+        //debugger;
+        return finaldisplayArray;
 
-        }
-        return { data: currentLiveData, listTitle: 'Current Game %' };
     }
-
-
-    //TODO: 6/25/2020 this should be mapping the GameDataList item Getting cant read propert .map() of undefined..
     // return <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): %o', buildDisplayData());}} />
-    return (buildDisplayData().data.map((element, i) => {
-        return (<GameDataListItem
-            gameDataObject={element}
+    return dataToDisplay.map((element, i) => {
+        return <View>
+            <GameDataListItem
+                key={`ListSection_${i}`}
+                gameDataObject={element}
+                listTitle={element.listTitle}
 
-        />)
+            />
+        </View>
     })
 
-    )
+
+}   
+    
 
 
 
-}
+//        gameDataObject={element.changeToArray ? Object.entries(element.data[liveGame.position]) : element.data} 
+
+
+    // //!!TODO:ended here 6/25/2020
+    // const buildDisplayData = () => {
+    //     let displayArray = [];
+    //     let currentLiveData = [];
+    //     if (addActionValues(liveGame.actions) == 0) {  //checks to see if its is first move.
+    //         currentLiveData.push({ name: 'Start Playing!' })
+    //     } else if (liveGame.tags.length == 0) {
+    //         liveGame.actions.forEach(element => {
+    //             currentLiveData.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
+    //             currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
+    //         })
+    //         // currentLiveData.push({ name: liveGame.position, data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount) })
+
+    //     }
+    //     else {
+
+    //     }
+    //     return { data: currentLiveData, listTitle: 'Current Game %' };
+    // }
+
+
+    // //TODO: 6/25/2020 this should be mapping the GameDataList item Getting cant read propert .map() of undefined..
+    // // return <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): %o', buildDisplayData());}} />
+    // return (buildDisplayData().data.map((element, i) => {
+    //     return (<GameDataListItem
+    //         gameDataObject={element}
+
+    //     />)
+    // })
+
+    // )
+
+// }

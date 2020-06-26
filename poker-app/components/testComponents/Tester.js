@@ -89,7 +89,7 @@ export const Tester = () => {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View>
+                <View style={{flex: 1,}}>
                     {/* {!state.calculatedData.loading ? */}
 
                     <View>

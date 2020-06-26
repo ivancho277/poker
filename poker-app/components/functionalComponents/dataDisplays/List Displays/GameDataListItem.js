@@ -71,26 +71,40 @@ export function GameDataListItem(props) {
         return `${action.actionName}: ${calculatePercentage(action.count, foundsum)}% `
     }
 
-
+    
     return (
         <Surface style={{ elevation: 2, flex: 1, }}>
             <List.Accordion
-                titleStyle={{ textDecorationLine: 'underline', fontSize: 20, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
-                title={props.gameDataObject.listTitle}
+                titleStyle={{color: 'bkack', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
+                style={{lineHeight: 20}}
+                title={props.listTitle}
                 expanded={expanded}
                 onPress={_handlePress}
             >
-                {props.gameDataObject.data.map((element, i) => {
+                {(props.gameDataObject.data instanceof Array) ? props.gameDataObject.data.map((element, i) => {
                     return <View>
                         <Divider />
                         <List.Item
                             key={`item_${i}`}
-                            style={{ height: 25, padding: 5, margin: 8,}}
-                            title={`${element.name}: ${element.data} %`}
+                            style={{ height: 15, padding: 5, margin: 8, }}
+                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                            title={`${element.name}: ${element.data == undefined ? "data will show here" : element.data} %`}
                             left={() => <List.Icon icon='cards-spade' color='black' />}
                         />
                     </View>
-                })}
+                })
+                    :
+                    <View>
+                        <Divider />
+                        <List.Item
+                            key={`item_${props.gameDataObject.name}`}
+                            style={{ height:15, padding: 5, margin: 8, }}
+                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                            title={`${props.gameDataObject.name}: ${props.gameDataObject.data == undefined ? "data will show here" : props.gameDataObject.data} %`}
+                            left={() => <List.Icon icon='cards-spade' color='black' />}
+                        />
+                    </View>
+                }
             </List.Accordion>
         </Surface>
     )
