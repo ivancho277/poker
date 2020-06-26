@@ -79,30 +79,56 @@ export function GameDataAccordian(props) {
             })
             console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
             percentPerPosition = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
-            console.log("MY Damn FUcking ArrAy",holdingArray)
-            holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
+
+            //console.log("MY Damn FUcking ArrAy",holdingArray)
+            //holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
             finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %' });
-            finaldisplayArray.push({ data: holdingArray, listTitle: 'Historical % for current position' });
+            finaldisplayArray.push({ data: percentPerPosition, listTitle: 'Historical % for current position' });
         }
         //debugger;
         return finaldisplayArray;
 
     }
-    // return <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): %o', buildDisplayData());}} />
-    return dataToDisplay.map((element, i) => {
-        return <View>
-            <GameDataListItem
-                key={`ListSection_${i}`}
-                gameDataObject={element}
-                listTitle={element.listTitle}
-
-            />
-        </View>
-    })
 
 
-}   
-    
+    //TODO: ended here for more work on 6/26/2020
+    const positionObjectArrayToMatrix = (arr) => {
+        let matrix = Object.entries(Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
+        console.log(matrix)
+        let middleArr = matrix.map((element, i) => {
+            let position = element[0];
+
+            //   let temparr = {position: element[0], data:{} }  
+            let temparr = []
+            console.log(`LOOOK AT ${position}`, Object.entries(element[1]));
+            for (let [key, value] of Object.entries(element[1])) {
+                // temparr.push({key: value })
+                console.log('key: %s, val: %s', key, Object.values(value)[0])
+
+            }
+        })
+    }
+
+    return <View>
+        <Button title={'Test it'} onPress={() => { console.log('buildDisplayData(): ', buildDisplayData()); }} />
+        <Button title={'Test it 2'} onPress={() => { console.log('dataToDisplay: ', dataToDisplay); }} />
+        <Button title={'Test it 3: test returns'} onPress={() => { positionObjectArrayToMatrix(); }} />
+
+    </View>
+    // return dataToDisplay.map((element, i) => {
+    //     return <View>
+    //         <GameDataListItem
+    //             key={`ListSection_${i}`}
+    //             gameDataObject={element}
+    //             listTitle={element.listTitle}
+
+    //         />
+    //     </View>
+    // })
+
+
+}
+
 
 
 

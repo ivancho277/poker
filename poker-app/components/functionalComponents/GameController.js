@@ -1,15 +1,10 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { View, TextInput, onLongPress, StyleSheet } from 'react-native';
-import Radio from '../Radio.js';
-import { Button } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../statscalculation.js';
 import { StorageAPI } from '../storageAPI/AsyncStorageController'
-import { AddTag } from './AddTag'
-// const storageController = require('./AsyncStorageController.js')
-// const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
-import * as Calculate from '../GameCalculations/calculateStats.js'
+import * as Calculate from '../GameCalculations/calculateStats.js';
 import * as Utils from '../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton } from 'react-native-paper';
 import TagDialog from './TagDialog';
@@ -17,6 +12,7 @@ import { Tables } from '../../constants/tables.js';
 import { getPercentages } from '../statscalculation.js';
 import { sumUpGameTotals } from '../GameCalculations/calculateStats.js';
 import { ChipButton } from './ChipButton';
+import { GameDataAccordian } from './dataDisplays/List Displays/GameDataAccordian'
 
 
 
@@ -71,14 +67,14 @@ export const GameController = (props) => {
     }
 
     const getPercentagesForPositionsDisplay = (position) => {
-        if(allGamesArray.length === 0){
+        if (allGamesArray.length === 0) {
             return [];
         }
         let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
         return Object.entries(dataArray[position]);
     }
     const getPercentagesForPositionsDisplayBYTAG = (position) => {
-        if(allGamesArray.length === 0){
+        if (allGamesArray.length === 0) {
             return [];
         }
         let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
@@ -205,6 +201,8 @@ export const GameController = (props) => {
                     <View>
                         {renderBasicLiveData(liveGame, allGamesArray)}
                         {/* <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}> */}
+
+                        <GameDataAccordian />
                         <View>
                             <Surface style={{ elevation: 8, backgroundColor: '#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {liveGame.actions.map((action, index) => {
@@ -226,8 +224,6 @@ export const GameController = (props) => {
                         {/* <AntDesign.Button name={'tool'} backgroundColor="red" onPress={() => { console.log(GetDataTest()) }}>{"Console Log new Storage"}</AntDesign.Button>
                             <AntDesign.Button name={'delete'} backgroundColor="red" onPress={() => { StorageAPI.deleteAllNewGames() }}><Text>Clear new Storage</Text></AntDesign.Button> */}
                     </View>
-
-
                     :
                     <View>
                         <Text> not done </Text>

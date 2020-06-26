@@ -11,7 +11,7 @@ import { AddTag } from '../../AddTag'
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider, Card } from 'react-native-paper';
 import TagDialog from '../../TagDialog';
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
@@ -71,42 +71,50 @@ export function GameDataListItem(props) {
         return `${action.actionName}: ${calculatePercentage(action.count, foundsum)}% `
     }
 
-    
+
     return (
-        <Surface style={{ elevation: 2, flex: 1, }}>
-            <List.Accordion
-                titleStyle={{color: 'bkack', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
-                style={{lineHeight: 20}}
-                title={props.listTitle}
-                expanded={expanded}
-                onPress={_handlePress}
-            >
-                {(props.gameDataObject.data instanceof Array) ? props.gameDataObject.data.map((element, i) => {
-                    return <View>
-                        <Divider />
-                        <List.Item
-                            key={`item_${i}`}
-                            style={{ height: 15, padding: 5, margin: 8, }}
-                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                            title={`${element.name}: ${element.data == undefined ? "data will show here" : element.data} %`}
-                            left={() => <List.Icon icon='cards-spade' color='black' />}
-                        />
-                    </View>
-                })
-                    :
-                    <View>
-                        <Divider />
-                        <List.Item
-                            key={`item_${props.gameDataObject.name}`}
-                            style={{ height:15, padding: 5, margin: 8, }}
-                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                            title={`${props.gameDataObject.name}: ${props.gameDataObject.data == undefined ? "data will show here" : props.gameDataObject.data} %`}
-                            left={() => <List.Icon icon='cards-spade' color='black' />}
-                        />
-                    </View>
-                }
-            </List.Accordion>
-        </Surface>
+        <Card style={{ elevation: 2, flex: 1, }}>
+            <Card.Title title='Game Stats' />
+            <Card.Content>
+
+                <List.Accordion
+                    titleStyle={{ color: 'black', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
+                    style={{ lineHeight: 20 }}
+                    title={props.listTitle}
+                    expanded={expanded}
+                    onPress={_handlePress}
+                >
+                    {props.gameDataObject.data.map((element, i) => {
+                        return (props.gameDataObject.data instanceof Array) ?
+                            <View>
+                                <Divider />
+                                <List.Item
+                                    key={`item_${i}`}
+                                    style={{ height: 15, padding: 5, margin: 8, }}
+                                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                    title={`${element.name}: ${element.data == undefined ? "data will show here" : element.data} %`}
+                                    left={() => <List.Icon icon='cards-spade' color='black' />}
+                                />
+                            </View>
+
+                            :
+                            Object.entries(element[liveGame.position]).map((elem, j) => {
+                                <View>
+                                    <Divider />
+                                    <List.Item
+                                        key={`item_${props.element.name}`}
+                                        style={{ height: 15, padding: 5, margin: 8, }}
+                                        titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                        title={`${props.elem.name}: ${props.elem.data == undefined ? "data will show here" : props.element.data} %`}
+                                        left={() => <List.Icon icon='cards-spade' color='black' />}
+                                    />
+                                </View>
+                            })
+
+                    })}
+                </List.Accordion>
+            </Card.Content>
+        </Card>
     )
 
 
