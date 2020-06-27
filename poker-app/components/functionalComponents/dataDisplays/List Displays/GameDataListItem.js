@@ -75,7 +75,7 @@ export function GameDataListItem(props) {
 
     return (
         <Card style={{ elevation: 2, flex: 1, }}>
-            <Card.Title title='Game Stats' />
+            
             <Card.Content>
 
                 <List.Accordion

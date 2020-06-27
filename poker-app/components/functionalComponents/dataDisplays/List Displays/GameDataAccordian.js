@@ -11,7 +11,7 @@ import { AddTag } from '../../AddTag'
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Card } from 'react-native-paper';
 import TagDialog from '../../TagDialog';
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
@@ -32,11 +32,13 @@ export function GameDataAccordian(props) {
             setIsThereSavedData(true);
         }
         let data = buildDisplayData();
-       // debugger;
+        // debugger;
         console.log('data: %o', data);
         if (dataToDisplay.length !== data.length) {
             setDataToDisplay(data);
         }
+        console.log("dataToDisplay: ", dataToDisplay);
+        console.log("well is there?: ", isThereSavedData);
 
     }, [liveGame.position])
 
@@ -106,12 +108,12 @@ export function GameDataAccordian(props) {
             })
             console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
             let tempArr = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
-            percentPerPosition = positionObjectArrayToMatrix(tempArr); 
-            
+            percentPerPosition = positionObjectArrayToMatrix(tempArr);
+
             //console.log("MY Damn FUcking ArrAy",holdingArray)
             //holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
-            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %', isDisplayByPosition: false});
-            finaldisplayArray.push({ data: percentPerPosition, listTitle: 'Historical % for current position', isDisplayByPosition: true });
+            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %', isDisplayByPosition: false });
+            finaldisplayArray.push({ data: percentPerPosition, listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true });
         }
         //debugger;
         return finaldisplayArray;
@@ -126,21 +128,27 @@ export function GameDataAccordian(props) {
     //     <Button title={'Test it 3: test returns'} onPress={() => { console.log("does it wpork?:", positionObjectArrayToMatrix()) }} />
 
     // </View>
-    return ( addActionValues(liveGame.actions) === 0 ) ?
-    dataToDisplay.map((element, i) => {
-        return <View>
-            <GameDataListItem
-                key={`ListSection_${i}`}
-                gameDataObject={element}
-                listTitle={element.listTitle}
-
-            />
-        </View>
-    }) :
-    <View>
-        <Text> This is some text. </Text>
-    </View>
-
+    return (<Card>
+        <Card.Title title='     Game Stats' />
+        <Card.Content>
+            {(isThereSavedData && (addActionValues(liveGame.actions) > 0) )? 
+                dataToDisplay.map((element, i) => {
+                    return <View>
+                        <GameDataListItem
+                            key={`ListSection_${i}`}
+                            gameDataObject={element}
+                            listTitle={element.listTitle}
+                        />
+                    </View>
+                })
+                :
+                <View>
+                    <Text> This is some text. </Text>
+                </View>
+            }
+        </ Card.Content>
+    </Card>
+    )
 
 }
 
