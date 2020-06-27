@@ -126,7 +126,8 @@ export function GameDataAccordian(props) {
     //     <Button title={'Test it 3: test returns'} onPress={() => { console.log("does it wpork?:", positionObjectArrayToMatrix()) }} />
 
     // </View>
-    return dataToDisplay.map((element, i) => {
+    return ( addActionValues(liveGame.actions) === 0 ) ?
+    dataToDisplay.map((element, i) => {
         return <View>
             <GameDataListItem
                 key={`ListSection_${i}`}
@@ -135,7 +136,10 @@ export function GameDataAccordian(props) {
 
             />
         </View>
-    })
+    }) :
+    <View>
+        <Text> This is some text. </Text>
+    </View>
 
 
 }
