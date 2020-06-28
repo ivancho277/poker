@@ -18,7 +18,15 @@ import { getPercentages } from '../../../statscalculation.js';
 import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
 import { ChipButton } from '../../ChipButton';
 import { GameDataListItem } from './GameDataListItem'
+import { all } from 'underscore';
 
+/**
+ *
+ *
+ * @export
+ * @param {*} props
+ * @returns
+ */
 export function GameDataAccordian(props) {
     const [{ data, liveGame, allGamesArray, calculatedData }, actions] = UseGameStore();
     const [isThereSavedData, setIsThereSavedData] = useState(false);
@@ -66,7 +74,7 @@ export function GameDataAccordian(props) {
     }
 
     const calculatePercentage = (count, total) => {
-        return Math.round(count / total * 100)
+        return total === 0 ? 0 : Math.round(count / total * 100)
     }
 
     //TODO: ended here for more work on 6/26/2020
@@ -90,33 +98,90 @@ export function GameDataAccordian(props) {
         return null;
     }
 
-
-
-
-
-
-    const buildDisplayData = (position) => {
-        let finaldisplayArray = [];
-        let currentLivePercent = [];
-        let percentPerPosition = [];
-        let holdingArray = [];
-        if (addActionValues(liveGame.actions) == 0) {  //checks to see if its is first move.
-            finaldisplayArray.push({ name: 'Start Playing!' })
-        } else {
+    /**
+     *
+     *
+     * @param {Object} liveGame - *current game in progress Object Data
+     * @param {Array} foundGames - *an array of games found by tags, or all games if none found
+     * @returns {Array} - array of Objects formatted to be mapped and displayed as list  
+     */
+    const currentPercentageDisplayArr = (liveGame, foundGames) => {
+        let livePercentages = [];
+        let liveGameSum = addActionValues(liveGame.actions);
+        let foundGamesSum;
+        if (foundGames) {
+            foundGamesSum = Calculate.sumGamesTotals(foundGames);
             liveGame.actions.forEach(element => {
-                currentLivePercent.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
-            })
-            console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
-            let tempArr = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
-            percentPerPosition = positionObjectArrayToMatrix(tempArr);
-
-            //console.log("MY Damn FUcking ArrAy",holdingArray)
-            //holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
-            finaldisplayArray.push({ data: currentLivePercent, listTitle: 'Current Game %', isDisplayByPosition: false });
-            finaldisplayArray.push({ data: percentPerPosition, listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true });
+                livePercentages.push({ name: element.actionName, data: calculatePercentage(element.count, liveGameSum + foundGamesSum) })
+            });
         }
-        //debugger;
-        return finaldisplayArray;
+        else {
+            liveGame.actions.forEach(element => {
+                livePercentages.push({ name: element.actionName, data: calculatePercentage(element.count, liveGameSum) })
+            });
+        }
+        return livePercentages;
+    }
+    /**
+     *
+     *
+     * @param {Array} foundGames - array of found games by tag
+     * @returns Array Formatted to be displayed in a mapped list
+     */
+    const positionActionDisplayArr = (foundGames) => {
+        if(isThereSavedData){
+            return positionObjectArrayToMatrix((Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)));
+        }
+        if (foundGames) {
+            return positionObjectArrayToMatrix((Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)));
+        }
+        return null;
+    }
+    /**
+     *
+     *
+     * @param {*} position
+     * @returns
+     */
+    const buildDisplayData = (position) => {
+        let finalDisplay = [];
+        if(isThereSavedData){
+            finalDisplay.push({
+                data: currentPercentageDisplayArr(liveGame), listTitle: 'Current Game %', isDisplayByPosition: false 
+            })
+            finalDisplay.push({
+                data: positionActionDisplayArr(liveGame.position), listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true 
+            })
+        }
+        else{
+            finalDisplay.push({
+                data: currentPercentageDisplayArr(liveGame), listTitle: 'Current Game %', isDisplayByPosition: false 
+            })
+        }
+        return finalDisplay;
+        // let finaldisplayArray = [];
+        // let currentLivePercent = [];
+        // let percentPerPosition = [];
+        // let holdingArray = [];
+        // if (addActionValues(liveGame.actions) == 0) {  //checks to see if its is first move.
+        //     finaldisplayArray.push({ name: 'Start Playing!' })
+        // } else {
+        //     liveGame.actions.forEach(element => {
+        //         currentLivePercent.push({ name: element.actionName, data: calculatePercentage(element.count, addActionValues(liveGame.actions)) })
+        //     })
+        //     console.log('WHAT BITCH', Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount));
+        //     let tempArr = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+        //     percentPerPosition = positionObjectArrayToMatrix(tempArr);
+
+        //     //console.log("MY Damn FUcking ArrAy",holdingArray)
+        //     //holdingArray.push({ data: Object.entries(currentLivePercent[liveGame.position]), name: `Stats for Position: ${liveGame.position}` });
+        //     finaldisplayArray.push({
+        //         data: currentLivePercent, listTitle: 'Current Game %', isDisplayByPosition: false
+        //     });
+        //     finaldisplayArray.push({ data: percentPerPosition, listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true });
+        // }
+        // //debugger;
+        // return finaldisplayArray;
 
     }
 
@@ -131,7 +196,7 @@ export function GameDataAccordian(props) {
     return (<Card>
         <Card.Title title='     Game Stats' />
         <Card.Content>
-            {(isThereSavedData && (addActionValues(liveGame.actions) > 0) )? 
+            {(isThereSavedData && (addActionValues(liveGame.actions) > 0)) ?
                 dataToDisplay.map((element, i) => {
                     return <View>
                         <GameDataListItem
