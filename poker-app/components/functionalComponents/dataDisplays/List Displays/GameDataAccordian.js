@@ -76,7 +76,10 @@ export function GameDataAccordian(props) {
     const calculatePercentage = (count, total) => {
         console.log("count: ", count);
         console.log("totals", total);
-        return (total === 0) ? 0 : (Math.round(count / total)) * 100
+        if(total === 0) {
+            return 0
+        }
+        return Math.round(count / total) * 100
     }
 
     //TODO: ended here for more work on 6/26/2020
@@ -127,7 +130,7 @@ export function GameDataAccordian(props) {
             });
             return livePercentages;
         }
-        return livePercentages;
+        
     }
     /**
      *
@@ -152,18 +155,23 @@ export function GameDataAccordian(props) {
      */
     const buildDisplayData = (position) => {
         let finalDisplay = [];
+        let currentPercent;
+        let positionPercent;
         if(isThereSavedData){
+            currentPercent = currentPercentageDisplayArr(liveGame);
+            positionPercent = positionActionDisplayArr(liveGame.position); 
             finalDisplay.push({
-                data: currentPercentageDisplayArr(liveGame), listTitle: 'Current Game %', isDisplayByPosition: false 
+                data: currentPercent, listTitle: 'Current Game %', isDisplayByPosition: false 
             })
             finalDisplay.push({
-                data: positionActionDisplayArr(liveGame.position), listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true 
+                data: positionPercent , listTitle: `Historical % for current position: ${liveGame.position}`, isDisplayByPosition: true 
             })
         }
         else{
             finalDisplay.push({
-                data: currentPercentageDisplayArr(liveGame), listTitle: 'Current Game %', isDisplayByPosition: false 
+                data: currentPercent, listTitle: 'Current Game %', isDisplayByPosition: false 
             })
+            
         }
         return finalDisplay;
         // let finaldisplayArray = [];

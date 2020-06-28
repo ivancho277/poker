@@ -35,11 +35,11 @@ export function GameDataListItem(props) {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
         console.log('props.gameDataObjevt: ', props.gameDataObject);
-       // debugger;
+        // debugger;
         if (allGamesArray.length >= 0) {
             setIsThereSavedData(true);
         }
-    }, [])
+    }, [liveGame.position])
 
     const addActionValues = (actions) => {
         let accum = 0;
@@ -75,43 +75,46 @@ export function GameDataListItem(props) {
 
     return (
         <Card style={{ elevation: 2, flex: 1, }}>
-            
+
             <Card.Content>
+                <List.Section>
+                    <List.Accordion
+                        titleStyle={{ color: 'black', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
+                        style={{ lineHeight: 20 }}
+                        title={props.listTitle}
+                        expanded={expanded}
+                        onPress={_handlePress}
+                    >
+                        {props.gameDataObject.data === undefined ?
+                            <Text>I AM undefined</Text>
+                            :
+                            !(props.gameDataObject.isDisplayByPosition) ?
+                                props.gameDataObject.data.map((element, i) => {
+                                    return <View key={`item_${i}`}>
+                                        <List.Item
+                                            style={{ height: 15, padding: 3, margin: 3, }}
+                                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                            title={`${element.name}: ${element.data} %`}
+                                            left={() => <List.Icon icon='cards-spade' color='black' />}
+                                        />
+                                    </View>
+                                })
+                                :
+                                props.gameDataObject.data[+liveGame.position].map((elem, j) => {
+                                    return (
+                                        <List.Item
+                                            key={`item_$_${j}`}
+                                            style={{ borderStyle: 'solid', borderWidth: 1, borderColor: 'black', height: 30, }}
+                                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                            title={`${Object.keys(elem)[0]}: ${Object.values(elem)[0]} %`}
+                                            left={() => <List.Icon icon='cards-spade' color='black' />}
+                                        />
+                                    )
+                                })
 
-                <List.Accordion
-                    titleStyle={{ color: 'black', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
-                    style={{ lineHeight: 20 }}
-                    title={props.listTitle}
-                    expanded={expanded}
-                    onPress={_handlePress}
-                >
-                    {!(props.gameDataObject.isDisplayByPosition) ?
-                        props.gameDataObject.data.map((element, i) => {
-                            return <View key={`item_${i}`}>
-                                <Divider />
-                                <List.Item                                    
-                                    style={{ height: 15, padding: 5, margin: 8, }}
-                                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                    title={`${element.name}: ${element.data == undefined ? "data will show here" : element.data} %`}
-                                    left={() => <List.Icon icon='cards-spade' color='black' />}
-                                />
-                            </View>
-                        })
-                        :
-                        props.gameDataObject.data[+liveGame.position].map((elem, j) => {
-                            return (<View key={`item_$_${j}`}>
-                                <Divider />
-                                <List.Item
-                                    style={{ height: 15, padding: 5, margin: 8, }}
-                                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                    title={`${Object.keys(elem)[0]}: ${Object.values(elem)[0]} %`}
-                                    left={() => <List.Icon icon='cards-spade' color='black' />}
-                                />
-                            </View>)
-                        })
-
-                    }
-                </List.Accordion>
+                        }
+                    </List.Accordion>
+                </List.Section>
             </Card.Content>
         </Card>
     )
