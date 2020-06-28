@@ -74,7 +74,9 @@ export function GameDataAccordian(props) {
     }
 
     const calculatePercentage = (count, total) => {
-        return total === 0 ? 0 : Math.round(count / total * 100)
+        console.log("count: ", count);
+        console.log("totals", total);
+        return (total === 0) ? 0 : (Math.round(count / total)) * 100
     }
 
     //TODO: ended here for more work on 6/26/2020
@@ -108,17 +110,22 @@ export function GameDataAccordian(props) {
     const currentPercentageDisplayArr = (liveGame, foundGames) => {
         let livePercentages = [];
         let liveGameSum = addActionValues(liveGame.actions);
-        let foundGamesSum;
-        if (foundGames) {
-            foundGamesSum = Calculate.sumGamesTotals(foundGames);
-            liveGame.actions.forEach(element => {
-                livePercentages.push({ name: element.actionName, data: calculatePercentage(element.count, liveGameSum + foundGamesSum) })
-            });
-        }
-        else {
+        let foundGamesSum = 0;
+        if (isThereSavedData) {
+            foundGamesSum = Calculate.sumGamesTotals(allGamesArray)
+            console.log("cool",foundGamesSum);
+            console.log("cooler", foundGamesSum+ liveGameSum)
             liveGame.actions.forEach(element => {
                 livePercentages.push({ name: element.actionName, data: calculatePercentage(element.count, liveGameSum) })
             });
+            return livePercentages;
+        }
+        else {
+            console.log("uncool", liveGameSum);
+            liveGame.actions.forEach(element => {
+                livePercentages.push({ name: element.actionName, data: calculatePercentage(element.count, liveGameSum) })
+            });
+            return livePercentages;
         }
         return livePercentages;
     }

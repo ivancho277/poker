@@ -67,8 +67,7 @@ const searchByManyTags = (tagsArray, games) => {
  * NOTE: Sums up recieved array of games found;
  */
 const sumGamesTotals = (games) => {
-    if (games === null) {
-
+    if (games === null || games === undefined) {
         return 'no games'
     }
     //console.log('sumFUNT:', games)
