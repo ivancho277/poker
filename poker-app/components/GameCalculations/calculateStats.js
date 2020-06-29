@@ -60,9 +60,6 @@ const searchByManyTags = (tagsArray, games) => {
 }
 
 
-
-
-
 /**
  * NOTE: Sums up recieved array of games found;
  */

@@ -43,7 +43,7 @@ export function GameDataListItem(props) {
 
     const addActionValues = (actions) => {
         let accum = 0;
-        return actions.reduce((accum, action) => {
+        return actions.reduce((accum, action) => { 
             return accum + action.count;
         }, accum);
     }
@@ -85,10 +85,11 @@ export function GameDataListItem(props) {
                         expanded={expanded}
                         onPress={_handlePress}
                     >
-                        {props.gameDataObject.data === undefined ?
+                        {(props.gameDataObject.data === undefined)   ?
                             <Text>I AM undefined</Text>
+                            
                             :
-                            !(props.gameDataObject.isDisplayByPosition) ?
+                            (!props.gameDataObject.isDisplayByPosition) ?
                                 props.gameDataObject.data.map((element, i) => {
                                     return <View key={`item_${i}`}>
                                         <List.Item
@@ -99,9 +100,11 @@ export function GameDataListItem(props) {
                                         />
                                     </View>
                                 })
-                                :
+                                : 
+                                
                                 props.gameDataObject.data[+liveGame.position].map((elem, j) => {
                                     return (
+                                        (elem != null || elem != undefined) ?
                                         <List.Item
                                             key={`item_$_${j}`}
                                             style={{ borderStyle: 'solid', borderWidth: 1, borderColor: 'black', height: 30, }}
@@ -109,6 +112,8 @@ export function GameDataListItem(props) {
                                             title={`${Object.keys(elem)[0]}: ${Object.values(elem)[0]} %`}
                                             left={() => <List.Icon icon='cards-spade' color='black' />}
                                         />
+                                        :
+                                        <Text>No Saved Data</Text>
                                     )
                                 })
 
