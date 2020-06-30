@@ -121,10 +121,13 @@ export function GameDataAccordian(props) {
             return displayArray;
         }
         else {
-            console.log('FOUNDEM');
-            let sumofgamesfound = Calculate.sumUpGameTotals(foundGames);
-            let actions = Calculate.sumGamesTotals(foundGames);
+            console.log('FOUNDEM', foundGames);
+            let sumofgamesfound = Calculate.sumGamesTotals(foundGames);
+            let actions = Calculate.sumUpGameTotals(foundGames);;
+            console.log("actions: ", actions)
+            console.log("sum: " ,sumofgamesfound)
             for ([key, value] of Object.entries(actions)) {
+                console.log("key, value", key + " " + value)
                 displayArray.push({ name: [key], data: calculatePercentage([value], sumofgamesfound) })
             }
             console.log("displayARray:", displayArray);
