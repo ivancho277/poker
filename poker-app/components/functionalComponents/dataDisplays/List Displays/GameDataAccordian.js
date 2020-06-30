@@ -134,6 +134,17 @@ export function GameDataAccordian(props) {
             return displayArray;
         }
     }
+     
+    const mapPositionActions = (liveGame, calculatedData, foundGames) => {
+        let displayArray = [];
+        if(!foundGames && !isThereSavedData){
+            displayArray.push( {name: 'no saved or found Games', data: [] } )
+        } else if (isThereSavedData && !foundGames){
+            displayArray = getPercentagesForPositionsDisplay(liveGame.position);
+        }
+
+    }
+
 
 
     return (
