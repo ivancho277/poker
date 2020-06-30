@@ -105,7 +105,7 @@ export const GameController = (props) => {
             if (addActionValues(liveGame.actions) === 0) {
                 storageIsEmpty = true;
             }
-        } eqwr
+        } 
         //console.log("ITS RAINING TAGS: ", allgames);
         //console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
         let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;

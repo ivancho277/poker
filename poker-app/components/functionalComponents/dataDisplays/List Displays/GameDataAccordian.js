@@ -125,7 +125,7 @@ export function GameDataAccordian(props) {
             let sumofgamesfound = Calculate.sumGamesTotals(foundGames);
             let actions = Calculate.sumUpGameTotals(foundGames);;
             console.log("actions: ", actions)
-            console.log("sum: " ,sumofgamesfound)
+            console.log("sum: ", sumofgamesfound)
             for ([key, value] of Object.entries(actions)) {
                 console.log("key, value", key + " " + value)
                 displayArray.push({ name: [key], data: calculatePercentage([value], sumofgamesfound) })
@@ -134,52 +134,66 @@ export function GameDataAccordian(props) {
             return displayArray;
         }
     }
-     
+
     const mapPositionActions = (liveGame, calculatedData, foundGames) => {
         let displayArray = [];
-        if(!foundGames && !isThereSavedData){
-            displayArray.push( {name: 'no saved or found Games', data: [] } )
-        } else if (isThereSavedData && !foundGames){
-            displayArray = getPercentagesForPositionsDisplay(liveGame.position);
-        }
+        if (!isThereSavedData) {
+            displayArray.push({ name: 'no saved or found Games', data: [] })
+            console.log("if::", displayArray)
 
+        } else if (isThereSavedData && !foundGames) {
+            displayArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+            console.log('else if :: displayArray: %o', displayArray);
+            return displayArray;
+        }
+        else {
+            displayArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(found));
+            console.log("displayArray:::else:::", displayArray);
+            return displayArray;
+        }
+    }
+
+    const renderActions = (liveGame, isVisible, hideDialogFun) => {
+        return (
+            <Portal>
+                <Dialog visible={isVisible} onDismiss={hideDialogFun} >
+                    <Dialog.Title>Data:</Dialog.Title>
+                    <Dialog.ScrollArea>
+
+                        <Divider />
+                        {liveGame.tags.length > 0 ?
+                            <Dialog.Content>
+                                {mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray)).map((element, i) => {
+                                    return <Paragraph key={i}>{`${element.name}: ${element.data}% \n`}</Paragraph>
+                                })}
+                            </Dialog.Content>
+                            :
+                            <Dialog.Content>
+                                {mapActions(liveGame, null).map((element, i) => {
+                                    return <Paragraph key={i}>{`${element.name}: ${element.data}% \n`}</Paragraph>
+                                })
+                                }
+                            </Dialog.Content>
+                        }
+
+                    </Dialog.ScrollArea>
+                    <Dialog.Actions>
+                        <Button title='Cancal' onPress={() =>hideDialogFun()} />
+                        <Button title='Ok' onPress={() =>hideDialogFun()} />
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+        )
     }
 
 
 
     return (
         <GameSubscriber>
-            {({liveGame, allGamesArray}, actions) =>
+            {({ liveGame, allGamesArray }, actions) =>
                 <View>
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
-                    <Portal>
-                        <Dialog visible={visibleTestDialog} onDismiss={_hideTestDialog} >
-                            <Dialog.Title>Data:</Dialog.Title>
-                            <Dialog.ScrollArea>
-                               
-                                    <Divider />
-                                    {liveGame.tags.length > 0 ?
-                                        <Dialog.Content>  
-                                            {mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray)).map((element,i) => {
-                                                return <Paragraph key={i}>{`${element.name}: ${element.data}% \n`}</Paragraph>
-                                            })}
-                                        </Dialog.Content>
-                                        :
-                                        <Dialog.Content> 
-                                            {mapActions(liveGame, null).map((element, i) => {
-                                                return <Paragraph key={i}>{`${element.name}: ${element.data}% \n`}</Paragraph>
-                                            })
-                                            }
-                                        </Dialog.Content>
-                                    }
-                                
-                            </Dialog.ScrollArea>
-                            <Dialog.Actions>
-                                <Button title='Cancal' onPress={() => _hideTestDialog()} />
-                                <Button title='Ok' onPress={() => _hideTestDialog()} />
-                            </Dialog.Actions>
-                        </Dialog>
-                    </Portal>
+                    { renderActions(liveGame, visibleTestDialog, _hideTestDialog) }
                 </View>
             }
         </GameSubscriber>
