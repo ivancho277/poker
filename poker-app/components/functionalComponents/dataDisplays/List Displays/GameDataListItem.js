@@ -29,8 +29,6 @@ export function GameDataListItem(props) {
         setExpanded(!expanded);
     }
 
-
-
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);

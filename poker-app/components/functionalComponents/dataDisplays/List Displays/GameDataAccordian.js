@@ -7,7 +7,7 @@ import * as calculations from '../../../statscalculation.js';
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Car, Dialog, Portald, Portal, Paragraph, Divider } from 'react-native-paper';
+import { ActivityIndicator, Surface, Text, Subheading, IconButton, List, Card, Dialog, Portal, Paragraph, Divider, Title } from 'react-native-paper';
 import { Button } from 'react-native-elements'
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
@@ -27,10 +27,13 @@ export function GameDataAccordian(props) {
     const [isThereSavedData, setIsThereSavedData] = useState(false);
     const [dataToDisplay, setDataToDisplay] = useState([]);
     const [visibleTestDialog, setVisibleTestDialog] = useState(false);
+    const [visiblePOSDialog, setVisiblePOSDialog] = useState(false);
 
     const _hideTestDialog = () => { setVisibleTestDialog(false) };
     const _showTestDialog = () => { setVisibleTestDialog(true) };
 
+    const _showPOSDialog = () => { setVisiblePOSDialog(true) };
+    const _hidePOSDialog = () => { setVisiblePOSDialog(false) };
 
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
@@ -72,12 +75,16 @@ export function GameDataAccordian(props) {
         return Object.entries(dataArray[position]);
     }
 
+
+    //TODO: TODAY HERE COULD BE CAUSEING ERROR
     const getPositionPercentages = (position, foundGames) => {
         if (foundGames) {
-            let dataArray = foundGames.length === allGamesArray.length ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
-                : Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames));
+            let dataArray = (foundGames.length === allGamesArray.length) ? Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames))
+                : Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
+            console.log("position: ", position);
+            console.log("entries, :", Object.entries(dataArray[position]))
             return Object.entries(dataArray[position]);
-        } 
+        }
         else {
             return [];
         }
@@ -146,18 +153,19 @@ export function GameDataAccordian(props) {
         }
     }
 
-    const mapPositionActions = (liveGame, calculatedData, foundGames) => {
+    //TODO: TODAY HERE COULD BE CAUSEING ERROR
+    const mapPositionActions = (liveGame, calculatedData, foundGames, isData) => {
         let displayArray = [];
         console.log("what did we find?", foundGames)
-        if (!isThereSavedData) {
+        if (!isData) {
             displayArray.push({ name: 'no saved or found Games', data: [] })
             console.log("if::", displayArray)
             return displayArray;
 
-        } else if (isThereSavedData && foundGames.length == 0) {
+        } else if (isData && foundGames.length == 0) {
             console.log("found.len", foundGames.length)
             console.log("found.len", foundGames.length)
-            
+
             displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame.position, foundGames) });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
@@ -169,10 +177,39 @@ export function GameDataAccordian(props) {
         }
     }
 
-    const renderPositionActions = () => {
+    const renderPositionActions = (liveGame, isVisible, hideDialogFun) => {
+        <Portal>
+            <Dialog visible={isVisible} onDismiss={hideDialogFun} >
+                <Dialog.Title>Data:</Dialog.Title>
+                <Dialog.ScrollArea>
 
+                    <Divider />
+                    {isThereSavedData?
+                        <Dialog.Content>
+                            {mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray, isThereSavedData)).map((element, i) => {
+                                return <Paragraph key={i}>{`${element[0]}: ${element[1][Object.keys(element[1])[0]]}% \n`}</Paragraph>
+                            })}
+                        </Dialog.Content>
+                        :
+                        <Dialog.Content>
+                            <Title>No Saved Data</Title>
+
+                        </Dialog.Content>
+                    }
+                </Dialog.ScrollArea>
+                <Dialog.Actions>
+                    <Button title='Cancal' onPress={() => hideDialogFun()} />
+
+                    <Button title='Ok' onPress={() => hideDialogFun()} />
+                </Dialog.Actions>
+            </Dialog>
+        </Portal>
     }
 
+    //NOTE: 7/1/2020 ---- remeber that I should possibly need to add another param, that takes in the allGames array.
+    /**
+     * @param {type} property - description.
+     */
     const renderActions = (liveGame, isVisible, hideDialogFun) => {
         return (
             <Portal>
@@ -216,8 +253,10 @@ export function GameDataAccordian(props) {
 
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
-                    <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
+                    {/* <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} /> */}
+                    <Button title="LOG OTHER DATA" onPress={_showPOSDialog} style={{ color: "red" }} />
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
+                    {renderPositionActions(liveGame, visiblePOSDialog, _hidePOSDialog)}
                 </View>
             }
         </GameSubscriber>
