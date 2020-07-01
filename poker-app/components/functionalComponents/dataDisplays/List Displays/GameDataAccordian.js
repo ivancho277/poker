@@ -1,6 +1,5 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { View, TextInput, onLongPress, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../../../statscalculation.js';
 // const storageController = require('./AsyncStorageController.js')
@@ -9,6 +8,7 @@ import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Car, Dialog, Portald, Portal, Paragraph, Divider } from 'react-native-paper';
+import {Button} from 'react-native-elements'
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
 import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
@@ -35,9 +35,9 @@ export function GameDataAccordian(props) {
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
-        // if (allGamesArray.length >= 0) {
-        //     setIsThereSavedData(true);
-        // }
+        if (allGamesArray.length >= 0) {
+            setIsThereSavedData(true);
+        }
         // let data = buildDisplayData();
         // // debugger;
         // console.log('data: %o', data);
@@ -137,12 +137,13 @@ export function GameDataAccordian(props) {
 
     const mapPositionActions = (liveGame, calculatedData, foundGames) => {
         let displayArray = [];
+        console.log("what did we find?",foundGames)
         if (!isThereSavedData) {
             displayArray.push({ name: 'no saved or found Games', data: [] })
             console.log("if::", displayArray)
             return displayArray;
 
-        } else if (isThereSavedData && !foundGames) {
+        } else if (isThereSavedData && (!foundGames || foundGames.length == 0)) {
             displayArray.push({  name: 'Display History of current Position for all games' ,data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)}   );
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
@@ -184,6 +185,7 @@ export function GameDataAccordian(props) {
                     </Dialog.ScrollArea>
                     <Dialog.Actions>
                         <Button title='Cancal' onPress={() =>hideDialogFun()} />
+                       
                         <Button title='Ok' onPress={() =>hideDialogFun()} />
                     </Dialog.Actions>
                 </Dialog>
@@ -195,10 +197,12 @@ export function GameDataAccordian(props) {
 
     return (
         <GameSubscriber>
-            {({ liveGame, allGamesArray }, actions) =>
+            {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View>
+
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
-                    <Button title="LOG OTHER DATA" onPress={mapPositionActions} style={{color: "red"}} />
+                    <Divider />
+                    <Button title="LOG OTHER DATA" onPress={() => {mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags))} } style={{color: "red"}} />
                     { renderActions(liveGame, visibleTestDialog, _hideTestDialog) }
                 </View>
             }
