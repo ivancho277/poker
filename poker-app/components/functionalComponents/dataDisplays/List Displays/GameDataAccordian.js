@@ -140,17 +140,22 @@ export function GameDataAccordian(props) {
         if (!isThereSavedData) {
             displayArray.push({ name: 'no saved or found Games', data: [] })
             console.log("if::", displayArray)
+            return displayArray;
 
         } else if (isThereSavedData && !foundGames) {
-            displayArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+            displayArray.push({  name: 'Display History of current Position for all games' ,data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)}   );
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
         else {
-            displayArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(found));
+            displayArray.push({ name: "display History for games with same Tag(s)" , data: Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(found)) }  )  ;
             console.log("displayArray:::else:::", displayArray);
             return displayArray;
         }
+    }
+
+    const renderPositionActions = () => {
+
     }
 
     const renderActions = (liveGame, isVisible, hideDialogFun) => {
@@ -193,6 +198,7 @@ export function GameDataAccordian(props) {
             {({ liveGame, allGamesArray }, actions) =>
                 <View>
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
+                    <Button title="LOG OTHER DATA" onPress={mapPositionActions} style={{color: "red"}} />
                     { renderActions(liveGame, visibleTestDialog, _hideTestDialog) }
                 </View>
             }
