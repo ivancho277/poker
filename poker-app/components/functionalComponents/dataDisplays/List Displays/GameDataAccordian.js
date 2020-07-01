@@ -8,7 +8,7 @@ import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Car, Dialog, Portald, Portal, Paragraph, Divider } from 'react-native-paper';
-import {Button} from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
 import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
@@ -70,6 +70,17 @@ export function GameDataAccordian(props) {
         let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
         let dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
         return Object.entries(dataArray[position]);
+    }
+
+    const getPositionPercentages = (position, foundGames) => {
+        if (foundGames) {
+            let dataArray = foundGames.length === allGamesArray.length ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
+                : Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames));
+            return Object.entries(dataArray[position]);
+        } 
+        else {
+            return [];
+        }
     }
 
     const calculatePercentage = (count, total) => {
@@ -137,19 +148,22 @@ export function GameDataAccordian(props) {
 
     const mapPositionActions = (liveGame, calculatedData, foundGames) => {
         let displayArray = [];
-        console.log("what did we find?",foundGames)
+        console.log("what did we find?", foundGames)
         if (!isThereSavedData) {
             displayArray.push({ name: 'no saved or found Games', data: [] })
             console.log("if::", displayArray)
             return displayArray;
 
-        } else if (isThereSavedData && (!foundGames || foundGames.length == 0)) {
-            displayArray.push({  name: 'Display History of current Position for all games' ,data: Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)}   );
+        } else if (isThereSavedData && foundGames.length == 0) {
+            console.log("found.len", foundGames.length)
+            console.log("found.len", foundGames.length)
+            
+            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame.position, foundGames) });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
         else {
-            displayArray.push({ name: "display History for games with same Tag(s)" , data: Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(found)) }  )  ;
+            displayArray.push({ name: "display History for games with same Tag(s)", data: getPositionPercentages(liveGame.position, foundGames) });
             console.log("displayArray:::else:::", displayArray);
             return displayArray;
         }
@@ -184,9 +198,9 @@ export function GameDataAccordian(props) {
 
                     </Dialog.ScrollArea>
                     <Dialog.Actions>
-                        <Button title='Cancal' onPress={() =>hideDialogFun()} />
-                       
-                        <Button title='Ok' onPress={() =>hideDialogFun()} />
+                        <Button title='Cancal' onPress={() => hideDialogFun()} />
+
+                        <Button title='Ok' onPress={() => hideDialogFun()} />
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -202,8 +216,8 @@ export function GameDataAccordian(props) {
 
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
-                    <Button title="LOG OTHER DATA" onPress={() => {mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags))} } style={{color: "red"}} />
-                    { renderActions(liveGame, visibleTestDialog, _hideTestDialog) }
+                    <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
+                    {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
                 </View>
             }
         </GameSubscriber>

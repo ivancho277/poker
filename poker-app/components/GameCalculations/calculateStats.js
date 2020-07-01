@@ -41,22 +41,26 @@ const searchBytag = (tag, games) => {
 
 /**
  * !!needs to be tested after i have a multiselct option working on the stats screen.
- * TODO: test this function 
+ * TODO: 7/1/2020 Fix the conditionals here, needs to account for games comming in as undefined or null as well
+ * NOTE: 7.1.2020 Really think about best way to deal with null or undefined cases
+ * 
  */
 const searchByManyTags = (tagsArray, games) => {
-    if (tagsArray instanceof Array) {
-        if (tagsArray.length === 0 || games.length === 0) {
-            return [];
-        }
-        const foundGames = games.filter(savedGame => {
-            if (tagsArray.every(tag => { return (savedGame.game.data.tags.indexOf(tag) >= 0) })) {
-                return savedGame;
+    if (games) {
+        if (tagsArray instanceof Array) {
+            if (tagsArray.length === 0 || games.length === 0) {
+                return [];
             }
-        });
-        //console.log("MANY TAGS:", foundGames);
-        return foundGames.length > 0 ? foundGames : null;
+            const foundGames = games.filter(savedGame => {
+                if (tagsArray.every(tag => { return (savedGame.game.data.tags.indexOf(tag) >= 0) })) {
+                    return savedGame;
+                }
+            });
+            //console.log("MANY TAGS:", foundGames);
+            return foundGames.length > 0 ? foundGames : null;
+        }
     }
-    
+    return [];
 }
 
 
@@ -205,15 +209,15 @@ const sumPositionCount = (games) => {
     let actionCountPerPosition = sumGamesPositions(games);
     console.log('actionCountPerPosition: %o', actionCountPerPosition);
     let positionCount = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
-    for(action in actionCountPerPosition){
-        for(position in actionCountPerPosition[action]){
+    for (action in actionCountPerPosition) {
+        for (position in actionCountPerPosition[action]) {
             // console.log('[ation]:%o', action);
             // console.log('action: %o', action);
             // console.log('position: %o', position);
             // console.log('[action][position]: %o', actionCountPerPosition[action][position]);
-            positionCount[position] = positionCount[position] + actionCountPerPosition[action][position]; 
+            positionCount[position] = positionCount[position] + actionCountPerPosition[action][position];
         }
-        
+
     }
     // console.log('positionCount: %o', positionCount);
     return positionCount;
