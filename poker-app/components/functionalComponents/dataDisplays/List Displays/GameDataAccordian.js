@@ -74,7 +74,7 @@ export function GameDataAccordian(props) {
 
     const getPositionPercentages = (position, foundGames) => {
         if (foundGames) {
-            let dataArray = foundGames.length === allGamesArray.length ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
+            let dataArray = ((foundGames.length === allGamesArray.length) || (foundGames.length === 0)) ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
                 : Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames));
             return Object.entries(dataArray[position]);
         } 
