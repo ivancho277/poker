@@ -151,7 +151,7 @@ export function GameDataAccordian(props) {
             console.log("displayARray:", displayArray);
             return displayArray;
         }
-    }
+    } 
 
     //TODO: TODAY HERE COULD BE CAUSEING ERROR
     const mapPositionActions = (liveGame, calculatedData, foundGames, isData) => {
