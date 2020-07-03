@@ -170,9 +170,9 @@ export function GameDataAccordian(props) {
             console.log("if::", displayArray)
             return displayArray;
 
-        } else if (isThereSavedData && foundGames.length == 0) {
-            console.log("found.len", foundGames.length)
-            console.log("found.len", foundGames.length)
+        } else if (isThereSavedData && !foundGames) {
+            console.log("found.len", foundGames)
+            console.log("found.len", foundGames)
 
             displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData) });
             console.log('else if :: displayArray: %o', displayArray);
@@ -196,7 +196,7 @@ export function GameDataAccordian(props) {
                     {isThereSavedData ?
                         <Dialog.Content>
                             {(mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(tags, allGames))[0].data).map((element, i) => {
-                                return <Paragraph key={`$PosPerAct_${i}`}> {`${element[0]}: element = ${element[0]}]`}    </Paragraph>
+                                return <Paragraph key={`$PosPerAct_${i}`}> {`${element[0]}: ${element[1][position]}% `}    </Paragraph>
                             })
                             }
                         </Dialog.Content>
@@ -207,10 +207,10 @@ export function GameDataAccordian(props) {
                     }
                     <Dialog.Actions>
                         <View style={{margin: 4}}>
-                            <Button title='Cancal' onPress={() => hideDialogFun()} />
+                            <Button title='Cancal' onPress={() => hideDialog()} />
                         </View>
                         <View style={{margin: 4}}>
-                            <Button title='Ok' onPress={() => hideDialogFun()} />
+                            <Button title='Ok' onPress={() => hideDialog()} />
                         </View>
 
                     </Dialog.Actions>
