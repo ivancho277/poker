@@ -27,7 +27,10 @@ export function GameDataAccordian(props) {
     const [isThereSavedData, setIsThereSavedData] = useState(false);
     const [dataToDisplay, setDataToDisplay] = useState([]);
     const [visibleTestDialog, setVisibleTestDialog] = useState(false);
+    const [visiblePOSDialog, setPOSDialog] = useState(false);
 
+    const _hidePOS = () => { setPOSDialog(false) };
+    const _showPOS = () => { setPOSDialog(true) };
     const _hideTestDialog = () => { setVisibleTestDialog(false) };
     const _showTestDialog = () => { setVisibleTestDialog(true) };
 
@@ -56,9 +59,15 @@ export function GameDataAccordian(props) {
         }, accum);
     }
 
-    const getPercentagesForPositionsDisplay = (position) => {
+    //NOTE: Check what found is when no tags, should be empty array, if it is then we should just return all games
+    //TODO: 7.2.2020 -- Read Note above
+    const getPercentagesForPositionsDisplay = (position, tags, calculatedData, allGamesArray) => {
         if (allGamesArray.length === 0) {
             return [];
+        }
+        let found = Calculate.searchByManyTags(tags, allGamesArray);
+        if (found) {
+            console.log('found', found);
         }
         let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
         return Object.entries(dataArray[position]);
@@ -77,7 +86,7 @@ export function GameDataAccordian(props) {
             let dataArray = ((foundGames.length === allGamesArray.length) || (foundGames.length === 0)) ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
                 : Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames));
             return Object.entries(dataArray[position]);
-        } 
+        }
         else {
             return [];
         }
@@ -157,7 +166,7 @@ export function GameDataAccordian(props) {
         } else if (isThereSavedData && foundGames.length == 0) {
             console.log("found.len", foundGames.length)
             console.log("found.len", foundGames.length)
-            
+
             displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame.position, foundGames) });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
@@ -169,8 +178,14 @@ export function GameDataAccordian(props) {
         }
     }
 
-    const renderPositionActions = () => {
-
+    const renderPositionActions = (liveGame, isVisible, hideDialog, tags, calculatedData, allGames) => {
+        return (
+            <Portal>
+                <Dialog visible={isVisible} onDismiss={hideDialog}>
+                    <Dialog.Title>Historical % of Current Position: {liveGame.position}</Dialog.Title>
+                </Dialog>
+            </Portal>
+        )
     }
 
     const renderActions = (liveGame, isVisible, hideDialogFun) => {
@@ -217,7 +232,9 @@ export function GameDataAccordian(props) {
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
                     <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
+                    <Button title="log 2" onPress={() => {_showPOS()}}></Button>
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
+                    {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, liveGame.tags, calculatedData, allGamesArray)}
                 </View>
             }
         </GameSubscriber>
