@@ -80,11 +80,18 @@ export function GameDataAccordian(props) {
         let dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
         return Object.entries(dataArray[position]);
     }
-
-    const getPositionPercentages = (position, foundGames) => {
-        if (foundGames) {
-            let dataArray = ((foundGames.length === allGamesArray.length) || (foundGames.length === 0)) ? Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
-                : Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(foundGames), Calculate.sumPositionCount(foundGames));
+    //NOTE: 7/2/2020 getPercentafesForPositionDislay() should do the search so here just pass allGames and the checks will run in there..
+    //TODOL 7/2/2020 see note above!
+    const getPositionPercentages = (liveGame, found, calculatedData) => {
+        //let found = Calculate.searchByManyTags(tags, allGamesArray);
+        const { position, tags } = liveGame;
+        let dataArray = [];
+        if (found) {
+            if ((found.length === allGamesArray.length) || (found.length === 0)) {
+                dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
+            } else {
+                dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+            }
             return Object.entries(dataArray[position]);
         }
         else {
@@ -167,24 +174,48 @@ export function GameDataAccordian(props) {
             console.log("found.len", foundGames.length)
             console.log("found.len", foundGames.length)
 
-            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame.position, foundGames) });
+            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData) });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
         else {
-            displayArray.push({ name: "display History for games with same Tag(s)", data: getPositionPercentages(liveGame.position, foundGames) });
+            displayArray.push({ name: "display History for games with same Tag(s)", data: getPositionPercentages(liveGame, foundGames, calculatedData) });
             console.log("displayArray:::else:::", displayArray);
             return displayArray;
         }
     }
 
-    const renderPositionActions = (liveGame, isVisible, hideDialog, tags, calculatedData, allGames) => {
+    //(liveGame, visiblePOSDialog, _hidePOS, liveGame.tags, calculatedData, allGamesArray)}
+    //NOTE: 7.2.2020 honestly should deconstruct here, then pass just the pieces necessary of each State Object.
+    const renderPositionActions = (liveGame, isVisible, hideDialog, calculatedData, allGames) => {
+        const { position, tags } = liveGame;
         return (
             <Portal>
                 <Dialog visible={isVisible} onDismiss={hideDialog}>
-                    <Dialog.Title>Historical % of Current Position: {liveGame.position}</Dialog.Title>
+                    <Dialog.Title>Historical % of Current Position: {position}</Dialog.Title>
+                    {isThereSavedData ?
+                        <Dialog.Content>
+                            {(mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(tags, allGames))[0].data).map((element, i) => {
+                                return <Paragraph key={`$PosPerAct_${i}`}> {`${element[0]}: element = ${element[0]}]`}    </Paragraph>
+                            })
+                            }
+                        </Dialog.Content>
+                        :
+                        <Dialog.Content>
+                            <Paragraph>No Saved Data.</Paragraph>
+                        </Dialog.Content>
+                    }
+                    <Dialog.Actions>
+                        <View style={{margin: 4}}>
+                            <Button title='Cancal' onPress={() => hideDialogFun()} />
+                        </View>
+                        <View style={{margin: 4}}>
+                            <Button title='Ok' onPress={() => hideDialogFun()} />
+                        </View>
+
+                    </Dialog.Actions>
                 </Dialog>
-            </Portal>
+            </Portal >
         )
     }
 
@@ -232,9 +263,9 @@ export function GameDataAccordian(props) {
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
                     <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
-                    <Button title="log 2" onPress={() => {_showPOS()}}></Button>
+                    <Button title="log 2" onPress={() => { _showPOS() }}></Button>
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
-                    {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, liveGame.tags, calculatedData, allGamesArray)}
+                    {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, calculatedData, allGamesArray)}
                 </View>
             }
         </GameSubscriber>
