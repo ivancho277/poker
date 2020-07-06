@@ -25,7 +25,7 @@ export function GameDataListItem(props) {
     const [expanded, setExpanded] = useState(true);
 
     const _handlePress = () => {
-        console.log(props.gameDataObject)
+        console.log(props.gameDataArray)
         setExpanded(!expanded);
     }
 
@@ -34,7 +34,7 @@ export function GameDataListItem(props) {
     useEffect(() => {
         console.log("liveGame:  ", liveGame);
         console.log('allGamesArray: %o', allGamesArray);
-        console.log('props.gameDataObjevt: ', props.gameDataObject);
+        console.log('props.gameDataObjevt: ', props.gameDataArray);
         // debugger;
         if (allGamesArray.length >= 0) {
             setIsThereSavedData(true);
@@ -85,12 +85,12 @@ export function GameDataListItem(props) {
                         expanded={expanded}
                         onPress={_handlePress}
                     >
-                        {(props.gameDataObject.data === undefined)   ?
+                        {(props.gameDataArray === undefined)   ?
                             <Text>I AM undefined</Text>
                             
                             :
-                            (!props.gameDataObject.isDisplayByPosition) ?
-                                props.gameDataObject.data.map((element, i) => {
+                            (!props.gameDataArray.isDisplayByPosition) ?
+                                props.gameDataArray.map((element, i) => {
                                     return <View key={`item_${i}`}>
                                         <List.Item
                                             style={{ height: 15, padding: 3, margin: 3, }}
@@ -102,7 +102,7 @@ export function GameDataListItem(props) {
                                 })
                                 : 
                                 
-                                props.gameDataObject.data[+liveGame.position].map((elem, j) => {
+                                props.gameDataArray.data[+liveGame.position].map((elem, j) => {
                                     return (
                                         (elem != null || elem != undefined) ?
                                         <List.Item

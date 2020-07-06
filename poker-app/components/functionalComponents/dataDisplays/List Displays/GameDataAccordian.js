@@ -142,7 +142,7 @@ export function GameDataAccordian(props) {
         if (!foundGames || foundGames.length === 0) {
             console.log('NOT !!! FOUND GAMES')
             liveGame.actions.forEach((action, i) => {
-                displayArray.push({ name: action.actionName, data: calculatePercentage(action.count, addActionValues(liveGame.actions)) });
+                displayArray.push({ name: action.actionName, data: calculatePercentage(action.count, addActionValues(liveGame.actions)), isDisplayByPosition: false  });
             })
             console.log("displayARray:", displayArray)
             return displayArray;
@@ -157,6 +157,7 @@ export function GameDataAccordian(props) {
                 console.log("key, value", key + " " + value)
                 displayArray.push({ name: [key], data: calculatePercentage([value], sumofgamesfound) })
             }
+            displayArray[0].isDisplayByPosition = false;
             console.log("displayARray:", displayArray);
             return displayArray;
         }
@@ -166,7 +167,7 @@ export function GameDataAccordian(props) {
         let displayArray = [];
         console.log("what did we find?", foundGames)
         if (!isThereSavedData) {
-            displayArray.push({ name: 'no saved or found Games', data: [] })
+            displayArray.push({ name: 'no saved or found Games', data: [], isDisplayByPosition: true })
             console.log("if::", displayArray)
             return displayArray;
 
@@ -174,12 +175,12 @@ export function GameDataAccordian(props) {
             console.log("found.len", foundGames);
             console.log("found.len", foundGames);
 
-            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData) });
+            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData), isDisplayByPosition:true });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
         else {
-            displayArray.push({ name: "display History for games with same Tag(s)", data: getPositionPercentages(liveGame, foundGames, calculatedData) });
+            displayArray.push({ name: "display History for games with same Tag(s)", data: getPositionPercentages(liveGame, foundGames, calculatedData), isDisplayByPosition: true });
             console.log("displayArray:::else:::", displayArray);
             return displayArray;
         }
@@ -259,7 +260,7 @@ export function GameDataAccordian(props) {
         <GameSubscriber>
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View>
-
+                     <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' />
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
                     <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
