@@ -260,7 +260,9 @@ export function GameDataAccordian(props) {
         <GameSubscriber>
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View>
-                     <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' />
+                     <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
+                     <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) } listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
                     <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
