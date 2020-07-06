@@ -171,8 +171,8 @@ export function GameDataAccordian(props) {
             return displayArray;
 
         } else if (isThereSavedData && !foundGames) {
-            console.log("found.len", foundGames)
-            console.log("found.len", foundGames)
+            console.log("found.len", foundGames);
+            console.log("found.len", foundGames);
 
             displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData) });
             console.log('else if :: displayArray: %o', displayArray);
