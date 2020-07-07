@@ -104,14 +104,12 @@ export function GameDataListItem(props) {
                                             </View>
                                         })
                                         : 
-
                                         (props.gameDataArray[0].data).map((elem, j) => {
                                             return (
                                                 (elem != null || elem != undefined) ?
                                                     <List.Item
-                                                        
                                                         key={`item_$_${j}`}
-                                                        style={{ borderStyle: 'solid', borderWidth: 1, borderColor: 'black', height: 30, }}
+                                                        style={{ padding: 3, margin: 3, height: 15, }}
                                                         titleStyle={{ fontSize: 13, lineHeight: 15 }}
                                                         title={`${elem[0]}: ${elem[1][(liveGame.position)]} %`}
                                                         left={() => <List.Icon icon='cards-spade' color='black' />}
