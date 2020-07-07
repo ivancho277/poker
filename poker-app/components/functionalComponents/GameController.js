@@ -86,7 +86,7 @@ export const GameController = (props) => {
         return Math.round(count / total * 100)
     }
 
-    /**
+    /**wd
      * !!Ended Here
      * TODO: 6/13/2020 this seems to work as is now
      * 

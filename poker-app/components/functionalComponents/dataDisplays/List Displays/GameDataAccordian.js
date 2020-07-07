@@ -142,7 +142,7 @@ export function GameDataAccordian(props) {
         if (!foundGames || foundGames.length === 0) {
             console.log('NOT !!! FOUND GAMES')
             liveGame.actions.forEach((action, i) => {
-                displayArray.push({ name: action.actionName, data: calculatePercentage(action.count, addActionValues(liveGame.actions)), isDisplayByPosition: false  });
+                displayArray.push({ name: action.actionName, data: calculatePercentage(action.count, addActionValues(liveGame.actions)), isDisplayByPosition: false });
             })
             console.log("displayARray:", displayArray)
             return displayArray;
@@ -175,7 +175,7 @@ export function GameDataAccordian(props) {
             console.log("found.len", foundGames);
             console.log("found.len", foundGames);
 
-            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData), isDisplayByPosition:true });
+            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData), isDisplayByPosition: true });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
@@ -207,10 +207,10 @@ export function GameDataAccordian(props) {
                         </Dialog.Content>
                     }
                     <Dialog.Actions>
-                        <View style={{margin: 4}}>
+                        <View style={{ margin: 4 }}>
                             <Button title='Cancal' onPress={() => hideDialog()} />
                         </View>
-                        <View style={{margin: 4}}>
+                        <View style={{ margin: 4 }}>
                             <Button title='Ok' onPress={() => hideDialog()} />
                         </View>
 
@@ -255,13 +255,15 @@ export function GameDataAccordian(props) {
     }
 
 
-
+    //TODO: 7.7.2020 Fix styling here or in LIST ITEMs so it has no overlap and just has a cleaner look....
     return (
         <GameSubscriber>
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View>
-                     <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
-                     <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) } listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+                    <View style={{padding: 2, margin: 2}}>
+                        <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
+                        <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+                    </View>
 
                     <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                     <Divider />
