@@ -259,21 +259,26 @@ export function GameDataAccordian(props) {
     return (
         <GameSubscriber>
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
-                <View>
-                    <View style={{padding: 2, margin: 2}}>
+                <View style={{ flex: 1 }}>
+                    <View style={{ padding: 2, margin: 2 }}>
                         <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
-                        <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
                     </View>
-
-                    <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
+                    <View style={{ padding: 2, margin: 2 }}></View>
+                    <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+                    <View>
+                    </View>
                     <Divider />
-                    <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
-                    <Button title="log 2" onPress={() => { _showPOS() }}></Button>
+                    <View style={{ margin: 2 }}>
+                        <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
+                        <Divider />
+                        <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
+                        <Button title="log 2" onPress={() => { _showPOS() }}></Button>
+                    </View>
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
                     {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, calculatedData, allGamesArray)}
                 </View>
             }
-        </GameSubscriber>
+        </GameSubscriber >
     )
 
 

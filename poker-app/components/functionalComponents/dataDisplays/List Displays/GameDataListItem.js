@@ -25,12 +25,12 @@ export function RenderPercentByAction(props) {
     }, [])
     //NOTE: 7.7.2020 have props state if we are rendering by tags or just all games.
     return (
-        <View>
-            <Surface>
+        <View style={{ magrin: 5 }}>
+            <Surface style={{ flexGrow: 10 }}>
                 {props.gameDataArray.map((element, i) => {
                     return (<View key={`item_${i}`}>
                         <List.Item
-                            style={{ height: 15, padding: 3, margin: 3, }}
+                            style={{ height: 15, padding: 3, margin: 3, flex: 1 }}
                             titleStyle={{ fontSize: 13, lineHeight: 15 }}
                             title={`${element.name}: ${element.data} %`}
                             left={() => <List.Icon icon='cards-spade' color='black' />}
@@ -53,22 +53,24 @@ export function RenderPercentByPositionByAction(props) {
         console.log('props,', props)
     }, [])
     //NOTE: 7.7.2020 have prop to choose if we are rendering based on allGames of found Tags
-    return (<View>
-        {(props.gameDataArray[0].data).map((elem, j) => {
-            return ((elem != null || elem != undefined) ?
-                <List.Item
-                    key={`item_$_${j}`}
-                    style={{ padding: 3, margin: 3, height: 15, }}
-                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                    title={`${elem[0]}: ${elem[1][(props.liveGame.position)]} %`}
-                    left={() => <List.Icon icon='cards-spade' color='black' />}
-                />
-                :
+    return (<View style={{ magrin: 5 }}>
+        <Surface style={{ flexGrow: 10 }} >
+            {(props.gameDataArray[0].data).map((elem, j) => {
+                return ((elem != null || elem != undefined) ?
+                    <List.Item
+                        key={`item_$_${j}`}
+                        style={{ padding: 3, margin: 3, height: 15, flex: 1 }}
+                        titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                        title={`${elem[0]}: ${elem[1][(props.liveGame.position)]} %`}
+                        left={() => <List.Icon icon='cards-spade' color='black' />}
+                    />
+                    :
 
-                <Paragraph>No Saved Data</Paragraph>
-            )
-        })
-        }
+                    <Paragraph>No Saved Data</Paragraph>
+                )
+            })
+            }
+        </Surface>
     </View>
     )
 }
@@ -137,55 +139,61 @@ export function GameDataListItem(props) {
     return (
         <GameSubscriber>
             {({ liveGame }, actions) => (
-                <Surface style={{ elevation: 2, flex: 1, }}>
 
 
-                    <List.Section>
-                        <List.Accordion
-                            titleStyle={{ color: 'black', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
-                            style={{ lineHeight: 20 }}
-                            title={props.listTitle}
-                            expanded={expanded}
-                            onPress={_handlePress}
-                        >
-                            {(props.gameDataArray === undefined) ?
-                                <Paragraph>I AM undefined</Paragraph>
 
-                                :
-                                (!props.isDisplayByPosition) ?
-                                    <RenderPercentByAction {...props} liveGame={liveGame}/>
-                                    // props.gameDataArray.map((element, i) => {
-                                    //     return <View key={`item_${i}`}>
-                                    //         <List.Item
-                                    //             style={{ height: 15, padding: 3, margin: 3, }}
-                                    //             titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                    //             title={`${element.name}: ${element.data} %`}
-                                    //             left={() => <List.Icon icon='cards-spade' color='black' />}
-                                    //         />
-                                    //     </View>
-                                    // })
+                <List.Section>
+                    <Card>
+                        <Card.Content>
+                            <List.Accordion
+                                titleStyle={{ color: 'black', textDecorationLine: 'underline', fontSize: 14, borderColor: 'red', borderWidth: 1, borderStyle: 'dotted' }}
+                                style={{ lineHeight: 20 }}
+                                title={props.listTitle}
+                                expanded={expanded}
+                                onPress={_handlePress}
+                            >
+                                {(props.gameDataArray === undefined) ?
+                                    <Paragraph>I AM undefined</Paragraph>
+
                                     :
-                                    <RenderPercentByPositionByAction {...props} liveGame={liveGame} />
-                                // (props.gameDataArray[0].data).map((elem, j) => {
-                                //     return (
-                                //         (elem != null || elem != undefined) ?
-                                //             <List.Item
-                                //                 key={`item_$_${j}`}
-                                //                 style={{ padding: 3, margin: 3, height: 15, }}
-                                //                 titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                //                 title={`${elem[0]}: ${elem[1][(liveGame.position)]} %`}
-                                //                 left={() => <List.Icon icon='cards-spade' color='black' />}
-                                //             />
-                                //             :
-                                //             <Text>No Saved Data</Text>
-                                //     )
-                            }
+                                    (!props.isDisplayByPosition) ?
+
+                                        <RenderPercentByAction {...props} liveGame={liveGame} />
+
+                                        // props.gameDataArray.map((element, i) => {
+                                        //     return <View key={`item_${i}`}>
+                                        //         <List.Item
+                                        //             style={{ height: 15, padding: 3, margin: 3, }}
+                                        //             titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                        //             title={`${element.name}: ${element.data} %`}
+                                        //             left={() => <List.Icon icon='cards-spade' color='black' />}
+                                        //         />
+                                        //     </View>
+                                        // })
+                                        :
+                                        <RenderPercentByPositionByAction {...props} liveGame={liveGame} />
+                                    // (props.gameDataArray[0].data).map((elem, j) => {
+                                    //     return (
+                                    //         (elem != null || elem != undefined) ?
+                                    //             <List.Item
+                                    //                 key={`item_$_${j}`}
+                                    //                 style={{ padding: 3, margin: 3, height: 15, }}
+                                    //                 titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                    //                 title={`${elem[0]}: ${elem[1][(liveGame.position)]} %`}
+                                    //                 left={() => <List.Icon icon='cards-spade' color='black' />}
+                                    //             />
+                                    //             :
+                                    //             <Text>No Saved Data</Text>
+                                    //     )
+                                }
 
 
-                        </List.Accordion>
-                    </List.Section>
+                            </List.Accordion>
+                        </Card.Content>
+                    </Card>
+                </List.Section>
 
-                </Surface>
+
             )}
         </GameSubscriber>
     )

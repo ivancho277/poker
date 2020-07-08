@@ -63,6 +63,18 @@ const searchByManyTags = (tagsArray, games) => {
     return [];
 }
 
+const anyGamesFound = (gamesList) => {
+    if(gamesList === null || gamesList === undefined){
+        return false;
+    }
+    else if(gamesList.length == 0){
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 
 /**
  * NOTE: Sums up recieved array of games found;
@@ -236,5 +248,6 @@ module.exports = {
     sumGamesPositions: sumGamesPositions,
     percentagesPerPositionForEachAction: percentagesPerPositionForEachAction,
     sumPositionCount: sumPositionCount,
-
+    anyGamesFound: anyGamesFound,
+    
 }
