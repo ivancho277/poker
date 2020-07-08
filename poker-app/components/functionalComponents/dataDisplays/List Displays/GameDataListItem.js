@@ -11,7 +11,7 @@ import { AddTag } from '../../AddTag'
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider, Card } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider, Card, Paragraph } from 'react-native-paper';
 import TagDialog from '../../TagDialog';
 import { Tables } from '../../../../constants/tables.js';
 import { getPercentages } from '../../../statscalculation.js';
@@ -20,11 +20,26 @@ import { ChipButton } from '../../ChipButton';
 
 //TODO: 7.7.2020 Write me!
 export function RenderPercentByAction(props) {
+    useEffect(() => {
+        console.log('props,', props)
+    }, [])
     //NOTE: 7.7.2020 have props state if we are rendering by tags or just all games.
-    return (props.byTag ?
-        <View></View>
-        :
-        <View></View>
+    return (
+        <View>
+            <Surface>
+                {props.gameDataArray.map((element, i) => {
+                    return (<View key={`item_${i}`}>
+                        <List.Item
+                            style={{ height: 15, padding: 3, margin: 3, }}
+                            titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                            title={`${element.name}: ${element.data} %`}
+                            left={() => <List.Icon icon='cards-spade' color='black' />}
+                        />
+                    </View>)
+                })
+                }
+            </Surface>
+        </View>
     )
 }
 
@@ -34,7 +49,28 @@ RenderPercentByAction.defaultProps = {
 
 //TODO: 7.7.2020 Write me!
 export function RenderPercentByPositionByAction(props) {
+    useEffect(() => {
+        console.log('props,', props)
+    }, [])
     //NOTE: 7.7.2020 have prop to choose if we are rendering based on allGames of found Tags
+    return (<View>
+        {(props.gameDataArray[0].data).map((elem, j) => {
+            return ((elem != null || elem != undefined) ?
+                <List.Item
+                    key={`item_$_${j}`}
+                    style={{ padding: 3, margin: 3, height: 15, }}
+                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                    title={`${elem[0]}: ${elem[1][(props.liveGame.position)]} %`}
+                    left={() => <List.Icon icon='cards-spade' color='black' />}
+                />
+                :
+
+                <Paragraph>No Saved Data</Paragraph>
+            )
+        })
+        }
+    </View>
+    )
 }
 
 RenderPercentByPositionByAction.defaultProps = {
@@ -113,37 +149,39 @@ export function GameDataListItem(props) {
                             onPress={_handlePress}
                         >
                             {(props.gameDataArray === undefined) ?
-                                <Text>I AM undefined</Text>
+                                <Paragraph>I AM undefined</Paragraph>
 
                                 :
                                 (!props.isDisplayByPosition) ?
-                                    props.gameDataArray.map((element, i) => {
-                                        return <View key={`item_${i}`}>
-                                            <List.Item
-                                                style={{ height: 15, padding: 3, margin: 3, }}
-                                                titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                                title={`${element.name}: ${element.data} %`}
-                                                left={() => <List.Icon icon='cards-spade' color='black' />}
-                                            />
-                                        </View>
-                                    })
+                                    <RenderPercentByAction {...props} liveGame={liveGame}/>
+                                    // props.gameDataArray.map((element, i) => {
+                                    //     return <View key={`item_${i}`}>
+                                    //         <List.Item
+                                    //             style={{ height: 15, padding: 3, margin: 3, }}
+                                    //             titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                    //             title={`${element.name}: ${element.data} %`}
+                                    //             left={() => <List.Icon icon='cards-spade' color='black' />}
+                                    //         />
+                                    //     </View>
+                                    // })
                                     :
-                                    (props.gameDataArray[0].data).map((elem, j) => {
-                                        return (
-                                            (elem != null || elem != undefined) ?
-                                                <List.Item
-                                                    key={`item_$_${j}`}
-                                                    style={{ padding: 3, margin: 3, height: 15, }}
-                                                    titleStyle={{ fontSize: 13, lineHeight: 15 }}
-                                                    title={`${elem[0]}: ${elem[1][(liveGame.position)]} %`}
-                                                    left={() => <List.Icon icon='cards-spade' color='black' />}
-                                                />
-                                                :
-                                                <Text>No Saved Data</Text>
-                                        )
-                                    })
-
+                                    <RenderPercentByPositionByAction {...props} liveGame={liveGame} />
+                                // (props.gameDataArray[0].data).map((elem, j) => {
+                                //     return (
+                                //         (elem != null || elem != undefined) ?
+                                //             <List.Item
+                                //                 key={`item_$_${j}`}
+                                //                 style={{ padding: 3, margin: 3, height: 15, }}
+                                //                 titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                //                 title={`${elem[0]}: ${elem[1][(liveGame.position)]} %`}
+                                //                 left={() => <List.Icon icon='cards-spade' color='black' />}
+                                //             />
+                                //             :
+                                //             <Text>No Saved Data</Text>
+                                //     )
                             }
+
+
                         </List.Accordion>
                     </List.Section>
 
