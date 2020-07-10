@@ -6,17 +6,12 @@ import { AntDesign } from '@expo/vector-icons';
 import * as calculations from '../../../statscalculation.js';
 import { StorageAPI } from '../../../storageAPI/AsyncStorageController'
 import { AddTag } from '../../AddTag'
-// const storageController = require('./AsyncStorageController.js')
-// const calculations = require('./statscalculation.js')
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore';
 import * as Calculate from '../../../GameCalculations/calculateStats.js'
 import * as Utils from '../../../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Divider, Card, Paragraph } from 'react-native-paper';
-import TagDialog from '../../TagDialog';
 import { Tables } from '../../../../constants/tables.js';
-import { getPercentages } from '../../../statscalculation.js';
-import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
-import { ChipButton } from '../../ChipButton';
+
 
 //TODO: 7.7.2020 Write me!
 export function RenderPercentByAction(props) {
