@@ -66,7 +66,33 @@ const initialState = {
     currentTime: new Date(),
     previousTime: new Date(),
     testModeOn: false,
+    testNewSecureStore: null,
 };
+
+const setSecureStoreStorage = (dataToSet) => {
+    storage.setData(dataToSet);
+}
+
+const setSecureState = (dataToSet) => ({ setState }) => {
+    setSecureStoreStorage(dataToSet);
+    setState(draft => {
+        draft.testNewSecureStore = dataToSet;
+    })
+}
+
+const getSecureStorage = async () => ({ dispatch }) => {
+    let data = await storage.getData().then(res => {
+        console.log('in the then', res);
+        return JSON.parse(res);
+    })
+    if (data) {
+        return data;
+    } else {
+        return null;
+    }
+}
+
+
 
 const setCurrentTime = () => ({ setState }) => {
     setState(draft => {
@@ -127,12 +153,12 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         console.log("Curr Calc::::", currentGame.calcData);
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
-        dispatch(firstMoveMade()); 
+        dispatch(firstMoveMade());
     } else {
         console.log("No Current Game Present");
         dispatch(setNewLiveGame(actions));
         //dispatch(firstMoveMade());
-        
+
     }
 }
 
@@ -708,12 +734,12 @@ const actions = {
      */
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
-storage.updateTotals(liveGame);
+        storage.updateTotals(liveGame);
     },
 
-getPositionTotalsFromStorage: () => ({ dispatch }) => {
+    getPositionTotalsFromStorage: () => ({ dispatch }) => {
 
-},
+    },
 
     TestModeSwitch: () => ({ getState, setState }) => {
         const { testModeOn } = getState();
