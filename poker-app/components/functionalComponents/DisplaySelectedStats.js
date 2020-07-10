@@ -61,7 +61,7 @@ export function DisplaySelectedStats(props) {
                                         {/* <Text>{JSON.stringify(Calculate.sumGamesTotals(props.foundGames))}</Text> */}
                                         {Object.entries(Calculate.sumUpGameTotals(props.foundGames)).map(element => {
                                             let printout = element
-                                            console.log(printout)
+                                            console.log(printout);
                                             return <DataTable.Row key={`row_${printout[0]}`}>
                                                 <DataTable.Cell key={`${printout[0]}`}>{printout[0]}</DataTable.Cell>
                                                 <DataTable.Cell key={`countOf_${printout[0]}`}>       {printout[1]}</DataTable.Cell>
@@ -69,10 +69,6 @@ export function DisplaySelectedStats(props) {
 
                                             </DataTable.Row>
                                         })
-
-
-
-
                                         }
                                     </View>
 

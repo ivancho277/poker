@@ -1,5 +1,5 @@
 
-const tableObject = {
+const positionsObject = {
     0: "Big Blind",
     1: "Small Blind",
     2: "Dealer",
@@ -11,20 +11,33 @@ const tableObject = {
     9: "D+6",
 }
 
-const tableArray = [
+const positionsArray = [
     {0: "Big Blind"},
     {1: "Small Blind"},
     {2: "Dealer"},
     {3: "D+1"},
     {4: "D+2"},
     {5: "D+3"},
-    {6: "D+3"},
-    {7: "D+4"},
-    {8: "D+5"},
+    {6: "D+4"},
+    {7: "D+5"},
+    {8: "D+6"},
+]
+
+const simplePositionsArr = [
+    {0: "BB"},
+    {1: "SB"},
+    {2: "D"},
+    {3: "D+1"},
+    {4: "D+2"},
+    {5: "D+3"},
+    {6: "D+4"},
+    {7: "D+5"},
+    {8: "D+6"}, 
 ]
 
 export const Tables = {
-    tableObject: tableObject,
-    tableArray: tableArray
+    positionsObject: positionsObject,
+    positionsArray: positionsArray,
+    simplePositionsArr: simplePositionsArr,
 } 
 

@@ -6,11 +6,13 @@ import * as Calculate from './components/GameCalculations/calculateStats.js'
 import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
-import { Chip, Snackbar, Card } from 'react-native-paper';
+import { Chip, Snackbar, Card, Surface } from 'react-native-paper';
 import { ValidationSnackbar } from './components/functionalComponents/ValidationSnackBar';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
 import { Switch } from 'react-native-paper';
+import { DisplayStats } from './components/functionalComponents/DisplayStats';
+import { DataGraph } from './components/functionalComponents/DataGraph.js';
 //import Tester from './components/tester'
 // const calculation = require('./components/statscalculation.js')
 
@@ -54,8 +56,8 @@ class StatsScreen extends Component {
                     <Card.Title title='Testing Raw Data' subtitle="Game data for selected tags will appear here..." />
                     <ScrollView>
                         <Card.Content>
-                            <View style={{flex: 1}}>
-                            <Text>Toggle to see raw data for testing</Text>
+                            <View style={{ flex: 1 }}>
+                                <Text>Toggle to see raw data for testing</Text>
                                 <Switch
                                     style={{ alignContent: 'center' }}
                                     value={teston}
@@ -76,7 +78,7 @@ class StatsScreen extends Component {
                                             <Text>More data</Text>
                                         </View>
                                     :
-                                    <Text style={{color:'red'}}>Note: test mode will stay on everywhere</Text>
+                                    <Text style={{ color: 'red' }}>Note: test mode will stay on everywhere</Text>
                                 }
                             </ScrollView>
                         </Card.Content>
@@ -94,6 +96,7 @@ class StatsScreen extends Component {
     renderPicker() {
         return <GameSubscriber>
             {({ data }, actions) =>
+
                 <RNPickerSelect
                     selectedValue={this.state.tagpicker}
                     style={{ height: 40, width: 110, backgroundColor: 'grey', zIndex: -1 }}
@@ -148,11 +151,9 @@ class StatsScreen extends Component {
             {({ data, calculatedData, testModeOn }, actions) =>
                 // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
                 <ScrollView>
+                    <DisplayStats />
                     <View>
-                        <View style={{ alignContent: 'space-around', margin: 5 }}>
-                            <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
-                        </View>
-                        <View>
+                        <Surface>
                             <Card elevation={10}>
                                 <Card.Title title='Search by Tags' />
                                 <Card.Content>
@@ -168,14 +169,22 @@ class StatsScreen extends Component {
                                 </Card.Content>
 
                             </Card>
+                            <View style={{ alignContent: 'space-around', margin: 5 }}>
+                                <DisplaySelectedStats foundGames={this.state.foundGames} ></DisplaySelectedStats>
+                            </View>
+                        </Surface>
+                        <View>
                             <View>
                                 {this.renderGamesFound(this.state.selectedTags, data.allGames, testModeOn, actions.TestModeSwitch)}
                             </View>
+                            {/* <DataGraph /> */}
+
                             <ValidationSnackbar
                                 message={`Sorry, you have already added the tag: ${this.state.lastRemovedTag}`}
                                 visible={this.state.showSnack}
                                 onDismiss={this._hideSnack}
                             />
+
 
                         </View>
                     </View>

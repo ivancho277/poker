@@ -9,6 +9,7 @@ import { Colors, ActivityIndicator, Switch } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 import { StorageAPI } from '../storageAPI/AsyncStorageController'
 import { ConfirmDialog } from '../functionalComponents/ConfirmDialog';
+import { GameDataAccordian } from '../functionalComponents/dataDisplays/List Displays/GameDataAccordian'
 
 export const TestComponent = () => {
 
@@ -42,17 +43,17 @@ export const Tester = () => {
 
     const [state, actions] = UseGameStore();
     const [isVisible, setIsVisible] = useState(false);
-
-    _showDialog = () => { setIsVisible(true) };
-    _hideDialog = () => { setIsVisible(false) };    
+    const [showTestDialog, setShowTestDialog] = useState(false);
+    const _showDialog = () => { setIsVisible(true) };
+    const _hideDialog = () => { setIsVisible(false) };
     // const [loading, setLoading] = useState(false);
     // useEffect(() => {
     //     //actions.load();
     // }, [])
 
-    GetDataTest = async () => {
+    const GetDataTest = async () => {
         const myData = await StorageAPI.getAllNewGames();
-       // setTest(JSON.parse(myData));
+        // setTest(JSON.parse(myData));
         setTimeout(() => {
             console.log("new :::", JSON.parse(myData));
             if (typeof (JSON.parse(myData)) === "Array") {
@@ -62,7 +63,7 @@ export const Tester = () => {
         return (JSON.parse(myData));
     }
 
-    getCurrentGame = async () => {
+    const getCurrentGame = async () => {
         const CurrGame = await StorageAPI.retrieveCurrentGame();
         setTimeout(() => {
             console.log("What Saved LIVEGAME:::", JSON.parse(CurrGame));
@@ -70,7 +71,7 @@ export const Tester = () => {
         return JSON.parse(CurrGame);
     }
 
-    manualReload = async () => {
+    const manualReload = async () => {
         //setLoadingData(true);
         await actions.load().then(async (res) => {
             await actions.loadTotals().then(res => {
@@ -88,12 +89,12 @@ export const Tester = () => {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View>
+                <View style={{flex: 1,}}>
                     {/* {!state.calculatedData.loading ? */}
 
                     <View>
                         <Text style={{ textAlign: 'center', textDecorationLine: 'underline' }}> Switch to show Testing buttons </Text>
-                        <Button color={Colors.purpleA100} title="init storage totals" onPress={() => { console.log(Storage.setInitialTotals(state.data.actions)) }}></Button>
+                        <GameDataAccordian />
                         <Button color={Colors.deepOrange400} title="check live Totals" onPress={() => { console.log("liveGame.totals: ", actions.getGameTotals()) }}> </Button>
                         <Button color={Colors.deepOrange400} title="check live actions" onPress={() => { console.log("liveGame.actions: ", state.liveGame.actions) }}> </Button>
                         <Button color={Colors.teal400} title="test update totals" onPress={() => { console.log(Storage.updateTotals(state.liveGame)) }}></Button>

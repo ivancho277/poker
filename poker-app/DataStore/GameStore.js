@@ -109,13 +109,15 @@ const setData = data => ({ setState }) => {
     setState(draft => {
         draft.data = data;
         draft.error = false;
-        draft.allGamesArray = data.savedGames;
+        draft.allGamesArray = Utils.isEmpty(data.savedGames) ? [] : (data.savedGames);
         draft.gamesObj = data.savedGames;
         draft.data.loading = false;
     })
 };
 
 
+// NOTE: 6/11/2020 - this is what I have added may need to change a bit.
+// TODO: 6/11/2020 - working on this bad Boy
 const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
     const { calculatedData } = getState();
     const { actions, currentGame } = getState().data
@@ -125,9 +127,12 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         console.log("Curr Calc::::", currentGame.calcData);
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
+        dispatch(firstMoveMade()); 
     } else {
         console.log("No Current Game Present");
-        dispatch(setNewLiveGame(actions))
+        dispatch(setNewLiveGame(actions));
+        //dispatch(firstMoveMade());
+        
     }
 }
 
@@ -146,9 +151,7 @@ setCurrentGameToLive = () => ({ setState, getState }) => {
 
 }
 
-/**
- * !!Where I am at............  so i should just need to check what fetch data is returning for current game, but i guess i can still do this. not sure whats better?
- */
+
 const fetchCurrentGame = async () => {
     return await storage.retrieveCurrentGame().then(res => {
         if (res) {
@@ -177,16 +180,12 @@ const setNewLiveGame = actions => ({ getState, setState, dispatch }) => {
 
 };
 
-
-
 const setError = msg => ({ setState }) => {
     setState(draft => {
         //dispatch(setData(loadedData));
         draft.error = 'Error with loading';
     });
 }
-
-
 
 /**
  * * Storage Action
@@ -497,7 +496,17 @@ const reloadandSetPositionCount = async () => {
     })
 }
 
+const firstMoveMade = () => ({ setState }) => {
+    setState(draft => {
+        draft.liveGame.firstMoveMade = true;
+    })
+}
 
+const resetFirstMoveNotMade = () => ({ setState }) => {
+    setState(draft => {
+        draft.liveGame.firstMoveMade = false;
+    })
+}
 
 
 
@@ -517,7 +526,9 @@ const actions = {
         // console.log('loadedData: ', loadedData);
     },
 
-
+    gameStart: () => ({ dispatch }) => {
+        dispatch(firstMoveMade())
+    },
 
 
     //!!I dont believe this is being used at them moment anywhere, just the above action is our main loadData();
@@ -556,6 +567,7 @@ const actions = {
     resetLiveGame: () => async ({ getState, setState, dispatch }) => {
         const { data } = getState();
         await reloadandSetPositionCount().then(res => {
+            dispatch(removeCurrentGame())
             dispatch(setNewLiveGame(data.actions));
             return res;
         })
@@ -688,18 +700,20 @@ const actions = {
             })
         }
     },
+
+
     /**
      * This Action will Update Storage Running totals with what ever data is in Currently in liveGame 
      * *Not implemented anywhere in code, SaveAllGames is updating them only.
      */
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
-        storage.updateTotals(liveGame);
+storage.updateTotals(liveGame);
     },
 
-    getPositionTotalsFromStorage: () => ({ dispatch }) => {
+getPositionTotalsFromStorage: () => ({ dispatch }) => {
 
-    },
+},
 
     TestModeSwitch: () => ({ getState, setState }) => {
         const { testModeOn } = getState();

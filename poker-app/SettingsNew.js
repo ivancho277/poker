@@ -3,13 +3,13 @@ import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList
 // import { Button } from 'react-native-elements';
 const storage = require('./components/storageAPI/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar } from 'react-native-paper';
+import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar, } from 'react-native-paper';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
-export default function NewSettings(){
-    const [{data, loading} , {load}] = UseGameStore();
+export default function NewSettings() {
+    const [{ data, loading }, { load }] = UseGameStore();
     const [action, setAction] = useState('');
     const [tag, setTag] = useState('');
     const [tagVal, setTagVal] = useState('');
@@ -29,16 +29,29 @@ export default function NewSettings(){
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => { onConfirmFunction(); alert(onConfirmMessage) } },
+                { text: 'OK', onPress: () => { onConfirmFunction(); alert(onConfirmMessage); manualReload().then(res => {console.log('reloaded')}) } },
             ],
             { cancelable: true },
         );
     }
 
-  
+
+    const manualReload = async () => {
+        //setLoadingData(true);
+        await actions.load().then(async (res) => {
+            await actions.loadTotals().then(res => {
+                let response = res;
+                //console.log('MANUL LOAD RES:', response);
+                //setLoadingData(false);
+            })
+        })
+    }
+
+
+
     return (
         <GameSubscriber>
-            {({data, loading}, actions) => (
+            {({ data, loading }, actions) => (
                 <View>
                     <View style={{ margin: 4, padding: 4, borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }} >
                         <Subheading style={{ backgroundColor: 'lightgrey' }}>Edit Game Actions</Subheading>
@@ -49,15 +62,15 @@ export default function NewSettings(){
                                     label='add action'
                                     placeholder='add action...'
                                     value={actionVal}
-                                    onChangeText={text => setActionVal(text) }
+                                    onChangeText={text => setActionVal(text)}
                                 />
 
                                 <IconButton
-                                    style={{ position: 'absolute', right: 10, top: 7 }}
+                                    style={{ backgroundColor: 'white',position: 'absolute', right: 10, top: 7 }}
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
-                                    onPress={() => {console.log('Pressed'); actions.addNewAction(actionVal); setActionVal('')} }   
+                                    onPress={() => { console.log('Pressed'); actions.addNewAction(actionVal); setActionVal('') }}
                                 />
                             </View>
                             <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
@@ -71,12 +84,12 @@ export default function NewSettings(){
                                         onValueChange={(itemValue, itemIndex) =>
                                             setAction(itemValue)
                                         }>
-                                        {data.actions === null || data.actions === undefined ?  
-                                        <Picker.Item label={'no actions'} key={'1'} value={'Loading Actions'} />
-                                        :
-                                        data.actions.map((action, i) => {
-                                            return <Picker.Item label={action} key={action} value={action} />
-                                        })}
+                                        {data.actions === null || data.actions === undefined ?
+                                            <Picker.Item label={'no actions'} key={'1'} value={'Loading Actions'} />
+                                            :
+                                            data.actions.map((action, i) => {
+                                                return <Picker.Item label={action} key={action} value={action} />
+                                            })}
 
                                     </Picker>
                                 </View>
@@ -95,15 +108,15 @@ export default function NewSettings(){
                                     label='add tag'
                                     placeholder='add tag...'
                                     value={tagVal}
-                                    onChangeText={text => setTagVal(text) }
+                                    onChangeText={text => setTagVal(text)}
                                 />
 
                                 <IconButton
-                                    style={{ position: 'absolute', right: 10, top: 7 }}
+                                    style={{ backgroundColor:'white', position: 'absolute', right: 10, top: 7 }}
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
-                                    onPress={() => {console.log('Pressed'); actions.addTagToAll(tagVal); setTagVal('')} }
+                                    onPress={() => { console.log('Pressed'); actions.addTagToAll(tagVal); setTagVal('') }}
                                 />
                             </View>
                             <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
@@ -115,7 +128,7 @@ export default function NewSettings(){
                                         prompt='Please select tag to Remove'
                                         style={{ margin: 3, height: 50, width: '60%', }}
                                         onValueChange={(itemValue, itemIndex) =>
-                                            setTag(itemValue) 
+                                            setTag(itemValue)
                                         }>
                                         {data.tags === null || data.tags === undefined ?
                                             <Picker.Item label={'no Tags'} key={'0'} value={'noTags'} />
@@ -126,7 +139,7 @@ export default function NewSettings(){
 
                                     </Picker>
                                 </View>
-                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeTag(tag)   }>
+                                <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeTag(tag)}>
                                     <Text style={{ fontSize: 10 }}>Remove Tag </Text>
                                 </Button>
                             </View>
@@ -135,11 +148,11 @@ export default function NewSettings(){
 
                     <View>
                         <Divider />
-                        <Button color='teal' onPress={() =>confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', actions.removeAllTags)} mode='contained'>Remove all Tags</Button>
+                        <Button color='teal' onPress={() => confirmAlert('Delete all tags', "Are you sure?", 'tags deleted', actions.removeAllTags)} mode='contained'>Remove all Tags</Button>
                         <Divider />
-                        <Button color='teal' onPress={() =>confirmAlert('Reset all actions', "Are you sure?", 'actions reset', actions.resetActions)} mode='contained'>Reset Actions</Button>
+                        <Button color='teal' onPress={() => confirmAlert('Reset all actions', "Are you sure?", 'actions reset', actions.resetActions)} mode='contained'>Reset Actions</Button>
                         <Divider />
-                        <Button color='red' onPress={() => {confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { actions.removeAllData(); actions.removeAllTags() }) }} mode='contained'>DELETE ALL DATA</Button>
+                        <Button color='red' onPress={() => { confirmAlert('Delete all storage', "Are you sure?", 'Data deleted', () => { actions.removeAllData(); actions.removeAllTags(); actions.removeCurrentGameFromStorage() }) }} mode='contained'>DELETE ALL DATA</Button>
 
                     </View>
                 </View>

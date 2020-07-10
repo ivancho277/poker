@@ -147,6 +147,7 @@ class Game {
         this.version = version;
         this.date = date;
         this.currentStats = {};
+        
     }
 
     addTag = (tag) => {
@@ -179,6 +180,7 @@ class Game {
             tags: [...this.tags],
             version: this.version,
             date: this.date,
+            firstMoveMade: false,
             //currentStats: this.getCurrentStats()
 
         }

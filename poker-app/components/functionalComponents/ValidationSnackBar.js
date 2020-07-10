@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 
+
+
+/**
+ *
+ *
+ * @export
+ * @param {*} props : props are {Boolean}
+ * @returns 
+ */
 export function ValidationSnackbar(props) {
     const [isVisible, setisVisible] = useState(false);
     const [message, setMessage] = useState(props.message)
