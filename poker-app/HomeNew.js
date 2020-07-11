@@ -4,7 +4,7 @@ import { Button, Header } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import * as calculation from './components/GameCalculations/calculateStats'
 import { DisplayStats } from './components/functionalComponents/DisplayStats';
-import { Colors,ActivityIndicator, Snackbar, Title } from 'react-native-paper';
+import { Colors,ActivityIndicator, Snackbar, Title, TextInput } from 'react-native-paper';
 import * as Utils from './utils/objectOps'
 import * as Calculate from './components/GameCalculations/calculateStats'
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
@@ -14,6 +14,7 @@ import { ChipButton } from './components/functionalComponents/ChipButton'
 export default function HomeScreenNew(props) {
     const [state, actions] = UseGameStore();
     const [loadingData, setLoadingData] = useState(true);
+    const [testtext, settesttext] = useState('');
 
     manualReload = async () => {
         setLoadingData(true);
@@ -79,7 +80,15 @@ export default function HomeScreenNew(props) {
                                     <Button title="     Games Config." icon={{ name: 'settings', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Settings')} />
                                     <Button title="     Statistics" icon={{ name: 'pie-chart', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Statistics')} />
 
-                                    <Button title="SecureStore Works?" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {}} />
+                                    <TextInput   
+                                        label="save a word."
+                                        value={testtext}
+                                        onChangeText={text => settesttext(text)}
+
+                                    />
+
+                                    <Button title="load from SS from API" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {actions.loadTestFromStorage()}} />
+                                    <Button title="Save + Log Secure Storage" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {actions.saveTestValue(testtext); settesttext('')}} />
 
                                     <Text>ReRender global state</Text>
                                     <TouchableOpacity onPress={() => { manualReload() }}>

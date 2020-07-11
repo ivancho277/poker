@@ -66,30 +66,40 @@ const initialState = {
     currentTime: new Date(),
     previousTime: new Date(),
     testModeOn: false,
-    testNewSecureStore: null,
+    testNewSecureStore: [],
 };
 
-const setSecureStoreStorage = (dataToSet) => {
-    storage.setData(dataToSet);
+const setSecureState = (data) => ({ setState }) => {
+    setState(draft => {
+        draft.testNewSecureStore = data;
+    })
+}
+const saveSecureState = (dataToAdd) => ({ getState, setState }) => {
+    const { testNewSecureStore } = getState();
+    let updatedData = testNewSecureStore.concat(dataToAdd);
+    storage.setData(updatedData);
+    setSecureState(updatedData);
 }
 
-const setSecureState = (dataToSet) => ({ setState }) => {
-    setSecureStoreStorage(dataToSet);
-    setState(draft => {
-        draft.testNewSecureStore = dataToSet;
+const fetchSecureState = async () => {
+    return await storage.getData().then(res => {
+        if (res) {
+            console.log("WE FUCKING FETCHIN:", JSON.parse(res));
+            return JSON.parse(res);
+        }
+        else return null
     })
 }
 
-const getSecureStorage = async () => ({ dispatch }) => {
-    let data = await storage.getData().then(res => {
-        console.log('in the then', res);
+const laodSecure = () => async ({ setState, dispatch }) => {
+    let data = await fetchSecureState().then(res => {
+        setSecureState(JSON.parse(res));
+        console.log('test is loaded', JSON.parse(res))
         return JSON.parse(res);
     })
-    if (data) {
-        return data;
-    } else {
-        return null;
-    }
+    return JSON.parse(data);
+
+
 }
 
 
@@ -556,6 +566,18 @@ const actions = {
         dispatch(firstMoveMade())
     },
 
+    loadTestFromStorage: () => async ({ dispatch }) => {
+        let testData = await dispatch(laodSecure()).then(res => {
+            console.log(res);
+            return data;
+        })
+        return testData;
+    },
+
+    saveTestValue: (value) => ({ getState, dispatch }) => {
+        dispatch(saveSecureState(value));
+        console.log("GET THAT STATE: ", getState().testNewSecureStore );
+    },
 
     //!!I dont believe this is being used at them moment anywhere, just the above action is our main loadData();
     loadData: () => async ({ getState, dispatch }) => {
