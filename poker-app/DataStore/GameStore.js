@@ -71,17 +71,18 @@ const initialState = {
 
 const setSecureState = data => ({ getState ,setState }) => {
     console.log('data', data)
-    debugger;
+    //debugger;
     setState(draft => {
-        draft.testNewSecureStore = getState().testNewSecureStore.push(data);
+        draft.testNewSecureStore = data;
     })
 }
-const saveSecureState = (dataToAdd) => async ({ getState, setState }) => {
+const saveSecureState = (dataToAdd) => async ({ getState, setState, dispatch }) => {
     const { testNewSecureStore } = getState();
+    console.log("log me",testNewSecureStore)
     let updatedData = testNewSecureStore.concat(dataToAdd);
     await storage.setData(updatedData).then(() => {
         console.log('updateddddddd', updatedData);
-        setSecureState(updatedData);
+        dispatch(setSecureState(updatedData));
     });
     
 }
@@ -96,10 +97,10 @@ const fetchSecureState = async () => {
     })
 }
 
-const laodSecure = () => async ()=> {
+const laodSecure = () => async ({dispatch})=> {
     let data = await fetchSecureState().then(res => {
 
-        setSecureState(res);
+        dispatch(setSecureState(res)) ;
         console.log('test is loaded', res)
         return res;
     })
