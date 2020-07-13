@@ -21,9 +21,9 @@ const firstTimeLauching = async function () {
     }
 }
 
-const setData = function (data) {
+const setData = async function (data) {
     try {
-        return secureStore.setItem('gamedata', JSON.stringify(data)).then(() => {
+        return await secureStore.setItem('gamedata', JSON.stringify(data)).then(() => {
             console.log(`${data} stored successfully`)
             return data;
         });
@@ -46,6 +46,15 @@ const getData = async function () {
     }
 }
 
+const removeTestData = function() {
+    try {
+        return secureStore.removeItem('gamedata').then(() => {
+            console.log('we removed data');
+        })
+    } catch {
+        console.log('Nope, could not remove it');
+    }
+}
 
 /**
  *
@@ -506,6 +515,7 @@ export const StorageAPI = {
 
     setData: setData,
     getData: getData,
+    removeTestData: removeTestData,
 
 
 }

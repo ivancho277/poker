@@ -69,16 +69,21 @@ const initialState = {
     testNewSecureStore: [],
 };
 
-const setSecureState = (data) => ({ setState }) => {
+const setSecureState = data => ({ getState ,setState }) => {
+    console.log('data', data)
+    debugger;
     setState(draft => {
-        draft.testNewSecureStore = data;
+        draft.testNewSecureStore = getState().testNewSecureStore.push(data);
     })
 }
-const saveSecureState = (dataToAdd) => ({ getState, setState }) => {
+const saveSecureState = (dataToAdd) => async ({ getState, setState }) => {
     const { testNewSecureStore } = getState();
     let updatedData = testNewSecureStore.concat(dataToAdd);
-    storage.setData(updatedData);
-    setSecureState(updatedData);
+    await storage.setData(updatedData).then(() => {
+        console.log('updateddddddd', updatedData);
+        setSecureState(updatedData);
+    });
+    
 }
 
 const fetchSecureState = async () => {
@@ -91,17 +96,21 @@ const fetchSecureState = async () => {
     })
 }
 
-const laodSecure = () => async ({ setState, dispatch }) => {
+const laodSecure = () => async ()=> {
     let data = await fetchSecureState().then(res => {
-        setSecureState(JSON.parse(res));
-        console.log('test is loaded', JSON.parse(res))
-        return JSON.parse(res);
+
+        setSecureState(res);
+        console.log('test is loaded', res)
+        return res;
     })
-    return JSON.parse(data);
+    return data;
 
 
 }
 
+const removeTestData = () => {
+    storage.removeTestData();
+}
 
 
 const setCurrentTime = () => ({ setState }) => {
@@ -567,11 +576,12 @@ const actions = {
     },
 
     loadTestFromStorage: () => async ({ dispatch }) => {
-        let testData = await dispatch(laodSecure()).then(res => {
-            console.log(res);
-            return data;
-        })
-        return testData;
+        dispatch(laodSecure())
+        
+    },
+
+    removeTestValue: () => ({dispatch}) => {
+        dispatch(removeTestData());
     },
 
     saveTestValue: (value) => ({ getState, dispatch }) => {
