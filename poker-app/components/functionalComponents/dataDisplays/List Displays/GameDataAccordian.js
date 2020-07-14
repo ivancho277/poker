@@ -268,12 +268,12 @@ export function GameDataAccordian(props) {
                     <View>
                     </View>
                     <Divider />
-                    <View style={{ margin: 2 }}>
+                    {/* <View style={{ margin: 2 }}>
                         <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                         <Divider />
                         <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
                         <Button title="log 2" onPress={() => { _showPOS() }}></Button>
-                    </View>
+                    </View> */}
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
                     {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, calculatedData, allGamesArray)}
                 </View>

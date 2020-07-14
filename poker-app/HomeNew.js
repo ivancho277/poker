@@ -80,7 +80,7 @@ export default function HomeScreenNew(props) {
                                     <Button title="     Games Config." icon={{ name: 'settings', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Settings')} />
                                     <Button title="     Statistics" icon={{ name: 'pie-chart', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Statistics')} />
 
-                                    <TextInput   
+                                    {/* <TextInput   
                                         label="save a word."
                                         value={testtext}
                                         onChangeText={text => settesttext(text)}
@@ -88,16 +88,16 @@ export default function HomeScreenNew(props) {
                                     />
 
                                     <Button title="load from SS from API" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {actions.loadTestFromStorage()}} />
-                                    <Button title="Save + Log Secure Storage" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {actions.saveTestValue(testtext); settesttext('')}} />
+                                    <Button title="Save + Log Secure Storage" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {actions.saveTestValue(testtext); settesttext('')}} /> */}
 
                                     <Text>ReRender global state</Text>
                                     <TouchableOpacity onPress={() => { manualReload() }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
+                                    {/* <TouchableOpacity onPress={() => { actions.load().then(console.log('LOADED DATA:', state.data)) }}>
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 </View>
 
                             </View>

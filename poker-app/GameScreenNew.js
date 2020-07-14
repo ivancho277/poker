@@ -12,13 +12,8 @@ import { Switch, Card, Button } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB';
 import { RadioTable } from './components/functionalComponents/RadioTable';
 import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog';
-import { StackedBarChart } from 'react-native-chart-kit'
-
-//import StoreLoader from '../components/HOCs/StoreLoader'
-// import  Tester  from './components/testComponents/Tester'
-// const calculation = require('./components/statscalculation.js')
-// const storage = require('./components/AsyncStorageController.js');
-
+import { LiveGameDisplayTable } from './components/functionalComponents/dataDisplays/Data Table Displays/LiveGameDisplayTable';
+import { GameDataListItem } from './components/functionalComponents/dataDisplays/List Displays/GameDataListItem.js';
 
 
 export default function GameScreenNew(props) {
@@ -84,8 +79,9 @@ export default function GameScreenNew(props) {
             <ScrollView>
                 <View>
                     <ScrollView>
-                        <Card style={{backgroundColor: '#7FB7BE'}}>
-                            <Card.Title style={{alignItems: 'center'}} title="      Track your game!" />
+                        <Card style={{ backgroundColor: '#7FB7BE' }}>
+                            <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
+                            <LiveGameDisplayTable />
                             <Card.Content>
                                 <ScrollView>
                                     <GameController goHome={goHome} reload={manualReload}></GameController>

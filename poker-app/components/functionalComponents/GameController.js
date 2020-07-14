@@ -199,7 +199,7 @@ export const GameController = (props) => {
                 //debugger
                 (liveGame !== null && !data.liveGameLoading) ?
                     <View>
-                        {renderBasicLiveData(liveGame, allGamesArray)}
+                        {/* {renderBasicLiveData(liveGame, allGamesArray)} */}
                         {/* <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}> */}
 
                         <GameDataAccordian />
