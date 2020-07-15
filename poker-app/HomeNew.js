@@ -9,6 +9,7 @@ import * as Utils from './utils/objectOps'
 import * as Calculate from './components/GameCalculations/calculateStats'
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
 import { ChipButton } from './components/functionalComponents/ChipButton'
+import { isUndefined } from 'underscore';
 
 
 export default function HomeScreenNew(props) {
@@ -79,7 +80,7 @@ export default function HomeScreenNew(props) {
                                     <Button title="     Begin Tracking A Game!" icon={{ name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
                                     <Button title="     Games Config." icon={{ name: 'settings', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Settings')} />
                                     <Button title="     Statistics" icon={{ name: 'pie-chart', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Statistics')} />
-
+                                    <Button title=" log test" icon={{name:'save', color: 'red', size: 30 }} onPress={() => {console.log('one: %j, %j', (typeof banss  === "undefined"), isUndefined(state.MAX_POSITION))}} />
                                     {/* <TextInput   
                                         label="save a word."
                                         value={testtext}

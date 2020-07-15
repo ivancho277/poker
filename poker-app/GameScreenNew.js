@@ -66,12 +66,8 @@ export default function GameScreenNew(props) {
     }
 
 
-
-    //TODO: Fix position of Fab.
-    //TODO: fix position of switch
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-
         // state.loading ?
         //     <Text>We need to load</Text>
         //     :
@@ -81,7 +77,7 @@ export default function GameScreenNew(props) {
                     <ScrollView>
                         <Card style={{ backgroundColor: '#7FB7BE' }}>
                             <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
-                            <LiveGameDisplayTable />
+                            {isAskLoadVisible ?  <View></View> :<LiveGameDisplayTable /> }
                             <Card.Content>
                                 <ScrollView>
                                     <GameController goHome={goHome} reload={manualReload}></GameController>

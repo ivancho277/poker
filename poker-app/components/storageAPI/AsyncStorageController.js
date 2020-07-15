@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store';
 
+
+//REMINDER:come back to change store over to secureStore.
 const secureStore = createSecureStore();
 /**
  *Checks if it is the Applications first time launching
@@ -20,7 +22,7 @@ const firstTimeLauching = async function () {
         return false;
     }
 }
-
+//!! SECURESTORE tests--------------------
 const setData = async function (data) {
     try {
         return await secureStore.setItem('gamedata', JSON.stringify(data)).then(() => {
@@ -55,7 +57,7 @@ const removeTestData = function() {
         console.log('Nope, could not remove it');
     }
 }
-
+//!! END TESTS ------------------------------ 
 /**
  *
  *
