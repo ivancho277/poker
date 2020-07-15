@@ -62,13 +62,13 @@ export function LiveGameDisplayTable(props) {
     }
 
     const renderRow = (liveGame, foundGames) => {
-        
+
         return mapActions(liveGame).map((action, i) => {
-               return <DataTable.Row key={i}>
-                    <DataTable.Cell><Text>{Object.keys(action)[0].toString()} </Text> </DataTable.Cell>
-                    <DataTable.Cell><Text> {Object.values(action)[0].toString()} </Text> </DataTable.Cell>
-                </DataTable.Row >
-            })
+            return <DataTable.Row key={i}>
+                <DataTable.Cell><Text>{Object.keys(action)[0].toString()} </Text> </DataTable.Cell>
+                <DataTable.Cell><Text> {Object.values(action)[0].toString()} </Text> </DataTable.Cell>
+            </DataTable.Row >
+        })
     }
 
 
@@ -104,7 +104,7 @@ export function LiveGameDisplayTable(props) {
 
     return (
         <GameSubscriber>
-            {(state, actions) => (
+            {({liveGame}, actions) => (
                 <View>
                     <Surface style={{ elevation: 10 }}>
                         <DataTable>
@@ -120,8 +120,16 @@ export function LiveGameDisplayTable(props) {
 
 
                             </DataTable.Header>
-                            
-                            <DataTable.Cell>nothing</DataTable.Cell> 
+                            {liveGame ? mapActions(liveGame).map((action, i) => {
+                                return <DataTable.Row key={i}>
+                                    <DataTable.Cell><Text>{Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
+                                    <DataTable.Cell><Text> {Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                </DataTable.Row >
+                                })
+                                :
+
+                                <DataTable.Cell>Waiting</DataTable.Cell>
+                            }
                         </DataTable>
                         <Button title="let us test" onPress={() => { console.log('test we do!', mapActions(state.liveGame)) }} >Test dat </Button>
                     </Surface>
