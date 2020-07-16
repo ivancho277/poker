@@ -148,10 +148,6 @@ export function LiveGameDisplayTable(props) {
                                 <DataTable.Title numeric>% By Position</DataTable.Title>
                                 {/* <DataTable.Title>% By Position (w/ same tags)</DataTable.Title> */}
 
-
-
-
-
                             </DataTable.Header>
                             {liveGame ? mapActions(liveGame).map((action, i) => {
                                 return <DataTable.Row key={i}>
