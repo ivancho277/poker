@@ -81,7 +81,7 @@ export function GameDataAccordian(props) {
         return Object.entries(dataArray[position]);
     }
     //NOTE: 7/2/2020 getPercentafesForPositionDislay() should do the search so here just pass allGames and the checks will run in there..
-    //TODOL 7/2/2020 see note above!
+    //TODO: L 7/2/2020 see note above!
     const getPositionPercentages = (liveGame, found, calculatedData) => {
         //let found = Calculate.searchByManyTags(tags, allGamesArray);
         const { position, tags } = liveGame;

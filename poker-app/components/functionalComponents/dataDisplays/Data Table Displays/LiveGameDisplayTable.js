@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore.js';
-import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading } from 'react-native-paper';
+import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading, Icon } from 'react-native-paper';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
 import { isUndefined } from 'underscore';
-import { Tables } from '../../../../constants/tables.js';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+
 
 const calculatePercentage = (count, total) => {
     return Math.round(count / total * 100)
@@ -144,10 +143,10 @@ export function LiveGameDisplayTable(props) {
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <DataTable.Title>% used</DataTable.Title>
-                                <DataTable.Title>% used (from games w/ same tags) </DataTable.Title>
-                                <DataTable.Title>% By Position</DataTable.Title>
-                                <DataTable.Title>% By Position (w/ same tags)</DataTable.Title>
+                                <DataTable.Title numeric>% used</DataTable.Title>
+                                {/* <DataTable.Title>% used (from games w/ same tags) </DataTable.Title> */}
+                                <DataTable.Title numeric>% By Position</DataTable.Title>
+                                {/* <DataTable.Title>% By Position (w/ same tags)</DataTable.Title> */}
 
 
 
@@ -156,9 +155,9 @@ export function LiveGameDisplayTable(props) {
                             </DataTable.Header>
                             {liveGame ? mapActions(liveGame).map((action, i) => {
                                 return <DataTable.Row key={i}>
-                                    <DataTable.Cell><Text>{Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                    <DataTable.Cell><Text> {Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                    <DataTable.Cell><Text>{(Object.values((getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position]))[Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                    <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
+                                    <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                    <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
                                 </DataTable.Row>
                             })
                                 :
