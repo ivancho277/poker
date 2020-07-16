@@ -18,6 +18,40 @@ const addActionValues = (actions) => {
     }, accum);
 }
 
+const getPositionPercentages = (liveGame, calculatedData, found, allGamesArray) => {
+    //let found = Calculate.searchByManyTags(tags, allGamesArray);
+    const { position, tags } = liveGame;
+    let dataArray = [];
+    if (found) {
+        if ((found.length === allGamesArray.length) || (found.length === 0)) {
+            console.log("same len len")
+            dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount)
+        } else {
+            dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+        }
+        let positionArr = [];
+        for ([key, value] of Object.entries(dataArray)) {
+            //console.log("key: %j and Value: %j", key, value);
+            //console.log(dataArray);
+            // console.log('Value', value)
+            let eachPosition = {}
+            Object.entries(value).forEach((action, i) => {
+                //console.log("llop", action);
+                eachPosition[action[0]] = Object.values(action[1])[0];
+            })
+            positionArr.push(eachPosition);
+            // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
+            //  dataArray[+key] = 
+
+        }
+        console.log("Look at my array: ", positionArr);
+        return positionArr;
+    }
+    else {
+        return [];
+    }
+}
+
 export function LiveGameDisplayTable(props) {
     const [{ allGamesArray }, actions] = UseGameStore();
     const [isThereData, setisThereData] = useState(true);
@@ -67,6 +101,7 @@ export function LiveGameDisplayTable(props) {
             return <DataTable.Row key={i}>
                 <DataTable.Cell><Text>{Object.keys(action)[0].toString()} </Text> </DataTable.Cell>
                 <DataTable.Cell><Text> {Object.values(action)[0].toString()} </Text> </DataTable.Cell>
+                <DataTable.Cell><Text>  </Text>  </DataTable.Cell>
             </DataTable.Row >
         })
     }
@@ -75,8 +110,7 @@ export function LiveGameDisplayTable(props) {
 
     //TODO: 7.14.20
     //TODO: Write our map functions - https://trello.com/c/tEPMn8Yd/69-write-our-map-functions20 dO THIS
-
-    const mapPositionActions = (liveGame, calculatedData, foundGames, allGames) => {
+    const mapPositionActions = (liveGame, calculatedData, allGames, foundGames = null) => {
         let isThereSavedData = (allGames == null || allGames.length == 0) ? false : true
         let displayArray = [];
         console.log("what did we find?", foundGames)
@@ -87,7 +121,7 @@ export function LiveGameDisplayTable(props) {
         } else if (isThereSavedData && !foundGames) {
             console.log("found.len", foundGames);
             console.log("found.len", foundGames);
-            displayArray.push({ name: 'Display History of current Position for all games', data: getPositionPercentages(liveGame, foundGames, calculatedData), isDisplayByPosition: true });
+            displayArray.push({ data: getPositionPercentages(liveGame, foundGames, calculatedData) });
             console.log('else if :: displayArray: %o', displayArray);
             return displayArray;
         }
@@ -104,7 +138,7 @@ export function LiveGameDisplayTable(props) {
 
     return (
         <GameSubscriber>
-            {({liveGame}, actions) => (
+            {({ liveGame, calculatedData, allGamesArray }, actions) => (
                 <View>
                     <Surface style={{ elevation: 10 }}>
                         <DataTable>
@@ -124,14 +158,15 @@ export function LiveGameDisplayTable(props) {
                                 return <DataTable.Row key={i}>
                                     <DataTable.Cell><Text>{Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
                                     <DataTable.Cell><Text> {Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                </DataTable.Row >
-                                })
+                                    <DataTable.Cell><Text>{(Object.values((getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position]))[Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                </DataTable.Row>
+                            })
                                 :
 
                                 <DataTable.Cell>Waiting</DataTable.Cell>
                             }
                         </DataTable>
-                        <Button title="let us test" onPress={() => { console.log('test we do!', mapActions(state.liveGame)) }} >Test dat </Button>
+                        <Button title="let us test" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }} >Test dat </Button>
                     </Surface>
                 </View>
             )
