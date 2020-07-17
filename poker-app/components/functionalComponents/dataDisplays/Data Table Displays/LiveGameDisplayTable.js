@@ -108,15 +108,15 @@ export function LiveGameDisplayTable(props) {
 
 
 
-    //TODO: 7.14.20
+    //TODO: 7.14.20 
     //TODO: Write our map functions - https://trello.com/c/tEPMn8Yd/69-write-our-map-functions20 dO THIS
     const mapPositionActions = (liveGame, calculatedData, allGames, foundGames = null) => {
-        let isThereSavedData = (allGames == null || allGames.length == 0) ? false : true
+        let isThereSavedData = (allGames == null || allGames.length == 0) ? false : true;
         let displayArray = [];
-        console.log("what did we find?", foundGames)
+        console.log("what did we find?", foundGames);
         if (!isThereSavedData) {
             displayArray.push({ name: 'no saved or found Games', data: [], isDisplayByPosition: true })
-            console.log("if::", displayArray)
+            console.log("if::", displayArray);
             return displayArray;
         } else if (isThereSavedData && !foundGames) {
             console.log("found.len", foundGames);
@@ -133,9 +133,6 @@ export function LiveGameDisplayTable(props) {
     }
 
 
-
-
-
     return (
         <GameSubscriber>
             {({ liveGame, calculatedData, allGamesArray }, actions) => (
@@ -148,7 +145,7 @@ export function LiveGameDisplayTable(props) {
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <DataTable.Title numeric>% used</DataTable.Title>
+                                <DataTable.Title numeric >% used</DataTable.Title>
                                 <DataTable.Title numeric>% By Position</DataTable.Title>
                             </DataTable.Header>
                             {liveGame ? mapActions(liveGame).map((action, i) => {
@@ -159,7 +156,6 @@ export function LiveGameDisplayTable(props) {
                                 </DataTable.Row>
                             })
                                 :
-
                                 <DataTable.Cell>Waiting</DataTable.Cell>
                             }
                         </DataTable>
