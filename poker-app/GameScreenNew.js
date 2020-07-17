@@ -56,7 +56,7 @@ export default function GameScreenNew(props) {
         
         console.log('state.currentGame: %o', state.data.currentGame);
 
-    }, [state.liveGame])
+    }, [])
 
     const searchAndUpdateFoundGames = (tags, allGames, _cb_Search) => {
         if (typeof _cb_Search === 'function') {

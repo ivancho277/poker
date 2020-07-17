@@ -16,7 +16,7 @@ import {
     validActionRemove
 } from "../utils/validators.js";
 import * as Utils from '../utils/objectOps';
-const calculation = require("../components/statscalculation.js");
+import * as Calculate from '../components/GameCalculations/calculateStats.js';
 
 
 //import * as selectors from './selectors';
@@ -60,6 +60,7 @@ const initialState = {
     liveGame: null,
     loading: false,
     liveGameLoading: false,
+    foundGamesArray: [],
     error: null,
     MAX_POSITION: 8,
     MIN_POSITION: 0,
@@ -68,6 +69,13 @@ const initialState = {
     testModeOn: false,
     testNewSecureStore: [],
 };
+
+//TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY 
+const searchGamesForLiveTags = () => ({getState, setState}) => {
+    const {tags} = getState().liveGame;
+    const {allGamesArray} = getState();
+    let found = Calculate.searchByManyTags(tags, allGamesArray)
+}
 
 const setSecureState = data => ({ getState ,setState }) => {
     console.log('data', data)
