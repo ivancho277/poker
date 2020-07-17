@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore.js';
-import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading, Icon } from 'react-native-paper';
+import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading, } from 'react-native-paper';
+import { Icon } from 'react-native-elements';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
 import { isUndefined } from 'underscore';
 
@@ -140,14 +141,15 @@ export function LiveGameDisplayTable(props) {
             {({ liveGame, calculatedData, allGamesArray }, actions) => (
                 <View>
                     <Surface style={{ elevation: 10 }}>
+                        <View style={{ flex: 1 , flexDirection: 'row'}}>
+                            <Subheading>  Current Tags  </Subheading>
+                            <Icon name="pound" type="material-community" size={18} containerStyle={{paddingTop:4} }/>
+                        </View>
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
                                 <DataTable.Title numeric>% used</DataTable.Title>
-                                {/* <DataTable.Title>% used (from games w/ same tags) </DataTable.Title> */}
                                 <DataTable.Title numeric>% By Position</DataTable.Title>
-                                {/* <DataTable.Title>% By Position (w/ same tags)</DataTable.Title> */}
-
                             </DataTable.Header>
                             {liveGame ? mapActions(liveGame).map((action, i) => {
                                 return <DataTable.Row key={i}>
@@ -161,12 +163,12 @@ export function LiveGameDisplayTable(props) {
                                 <DataTable.Cell>Waiting</DataTable.Cell>
                             }
                         </DataTable>
-                        <Button title="let us test" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }} >Test dat </Button>
+                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
             }
-        </GameSubscriber>
+        </GameSubscriber >
     )
 
 }
