@@ -261,10 +261,10 @@ export function GameDataAccordian(props) {
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View style={{ flex: 1 }}>
                     <View style={{ padding: 2, margin: 2 }}>
-                        <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
+                        <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='% out of games w/ tags' isDisplayByPosition={false} />
                     </View>
                     <View style={{ padding: 2, margin: 2 }}></View>
-                    <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+                    <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='% by position from games w/ tags ' isDisplayByPosition={true} />
                     <View>
                     </View>
                     <Divider />

@@ -52,10 +52,32 @@ const getPositionPercentages = (liveGame, calculatedData, found, allGamesArray) 
     }
 }
 
+
+const itemsPerPage = 2;
+
+const items = [
+    {
+        key: 1,
+        name: 'Page 1',
+    },
+    {
+        key: 2,
+        name: 'Page 2',
+    },
+    {
+        key: 3,
+        name: 'Page 3',
+    },
+];
+
+
+
 export function LiveGameDisplayTable(props) {
     const [{ allGamesArray }, actions] = UseGameStore();
     const [isThereData, setisThereData] = useState(true);
-
+    const [page, setPage] = React.useState(0);
+    const from = page * itemsPerPage;
+    const to = (page + 1) * itemsPerPage;
 
 
 
@@ -164,6 +186,15 @@ export function LiveGameDisplayTable(props) {
                                 :
                                 <DataTable.Cell>Waiting</DataTable.Cell>
                             }
+
+                            <DataTable.Pagination
+                                page={1}
+                                numberOfPages={3}
+                                onPageChange={page => {
+                                    console.log(page);
+                                }}
+                                label="1-2 of 6"
+                            />
                         </DataTable>
                         <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
