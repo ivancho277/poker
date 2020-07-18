@@ -5,6 +5,7 @@ import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndi
 import { Icon } from 'react-native-elements';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
 import { isUndefined } from 'underscore';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const calculatePercentage = (count, total) => {
@@ -174,18 +175,25 @@ export function LiveGameDisplayTable(props) {
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
                                 <DataTable.Title numeric >% used</DataTable.Title>
-                                <DataTable.Title numeric>% By Position</DataTable.Title>
+                                <DataTable.Title numeric >% by Tag</DataTable.Title>
+                                <DataTable.Title numeric>% by Pos</DataTable.Title>
+                                <DataTable.Title numeric>% Pos / Tag</DataTable.Title>
                             </DataTable.Header>
-                            {liveGame ? mapActions(liveGame).map((action, i) => {
-                                return <DataTable.Row key={i}>
-                                    <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                    <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                    <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                </DataTable.Row>
-                            })
-                                :
-                                <DataTable.Cell>Waiting</DataTable.Cell>
-                            }
+                            <ScrollView>
+
+                                {liveGame ? mapActions(liveGame).map((action, i) => {
+                                    return <DataTable.Row key={i}>
+                                        <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
+                                        <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                    </DataTable.Row>
+                                })
+                                    :
+                                    <DataTable.Cell>Waiting</DataTable.Cell>
+                                }
+                            </ScrollView>
 
                             <DataTable.Pagination
                                 page={1}
