@@ -44,16 +44,16 @@ export default function GameScreenNew(props) {
         if (state.data.currentGame && state.allGamesArray) {
             _showLoadDialog()
         }
-        
-            // if (state.liveGame !== null && state.liveGame.tags.length !== foundGames.length) {
-            //     let newfoundgames = searchAndUpdateFoundGames(state.liveGame.tags, state.allGamesArray, Calculate.searchByManyTags);
-            //     if (newfoundGames) {
 
-            //         setFoundGames([...newfoundgames]);
-            //         console.log("NEWFOUNDLAND", newfoundgames);
-            //     }
-            // }
-        
+        // if (state.liveGame !== null && state.liveGame.tags.length !== foundGames.length) {
+        //     let newfoundgames = searchAndUpdateFoundGames(state.liveGame.tags, state.allGamesArray, Calculate.searchByManyTags);
+        //     if (newfoundGames) {
+
+        //         setFoundGames([...newfoundgames]);
+        //         console.log("NEWFOUNDLAND", newfoundgames);
+        //     }
+        // }
+
         console.log('state.currentGame: %o', state.data.currentGame);
 
     }, [])
@@ -97,7 +97,11 @@ export default function GameScreenNew(props) {
                     <ScrollView>
                         <Card style={{ backgroundColor: '#7FB7BE' }}>
                             <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
-                            {isAskLoadVisible ? <View></View> : <LiveGameDisplayTable />}
+                            {isAskLoadVisible ? <View></View> :
+                                (state.liveGame !== null && !state.data.liveGameLoading) ? <LiveGameDisplayTable /> :
+                                    <View>
+                                        <Text>Start to play</Text>
+                                    </View>}
                             <Card.Content>
                                 <ScrollView>
                                     <GameController goHome={goHome} reload={manualReload}></GameController>

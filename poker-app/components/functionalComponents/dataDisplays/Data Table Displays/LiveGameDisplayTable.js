@@ -132,16 +132,22 @@ export function LiveGameDisplayTable(props) {
         }
     }
 
+    renderTagsHeading = (tags) => {
+        return (
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Subheading>  Current Tags  </Subheading>
+                <Icon name="pound" type="material-community" size={18} containerStyle={{ paddingTop: 4 }} />
+                <Text style={{ fontWeight: 'bold' }}> {tags.join(', ')}</Text>
+            </View>
+        )
+    }
 
     return (
         <GameSubscriber>
             {({ liveGame, calculatedData, allGamesArray }, actions) => (
                 <View>
                     <Surface style={{ elevation: 10 }}>
-                        <View style={{ flex: 1 , flexDirection: 'row'}}>
-                            <Subheading>  Current Tags  </Subheading>
-                            <Icon name="pound" type="material-community" size={18} containerStyle={{paddingTop:4} }/>
-                        </View>
+                        {renderTagsHeading(liveGame.tags)}
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>

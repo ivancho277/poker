@@ -70,11 +70,18 @@ const initialState = {
     testNewSecureStore: [],
 };
 
-//TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY 
+//TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY //NOTE: When should this happen?? Maybe we get called in the add tag function?? Seems like the best place!
 const searchGamesForLiveTags = () => ({getState, setState}) => {
-    const {tags} = getState().liveGame;
-    const {allGamesArray} = getState();
-    let found = Calculate.searchByManyTags(tags, allGamesArray)
+    const {liveGame, allGamesArray} = getState();
+    console.log("foundGaMes in LIVELOVE!", liveGame.tags  )
+    // let found = [];
+    if(typeof liveGame.tags === 'object'){
+        let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
+        console.log("foundGaMes in Store:", found);
+        setState(draft => {
+            draft.foundGamesArray = found;
+        })
+    }
 }
 
 const setSecureState = data => ({ getState ,setState }) => {
@@ -695,8 +702,10 @@ const actions = {
         dispatch(removeAction(action));
     },
 
-    addTagToCurrentGame: (tag) => ({ dispatch }) => {
-        dispatch(addNewTag(tag))
+    //CONCERN: I'm not sure that the state of tags will be updated by the time we search for games
+    addTagToCurrentGame: (tag) => ({ dispatch, }) => {
+        dispatch(addNewTag(tag));
+        dispatch(searchGamesForLiveTags());
     },
 
     addTagToAll: (tag) => ({ dispatch }) => {
