@@ -173,14 +173,20 @@ export function LiveGameDisplayTable(props) {
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <Tooltip containerStyle={{height:80}} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{color: 'red'}}>Percentage of times you have done this actions in THIS Game </Text>} >
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>} >
                                     <DataTable.Title numeric >
                                         % used
                                 </DataTable.Title>
                                 </Tooltip>
-                                <DataTable.Title numeric >% by Tag</DataTable.Title>
-                                <DataTable.Title numeric>% by Pos</DataTable.Title>
-                                <DataTable.Title numeric>% Pos / Tag</DataTable.Title>
+                                <DataTable.Title numeric >
+                                    % by Tag
+                                </DataTable.Title>
+                                <DataTable.Title numeric>
+                                    % by Pos
+                                </DataTable.Title>
+                                <DataTable.Title numeric>
+                                    % Pos / Tag
+                                    </DataTable.Title>
                             </DataTable.Header>
                             <ScrollView>
 
