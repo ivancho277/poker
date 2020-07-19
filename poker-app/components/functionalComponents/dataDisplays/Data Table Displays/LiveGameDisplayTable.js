@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert, Picker, ScrollView } from 'react-native';
 import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore.js';
 import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading, } from 'react-native-paper';
-import { Icon } from 'react-native-elements';
+import { Icon, Tooltip } from 'react-native-elements';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
-import { isUndefined } from 'underscore';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 
 const calculatePercentage = (count, total) => {
@@ -174,7 +173,11 @@ export function LiveGameDisplayTable(props) {
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <DataTable.Title numeric >% used</DataTable.Title>
+                                <Tooltip containerStyle={{height:80}} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{color: 'red'}}>Percentage of times you have done this actions in THIS Game </Text>} >
+                                    <DataTable.Title numeric >
+                                        % used
+                                </DataTable.Title>
+                                </Tooltip>
                                 <DataTable.Title numeric >% by Tag</DataTable.Title>
                                 <DataTable.Title numeric>% by Pos</DataTable.Title>
                                 <DataTable.Title numeric>% Pos / Tag</DataTable.Title>
