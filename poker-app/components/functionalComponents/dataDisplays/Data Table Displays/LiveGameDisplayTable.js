@@ -171,32 +171,36 @@ export function LiveGameDisplayTable(props) {
                     <Surface style={{ elevation: 10 }}>
                         {renderTagsHeading(liveGame.tags)}
                         <DataTable>
-                            <DataTable.Header>
+                            <DataTable.Header style={{flex: 1, justifyContent: 'space-around', alignContent:'space-around'}}>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>} >
-                                    <DataTable.Title numeric >
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
+                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
                                         % used
-                                </DataTable.Title>
-                                </Tooltip>
-                                <DataTable.Title numeric >
-                                    % by Tag
-                                </DataTable.Title>
-                                <DataTable.Title numeric>
-                                    % by Pos
-                                </DataTable.Title>
-                                <DataTable.Title numeric>
-                                    % Pos / Tag
                                     </DataTable.Title>
+                                </Tooltip>
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
+                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
+                                        % by Tag
+                                    </DataTable.Title>
+                                </Tooltip>
+                                <Tooltip containerStyle={{height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
+                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
+                                        % by Pos
+                                    </DataTable.Title>
+                                </Tooltip>
+                                <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
+                                    % Pos / Tag
+                                </DataTable.Title>
                             </DataTable.Header>
                             <ScrollView>
 
                                 {liveGame ? mapActions(liveGame).map((action, i) => {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                        <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                        <DataTable.Cell numeric><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell numeric><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
                                     </DataTable.Row>
                                 })
                                     :
