@@ -154,7 +154,7 @@ export function LiveGameDisplayTable(props) {
         }
     }
 
-    renderTagsHeading = (tags) => {
+    const renderTagsHeading = (tags) => {
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Subheading>  Current Tags  </Subheading>
@@ -171,58 +171,60 @@ export function LiveGameDisplayTable(props) {
                     <Surface style={{ elevation: 10 }}>
                         {renderTagsHeading(liveGame.tags)}
                         <DataTable>
-                            <DataTable.Header style={{flex: 1, justifyContent: 'space-around', alignContent:'space-around'}}>
+                            <DataTable.Header style={{ flex: 1, justifyContent: 'space-around', alignContent: 'space-around' }}>
                                 <DataTable.Title>Actions</DataTable.Title>
-                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
-                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
-                                        % used
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have used actions in THIS Game </Text>}>
+                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>                                        
+                                            <Text><Text style={{color: 'purple'}}> % used</Text> </Text>                                                                                    
                                     </DataTable.Title>
                                 </Tooltip>
-                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
-                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
-                                        % by Tag
-                                    </DataTable.Title>
-                                </Tooltip>
-                                <Tooltip containerStyle={{height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have done this actions in THIS Game </Text>}>
-                                    <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
-                                        % by Pos
-                                    </DataTable.Title>
-                                </Tooltip>
-                                <DataTable.Title style={{marginEnd:10, marginStart:10, paddingHorizontal: 2}}>
-                                    % Pos / Tag
-                                </DataTable.Title>
+                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentages by games with Same Tags </Text>}>
+                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                            <Text style={{color: 'purple'}}>   % by Tag </Text>
+                                        </DataTable.Title>
+                                    </Tooltip>
+                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of Current Position from all Games </Text>}>
+                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                            <Text style={{color: 'purple'}}>  % by Pos </Text>
+                                        </DataTable.Title>
+                                    </Tooltip>
+                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of current Position by Tag </Text>}>
+                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                            <Text style={{color: 'purple'}}> % by Tag </Text>
+                                        </DataTable.Title>
+                                    </Tooltip>
                             </DataTable.Header>
-                            <ScrollView>
+                                <ScrollView>
 
-                                {liveGame ? mapActions(liveGame).map((action, i) => {
-                                    return <DataTable.Row key={i}>
-                                        <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                    </DataTable.Row>
-                                })
-                                    :
-                                    <DataTable.Cell>Waiting</DataTable.Cell>
-                                }
-                            </ScrollView>
+                                    {liveGame ? mapActions(liveGame).map((action, i) => {
+                                        return <DataTable.Row key={i}>
+                                            <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
+                                            <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                            <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                            <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                            <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        </DataTable.Row>
+                                    })
+                                        :
+                                        <DataTable.Cell>Waiting</DataTable.Cell>
+                                    }
+                                </ScrollView>
 
-                            <DataTable.Pagination
-                                page={1}
-                                numberOfPages={3}
-                                onPageChange={page => {
-                                    console.log(page);
-                                }}
-                                label="1-2 of 6"
-                            />
+                                <DataTable.Pagination
+                                    page={1}
+                                    numberOfPages={3}
+                                    onPageChange={page => {
+                                        console.log(page);
+                                    }}
+                                    label="1-2 of 6"
+                                />
                         </DataTable>
-                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
+                            <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
             }
         </GameSubscriber >
-    )
+            )
 
-}
+            }
