@@ -4,6 +4,7 @@ import { UseGameStore, GameSubscriber } from '../../../../DataStore/GameStore.js
 import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndicator, Button, Subheading, } from 'react-native-paper';
 import { Icon, Tooltip } from 'react-native-elements';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
+import { Tables } from '../../../../constants/tables'
 
 
 
@@ -16,6 +17,59 @@ const addActionValues = (actions) => {
     return actions.reduce((accum, action) => {
         return accum + action.count;
     }, accum);
+}
+
+
+const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
+    const { position, tags } = liveGame;
+    let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+    if (found) {
+        if ((found.length === allGamesArray.length) || (found.length === 0)) {
+            console.log("same len len");
+            console.log("dataAr: ", dataArray)
+            dataArray.forEach((position, i) => {
+                let tempPositionObj = { [i]: {} }
+                for ([key, value] of Object.entries(position)) {
+                    let temp = {}
+                    console.log("action(key):", key + "<?>")
+                    console.log("pos(value):", value)
+                    temp.all = value
+                    temp.bytag = 0
+                    tempPositionObj[i] = { [key]: temp }
+                }
+                dataArray[i] = tempPositionObj;
+
+            })
+        } else {
+            dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+            dataArray.forEach((position, i) => {
+                for ([key, value] of Object.entries(position)) {
+                    console.log("action(key):", key + "<?>")
+                    console.log("pos(value):", value)
+                }
+            })
+        }
+        let positionArr = [];
+        for ([key, value] of Object.entries(dataArray)) {
+            //console.log("key: %j and Value: %j", key, value);
+            //console.log(dataArray);
+            // console.log('Value', value)
+            let eachPosition = {}
+            Object.entries(value).forEach((action, i) => {
+                //console.log("llop", action);
+                eachPosition[action[0]] = Object.values(action[1])[0];
+            })
+            positionArr.push(eachPosition);
+            // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
+            //  dataArray[+key] = 
+
+        }
+        console.log("Look at my array: ", positionArr);
+        return positionArr;
+    }
+    else {
+        return [];
+    }
 }
 
 const getPositionPercentages = (liveGame, calculatedData, found, allGamesArray) => {
@@ -89,16 +143,47 @@ export function LiveGameDisplayTable(props) {
         }
     }, [])
 
+    const mapActionsNew = (liveGame, foundGames) => {
+        let displayArray = [];
+        let currentPercentages = [];
+        let foundPercentages = [];
+        // addActionValues(liveGame.actions)
+        liveGame.actions.forEach((action, i) => {
+            currentPercentages.push({ [action.actionName]: { current: calculatePercentage(action.count, addActionValues(liveGame.actions)) } });
+        })
+        displayArray.push({ currentGame: currentPercentages })
+        if (typeof foundGames === 'undefined' || typeof foundGames === 'null') {
+            displayArray.push({ gamesFound: null })
+            return displayArray;
+        }
+        else {
+            console.log('FOUNDEM', foundGames);
+            let sumofgamesfound = Calculate.sumGamesTotals(foundGames);
+            let actions = Calculate.sumUpGameTotals(foundGames);;
+            console.log("actions: ", actions)
+            console.log("sum: ", sumofgamesfound)
+            for ([key, value] of Object.entries(actions)) {
+                console.log("key, value", key + " " + value);
+                foundPercentages.push({ [key]: calculatePercentage([value], sumofgamesfound) })
+            }
+            displayArray.push({ gamesFound: foundPercentages })
+            console.log("displayARray:", displayArray);
+            return displayArray;
+
+        }
+    }
 
     //TOP PRIORITY: Write out my Map functions for Data Table Live
     const mapActions = (liveGame, foundGames) => {
         let displayArray = [];
+        let currentPercentages = [];
         // addActionValues(liveGame.actions)
         if (typeof foundGames === 'undefined' || typeof foundGames === 'null') {
             console.log('NOT !!! FOUND GAMES');
             liveGame.actions.forEach((action, i) => {
-                displayArray.push({ [action.actionName]: calculatePercentage(action.count, addActionValues(liveGame.actions)) });
+                currentPercentages.push({ [action.actionName]: calculatePercentage(action.count, addActionValues(liveGame.actions)) });
             })
+            displayArray.push({ CurrentGame: currentPercentages })
             console.log("displayARray:", displayArray)
             return displayArray;
         }
@@ -174,57 +259,57 @@ export function LiveGameDisplayTable(props) {
                             <DataTable.Header style={{ flex: 1, justifyContent: 'space-around', alignContent: 'space-around' }}>
                                 <DataTable.Title>Actions</DataTable.Title>
                                 <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Percentage of times you have used actions in THIS Game </Text>}>
-                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>                                        
-                                            <Text><Text style={{color: 'purple'}}> % used</Text> </Text>                                                                                    
+                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                        <Text><Text style={{ color: 'purple' }}> % used</Text> </Text>
                                     </DataTable.Title>
                                 </Tooltip>
-                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentages by games with Same Tags </Text>}>
-                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
-                                            <Text style={{color: 'purple'}}>   % by Tag </Text>
-                                        </DataTable.Title>
-                                    </Tooltip>
-                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of Current Position from all Games </Text>}>
-                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
-                                            <Text style={{color: 'purple'}}>  % by Pos </Text>
-                                        </DataTable.Title>
-                                    </Tooltip>
-                                    <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of current Position by Tag </Text>}>
-                                        <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
-                                            <Text style={{color: 'purple'}}> % by Tag </Text>
-                                        </DataTable.Title>
-                                    </Tooltip>
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentages by games with Same Tags </Text>}>
+                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                        <Text style={{ color: 'purple' }}>   % by Tag </Text>
+                                    </DataTable.Title>
+                                </Tooltip>
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of Current Position from all Games </Text>}>
+                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                        <Text style={{ color: 'purple' }}>  % by Pos </Text>
+                                    </DataTable.Title>
+                                </Tooltip>
+                                <Tooltip containerStyle={{ height: 80 }} backgroundColor={'black'} heigh={80} width={230} popover={<Text style={{ color: 'red' }}>Historical Percentage of current Position by Tag </Text>}>
+                                    <DataTable.Title style={{ marginEnd: 10, paddingHorizontal: 4 }}>
+                                        <Text style={{ color: 'purple' }}> % by Tag </Text>
+                                    </DataTable.Title>
+                                </Tooltip>
                             </DataTable.Header>
-                                <ScrollView>
+                            <ScrollView>
 
-                                    {liveGame ? mapActions(liveGame).map((action, i) => {
-                                        return <DataTable.Row key={i}>
-                                            <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                            <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                            <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                            <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                            <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                                        </DataTable.Row>
-                                    })
-                                        :
-                                        <DataTable.Cell>Waiting</DataTable.Cell>
-                                    }
-                                </ScrollView>
+                                {liveGame ? (mapActionsNew(liveGame)[0].currentGame).map((action, i) => {
+                                    return <DataTable.Row key={i}>
+                                        <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                    </DataTable.Row>
+                                })
+                                    :
+                                    <DataTable.Cell>Waiting</DataTable.Cell>
+                                }
+                            </ScrollView>
 
-                                <DataTable.Pagination
-                                    page={1}
-                                    numberOfPages={3}
-                                    onPageChange={page => {
-                                        console.log(page);
-                                    }}
-                                    label="1-2 of 6"
-                                />
+                            <DataTable.Pagination
+                                page={1}
+                                numberOfPages={3}
+                                onPageChange={page => {
+                                    console.log(page);
+                                }}
+                                label="1-2 of 6"
+                            />
                         </DataTable>
-                            <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', getPositionPercentages(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
+                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', gppNew(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
             }
         </GameSubscriber >
-            )
+    )
 
-            }
+}

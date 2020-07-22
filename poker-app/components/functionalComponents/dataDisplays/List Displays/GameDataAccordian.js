@@ -10,8 +10,6 @@ import * as Utils from '../../../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Car, Dialog, Portald, Portal, Paragraph, Divider } from 'react-native-paper';
 import { Button } from 'react-native-elements'
 import { Tables } from '../../../../constants/tables.js';
-import { getPercentages } from '../../../statscalculation.js';
-import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
 import { GameDataListItem } from './GameDataListItem'
 
 

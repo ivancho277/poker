@@ -134,9 +134,6 @@ export function GameDataListItem(props) {
     return (
         <GameSubscriber>
             {({ liveGame }, actions) => (
-
-
-
                 <List.Section>
                     <Card>
                         <Card.Content>

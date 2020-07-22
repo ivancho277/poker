@@ -99,7 +99,6 @@ const saveSecureState = (dataToAdd) => async ({ getState, setState, dispatch }) 
         console.log('updateddddddd', updatedData);
         dispatch(setSecureState(updatedData));
     });
-    
 }
 
 const fetchSecureState = async () => {
