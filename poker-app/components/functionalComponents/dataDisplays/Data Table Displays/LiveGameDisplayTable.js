@@ -29,12 +29,13 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
             console.log("dataAr: ", dataArray)
             dataArray.forEach((position, i) => {
                 let tempPositionObj = { [i]: {} }
+                let temp = {}
                 for ([key, value] of Object.entries(position)) {
-                    let temp = {}
                     console.log("action(key):", key + "<?>")
                     console.log("pos(value):", value)
-                    temp.all = value
-                    temp.bytag = 0
+                    temp[key] = {}
+                    temp[key].all = Object.values(value)[0]
+                    temp[key].bytag = 0
                     tempPositionObj[i] = { [key]: temp }
                 }
                 dataArray[i] = tempPositionObj;
