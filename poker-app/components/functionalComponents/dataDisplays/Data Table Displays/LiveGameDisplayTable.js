@@ -5,6 +5,7 @@ import { Text, Card, Paragraph, Divider, DataTable, Surface, Title, ActivityIndi
 import { Icon, Tooltip } from 'react-native-elements';
 import * as Calculate from '../../../GameCalculations/calculateStats.js';
 import { Tables } from '../../../../constants/tables'
+import { searchByManyTags } from '../../../GameCalculations/calculateStats.js';
 
 
 
@@ -279,9 +280,9 @@ export function LiveGameDisplayTable(props) {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[liveGame.position] }%</Text></DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(getPositionPercentages(liveGame, calculatedData, [], allGamesArray))[liveGame.position][Object.keys(action)[0]]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[liveGame.position]}%</Text></DataTable.Cell>
                                     </DataTable.Row>
                                 })
                                     :
