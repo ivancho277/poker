@@ -20,6 +20,8 @@ const addActionValues = (actions) => {
 }
 
 
+//TOP PRIORITY: 7/24/2020 FINISH THIS DAMNIT
+//TODO: 7/24/2020 THIS BULLSHIT!
 const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     const { position, tags } = liveGame;
     let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
@@ -30,18 +32,15 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     //debugger;
     let tempPositionObj = {};
     dataArray.forEach((position, i) => {
-        let temp = {}
-        for ([key, value] of Object.entries(position)) {
-            console.log("action(key):", key + "<?>")
-            console.log("pos(value):", value)
-            temp[key] = {}
-            temp[key] = {all: Object.values(value)[0] , bytag: 0 }
-            //let str = key.toString();
-            // temp[key].all = Object.values(value)[0]
-            // temp[key].bytag = 0;
-            tempPositionObj[i] = temp 
-        }
-        returnArrayData.push(tempPositionObj);
+        let temp = {all: position, bytag: 0}
+        // for ([key, value] of Object.entries(position)) {
+        //     console.log("action(key):", key + "<?>")
+        //     console.log("pos(value):", value)
+        //     temp[key] = {}
+        //     temp[key] = {all: Object.values(value)[0] , bytag: 0 }
+        //     tempPositionObj[i] = temp 
+        // }
+        returnArrayData.push(temp);
         
         //dataArray[i] = tempPositionObj;
     });
@@ -52,13 +51,14 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
             return returnArrayData;
 
         } else {
-            console.log("PINAPPLE PEN");
             foundData = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+            console.log("PINAPPLE PEN", foundData);
             foundData.forEach((position, i) => {
                 for ([key, value] of Object.entries(position)) {
                     console.log("action(key):", key + "<?>")
                     console.log("pos(value):", value)
                 }
+                returnArrayData[i].bytag = position    
             })
 
             let positionArr = [];
@@ -71,6 +71,7 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
                     //console.log("llop", action);
                     eachPosition[action[0]] = Object.values(action[1])[0];
                 })
+               // returnArrayData[action[0]].bytag = Object.values(action[1])[0];
                 positionArr.push(eachPosition);
                 // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
                 //  dataArray[+key] = 
@@ -81,7 +82,7 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
             })
             console.log("Look at my array: ", positionArr);
 
-            return positionArr;
+            return returnArrayData;
         }
     }
     else {
