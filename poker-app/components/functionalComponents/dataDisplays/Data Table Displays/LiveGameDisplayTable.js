@@ -23,55 +23,69 @@ const addActionValues = (actions) => {
 const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     const { position, tags } = liveGame;
     let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
+    let foundData = [];
+    console.log("same len len");
+    console.log("dataAr: ", dataArray)
+    //debugger;
+    let tempPositionObj = {};
+    dataArray.forEach((position, i) => {
+        let temp = {}
+        for ([key, value] of Object.entries(position)) {
+            console.log("action(key):", key + "<?>")
+            console.log("pos(value):", value)
+
+            temp[key] = {all: Object.values(value)[0] , bytag: 0 }
+            //let str = key.toString();
+            // temp[key].all = Object.values(value)[0]
+            // temp[key].bytag = 0;
+            tempPositionObj[i] = temp 
+        }
+        dataArray[i] = tempPositionObj;
+    });
     if (found) {
         if ((found.length === allGamesArray.length) || (found.length === 0)) {
-            console.log("same len len");
-            console.log("dataAr: ", dataArray)
-            dataArray.forEach((position, i) => {
-                let tempPositionObj = { [i]: {} }
-                let temp = {}
-                for ([key, value] of Object.entries(position)) {
-                    console.log("action(key):", key + "<?>")
-                    console.log("pos(value):", value)
-                    temp[key] = {}
-                    temp[key].all = Object.values(value)[0]
-                    temp[key].bytag = 0
-                    tempPositionObj[i] = { [key]: temp }
-                }
-                dataArray[i] = tempPositionObj;
+            console.log('POTATOOOOOOOOOOOO!!!!');
 
-            })
+            return dataArray;
+
         } else {
-            dataArray = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
-            dataArray.forEach((position, i) => {
+            console.log("PINAPPLE PEN");
+            foundData = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
+            foundData.forEach((position, i) => {
                 for ([key, value] of Object.entries(position)) {
                     console.log("action(key):", key + "<?>")
                     console.log("pos(value):", value)
                 }
             })
-        }
-        let positionArr = [];
-        for ([key, value] of Object.entries(dataArray)) {
-            //console.log("key: %j and Value: %j", key, value);
-            //console.log(dataArray);
-            // console.log('Value', value)
-            let eachPosition = {}
-            Object.entries(value).forEach((action, i) => {
-                //console.log("llop", action);
-                eachPosition[action[0]] = Object.values(action[1])[0];
-            })
-            positionArr.push(eachPosition);
-            // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
-            //  dataArray[+key] = 
 
+            let positionArr = [];
+            for ([key, value] of Object.entries(foundData)) {
+                //console.log("key: %j and Value: %j", key, value);
+                //console.log(dataArray);
+                // console.log('Value', value)
+                let eachPosition = {}
+                Object.entries(value).forEach((action, i) => {
+                    //console.log("llop", action);
+                    eachPosition[action[0]] = Object.values(action[1])[0];
+                })
+                positionArr.push(eachPosition);
+                // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
+                //  dataArray[+key] = 
+
+            }
+            positionArr.forEach((pos, i) => {
+
+            })
+            console.log("Look at my array: ", positionArr);
+
+            return positionArr;
         }
-        console.log("Look at my array: ", positionArr);
-        return positionArr;
     }
     else {
         return [];
     }
 }
+
 
 const getPositionPercentages = (liveGame, calculatedData, found, allGamesArray) => {
     //let found = Calculate.searchByManyTags(tags, allGamesArray);
@@ -305,7 +319,7 @@ export function LiveGameDisplayTable(props) {
                                 label="1-2 of 6"
                             />
                         </DataTable>
-                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', gppNew(liveGame, calculatedData, [], allGamesArray)) }}><Text> Test dat</Text> </Button>
+                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', gppNew(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray), allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
