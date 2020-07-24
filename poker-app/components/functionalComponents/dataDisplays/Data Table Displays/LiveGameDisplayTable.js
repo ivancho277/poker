@@ -28,54 +28,29 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     let foundData = [];
     let returnArrayData = [];
     console.log("same len len");
-    console.log("dataAr: ", dataArray)
-    //debugger;
+    console.log("dataAr: ", dataArray);
     let tempPositionObj = {};
     dataArray.forEach((position, i) => {
         let temp = {all: position, bytag: 0}
-        // for ([key, value] of Object.entries(position)) {
-        //     console.log("action(key):", key + "<?>")
-        //     console.log("pos(value):", value)
-        //     temp[key] = {}
-        //     temp[key] = {all: Object.values(value)[0] , bytag: 0 }
-        //     tempPositionObj[i] = temp 
-        // }
         returnArrayData.push(temp);
-        
-        //dataArray[i] = tempPositionObj;
     });
     if (found) {
         if ((found.length === allGamesArray.length) || (found.length === 0)) {
             console.log('POTATOOOOOOOOOOOO!!!!');
 
             return returnArrayData;
-
         } else {
             foundData = Calculate.percentagesPerPositionForEachAction(Calculate.sumGamesPositions(found), Calculate.sumPositionCount(found));
             console.log("PINAPPLE PEN", foundData);
-            foundData.forEach((position, i) => {
-                for ([key, value] of Object.entries(position)) {
-                    console.log("action(key):", key + "<?>")
-                    console.log("pos(value):", value)
-                }
-                returnArrayData[i].bytag = position    
-            })
-
             let positionArr = [];
             for ([key, value] of Object.entries(foundData)) {
-                //console.log("key: %j and Value: %j", key, value);
-                //console.log(dataArray);
-                // console.log('Value', value)
+                console.log("key: %j and Value: %j", key, value);
                 let eachPosition = {}
                 Object.entries(value).forEach((action, i) => {
-                    //console.log("llop", action);
                     eachPosition[action[0]] = Object.values(action[1])[0];
                 })
-               // returnArrayData[action[0]].bytag = Object.values(action[1])[0];
                 positionArr.push(eachPosition);
-                // console.log('LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOk', Object.entries(value))
-                //  dataArray[+key] = 
-
+                returnArrayData[key].bytag = eachPosition;
             }
             positionArr.forEach((pos, i) => {
 
