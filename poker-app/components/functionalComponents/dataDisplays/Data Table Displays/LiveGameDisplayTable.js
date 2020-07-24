@@ -24,6 +24,7 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     const { position, tags } = liveGame;
     let dataArray = Calculate.percentagesPerPositionForEachAction(calculatedData.positionTotals, calculatedData.positionCount);
     let foundData = [];
+    let returnArrayData = [];
     console.log("same len len");
     console.log("dataAr: ", dataArray)
     //debugger;
@@ -33,21 +34,22 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
         for ([key, value] of Object.entries(position)) {
             console.log("action(key):", key + "<?>")
             console.log("pos(value):", value)
-
+            temp[key] = {}
             temp[key] = {all: Object.values(value)[0] , bytag: 0 }
             //let str = key.toString();
             // temp[key].all = Object.values(value)[0]
             // temp[key].bytag = 0;
             tempPositionObj[i] = temp 
         }
-        position = tempPositionObj;
+        returnArrayData.push(tempPositionObj);
+        
         //dataArray[i] = tempPositionObj;
     });
     if (found) {
         if ((found.length === allGamesArray.length) || (found.length === 0)) {
             console.log('POTATOOOOOOOOOOOO!!!!');
 
-            return dataArray;
+            return returnArrayData;
 
         } else {
             console.log("PINAPPLE PEN");
