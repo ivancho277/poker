@@ -40,7 +40,8 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
             // temp[key].bytag = 0;
             tempPositionObj[i] = temp 
         }
-        dataArray[i] = tempPositionObj;
+        position = tempPositionObj;
+        //dataArray[i] = tempPositionObj;
     });
     if (found) {
         if ((found.length === allGamesArray.length) || (found.length === 0)) {
