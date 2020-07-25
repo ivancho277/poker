@@ -53,9 +53,6 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
                 positionArr.push(eachPosition);
                 returnArrayData[key].bytag = eachPosition;
             }
-            positionArr.forEach((pos, i) => {
-
-            })
             console.log("Look at my array: ", positionArr);
 
             return returnArrayData;
@@ -280,9 +277,9 @@ export function LiveGameDisplayTable(props) {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[liveGame.position] }%</Text></DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[liveGame.position]}%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0].toString() }%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]].toString() }%</Text></DataTable.Cell>
                                     </DataTable.Row>
                                 })
                                     :
