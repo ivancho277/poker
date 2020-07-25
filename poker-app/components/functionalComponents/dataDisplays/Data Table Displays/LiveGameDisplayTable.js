@@ -144,6 +144,7 @@ export function LiveGameDisplayTable(props) {
             currentPercentages.push({ [action.actionName]: { current: calculatePercentage(action.count, addActionValues(liveGame.actions)) } });
         })
         displayArray.push({ currentGame: currentPercentages })
+        displayArray.push({gamesFound: foundPercentages})
         if (typeof foundGames === 'undefined' || typeof foundGames === 'null') {
             displayArray.push({ gamesFound: null })
             return displayArray;
@@ -155,10 +156,12 @@ export function LiveGameDisplayTable(props) {
             console.log("actions: ", actions)
             console.log("sum: ", sumofgamesfound)
             for ([key, value] of Object.entries(actions)) {
-                console.log("key, value", key + " " + value);
+                console.log("key, value", key + " " + [value]);
                 foundPercentages.push({ [key]: calculatePercentage([value], sumofgamesfound) })
             }
-            displayArray.push({ gamesFound: foundPercentages })
+            //displayArray[1].foundGames = foundPercentages;
+            displayArray[1].gamesFound =  foundPercentages;
+            console.log("found PERCENTTTT", foundPercentages)
             console.log("displayARray:", displayArray);
             return displayArray;
 
@@ -273,13 +276,13 @@ export function LiveGameDisplayTable(props) {
                             </DataTable.Header>
                             <ScrollView>
 
-                                {liveGame ? (mapActionsNew(liveGame)[0].currentGame).map((action, i) => {
+                                {liveGame ? (mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[0].currentGame).map((action, i) => {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0].toString() }%</Text></DataTable.Cell>
-                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]].toString() }%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0] }%</Text></DataTable.Cell>
+                                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]] }%</Text></DataTable.Cell>
                                     </DataTable.Row>
                                 })
                                     :
@@ -296,7 +299,7 @@ export function LiveGameDisplayTable(props) {
                                 label="1-2 of 6"
                             />
                         </DataTable>
-                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', gppNew(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray), allGamesArray)) }}><Text> Test dat</Text> </Button>
+                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags))) } }><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
