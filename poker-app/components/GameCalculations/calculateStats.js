@@ -193,8 +193,8 @@ const calculatePercentage = (count, total) => {
 }
 
 const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPosition) => {
-    console.log('PosTotals::::', posTotals);
-    console.log('PosCounts::::', posCounts);
+    //console.log('PosTotals::::', posTotals);
+    //console.log('PosCounts::::', posCounts);
     let percentageArray = [];
 
     for (position in posCounts) {
