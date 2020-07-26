@@ -57,7 +57,7 @@ const searchByManyTags = (tagsArray, games) => {
                 }
             });
             //console.log("MANY TAGS:", foundGames);
-            return foundGames.length > 0 ? foundGames : null;
+            return foundGames.length > 0 ? foundGames : [];
         }
     }
     return [];
