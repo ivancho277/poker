@@ -138,13 +138,13 @@ export function LiveGameDisplayTable(props) {
     //TOP PRIORITY: 7/26/2020 something here is screwey 
     //NOTE: Getting an error whenever a new tag is added that didnt exsist before. Error says that 'cannot convert undefinned or null to object'
     const mapActionsNew = (liveGame, foundGames) => {
-        debugger;
+        //debugger;
         let displayArray = [];
         let currentPercentages = [];
         let foundPercentages = [];
         // addActionValues(liveGame.actions)
         liveGame.actions.forEach((action, i) => {
-            currentPercentages.push({ [action.actionName]: { current: calculatePercentage(action.count, addActionValues(liveGame.actions)) } });
+            currentPercentages.push({ [action.actionName]:  calculatePercentage(action.count, addActionValues(liveGame.actions))  });
         })
         displayArray.push({ currentGame: currentPercentages })
         displayArray.push({ gamesFound: foundPercentages })
@@ -251,7 +251,8 @@ export function LiveGameDisplayTable(props) {
 
 
 
-
+    //TODO: 7/27/2020 Need to see about the second column of Cells rendering 0s when no data, either here by condition or in MapActionsNew()
+    //TOP PRIORITY: This above
     return (
         <GameSubscriber>
             {({ liveGame, calculatedData, allGamesArray }, actions) => (
@@ -287,8 +288,8 @@ export function LiveGameDisplayTable(props) {
                                 {liveGame ? (mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[0].currentGame).map((action, i) => {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{44}% </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{44}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{Object.values(mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[1].gamesFound[i] ) }% </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0]}%</Text></DataTable.Cell>
                                         <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]]}%</Text></DataTable.Cell>
                                     </DataTable.Row>
