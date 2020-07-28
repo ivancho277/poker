@@ -156,7 +156,7 @@ export function GameDataListItem(props) {
                                         //     return <View key={`item_${i}`}>
                                         //         <List.Item
                                         //             style={{ height: 15, padding: 3, margin: 3, }}
-                                        //             titleStyle={{ fontSize: 13, lineHeight: 15 }}
+                                        //             titleStyle={{ fontSize: 13, lineHeight: 15 } }
                                         //             title={`${element.name}: ${element.data} %`}
                                         //             left={() => <List.Icon icon='cards-spade' color='black' />}
                                         //         />
