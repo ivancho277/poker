@@ -61,6 +61,7 @@ const initialState = {
     loading: false,
     liveGameLoading: false,
     foundGamesArray: [],
+    thereIsSavedData: true, 
     error: null,
     MAX_POSITION: 8,
     MIN_POSITION: 0,
@@ -749,7 +750,7 @@ const actions = {
     // },
 
     //TODO: Better place to check if games exsist before init totals.
-    loadTotals: () => async ({ dispatch, getState }) => {
+    loadTotals: () => async ({ dispatch, getState, setState }) => {
         if (getState().calculatedData.loading == true) return true;
         dispatch(setCalculatedDataLoading());
         const { data, loading } = getState();
@@ -759,7 +760,10 @@ const actions = {
             await fetchTotalsFromStorage().then(res => {
                 if (res) {
                     dispatch(setCalculatedData(res));
-                    alert('RESET');
+                    setState(draft => {
+                        draft.thereIsSavedData = false;
+                    })
+                    //alert('RESET');
                 }
             })
             //alert('RESET');
@@ -769,6 +773,9 @@ const actions = {
                 if (res) {
                     //alert("in fetch callback");
                     dispatch(setCalculatedData(res));
+                    setState(draft => {
+                        draft.thereIsSavedData = true;
+                    })
                 }
                 //alert('before return NO RESET!!!')
                 return 'totals';

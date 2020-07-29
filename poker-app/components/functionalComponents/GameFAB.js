@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native'
 import { FAB, Portal, Provider } from 'react-native-paper';
-import TagDialog from './TagDialog';
-import ActionDialog from './ActionDialog'
+import TagDialog from '../DialogsAndSnackbars/TagDialog';
+import ActionDialog from '../DialogsAndSnackbars/ActionDialog'
 import { GameSubscriber } from '../../DataStore/GameStore';
 
 export default function GameFAB(props) {
