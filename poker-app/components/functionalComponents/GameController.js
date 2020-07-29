@@ -202,7 +202,7 @@ export const GameController = (props) => {
                         {/* {renderBasicLiveData(liveGame, allGamesArray)} */}
                         {/* <View style={{ borderWidth: 1, borderStyle: 'solid', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}> */}
 
-                        <GameDataAccordian />
+                        {/* <GameDataAccordian /> */}
                         <View>
                             <Surface style={{ elevation: 8, backgroundColor: '#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {liveGame.actions.map((action, index) => {
