@@ -306,7 +306,7 @@ export function LiveGameDisplayTable(props) {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                                        {/* <DataTable.Cell><Text>{Object.values(mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[1].gamesFound[i])} % </Text> </DataTable.Cell> */}
+                                        <DataTable.Cell><Text>{Object.values(mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[1].gamesFound[i])} % </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0]}%</Text></DataTable.Cell>
                                         <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]]}%</Text></DataTable.Cell>
                                     </DataTable.Row>
