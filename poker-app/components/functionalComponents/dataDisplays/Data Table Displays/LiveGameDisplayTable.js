@@ -20,7 +20,6 @@ const addActionValues = (actions) => {
     }, accum);
 }
 
-
 //TOP PRIORITY: 7/24/2020 FINISH THIS DAMNIT
 //TODO: 7/24/2020 Handle a null found parameter
 const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
@@ -32,6 +31,7 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     console.log("dataAr: ", dataArray);
     let tempPositionObj = {};
     dataArray.forEach((position, i) => {
+        console.log('position in nforReach', position);
         let temp = { all: position, bytag: 0 }
         returnArrayData.push(temp);
     });
@@ -174,38 +174,6 @@ export function LiveGameDisplayTable(props) {
         return displayArray;
     }
 
-    //TOP PRIORITY: Write out my Map functions for Data Table Live
-    const mapActions = (liveGame, foundGames) => {
-        let displayArray = [];
-        let currentPercentages = [];
-        // addActionValues(liveGame.actions)
-        if (typeof foundGames === 'undefined' || typeof foundGames === 'null') {
-            console.log('NOT !!! FOUND GAMES');
-            liveGame.actions.forEach((action, i) => {
-                currentPercentages.push({ [action.actionName]: calculatePercentage(action.count, addActionValues(liveGame.actions)) });
-            })
-            displayArray.push({ CurrentGame: currentPercentages })
-            console.log("displayARray:", displayArray)
-            return displayArray;
-        }
-        else {
-            console.log('FOUNDEM', foundGames);
-            let sumofgamesfound = Calculate.sumGamesTotals(foundGames);
-            let actions = Calculate.sumUpGameTotals(foundGames);;
-            console.log("actions: ", actions)
-            console.log("sum: ", sumofgamesfound)
-            for ([key, value] of Object.entries(actions)) {
-                console.log("key, value", key + " " + value)
-                displayArray.push({ [key]: calculatePercentage([value], sumofgamesfound) })
-            }
-            console.log("displayARray:", displayArray);
-            return displayArray;
-        }
-    }
-
-
-
-
     //TODO: 7.14.20 
     //TODO: Write our map functions - https://trello.com/c/tEPMn8Yd/69-write-our-map-functions20 dO THIS
     const mapPositionActions = (liveGame, calculatedData, allGames, foundGames = null) => {
@@ -239,32 +207,7 @@ export function LiveGameDisplayTable(props) {
             </View>
         )
     }
-
-    const renderRows = (liveGame, allGames, calculatedData) => {
-        let foundGames = Calculate.searchByManyTags(liveGame.tags, allGames);
-        if (liveGame) {
-            console.log('WHAT THE FUCK!')
-            foundGames.length > 0 ? (mapActionsNew(liveGame, foundGames)[0].currentGame).map((action, i) => {
-                return <DataTable.Row key={i}>
-                    <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                    <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                    <DataTable.Cell><Text>{Object.values(mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[1].gamesFound[i])}% </Text> </DataTable.Cell>
-                    <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0]}%</Text></DataTable.Cell>
-                    <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                </DataTable.Row>
-            })
-                :
-                mapActionsNew(liveGame, foundGames)[0].currentGame.map((action, i) => {
-                    return <DataTable.Row key={i}>
-                        <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
-                        <DataTable.Cell><Text>{0}% </Text> </DataTable.Cell>
-                        <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0]}%</Text></DataTable.Cell>
-                        <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]]}%</Text></DataTable.Cell>
-                    </DataTable.Row>
-                })
-        }
-    }
+  
 
     //TODO: 7/27/2020 Need to see about the second column of Cells rendering 0s when no data, either here by condition or in MapActionsNew()
     //TOP PRIORITY: This above
@@ -305,7 +248,7 @@ export function LiveGameDisplayTable(props) {
                                 (mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[0].currentGame).map((action, i) => {
                                     return <DataTable.Row key={i}>
                                         <DataTable.Cell> <Text> {Object.keys(action)[0].toString()}: </Text> </DataTable.Cell>
-                                        <DataTable.Cell><Text>{Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
+                                        <DataTable.Cell><Text>{isNaN(Object.values(action)[0]) ? 0 : Object.values(action)[0].toString()}% </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values(mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))[1].gamesFound[i])} % </Text> </DataTable.Cell>
                                         <DataTable.Cell><Text>{Object.values((gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].all[Object.keys(action)[0]])[0]}%</Text></DataTable.Cell>
                                         <DataTable.Cell><Text>{(gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray))[liveGame.position].bytag[Object.keys(action)[0]]}%</Text></DataTable.Cell>

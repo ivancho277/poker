@@ -204,7 +204,7 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
         for (action in posTotals) {
             actionName = action
             !([action] in obj) && (obj[action] = {});
-            obj[action][position] = calculatePercentage(posTotals[action][position], posCounts[position]);
+            obj[action][position] = ( isNaN(calculatePercentage(posTotals[action][position], posCounts[position])) ) ? 0 : calculatePercentage(posTotals[action][position], posCounts[position])
             // console.log('OBJ:.;.;.;.;.;.;.', obj);
             // console.log(`Action::::: ${ calculatePercentage(posTotals[action][position], posCounts[position] )} %` )
             // console.log("posTotals{action}:::::", action)
