@@ -17,7 +17,7 @@ export default function HomeScreenNew(props) {
     const [state, actions] = UseGameStore();
     const [loadingData, setLoadingData] = useState(true);
     const [testtext, settesttext] = useState('');
-    const [showNoDataConfirm, setShowNoDataConfirm] = useState(!state.isThereSavedData);
+    const [showNoDataConfirm, setShowNoDataConfirm] = useState(false);
 
     const _hideDialog = () => { setShowNoDataConfirm(false) };  
 
@@ -43,10 +43,11 @@ export default function HomeScreenNew(props) {
         }
         dataLoad().then(res => {
             if (res) {
-                console.log("hey boys we loaded.")
+                console.log("hey boys we loaded.");
+                setShowNoDataConfirm(!state.thereIsSavedData);
             }
         })
-    }, []);
+    }, [state.thereIsSavedData]);
 
     test = async (cb) => {
         await cb().then(res => { console.log(res) })

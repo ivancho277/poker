@@ -268,7 +268,7 @@ export function LiveGameDisplayTable(props) {
                                 label="1-2 of 6"
                             />
                         </DataTable>
-                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', mapActionsNew(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))) }}><Text> Test dat</Text> </Button>
+                        <Button title="let us test" icon="cards-diamond" onPress={() => { console.log('test we do!', gppNew(liveGame, calculatedData, searchByManyTags(liveGame.tags, allGamesArray), allGamesArray)) }}><Text> Test dat</Text> </Button>
                     </Surface>
                 </View>
             )
