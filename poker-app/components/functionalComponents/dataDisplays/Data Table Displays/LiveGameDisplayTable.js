@@ -31,12 +31,15 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     console.log("dataAr: ", dataArray);
     let tempPositionObj = {};
     dataArray.forEach((position, i) => {
+        console.log('First POS:', position)
+    })
+    dataArray.forEach((position, i) => {
         console.log('position in nforReach', position);
         let temp = { all: position, bytag: 0 }
         returnArrayData.push(temp);
     });
     if (found) {
-        if ((found.length === allGamesArray.length) || (found.length === 0)) {
+        if (found.length === 0) {
             console.log('POTATOOOOOOOOOOOO!!!!');
 
             return returnArrayData;
