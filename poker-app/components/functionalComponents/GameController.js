@@ -6,7 +6,7 @@ import { StorageAPI } from '../storageAPI/AsyncStorageController'
 import { UseGameStore, GameSubscriber } from '../../DataStore/GameStore';
 import * as Calculate from '../GameCalculations/calculateStats.js';
 import * as Utils from '../../utils/objectOps.js';
-import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton } from 'react-native-paper';
+import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, Headline } from 'react-native-paper';
 import TagDialog from '../DialogsAndSnackbars/TagDialog';
 import { Tables } from '../../constants/tables.js';
 import { getPercentages } from '../statscalculation.js';
@@ -105,7 +105,7 @@ export const GameController = (props) => {
             if (addActionValues(liveGame.actions) === 0) {
                 storageIsEmpty = true;
             }
-        } 
+        }
         //console.log("ITS RAINING TAGS: ", allgames);
         //console.log("ITS RAINING LIVE TAGS: ", liveGame.tags);
         let foundGames = liveGame.tags.length > 0 ? Calculate.searchByManyTags(liveGame.tags, allgames) : allgames;
@@ -204,6 +204,7 @@ export const GameController = (props) => {
 
                         {/* <GameDataAccordian /> */}
                         <View>
+                            <Headline>Game Actions: {'\n'}</Headline>
                             <Surface style={{ elevation: 8, backgroundColor: '#D3F3EE', margin: 5, padding: 5, borderColor: 'black', display: "flex", flexDirection: 'row', zIndex: -1, justifyContent: 'space-evenly', alignItems: 'flex-start', alignItems: 'center', flexWrap: 'wrap', height: 'auto', width: '90%' }}>
                                 {liveGame.actions.map((action, index) => {
                                     return (

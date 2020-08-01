@@ -27,11 +27,11 @@ const theme = {
   roundness: 69,
   colors: {
     ...DefaultTheme,
-    primary: '#7FB7BE',
-    accent: '#BC2C1A',
-    surface: '#D3F3EE',
-    backdrop: '#7FB7BE',
-    background: '#7FB7BE'
+    primary: '#040303',
+    accent: '#6A7B76',
+    surface: '#8B9D83',
+    backdrop: '#BEB0A7',
+    background: '#BEB0A7'
   },
   font: {
     ...DefaultTheme

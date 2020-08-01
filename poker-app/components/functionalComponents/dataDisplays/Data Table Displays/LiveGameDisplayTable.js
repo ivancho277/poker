@@ -31,8 +31,16 @@ const gppNew = (liveGame, calculatedData, found, allGamesArray) => {
     console.log("dataAr: ", dataArray);
     let tempPositionObj = {};
     dataArray.forEach((position, i) => {
-        console.log('First POS:', position)
+        console.log('First POS:', position);
+        Object.keys(position).forEach(elem => {
+            if(!tempPositionObj[elem]){
+                tempPositionObj[elem] = 0;
+            }
+        })
+        console.log('check:', tempPositionObj);
+        
     })
+
     dataArray.forEach((position, i) => {
         console.log('position in nforReach', position);
         let temp = { all: position, bytag: 0 }
