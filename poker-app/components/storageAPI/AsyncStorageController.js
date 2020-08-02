@@ -1,6 +1,9 @@
 import { AsyncStorage } from 'react-native';
+import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store';
 
 
+//REMINDER:come back to change store over to secureStore.
+const secureStore = createSecureStore();
 /**
  *Checks if it is the Applications first time launching
  *Set storage key after first launch
@@ -19,8 +22,42 @@ const firstTimeLauching = async function () {
         return false;
     }
 }
+//!! SECURESTORE tests--------------------
+const setData = async function (data) {
+    try {
+        return await secureStore.setItem('gamedata', JSON.stringify(data)).then(() => {
+            console.log(`${data} stored successfully`)
+            return data;
+        });
+    }
+    catch (error) {
+        console.log("error saving data");
+        return null;
+    }
+}
 
+const getData = async function () {
+    try {
+        return await secureStore.getItem('gamedata').then(res => {
+            console.log('retrieved', res);
+            return res;
+        })
+    } catch {
+        console.log("UNABLE TO GET DATA");
+        return null;
+    }
+}
 
+const removeTestData = function() {
+    try {
+        return secureStore.removeItem('gamedata').then(() => {
+            console.log('we removed data');
+        })
+    } catch {
+        console.log('Nope, could not remove it');
+    }
+}
+//!! END TESTS ------------------------------ 
 /**
  *
  *
@@ -388,42 +425,42 @@ const setInitialPositionCount = () => {
         console.log('could not set Position Count');
     }
 }
- const setPositionCount = (Pcount) => {
-     try {
+const setPositionCount = (Pcount) => {
+    try {
         AsyncStorage.setItem('Pcount', JSON.stringify(Pcount));
         console.log('Success Setting Position Count')
-     } catch {
+    } catch {
         console.log('Counld NOT SET PCOUNT!')
-     }
- }
+    }
+}
 
- const deletePositionCount = () => {
-     try {
+const deletePositionCount = () => {
+    try {
         AsyncStorage.removeItem('Pcount', () => {
             console.log('Removed Position Count');
         })
-     } catch {
+    } catch {
         console.log('Could not remove Position Count')
-     }
- }
+    }
+}
 
- const getPositionCount = async () => {
+const getPositionCount = async () => {
     try {
         let PositionCount = await AsyncStorage.getItem('Pcount')
         return PositionCount;
     } catch {
         console.error('Could not get Position count');
         return null;
-     }
+    }
 
- 
-    
- }
- export const StorageAPI = {
+
+
+}
+export const StorageAPI = {
     getPositionCount: getPositionCount,
 
     deletePositionCount: deletePositionCount,
-    
+
     setPositionCount: setPositionCount,
 
     setInitialPositionCount: setInitialPositionCount,
@@ -476,7 +513,12 @@ const setInitialPositionCount = () => {
 
     firstTimeLauching: firstTimeLauching,
 
-    isEmpty: isEmpty
+    isEmpty: isEmpty,
+
+    setData: setData,
+    getData: getData,
+    removeTestData: removeTestData,
+
 
 }
 

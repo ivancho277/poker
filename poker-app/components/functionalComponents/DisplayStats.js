@@ -57,8 +57,8 @@ export function DisplayStats(props) {
                                                 return (
                                                     <DataTable.Row key={`${actionKey}_Row_${i}`}>
                                                         <DataTable.Cell key={`${actionKey}_name_${i}`}>{actionKey}</DataTable.Cell>
-                                                        <DataTable.Cell key={`${actionKey}_${i}`}>     {element[actionKey]}</DataTable.Cell>
-                                                        <DataTable.Cell key={`${actionKey}_key2_${i}`}>   {calculatePercentage(element[actionKey], Calculate.sumAllGameActions(state.calculatedData.totals))}%</DataTable.Cell>
+                                                        <DataTable.Cell numeric key={`${actionKey}_${i}`}>     {element[actionKey]}</DataTable.Cell>
+                                                        <DataTable.Cell numeric key={`${actionKey}_key2_${i}`}>   {calculatePercentage(element[actionKey], Calculate.sumAllGameActions(state.calculatedData.totals))}%</DataTable.Cell>
                                                     </DataTable.Row>
                                                 )
                                             })}

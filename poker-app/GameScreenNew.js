@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements'
-import * as calculation from './components/statscalculation.js';
-import * as storage from './components/storageAPI/AsyncStorageController.js';
+import * as Calculate from './components/GameCalculations/calculateStats.js';
 import { Tester, TestComponent } from './components/testComponents/Tester';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,13 +11,8 @@ import { Switch, Card, Button } from 'react-native-paper';
 import GameFAB from './components/functionalComponents/GameFAB';
 import { RadioTable } from './components/functionalComponents/RadioTable';
 import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog';
-import { StackedBarChart } from 'react-native-chart-kit'
-
-//import StoreLoader from '../components/HOCs/StoreLoader'
-// import  Tester  from './components/testComponents/Tester'
-// const calculation = require('./components/statscalculation.js')
-// const storage = require('./components/AsyncStorageController.js');
-
+import { LiveGameDisplayTable } from './components/functionalComponents/dataDisplays/Data Table Displays/LiveGameDisplayTable';
+import { GameDataListItem } from './components/functionalComponents/dataDisplays/List Displays/GameDataListItem.js';
 
 
 export default function GameScreenNew(props) {
@@ -26,6 +20,7 @@ export default function GameScreenNew(props) {
     const [loading, setLoading] = useState(state.loading);
     const [testOn, setTestOn] = useState(state.testModeOn);
     const [isAskLoadVisible, setIsAskLoadVisible] = useState(false);
+    const [foundGames, setFoundGames] = useState([]);
 
     const _showLoadDialog = () => { setIsAskLoadVisible(true) }
     const _hideLoadDialog = () => { setIsAskLoadVisible(false) }
@@ -41,15 +36,35 @@ export default function GameScreenNew(props) {
     //     console.log('LIVE :', state.liveGame)
 
     // }, [])
+
+
     //TODO: 6/22/2020 we need to also make sure that there are saved games in general before showing dialog!
     useEffect(() => {
         actions.setCurrentORNewLiveGame();
         if (state.data.currentGame && state.allGamesArray) {
             _showLoadDialog()
         }
+
+        // if (state.liveGame !== null && state.liveGame.tags.length !== foundGames.length) {
+        //     let newfoundgames = searchAndUpdateFoundGames(state.liveGame.tags, state.allGamesArray, Calculate.searchByManyTags);
+        //     if (newfoundGames) {
+
+        //         setFoundGames([...newfoundgames]);
+        //         console.log("NEWFOUNDLAND", newfoundgames);
+        //     }
+        // }
+
         console.log('state.currentGame: %o', state.data.currentGame);
 
     }, [])
+
+    const searchAndUpdateFoundGames = (tags, allGames, _cb_Search) => {
+        if (typeof _cb_Search === 'function') {
+            return _cb_Search(tags, allGames);
+        }
+        return [];
+    }
+
 
     manualReload = async () => {
         //setLoadingData(true);
@@ -71,12 +86,8 @@ export default function GameScreenNew(props) {
     }
 
 
-
-    //TODO: Fix position of Fab.
-    //TODO: fix position of switch
     return (
         // <View  style={{width: 200, height: 200,borderColor: '#000000', borderWidth: 3, borderStyle: 'solid', justifyContent: 'center' }}>
-
         // state.loading ?
         //     <Text>We need to load</Text>
         //     :
@@ -84,8 +95,13 @@ export default function GameScreenNew(props) {
             <ScrollView>
                 <View>
                     <ScrollView>
-                        <Card style={{backgroundColor: '#7FB7BE'}}>
-                            <Card.Title style={{alignItems: 'center'}} title="      Track your game!" />
+                        <Card style={{ backgroundColor: '#7FB7BE' }}>
+                            <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
+                            {isAskLoadVisible ? <View></View> :
+                                (state.liveGame !== null && !state.data.liveGameLoading) ? <LiveGameDisplayTable /> :
+                                    <View>
+                                        <Text>Start to play</Text>
+                                    </View>}
                             <Card.Content>
                                 <ScrollView>
                                     <GameController goHome={goHome} reload={manualReload}></GameController>

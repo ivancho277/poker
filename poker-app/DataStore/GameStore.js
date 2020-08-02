@@ -16,7 +16,7 @@ import {
     validActionRemove
 } from "../utils/validators.js";
 import * as Utils from '../utils/objectOps';
-const calculation = require("../components/statscalculation.js");
+import * as Calculate from '../components/GameCalculations/calculateStats.js';
 
 
 //import * as selectors from './selectors';
@@ -60,13 +60,74 @@ const initialState = {
     liveGame: null,
     loading: false,
     liveGameLoading: false,
+    foundGamesArray: [],
+    thereIsSavedData: true, 
     error: null,
     MAX_POSITION: 8,
     MIN_POSITION: 0,
     currentTime: new Date(),
     previousTime: new Date(),
     testModeOn: false,
+    testNewSecureStore: [],
 };
+
+//TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY //NOTE: When should this happen?? Maybe we get called in the add tag function?? Seems like the best place!
+const searchGamesForLiveTags = () => ({getState, setState}) => {
+    const {liveGame, allGamesArray} = getState();
+    console.log("foundGaMes in LIVELOVE!", liveGame.tags  )
+    // let found = [];
+    if(typeof liveGame.tags === 'object'){
+        let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
+        console.log("foundGaMes in Store:", found);
+        setState(draft => {
+            draft.foundGamesArray = found;
+        })
+    }
+}
+
+const setSecureState = data => ({ getState ,setState }) => {
+    console.log('data', data)
+    //debugger;
+    setState(draft => {
+        draft.testNewSecureStore = data;
+    })
+}
+const saveSecureState = (dataToAdd) => async ({ getState, setState, dispatch }) => {
+    const { testNewSecureStore } = getState();
+    console.log("log me",testNewSecureStore)
+    let updatedData = testNewSecureStore.concat(dataToAdd);
+    await storage.setData(updatedData).then(() => {
+        console.log('updateddddddd', updatedData);
+        dispatch(setSecureState(updatedData));
+    });
+}
+
+const fetchSecureState = async () => {
+    return await storage.getData().then(res => {
+        if (res) {
+            console.log("WE FUCKING FETCHIN:", JSON.parse(res));
+            return JSON.parse(res);
+        }
+        else return null
+    })
+}
+
+const laodSecure = () => async ({dispatch})=> {
+    let data = await fetchSecureState().then(res => {
+
+        dispatch(setSecureState(res)) ;
+        console.log('test is loaded', res)
+        return res;
+    })
+    return data;
+
+
+}
+
+const removeTestData = () => {
+    storage.removeTestData();
+}
+
 
 const setCurrentTime = () => ({ setState }) => {
     setState(draft => {
@@ -127,12 +188,12 @@ const setCurrentORNewLiveGame = () => ({ setState, getState, dispatch }) => {
         console.log("Curr Calc::::", currentGame.calcData);
         //NOTE:Set State here, liveGame and Calculated data...
         dispatch(setCurrentGameToLive());
-        dispatch(firstMoveMade()); 
+        dispatch(firstMoveMade());
     } else {
         console.log("No Current Game Present");
         dispatch(setNewLiveGame(actions));
         //dispatch(firstMoveMade());
-        
+
     }
 }
 
@@ -530,6 +591,19 @@ const actions = {
         dispatch(firstMoveMade())
     },
 
+    loadTestFromStorage: () => async ({ dispatch }) => {
+        dispatch(laodSecure())
+        
+    },
+
+    removeTestValue: () => ({dispatch}) => {
+        dispatch(removeTestData());
+    },
+
+    saveTestValue: (value) => ({ getState, dispatch }) => {
+        dispatch(saveSecureState(value));
+        console.log("GET THAT STATE: ", getState().testNewSecureStore );
+    },
 
     //!!I dont believe this is being used at them moment anywhere, just the above action is our main loadData();
     loadData: () => async ({ getState, dispatch }) => {
@@ -628,8 +702,10 @@ const actions = {
         dispatch(removeAction(action));
     },
 
-    addTagToCurrentGame: (tag) => ({ dispatch }) => {
-        dispatch(addNewTag(tag))
+    //CONCERN: I'm not sure that the state of tags will be updated by the time we search for games
+    addTagToCurrentGame: (tag) => ({ dispatch, }) => {
+        dispatch(addNewTag(tag));
+        dispatch(searchGamesForLiveTags());
     },
 
     addTagToAll: (tag) => ({ dispatch }) => {
@@ -674,7 +750,7 @@ const actions = {
     // },
 
     //TODO: Better place to check if games exsist before init totals.
-    loadTotals: () => async ({ dispatch, getState }) => {
+    loadTotals: () => async ({ dispatch, getState, setState }) => {
         if (getState().calculatedData.loading == true) return true;
         dispatch(setCalculatedDataLoading());
         const { data, loading } = getState();
@@ -684,7 +760,10 @@ const actions = {
             await fetchTotalsFromStorage().then(res => {
                 if (res) {
                     dispatch(setCalculatedData(res));
-                    alert('RESET');
+                    setState(draft => {
+                        draft.thereIsSavedData = false;
+                    })
+                    //alert('RESET');
                 }
             })
             //alert('RESET');
@@ -694,6 +773,9 @@ const actions = {
                 if (res) {
                     //alert("in fetch callback");
                     dispatch(setCalculatedData(res));
+                    setState(draft => {
+                        draft.thereIsSavedData = true;
+                    })
                 }
                 //alert('before return NO RESET!!!')
                 return 'totals';
@@ -708,12 +790,12 @@ const actions = {
      */
     updateTotalsWithLiveGame: () => ({ getState, dispatch }) => {
         const { liveGame } = getState();
-storage.updateTotals(liveGame);
+        storage.updateTotals(liveGame);
     },
 
-getPositionTotalsFromStorage: () => ({ dispatch }) => {
+    getPositionTotalsFromStorage: () => ({ dispatch }) => {
 
-},
+    },
 
     TestModeSwitch: () => ({ getState, setState }) => {
         const { testModeOn } = getState();

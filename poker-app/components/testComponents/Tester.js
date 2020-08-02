@@ -8,7 +8,7 @@ import { StorageAPI as Storage } from '../storageAPI/AsyncStorageController';
 import { Colors, ActivityIndicator, Switch } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 import { StorageAPI } from '../storageAPI/AsyncStorageController'
-import { ConfirmDialog } from '../functionalComponents/ConfirmDialog';
+import { ConfirmDialog } from '../DialogsAndSnackbars/ConfirmDialog';
 import { GameDataAccordian } from '../functionalComponents/dataDisplays/List Displays/GameDataAccordian'
 
 export const TestComponent = () => {

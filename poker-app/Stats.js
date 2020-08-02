@@ -7,7 +7,7 @@ import * as storage from './components/storageAPI/AsyncStorageController.js';
 import Tester from './components/testComponents/Tester';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore';
 import { Chip, Snackbar, Card, Surface } from 'react-native-paper';
-import { ValidationSnackbar } from './components/functionalComponents/ValidationSnackBar';
+import { ValidationSnackbar } from './components/DialogsAndSnackbars/ValidationSnackBar';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DisplaySelectedStats } from './components/functionalComponents/DisplaySelectedStats';
 import { Switch } from 'react-native-paper';
@@ -38,7 +38,7 @@ class StatsScreen extends Component {
         if (tags !== null) {
             if (tags.length > 0) {
                 return tags.map(tag => {
-                    return <Chip key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag, games)}>{tag}</Chip>
+                    return <Chip icon="close-circle-outline"  key={tag} value={tag} style={{ paddingHorizontal: 3, marginHorizontal: 3 }} onPress={() => this.onChipPress(tag, games)}>{tag}</Chip>
                 })
             } else {
                 return <Text style={{ textAlign: 'auto', fontStyle: 'italic', }}>Chosen tags...</Text>

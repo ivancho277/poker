@@ -57,7 +57,7 @@ const searchByManyTags = (tagsArray, games) => {
                 }
             });
             //console.log("MANY TAGS:", foundGames);
-            return foundGames.length > 0 ? foundGames : null;
+            return foundGames.length > 0 ? foundGames : [];
         }
     }
     return [];
@@ -193,8 +193,8 @@ const calculatePercentage = (count, total) => {
 }
 
 const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPosition) => {
-    console.log('PosTotals::::', posTotals);
-    console.log('PosCounts::::', posCounts);
+    //console.log('PosTotals::::', posTotals);
+    //console.log('PosCounts::::', posCounts);
     let percentageArray = [];
 
     for (position in posCounts) {
@@ -204,7 +204,7 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
         for (action in posTotals) {
             actionName = action
             !([action] in obj) && (obj[action] = {});
-            obj[action][position] = calculatePercentage(posTotals[action][position], posCounts[position]);
+            obj[action][position] = ( isNaN(calculatePercentage(posTotals[action][position], posCounts[position])) ) ? 0 : calculatePercentage(posTotals[action][position], posCounts[position])
             // console.log('OBJ:.;.;.;.;.;.;.', obj);
             // console.log(`Action::::: ${ calculatePercentage(posTotals[action][position], posCounts[position] )} %` )
             // console.log("posTotals{action}:::::", action)

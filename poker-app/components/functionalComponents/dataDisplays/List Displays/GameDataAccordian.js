@@ -10,8 +10,6 @@ import * as Utils from '../../../../utils/objectOps.js';
 import { ActivityIndicator, Colors, Surface, Text, Subheading, IconButton, List, Car, Dialog, Portald, Portal, Paragraph, Divider } from 'react-native-paper';
 import { Button } from 'react-native-elements'
 import { Tables } from '../../../../constants/tables.js';
-import { getPercentages } from '../../../statscalculation.js';
-import { sumUpGameTotals } from '../../../GameCalculations/calculateStats.js';
 import { GameDataListItem } from './GameDataListItem'
 
 
@@ -81,7 +79,7 @@ export function GameDataAccordian(props) {
         return Object.entries(dataArray[position]);
     }
     //NOTE: 7/2/2020 getPercentafesForPositionDislay() should do the search so here just pass allGames and the checks will run in there..
-    //TODOL 7/2/2020 see note above!
+    //TODO: L 7/2/2020 see note above!
     const getPositionPercentages = (liveGame, found, calculatedData) => {
         //let found = Calculate.searchByManyTags(tags, allGamesArray);
         const { position, tags } = liveGame;
@@ -261,19 +259,19 @@ export function GameDataAccordian(props) {
             {({ liveGame, allGamesArray, calculatedData }, actions) =>
                 <View style={{ flex: 1 }}>
                     <View style={{ padding: 2, margin: 2 }}>
-                        <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Pecentage by action:' isDisplayByPosition={false} />
+                        <GameDataListItem gameDataArray={mapActions(liveGame, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='% out of games w/ tags' isDisplayByPosition={false} />
                     </View>
                     <View style={{ padding: 2, margin: 2 }}></View>
-                    <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='Historical % for each Action At position:' isDisplayByPosition={true} />
+                    <GameDataListItem gameDataArray={mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray))} listTitle='% by position from games w/ tags ' isDisplayByPosition={true} />
                     <View>
                     </View>
                     <Divider />
-                    <View style={{ margin: 2 }}>
+                    {/* <View style={{ margin: 2 }}>
                         <Button title="SHOW DATA" onPress={_showTestDialog}>Show Data</Button>
                         <Divider />
                         <Button title="LOG OTHER DATA" onPress={() => { mapPositionActions(liveGame, calculatedData, Calculate.searchByManyTags(liveGame.tags, allGamesArray)) }} style={{ color: "red" }} />
                         <Button title="log 2" onPress={() => { _showPOS() }}></Button>
-                    </View>
+                    </View> */}
                     {renderActions(liveGame, visibleTestDialog, _hideTestDialog)}
                     {renderPositionActions(liveGame, visiblePOSDialog, _hidePOS, calculatedData, allGamesArray)}
                 </View>
