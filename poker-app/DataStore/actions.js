@@ -120,21 +120,21 @@ const actions = {
     },
 
     setCurrentORNewLiveGame: () => ({ dispatch }) => {
-        dispatch(setCurrentORNewLiveGame());
+        dispatch(Helpers.setCurrentORNewLiveGame());
     },
 
 
 
     updatePosition: (newPosition) => ({ getState, setState, dispatch }) => {
-        dispatch(updatePosition(newPosition));
+        dispatch(Helpers.updatePosition(newPosition));
     },
 
     incrementPosition: () => ({ dispatch }) => {
-        dispatch(incrementPosition());
+        dispatch(Helpers.incrementPosition());
     },
 
     removeCurrentGameFromStorage: () => ({ dispatch }) => {
-        dispatch(removeCurrentGame());
+        dispatch(Helpers.removeCurrentGame());
     },
 
 
@@ -143,46 +143,46 @@ const actions = {
     },
 
     saveAllGames: () => ({ getState, setState, dispatch }) => {
-        dispatch(SaveAllGames());
-        dispatch(removeCurrentGame());
+        dispatch(Helpers.SaveAllGames());
+        dispatch(Helpers.removeCurrentGame());
     },
 
     saveCurrentGame: () => ({ getState, setState, dispatch }) => {
-        dispatch(CurrentGameSave());
+        dispatch(Helpers.CurrentGameSave());
     },
 
     resetActions: () => ({ dispatch }) => {
-        dispatch(resetActions());
+        dispatch(Helpers.resetActions());
     },
 
     addNewAction: (action) => ({ getState, dispatch }) => {
-        dispatch(addNewAction(action));
+        dispatch(Helpers.addNewAction(action));
     },
 
     removeAction: (action) => ({ dispatch }) => {
-        dispatch(removeAction(action));
+        dispatch(Helpers.removeAction(action));
     },
 
     //CONCERN: I'm not sure that the state of tags will be updated by the time we search for games
     addTagToCurrentGame: (tag) => ({ dispatch, }) => {
-        dispatch(addNewTag(tag));
-        dispatch(searchGamesForLiveTags());
+        dispatch(Helpers.addNewTag(tag));
+        dispatch(Helpers.searchGamesForLiveTags());
     },
 
     addTagToAll: (tag) => ({ dispatch }) => {
-        dispatch(addToAllTags(tag))
+        dispatch(Helpers.addToAllTags(tag))
     },
 
     removeTag: (tag) => ({ dispatch }) => {
-        dispatch(removeTag(tag))
+        dispatch(Helpers.removeTag(tag))
     },
 
     removeAllTags: () => ({ dispatch }) => {
-        dispatch(removeAllTags());
+        dispatch(Helpers.removeAllTags());
     },
 
     removeAllData: () => ({ dispatch }) => {
-        dispatch(deleteAllSavedData());
+        dispatch(Helpers.deleteAllSavedData());
     },
 
     removeGamesDataOnly: () => ({ dispatch }) => {
@@ -213,7 +213,7 @@ const actions = {
     //TODO: Better place to check if games exsist before init totals.
     loadTotals: () => async ({ dispatch, getState, setState }) => {
         if (getState().calculatedData.loading == true) return true;
-        dispatch(setCalculatedDataLoading());
+        dispatch(Helpers.setCalculatedDataLoading());
         const { data, loading } = getState();
 
         if (Utils.isEmpty(data.savedGames)) {
@@ -296,6 +296,7 @@ export const Store = createStore({
     actions,
     name: "Global Store"
 });
+
 
 
 export const GameSubscriber = createSubscriber(Store);

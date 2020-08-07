@@ -25,6 +25,7 @@ import {
 import * as Utils from '../utils/objectOps';
 import * as Calculate from '../components/GameCalculations/calculateStats.js';
 import * as APIConnect from './StorageInterface.js';
+import { initialState } from './InitState.js'
 
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
@@ -45,43 +46,43 @@ defaults.middlewares.add(logger);
 
 
 
-const initialState = {
-    data: {
-        loading: false,
-        allGames: null,
-        savedGames: null,
-        currentGame: null,
-        allTags: null,
-        actions: null,
-    },
-    calculatedData: {
-        loading: false,
-        totals: null,
-        positionTotals: null,
-        positionCount: null,
-    },
-    allGamesArray: [],
-    gamesObj: null,
-    liveGame: null,
-    loading: false,
-    liveGameLoading: false,
-    foundGamesArray: [],
-    thereIsSavedData: true, 
-    error: null,
-    MAX_POSITION: 8,
-    MIN_POSITION: 0,
-    currentTime: new Date(),
-    previousTime: new Date(),
-    testModeOn: false,
-    testNewSecureStore: [],
-};
+// const initialState = {
+//     data: {
+//         loading: false,
+//         allGames: null,
+//         savedGames: null,
+//         currentGame: null,
+//         allTags: null,
+//         actions: null,
+//     },
+//     calculatedData: {
+//         loading: false,
+//         totals: null,
+//         positionTotals: null,
+//         positionCount: null,
+//     },
+//     allGamesArray: [],
+//     gamesObj: null,
+//     liveGame: null,
+//     loading: false,
+//     liveGameLoading: false,
+//     foundGamesArray: [],
+//     thereIsSavedData: true, 
+//     error: null,
+//     MAX_POSITION: 8,
+//     MIN_POSITION: 0,
+//     currentTime: new Date(),
+//     previousTime: new Date(),
+//     testModeOn: false,
+//     testNewSecureStore: [],
+// };
 
 //TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY //NOTE: When should this happen?? Maybe we get called in the add tag function?? Seems like the best place!
-export const searchGamesForLiveTags = () => ({getState, setState}) => {
-    const {liveGame, allGamesArray} = getState();
-    console.log("foundGaMes in LIVELOVE!", liveGame.tags  )
+export const searchGamesForLiveTags = () => ({ getState, setState }) => {
+    const { liveGame, allGamesArray } = getState();
+    console.log("foundGaMes in LIVELOVE!", liveGame.tags)
     // let found = [];
-    if(typeof liveGame.tags === 'object'){
+    if (typeof liveGame.tags === 'object') {
         let found = Calculate.searchByManyTags(liveGame.tags, allGamesArray);
         console.log("foundGaMes in Store:", found);
         setState(draft => {
@@ -90,7 +91,7 @@ export const searchGamesForLiveTags = () => ({getState, setState}) => {
     }
 }
 
-export const setSecureState = data => ({ getState ,setState }) => {
+export const setSecureState = data => ({ getState, setState }) => {
     console.log('data', data)
     //debugger;
     setState(draft => {
@@ -99,7 +100,7 @@ export const setSecureState = data => ({ getState ,setState }) => {
 }
 export const saveSecureState = (dataToAdd) => async ({ getState, setState, dispatch }) => {
     const { testNewSecureStore } = getState();
-    console.log("log me",testNewSecureStore)
+    console.log("log me", testNewSecureStore)
     let updatedData = testNewSecureStore.concat(dataToAdd);
     await storage.setData(updatedData).then(() => {
         console.log('updateddddddd', updatedData);
@@ -108,9 +109,9 @@ export const saveSecureState = (dataToAdd) => async ({ getState, setState, dispa
 }
 
 
-export const laodSecure = () => async ({dispatch})=> {
+export const laodSecure = () => async ({ dispatch }) => {
     let data = await APIConnect.fetchSecureState().then(res => {
-        dispatch(setSecureState(res)) ;
+        dispatch(setSecureState(res));
         console.log('test is loaded', res)
         return res;
     })
@@ -221,7 +222,7 @@ export const setNewLiveGame = actions => ({ getState, setState, dispatch }) => {
 
 };
 
- export const setError = msg => ({ setState }) => {
+export const setError = msg => ({ setState }) => {
     setState(draft => {
         //dispatch(setData(loadedData));
         draft.error = 'Error with loading';
@@ -520,4 +521,19 @@ export const resetFirstMoveNotMade = () => ({ setState }) => {
 }
 
 
+export const initializePositionCount = () => {
+    storage.setInitialPositionCount();
+}
+
+
+export const initializeStorageTotals = (actionsArr) => {
+    storage.setInitialTotals(actionsArr);
+    console.log('SHOW ME IM HERE!');
+}
+
+export const initializeAllCalculatedData = (actionsArr) => {
+    initializePositionCount();
+    initializeStorageTotals(actionsArr);
+
+}
 
