@@ -27,17 +27,19 @@ import * as Calculate from '../components/GameCalculations/calculateStats.js';
 import * as APIConnect from './StorageInterface.js';
 import * as Helpers from './actionHelpers.js';
 
+const { initialState } = Helpers;
+
 
 //TODO: 8.4.2020 Seperate from here on into another file, may need to keep some functions after the actions Object here too.
 
-const actions = {
+export const actions = {
     /**
      * !! This will be Original Load method
      *  TODO: we will need to add a check for if a current game exsists in storage.
      */
     load: () => async ({ getState, setState, dispatch }) => {
         const { setData, setDataLoading } = Helpers;
-        const { fetchData } = APIConnect;   wdsfwe
+        const { fetchData } = APIConnect; 
         if (getState().data.loading === true) return;
         dispatch(setDataLoading());
         //dispatch(setLiveGameLoading());
@@ -217,10 +219,10 @@ const actions = {
         const { data, loading } = getState();
 
         if (Utils.isEmpty(data.savedGames)) {
-            initializeAllCalculatedData(data.actions);
-            await fetchTotalsFromStorage().then(res => {
+            Helpers.initializeAllCalculatedData(data.actions);
+            await APIConnect.fetchTotalsFromStorage().then(res => {
                 if (res) {
-                    dispatch(setCalculatedData(res));
+                    dispatch(Helpers.setCalculatedData(res));
                     setState(draft => {
                         draft.thereIsSavedData = false;
                     })
@@ -230,10 +232,10 @@ const actions = {
             //alert('RESET');
             return 'totals_reset';
         } else {
-            fetchTotalsFromStorage().then(res => {
+            APIConnect.fetchTotalsFromStorage().then(res => {
                 if (res) {
                     //alert("in fetch callback");
-                    dispatch(setCalculatedData(res));
+                    dispatch(Helpers.setCalculatedData(res));
                     setState(draft => {
                         draft.thereIsSavedData = true;
                     })
@@ -271,47 +273,43 @@ const actions = {
 }
 
 
-const initializePositionCount = () => {
-    storage.setInitialPositionCount();
-}
+// const savePositionCount = () => {
 
-const savePositionCount = () => {
-
-}
+// }
 
 
-const initializeStorageTotals = (actionsArr) => {
-    storage.setInitialTotals(actionsArr);
-    console.log('SHOW ME IM HERE!');
-}
+// const initializeStorageTotals = (actionsArr) => {
+//     storage.setInitialTotals(actionsArr);
+//     console.log('SHOW ME IM HERE!');
+// }
 
-const initializeAllCalculatedData = (actionsArr) => {
-    initializePositionCount();
-    initializeStorageTotals(actionsArr);
+// const initializeAllCalculatedData = (actionsArr) => {
+//     initializePositionCount();
+//     initializeStorageTotals(actionsArr);
 
-}
+// }
 
-export const Store = createStore({
-    initialState,
-    actions,
-    name: "Global Store"
-});
+// export const Store = createStore({
+//     initialState,
+//     actions,
+//     name: "Global Store"
+// });
 
 
 
-export const GameSubscriber = createSubscriber(Store);
-export const GameContainer = createContainer(Store,
-    {
-        onInit: actions.load(),
+// export const GameSubscriber = createSubscriber(Store);
+// export const GameContainer = createContainer(Store,
+//     {
+//         onInit: actions.load(),
 
-    }
-);
+//     }
+// );
 
-// export const GameSelectedSubscriber = createSubscriber(Store, {
-//     selector: selectors.getSelected
-// })
+// // export const GameSelectedSubscriber = createSubscriber(Store, {
+// //     selector: selectors.getSelected
+// // })
 
-export const UseGameStore = createHook(Store);
+// export const UseGameStore = createHook(Store);
 
 
 

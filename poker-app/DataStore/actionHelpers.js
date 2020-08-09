@@ -25,57 +25,57 @@ import {
 import * as Utils from '../utils/objectOps';
 import * as Calculate from '../components/GameCalculations/calculateStats.js';
 import * as APIConnect from './StorageInterface.js';
-import { initialState } from './InitState.js'
+//import * as initialState  from './InitState.js'
 
 
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
 //NOTE: this is middleware.
-const logger = storeState => next => action => {
-    console.log('Updating(gamesObj)..: ', storeState.getState());
-    next(action);
-    console.log("action: ", action.toString());
-    console.log("result!!: ", storeState.getState());
+// const logger = storeState => next => action => {
+//     console.log('Updating(gamesObj)..: ', storeState.getState());
+//     next(action);
+//     console.log("action: ", action.toString());
+//     console.log("result!!: ", storeState.getState());
 
-    //console.log('UPDATED>> :', storeState.getState());
-}
+//     //console.log('UPDATED>> :', storeState.getState());
+// }
 
 
-defaults.middlewares.add(logger);
+// defaults.middlewares.add(logger);
 // defaults.middlwares.add(makeLiveGame);
 
 
 
-// const initialState = {
-//     data: {
-//         loading: false,
-//         allGames: null,
-//         savedGames: null,
-//         currentGame: null,
-//         allTags: null,
-//         actions: null,
-//     },
-//     calculatedData: {
-//         loading: false,
-//         totals: null,
-//         positionTotals: null,
-//         positionCount: null,
-//     },
-//     allGamesArray: [],
-//     gamesObj: null,
-//     liveGame: null,
-//     loading: false,
-//     liveGameLoading: false,
-//     foundGamesArray: [],
-//     thereIsSavedData: true, 
-//     error: null,
-//     MAX_POSITION: 8,
-//     MIN_POSITION: 0,
-//     currentTime: new Date(),
-//     previousTime: new Date(),
-//     testModeOn: false,
-//     testNewSecureStore: [],
-// };
+export const initialState = {
+    data: {
+        loading: false,
+        allGames: null,
+        savedGames: null,
+        currentGame: null,
+        allTags: null,
+        actions: null,
+    },
+    calculatedData: {
+        loading: false,
+        totals: null,
+        positionTotals: null,
+        positionCount: null,
+    },
+    allGamesArray: [],
+    gamesObj: null,
+    liveGame: null,
+    loading: false,
+    liveGameLoading: false,
+    foundGamesArray: [],
+    thereIsSavedData: true, 
+    error: null,
+    MAX_POSITION: 8,
+    MIN_POSITION: 0,
+    currentTime: new Date(),
+    previousTime: new Date(),
+    testModeOn: false,
+    testNewSecureStore: [],
+};
 
 //TODO: 7.17.2020 finish adding this method and then the acions for it. //TOP PRIORITY //NOTE: When should this happen?? Maybe we get called in the add tag function?? Seems like the best place!
 export const searchGamesForLiveTags = () => ({ getState, setState }) => {

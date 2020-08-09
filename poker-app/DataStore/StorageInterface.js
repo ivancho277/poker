@@ -3,7 +3,6 @@
 
 import React, { Component, Children, useState } from 'react';
 import { VERSION } from '../constants/version';
-import { GlobalState } from '../stateContext/GlobalState';
 import {
     createStore,
     createContainer,
@@ -12,7 +11,7 @@ import {
     defaults
 } from 'react-sweet-state';
 import { produce } from 'immer';
-import { AsyncStorageController as storage } from '../components/storageAPI/AsyncStorageController';
+import { StorageAPI as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
 import {
     isValidTag,
