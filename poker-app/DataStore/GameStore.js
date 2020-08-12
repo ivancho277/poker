@@ -10,13 +10,6 @@ import {
 import { produce } from 'immer';
 import { StorageAPI as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
-import {
-    isValidTag,
-    validActionAdd,
-    validActionRemove
-} from "../utils/validators.js";
-import * as Utils from '../utils/objectOps';
-import * as Calculate from '../components/GameCalculations/calculateStats.js';
 import {actions} from './actions.js';
 import {initialState} from './actionHelpers.js';
 // //import * as selectors from './selectors';
@@ -48,6 +41,14 @@ export const GameContainer = createContainer(Store);
 // export const GameSelectedSubscriber = createSubscriber(Store, {
 //     selector: selectors.getSelected
 // })
+const findGames = (State, props) => {
+
+}
+
+// export const FoundGamesSelector = createSubscriber(Store, {
+//     selector: findGames
+// })
+
 
 export const UseGameStore = createHook(Store);
 

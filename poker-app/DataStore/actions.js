@@ -103,7 +103,7 @@ export const actions = {
 
     resetLiveGame: () => async ({ getState, setState, dispatch }) => {
         const { data } = getState();
-        await reloadandSetPositionCount().then(res => {
+        await Helpers.reloadandSetPositionCount().then(res => {
             dispatch(Helpers.removeCurrentGame())
             dispatch(Helpers.setNewLiveGame(data.actions));
             return res;
