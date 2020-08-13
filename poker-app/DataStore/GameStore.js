@@ -7,12 +7,13 @@ import {
     createHook,
     defaults
 } from 'react-sweet-state';
+import { createSelector } from 'reselect'
 import { produce } from 'immer';
 import { StorageAPI as storage } from '../components/storageAPI/AsyncStorageController';
 import { Game, Action } from '../components/gameObjects';
 import * as Calculate from '../components/GameCalculations/calculateStats.js';
-import {actions} from './actions.js';
-import {initialState} from './actionHelpers.js';
+import { actions } from './actions.js';
+import { initialState } from './actionHelpers.js';
 // //import * as selectors from './selectors';
 
 
@@ -42,7 +43,9 @@ export const GameContainer = createContainer(Store);
 // export const GameSelectedSubscriber = createSubscriber(Store, {
 //     selector: selectors.getSelected
 // })
-const GamesByTags = (state, props) => ({foundGamesArray: Calculate.searchByManyTags(state.liveGame.tags)})
+const GamesByTags = (state, props) => ({ foundGamesArray: Calculate.searchByManyTags(state.liveGame.tags) })
+
+const GetGamesByTag = createSel
 
 // export const FoundGamesSelector = createSubscriber(Store, {
 //     selector: findGames
