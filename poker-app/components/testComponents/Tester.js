@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button } from 'react-native';
-import { UseGameStore, GameContainer, GameSubscriber } from '../../DataStore/GameStore';
+import { UseGameStore, GameContainer, GameSubscriber, TagsComponent } from '../../DataStore/GameStore';
 import { Card } from 'react-native-paper';
 import { StoreLoader } from '../HOCs/StoreLoader';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -35,8 +35,11 @@ export const TestComponent = () => {
     )
 }
 
-const innerComponent = () => {
-
+export const SelectTest = () => {
+    return (<TagsComponent>
+        <View><Text>this is something</Text></View>
+    </TagsComponent>
+    )
 }
 
 export const Tester = () => {
@@ -89,7 +92,7 @@ export const Tester = () => {
     return (
         <GameSubscriber>
             {(state, actions) => (
-                <View style={{flex: 1,}}>
+                <View style={{ flex: 1, }}>
                     {/* {!state.calculatedData.loading ? */}
 
                     <View>
