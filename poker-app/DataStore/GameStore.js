@@ -23,8 +23,8 @@ import { initialState } from './actionHelpers.js';
 const logger = storeState => next => action => {
     console.log('Updating(gamesObj)..: ', storeState.getState());
     next(action);
-    console.log("action: ", action.toString());
-    console.log("result!!: ", storeState.getState());
+    //console.log("action: ", action.toString());
+    //console.log("result!!: ", storeState.getState());
     //console.log('UPDATED>> :', storeState.getState());
 }
 defaults.middlewares.add(logger);

@@ -212,7 +212,7 @@ const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPositi
         }
         percentageArray.push(obj);
     }
-    console.log(percentageArray);
+    //console.log(percentageArray);
     return percentageArray;
 }
 

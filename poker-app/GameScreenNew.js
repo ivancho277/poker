@@ -54,7 +54,7 @@ export default function GameScreenNew(props) {
         //     }
         // }
 
-        console.log('state.currentGame: %o', state.data.currentGame);
+       // console.log('state.currentGame: %o', state.data.currentGame);
 
     }, [])
 
