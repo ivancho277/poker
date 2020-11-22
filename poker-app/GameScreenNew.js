@@ -13,6 +13,7 @@ import { RadioTable } from './components/functionalComponents/RadioTable';
 import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrentDialog';
 import { LiveGameDisplayTable } from './components/functionalComponents/dataDisplays/Data Table Displays/LiveGameDisplayTable';
 import { GameDataListItem } from './components/functionalComponents/dataDisplays/List Displays/GameDataListItem.js';
+import { GameDataAccordian } from './components/functionalComponents/dataDisplays/List Displays/GameDataAccordian.js';
 
 
 export default function GameScreenNew(props) {
@@ -54,7 +55,7 @@ export default function GameScreenNew(props) {
         //     }
         // }
 
-        console.log('state.currentGame: %o', state.data.currentGame);
+       // console.log('state.currentGame: %o', state.data.currentGame);
 
     }, [])
 
@@ -98,7 +99,7 @@ export default function GameScreenNew(props) {
                         <Card style={{ backgroundColor: '#7FB7BE' }}>
                             <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
                             {isAskLoadVisible ? <View></View> :
-                                (state.liveGame !== null && !state.data.liveGameLoading) ? <LiveGameDisplayTable /> :
+                                (state.liveGame !== null && !state.data.liveGameLoading) ? <GameDataAccordian /> :
                                     <View>
                                         <Text>Start to play</Text>
                                     </View>}

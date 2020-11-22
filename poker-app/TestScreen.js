@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert, Picker } from 'react-n
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import * as calculation from './components/statscalculation.js';
 import * as storage from './components/storageAPI/AsyncStorageController.js';
-import { Tester, TestComponent } from './components/testComponents/Tester';
+import { Tester, TestComponent, SelectTest } from './components/testComponents/Tester';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 import { ScrollView } from 'react-native-gesture-handler';
 import { GameController } from './components/functionalComponents/GameController';
@@ -64,9 +64,9 @@ export default function TestScreen() {
                                 </ScrollView>
                             </View>
                             <Card title='TestComponent with Subscriber'>
-                                <Text> Subscriber test </Text>
+                                <Text> Selector test </Text>
                                 <ScrollView>
-                                <Tester></Tester>
+                                    <SelectTest></SelectTest>
                                 </ScrollView>
                             </Card>
 

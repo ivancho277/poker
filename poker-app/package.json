@@ -25,7 +25,9 @@
     "acorn": "^7.1.0",
     "eslint": "^6.8.0",
     "expo": "^36.0.0",
+    "expo-file-system": "~8.0.0",
     "expo-font": "~8.0.0",
+    "expo-secure-store": "~8.0.0",
     "immer": "^5.3.2",
     "jsdom": "^16.0.1",
     "mock-async-storage": "^2.2.0",
@@ -63,12 +65,11 @@
     "react-native-wheel-scroll-picker": "^0.2.4",
     "react-navigation": "^3.11.1",
     "react-sweet-state": "^1.1.1",
+    "reselect": "^4.0.0",
     "styled-components": "^4.4.1",
     "toggle-switch-react-native": "^2.1.0",
     "underscore": "^1.9.2",
-    "use-immer": "^0.3.5",
-    "expo-secure-store": "~8.0.0",
-    "expo-file-system": "~8.0.0"
+    "use-immer": "^0.3.5"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
