@@ -3,7 +3,6 @@
     "name": "poker-app",
     "slug": "poker-app",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
