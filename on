@@ -1,0 +1,1052 @@
+[1mdiff --git a/poker-app/.gitignore b/poker-app/.gitignore[m
+[1mindex d40d999..20eb80e 100644[m
+[1m--- a/poker-app/.gitignore[m
+[1m+++ b/poker-app/.gitignore[m
+[36m@@ -1,5 +1,6 @@[m
+ node_modules/**/*[m
+ .expo/*[m
+[32m+[m[32m.history/*[m
+ npm-debug.*[m
+ *.jks[m
+ *.p12[m
+[1mdiff --git a/poker-app/App.js b/poker-app/App.js[m
+[1mindex 0de51a8..be6f851 100644[m
+[1m--- a/poker-app/App.js[m
+[1m+++ b/poker-app/App.js[m
+[36m@@ -40,6 +40,7 @@[m [mclass App extends React.Component {[m
+     if (!this.state.isReady) {[m
+       return <AppLoading />;[m
+     }[m
+[32m+[m[41m    [m
+ [m
+     return ([m
+       <Container>[m
+[1mdiff --git a/poker-app/Game.js b/poker-app/Game.js[m
+[1mindex 47045a2..87200ca 100644[m
+[1m--- a/poker-app/Game.js[m
+[1m+++ b/poker-app/Game.js[m
+[36m@@ -31,7 +31,7 @@[m [mclass GameScreen extends Component {[m
+ [m
+     goHome = () => {[m
+         this.props.navigation.navigate('Home');[m
+[31m-        cl  [m
+[32m+[m[41m        [m
+         [m
+     }[m
+ [m
+[36m@@ -40,6 +40,7 @@[m [mclass GameScreen extends Component {[m
+             if (res) {[m
+                 return JSON.parse(res);[m
+             }[m
+[32m+[m
+             else return res;[m
+         })[m
+     }[m
+[36m@@ -60,14 +61,15 @@[m [mclass GameScreen extends Component {[m
+         //     }[m
+         // })[m
+         console.log("CONT", this.context.allTags)[m
+[32m+[m
+         this.setState({[m
+             allTags: this.context.allTags,[m
+             tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : [][m
+         })[m
+     }[m
+[31m-    [m
+[32m+[m
+     //TODO: Might need to set state from context here, or just update context instead.[m
+[31m-    componentDidUpdate(){[m
+[32m+[m[32m    componentDidUpdate() {[m
+         // this.setState({[m
+         //     allTags: this.context.allTags,[m
+         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : [][m
+[36m@@ -75,8 +77,8 @@[m [mclass GameScreen extends Component {[m
+ [m
+     }[m
+ [m
+[31m- [m
+[31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m
+[32m+[m
+[32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m
+     saveToAllTags() {[m
+         if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {[m
+             let updatedTags = this.state.allTags.concat(this.state.tag);[m
+[36m@@ -110,7 +112,7 @@[m [mclass GameScreen extends Component {[m
+         this.setState({[m
+             tag: ''[m
+         })[m
+[31m-        [m
+[32m+[m
+     }[m
+ [m
+     saveToTags(tag) {[m
+[36m@@ -166,8 +168,8 @@[m [mclass GameScreen extends Component {[m
+                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}[m
+                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />[m
+                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}[m
+[31m-                {/* TODO: action button should be changes as it is outdated */}[m
+[31m-                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => {showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>[m
+[32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m
+[32m+[m[32m                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => { showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>[m
+                         <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>[m
+                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={context.state.allTags} renderTagInput={this.renderTagInput} />[m
+                         </ActionButton.Item>[m
+[1mdiff --git a/poker-app/Settings.js b/poker-app/Settings.js[m
+[1mindex 50b7c64..7c94f3f 100644[m
+[1m--- a/poker-app/Settings.js[m
+[1m+++ b/poker-app/Settings.js[m
+[36m@@ -28,6 +28,7 @@[m [mexport default class SettingsScreen extends Component {[m
+ [m
+ [m
+   confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {[m
+[32m+[m[41m    [m
+     Alert.alert([m
+       title,[m
+       message,[m
+[1mdiff --git a/poker-app/stateContext/GlobalState.js b/poker-app/stateContext/GlobalState.js[m
+[1mindex 47e99e3..2f3fce6 100644[m
+[1m--- a/poker-app/stateContext/GlobalState.js[m
+[1m+++ b/poker-app/stateContext/GlobalState.js[m
+[36m@@ -1,8 +1,4 @@[m
+[31m-import React, {[m
+[31m-  useState,[m
+[31m-  useContext,[m
+[31m-  Component[m
+[31m-} from "react";[m
+[32m+[m[32mimport React, { useState, useContext, Component } from "react";[m
+ //const storage = require('../components/AsyncStorageController.js')[m
+ const calculation = require("../components/statscalculation.js");[m
+ const {[m
+[36m@@ -43,6 +39,9 @@[m [mexport class GlobalState extends Component {[m
+     this.getDataFromStorage().then(res => {[m
+       console.log("global state populated");[m
+     });[m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+   }[m
+ [m
+   async getDataFromStorage() {[m
+[36m@@ -50,10 +49,8 @@[m [mexport class GlobalState extends Component {[m
+     await this.getActions();[m
+     await this.getTags();[m
+     await this.getCurrentGame();[m
+[31m-[m
+[31m-[m
+   }[m
+[31m-  z[m
+[32m+[m
+   getTags = async () => {[m
+     await retrieveTags()[m
+       .then(res => {[m
+[36m@@ -66,6 +63,7 @@[m [mexport class GlobalState extends Component {[m
+       .catch(err => {[m
+         console.log("NO TAGS IN STORAGE");[m
+       });[m
+[32m+[m
+   };[m
+ [m
+   getActions = async () => {[m
+[36m@@ -85,179 +83,190 @@[m [mexport class GlobalState extends Component {[m
+       if (res) {[m
+         return JSON.parse(res);[m
+       } else return res;[m
+[31m-    }));[m
+[31m-};[m
+[32m+[m[32m    });[m
+[32m+[m[41m    [m
+[32m+[m[32m  };[m
+ [m
+[31m-getAllGames = async () => {[m
+[31m-  await retrieveData()[m
+[31m-    .then(res => {[m
+[31m-      //console.log(JSON.parse(res));[m
+[31m-      //debugger;[m
+[31m-      if (res != undefined) {[m
+[31m-        let pastGames = JSON.parse(res);[m
+[31m-        console.log("SYNCC ", pastGames);[m
+[31m-        let temp = calculation.calculateByPosition(pastGames);[m
+[31m-        let allGamesArray = [];[m
+[31m-        if (pastGames.games) {[m
+[31m-          pastGames.games.forEach(game => {[m
+[31m-            allGamesArray.push(game);[m
+[32m+[m[32m  getAllGames = async () => {[m
+[32m+[m[32m    await retrieveData()[m
+[32m+[m[32m      .then(res => {[m
+[32m+[m[32m        //console.log(JSON.parse(res));[m
+[32m+[m[32m        //debugger;[m
+[32m+[m[32m        if (res != undefined) {[m
+[32m+[m[32m          let pastGames = JSON.parse(res);[m
+[32m+[m[32m          console.log("SYNCC ", pastGames);[m
+[32m+[m[32m          let temp = calculation.calculateByPosition(pastGames);[m
+[32m+[m[32m          let allGamesArray = [];[m
+[32m+[m[32m          if (pastGames.games) {[m
+[32m+[m[32m            pastGames.games.forEach(game => {[m
+[32m+[m[32m              allGamesArray.push(game);[m
+[32m+[m[32m            });[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m          this.setState({[m
+[32m+[m[32m            gamesObj: JSON.parse(res),[m
+[32m+[m[32m            loading: false,[m
+[32m+[m[32m            totals: temp,[m
+[32m+[m[32m            gamesArray: allGamesArray,[m
+[32m+[m[32m            totalGames: allGamesArray.length[m
+           });[m
+[32m+[m[32m          console.log("THIS IS ASYNC");[m
+[32m+[m[32m          console.log(pastGames);[m
+[32m+[m[32m          console.log(this.state.gamesObj);[m
+         }[m
+[32m+[m[32m      })[m
+[32m+[m[32m      .catch(error => {[m
+[32m+[m[32m        console.log("HOME SCREEN ERROR");[m
+[32m+[m[32m        resetActions();[m
+[32m+[m[32m        throw error;[m
+[32m+[m[32m      });[m
+[32m+[m[32m  };[m
+ [m
+[31m-        this.setState({[m
+[31m-          gamesObj: JSON.parse(res),[m
+[31m-          loading: false,[m
+[31m-          totals: temp,[m
+[31m-          gamesArray: allGamesArray,[m
+[31m-          totalGames: allGamesArray.length[m
+[31m-        });[m
+[31m-        console.log("THIS IS ASYNC");[m
+[31m-        console.log(pastGames);[m
+[31m-        console.log(this.state.gamesObj);[m
+[31m-      }[m
+[31m-    })[m
+[31m-    .catch(error => {[m
+[31m-      console.log("HOME SCREEN ERROR");[m
+[31m-      resetActions();[m
+[31m-      throw error;[m
+[32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m
+[32m+[m[32m  updateActions = action => { };[m
+[32m+[m[32m  //TODO: finish writing this funtion, use validators[m
+[32m+[m[32m  updateTags = tag => { };[m
+[32m+[m
+[32m+[m[32m  updateGames(newGamesObj) {[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      gamesObj: newGamesObj,[m
+[32m+[m[32m      gamesArray: newGamesObj.games[m
+     });[m
+[31m-};[m
+[32m+[m[32m  }[m
+ [m
+[31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m
+[31m-updateActions(action) {}[m
+[31m-//TODO: finish writing this funtion, use validators[m
+[31m-updateTags = tag => {[m
+[32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m
+[32m+[m[32m  resetActions = () => {[m
+[32m+[m[32m    resetActions();[m
+[32m+[m[32m    this.getActions();[m
+[32m+[m[32m    console.log("actions reset");[m
+[32m+[m[41m    [m
+ [m
+[31m-}[m
+[32m+[m[32m  };[m
+ [m
+[31m-updateGames(newGamesObj) {[m
+[31m-  this.setState({[m
+[31m-    gamesObj: newGamesObj,[m
+[31m-    gamesArray: newGamesObj.games[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  deleteAllTags = () => {[m
+[32m+[m[32m    removeTags();[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      allTags: [][m
+[32m+[m[32m    });[m
+[32m+[m[32m    console.log("tags removed");[m
+[32m+[m[32m  };[m
+ [m
+[31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m
+[31m-resetActions = () => {[m
+[31m-  resetActions();[m
+[31m-  console.log("actions reset");[m
+[31m-};[m
+[32m+[m[32m  addTag(tag) {[m
+[32m+[m[32m    if (isValidTag(tag, this.state.allTags)) {[m
+[32m+[m[32m      let updatedTags = this.state.allTags.concat(tag);[m
+[32m+[m[32m      this.setState([m
+[32m+[m[32m        {[m
+[32m+[m[32m          allTags: updatedTags[m
+[32m+[m[32m        },[m
+[32m+[m[32m        () => {[m
+[32m+[m[32m          saveTags(this.state.allTags);[m
+[32m+[m[32m        }[m
+[32m+[m[32m      );[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+ [m
+[31m-deleteAllTags = () => {[m
+[31m-  removeTags();[m
+[31m-  this.setState({[m
+[31m-    allTags: [][m
+[31m-  })[m
+[31m-  console.log("tags removed");[m
+[31m-};[m
+[32m+[m[32m  addAction(action) {[m
+[32m+[m[32m    if (validActionAdd(action, this.state.actions)) {[m
+[32m+[m[32m      let updatedActions = this.state.actions.concat(action);[m
+[32m+[m[32m      this.setState({[m
+[32m+[m[32m        actions: updatedActions[m
+[32m+[m[32m      });[m
+[32m+[m[32m      saveActions(updatedActions);[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+ [m
+[31m-addTag() {[m
+[31m-  if (isValidTag(tag, this.state.tags)) {[m
+[31m-    let updatedTags = this.state.allTags.concat(tag);[m
+[31m-    this.setState({[m
+[31m-        allTags: updatedTags[m
+[31m-      },[m
+[31m-      () => {[m
+[31m-        saveTags(this.state.allTags);[m
+[32m+[m[32m  removeAction = (action) => {[m
+[32m+[m[32m    if (validActionRemove(action, this.state.actions)) {[m
+[32m+[m[32m      let updatedActions = this.state.actions.filter((Oaction) => Oaction != action)[m
+[32m+[m[32m      this.setState({ actions: updatedActions });[m
+[32m+[m[32m      saveActions(updatedActions);[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m      alert('Can not remove base action, or action doesnt exsist')[m
+[32m+[m[32m    }[m
+ [m
+[31m-      }[m
+[31m-    );[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  componentDidUpdate() {[m
+[32m+[m[32m    //checks to see if any new tags are added to our list of overall tags, and updates state if so.[m
+[32m+[m[32m    // retrieveTags().then(res => {[m
+[32m+[m[32m    //   if (res != undefined && res != null) {[m
+[32m+[m[32m    //     if (this.state.allTags.length >= 1) {[m
+[32m+[m[32m    //       //debugger;[m
+[32m+[m[32m    //       if (this.state.allTags.length !== JSON.parse(res).length) {[m
+[32m+[m[32m    //         this.setState({[m
+[32m+[m[32m    //           allTags: JSON.parse(res)[m
+[32m+[m[32m    //         });[m
+[32m+[m[32m    //       }[m
+[32m+[m[32m    //     }[m
+[32m+[m[32m    //   }[m
+[32m+[m[32m    // });[m
+[32m+[m[32m    // storage.retrieveData().then((res) => {[m
+[32m+[m[32m    //     //console.log(JSON.parse(res));[m
+[32m+[m[32m    //     //debugger;[m
+[32m+[m[32m    //     if (res != undefined) {[m
+[32m+[m[32m    //         let pastGames = JSON.parse(res)[m
+[32m+[m[32m    //         console.log("SYNCC ", pastGames)[m
+[32m+[m[32m    //         //let temp = calculation.calculateByPosition(pastGames)[m
+[32m+[m[32m    //         let allGamesArray = [];[m
+[32m+[m[32m    //         if (pastGames.games) {[m
+[32m+[m[32m    //             pastGames.games.forEach(game => {[m
+[32m+[m[32m    //                 allGamesArray.push(game)[m
+[32m+[m[32m    //             })[m
+[32m+[m[32m    //         }[m
+[32m+[m[32m    //         debugger;[m
+[32m+[m[32m    // if (allGamesArray.length !== this.state.totalGames) {[m
+[32m+[m[32m    //    this.getDataFromStorage().then((res) => {[m
+[32m+[m[32m    //        console.log('Update global storage')[m
+[32m+[m[32m    //    })[m
+[32m+[m[32m    // }[m
+[32m+[m[32m    // }[m
+   }[m
+[31m-}[m
+[32m+[m[32m  logTotalsByPosition = () => {[m
+[32m+[m[32m    console.log(calculation.calculateByPosition(this.state.gamesObj));[m
+[32m+[m[32m    return calculation.calculateByPosition(this.state.gamesObj);[m
+[32m+[m[32m  };[m
+ [m
+[31m-addAction(action) {[m
+[31m-  if (validActionAdd(action, this.state.actions)) {[m
+[31m-    let updatedActions = this.state.actions.concat(action);[m
+[32m+[m[32m  incrementPosition() {[m
+     this.setState({[m
+[31m-      actions: updatedActions[m
+[32m+[m[32m      position: this.state.position + 1[m
+     });[m
+[31m-    saveActions(updatedActions);[m
+[31m-    console.l[m
+[32m+[m[32m  }[m
+ [m
+[32m+[m[32m  setPosition(position) {[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      position: position[m
+[32m+[m[32m    });[m
+   }[m
+ [m
+[31m-}[m
+[32m+[m[32m  getGames() {[m
+[32m+[m[32m    return this.state.gamesObj;[m
+ [m
+[31m-componentDidUpdate() {[m
+[31m-  //checks to see if any new tags are added to our list of overall tags, and updates state if so.[m
+[31m-  retrieveTags().then(res => {[m
+[31m-    if (res != undefined && res != null) {[m
+[31m-      if (this.state.allTags.length >= 1) {[m
+[31m-        //debugger;[m
+[31m-        if (this.state.allTags.length !== JSON.parse(res).length) {[m
+[31m-          this.setState({[m
+[31m-            allTags: JSON.parse(res)[m
+[31m-          });[m
+[31m-        }[m
+[31m-      }[m
+[31m-    }[m
+[31m-  });[m
+[31m-  // storage.retrieveData().then((res) => {[m
+[31m-  //     //console.log(JSON.parse(res));[m
+[31m-  //     //debugger;[m
+[31m-  //     if (res != undefined) {[m
+[31m-  //         let pastGames = JSON.parse(res)[m
+[31m-  //         console.log("SYNCC ", pastGames)[m
+[31m-  //         //let temp = calculation.calculateByPosition(pastGames)[m
+[31m-  //         let allGamesArray = [];[m
+[31m-  //         if (pastGames.games) {[m
+[31m-  //             pastGames.games.forEach(game => {[m
+[31m-  //                 allGamesArray.push(game)[m
+[31m-  //             })[m
+[31m-  //         }[m
+[31m-  //         debugger;[m
+[31m-  // if (allGamesArray.length !== this.state.totalGames) {[m
+[31m-  //    this.getDataFromStorage().then((res) => {[m
+[31m-  //        console.log('Update global storage')[m
+[31m-  //    })[m
+[31m-  // }[m
+[31m-  // }[m
+[31m-}[m
+[31m-logTotalsByPosition = () => {[m
+[31m-  console.log(calculation.calculateByPosition(this.state.gamesObj));[m
+[31m-  return calculation.calculateByPosition(this.state.gamesObj);[m
+[31m-};[m
+[31m-[m
+[31m-incrementPosition() {[m
+[31m-  this.setState({[m
+[31m-    position: this.state.position + 1[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  }[m
+ [m
+[31m-setPosition(position) {[m
+[31m-  this.setState({[m
+[31m-    position: position[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  getGamesArray() {[m
+[32m+[m[32m    return this.state.gamesArray;[m
+ [m
+[31m-getGames() {[m
+[31m-  return this.state.gamesObj;[m
+[31m-}[m
+[32m+[m[32m  }[m
+ [m
+[31m-getGamesArray() {[m
+[31m-  return this.state.gamesArray;[m
+[31m-}[m
+[32m+[m[32m  //TODO: remember to add new funtions to context provider[m
+[32m+[m[32m  render() {[m
+[32m+[m[32m    return ([m
+[32m+[m[32m      <MyContext.Provider[m
+[32m+[m[32m        value={{[m
+[32m+[m[32m          state: this.state,[m
+[32m+[m[32m          incrementPosition: () => this.incrementPosition(),[m
+[32m+[m[32m          setPosition: position => this.setPosition(position),[m
+[32m+[m[32m          remount: () => this.componentDidMount(),[m
+ [m
+[31m-//TODO: remember to add new funtions to context provider[m
+[31m-render() {[m
+[31m-  return ( <[m
+[31m-    MyContext.Provider value = {[m
+[31m-      {[m
+[31m-        state: this.state,[m
+[31m-        incrementPosition: () => this.incrementPosition(),[m
+[31m-        setPosition: position => this.setPosition(position),[m
+[31m-        remount: () => this.componentDidMount(),[m
+[31m-        updateGames: gamesObj => {[m
+[31m-          this.updateGames(gamesObj);[m
+[31m-        },[m
+[31m-        getGames: () => this.getGames(),[m
+[31m-        getGamesArray: () => this.getGamesArray()[m
+[31m-      }[m
+[31m-    } >[m
+[31m-    {[m
+[31m-      this.props.children[m
+[31m-    } <[m
+[31m-    /MyContext.Provider>[m
+[31m-  );[m
+[32m+[m[32m          updateGames: gamesObj => {[m
+[32m+[m[32m            this.updateGames(gamesObj);[m
+[32m+[m[32m          },[m
+[32m+[m[32m          getGames: () => this.getGames(),[m
+[32m+[m[32m          getGamesArray: () => this.getGamesArray(),[m
+[32m+[m[32m        }}[m
+[32m+[m[32m      >[m
+[32m+[m[32m        {this.props.children}[m
+[32m+[m[32m      </MyContext.Provider>[m
+[32m+[m[32m    );[m
+[32m+[m[32m  }[m
+ }[m
+[31m-}[m
+\ No newline at end of file[m
+[1mdiff --git a/poker-app/utils/validators.js b/poker-app/utils/validators.js[m
+[1mindex e21e82c..d0b97a2 100644[m
+[1m--- a/poker-app/utils/validators.js[m
+[1m+++ b/poker-app/utils/validators.js[m
+[36m@@ -15,20 +15,25 @@[m [mconst validActionAdd = (action, allActions) => {[m
+     else return false;[m
+ }[m
+ [m
+[31m-const validActionRemove = (action) => {[m
+[32m+[m[32mconst validActionRemove = (action, allActions) => {[m
+     const baseActions = ['call', 'fold', 'raise'];[m
+     if (baseActions.includes(action)) {[m
+         alert('you cannot remove base actions')[m
+         return false;[m
+[31m-    } else {[m
+[31m-        return true;[m
+     }[m
+[32m+[m[32m    if (!allActions.includes(action)) {[m
+[32m+[m[32m        console.log('this action doesnt exsist');[m
+[32m+[m[32m        return false;[m
+[32m+[m[41m        [m
+[32m+[m[32m    }[m
+[32m+[m[32m    return true;[m
+[32m+[m
+ }[m
+ [m
+ //TODO: fix this function[m
+ const correctlyVersionedGames = (allGames) => {[m
+     const currentVersionGames = {};[m
+[31m-    [m
+[32m+[m
+ }[m
+ [m
+ module.exports = {[m
+[1mdiff --git a/poker-app/.gitignore b/poker-app/.gitignore[m
+[1mindex d40d999..20eb80e 100644[m
+[1m--- a/poker-app/.gitignore[m
+[1m+++ b/poker-app/.gitignore[m
+[36m@@ -1,5 +1,6 @@[m
+ node_modules/**/*[m
+ .expo/*[m
+[32m+[m[32m.history/*[m
+ npm-debug.*[m
+ *.jks[m
+ *.p12[m
+[1mdiff --git a/poker-app/App.js b/poker-app/App.js[m
+[1mindex 0de51a8..be6f851 100644[m
+[1m--- a/poker-app/App.js[m
+[1m+++ b/poker-app/App.js[m
+[36m@@ -40,6 +40,7 @@[m [mclass App extends React.Component {[m
+     if (!this.state.isReady) {[m
+       return <AppLoading />;[m
+     }[m
+[32m+[m[41m    [m
+ [m
+     return ([m
+       <Container>[m
+[1mdiff --git a/poker-app/Game.js b/poker-app/Game.js[m
+[1mindex 47045a2..87200ca 100644[m
+[1m--- a/poker-app/Game.js[m
+[1m+++ b/poker-app/Game.js[m
+[36m@@ -31,7 +31,7 @@[m [mclass GameScreen extends Component {[m
+ [m
+     goHome = () => {[m
+         this.props.navigation.navigate('Home');[m
+[31m-        cl  [m
+[32m+[m[41m        [m
+         [m
+     }[m
+ [m
+[36m@@ -40,6 +40,7 @@[m [mclass GameScreen extends Component {[m
+             if (res) {[m
+                 return JSON.parse(res);[m
+             }[m
+[32m+[m
+             else return res;[m
+         })[m
+     }[m
+[36m@@ -60,14 +61,15 @@[m [mclass GameScreen extends Component {[m
+         //     }[m
+         // })[m
+         console.log("CONT", this.context.allTags)[m
+[32m+[m
+         this.setState({[m
+             allTags: this.context.allTags,[m
+             tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : [][m
+         })[m
+     }[m
+[31m-    [m
+[32m+[m
+     //TODO: Might need to set state from context here, or just update context instead.[m
+[31m-    componentDidUpdate(){[m
+[32m+[m[32m    componentDidUpdate() {[m
+         // this.setState({[m
+         //     allTags: this.context.allTags,[m
+         //     tags: this.context.currentGame != null ? JSON.parse(this.context.currentGame.tags) : [][m
+[36m@@ -75,8 +77,8 @@[m [mclass GameScreen extends Component {[m
+ [m
+     }[m
+ [m
+[31m- [m
+[31m- // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m
+[32m+[m
+[32m+[m[32m    // TODO(ivan): should be fixed: should be getting and updating tags in Global state[m
+     saveToAllTags() {[m
+         if (!this.state.allTags.includes(this.state.tag) && this.state.tag != "") {[m
+             let updatedTags = this.state.allTags.concat(this.state.tag);[m
+[36m@@ -110,7 +112,7 @@[m [mclass GameScreen extends Component {[m
+         this.setState({[m
+             tag: ''[m
+         })[m
+[31m-        [m
+[32m+[m
+     }[m
+ [m
+     saveToTags(tag) {[m
+[36m@@ -166,8 +168,8 @@[m [mclass GameScreen extends Component {[m
+                     {/* <Button title='Go to home screen' onPress={() => this.goHome()} /> */}[m
+                     {/* <Button title='Delete all tags' onPress={() => storage.removeTags()} />[m
+                 <Button title='Reset Actions' onPress={() => storage.resetActions()} /> */}[m
+[31m-                {/* TODO: action button should be changes as it is outdated */}[m
+[31m-                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => {showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>[m
+[32m+[m[32m                    {/* TODO: action button should be changes as it is outdated */}[m
+[32m+[m[32m                    <ActionButton onLong style={{ position: 'absolute', zIndex: 1 }} active={this.state.activeActionMenu} autoInactive={false} onPress={() => { showButtons = !showButtons; showOtherButtons = !showOtherButtons }}>[m
+                         <ActionButton.Item active={showButtons} buttonColor='#9b59b6' title="Add Tag" onPress={() => { console.log('open modal'); this.setState({ showTagsModal: true }) }}>[m
+                             <TagsModal closeModal={this.closeTagModal} style={styles.actionButtonIcon} showModal={this.state.showTagsModal} showSelectedTag={this.showSelectedTag} allTags={context.state.allTags} renderTagInput={this.renderTagInput} />[m
+                         </ActionButton.Item>[m
+[1mdiff --git a/poker-app/Settings.js b/poker-app/Settings.js[m
+[1mindex 50b7c64..7c94f3f 100644[m
+[1m--- a/poker-app/Settings.js[m
+[1m+++ b/poker-app/Settings.js[m
+[36m@@ -28,6 +28,7 @@[m [mexport default class SettingsScreen extends Component {[m
+ [m
+ [m
+   confirmAlert(title = 'Alert', message = '', onConfirmMessage = '', onConfirmFunction) {[m
+[32m+[m[41m    [m
+     Alert.alert([m
+       title,[m
+       message,[m
+[1mdiff --git a/poker-app/stateContext/GlobalState.js b/poker-app/stateContext/GlobalState.js[m
+[1mindex 47e99e3..2f3fce6 100644[m
+[1m--- a/poker-app/stateContext/GlobalState.js[m
+[1m+++ b/poker-app/stateContext/GlobalState.js[m
+[36m@@ -1,8 +1,4 @@[m
+[31m-import React, {[m
+[31m-  useState,[m
+[31m-  useContext,[m
+[31m-  Component[m
+[31m-} from "react";[m
+[32m+[m[32mimport React, { useState, useContext, Component } from "react";[m
+ //const storage = require('../components/AsyncStorageController.js')[m
+ const calculation = require("../components/statscalculation.js");[m
+ const {[m
+[36m@@ -43,6 +39,9 @@[m [mexport class GlobalState extends Component {[m
+     this.getDataFromStorage().then(res => {[m
+       console.log("global state populated");[m
+     });[m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+   }[m
+ [m
+   async getDataFromStorage() {[m
+[36m@@ -50,10 +49,8 @@[m [mexport class GlobalState extends Component {[m
+     await this.getActions();[m
+     await this.getTags();[m
+     await this.getCurrentGame();[m
+[31m-[m
+[31m-[m
+   }[m
+[31m-  z[m
+[32m+[m
+   getTags = async () => {[m
+     await retrieveTags()[m
+       .then(res => {[m
+[36m@@ -66,6 +63,7 @@[m [mexport class GlobalState extends Component {[m
+       .catch(err => {[m
+         console.log("NO TAGS IN STORAGE");[m
+       });[m
+[32m+[m
+   };[m
+ [m
+   getActions = async () => {[m
+[36m@@ -85,179 +83,190 @@[m [mexport class GlobalState extends Component {[m
+       if (res) {[m
+         return JSON.parse(res);[m
+       } else return res;[m
+[31m-    }));[m
+[31m-};[m
+[32m+[m[32m    });[m
+[32m+[m[41m    [m
+[32m+[m[32m  };[m
+ [m
+[31m-getAllGames = async () => {[m
+[31m-  await retrieveData()[m
+[31m-    .then(res => {[m
+[31m-      //console.log(JSON.parse(res));[m
+[31m-      //debugger;[m
+[31m-      if (res != undefined) {[m
+[31m-        let pastGames = JSON.parse(res);[m
+[31m-        console.log("SYNCC ", pastGames);[m
+[31m-        let temp = calculation.calculateByPosition(pastGames);[m
+[31m-        let allGamesArray = [];[m
+[31m-        if (pastGames.games) {[m
+[31m-          pastGames.games.forEach(game => {[m
+[31m-            allGamesArray.push(game);[m
+[32m+[m[32m  getAllGames = async () => {[m
+[32m+[m[32m    await retrieveData()[m
+[32m+[m[32m      .then(res => {[m
+[32m+[m[32m        //console.log(JSON.parse(res));[m
+[32m+[m[32m        //debugger;[m
+[32m+[m[32m        if (res != undefined) {[m
+[32m+[m[32m          let pastGames = JSON.parse(res);[m
+[32m+[m[32m          console.log("SYNCC ", pastGames);[m
+[32m+[m[32m          let temp = calculation.calculateByPosition(pastGames);[m
+[32m+[m[32m          let allGamesArray = [];[m
+[32m+[m[32m          if (pastGames.games) {[m
+[32m+[m[32m            pastGames.games.forEach(game => {[m
+[32m+[m[32m              allGamesArray.push(game);[m
+[32m+[m[32m            });[m
+[32m+[m[32m          }[m
+[32m+[m
+[32m+[m[32m          this.setState({[m
+[32m+[m[32m            gamesObj: JSON.parse(res),[m
+[32m+[m[32m            loading: false,[m
+[32m+[m[32m            totals: temp,[m
+[32m+[m[32m            gamesArray: allGamesArray,[m
+[32m+[m[32m            totalGames: allGamesArray.length[m
+           });[m
+[32m+[m[32m          console.log("THIS IS ASYNC");[m
+[32m+[m[32m          console.log(pastGames);[m
+[32m+[m[32m          console.log(this.state.gamesObj);[m
+         }[m
+[32m+[m[32m      })[m
+[32m+[m[32m      .catch(error => {[m
+[32m+[m[32m        console.log("HOME SCREEN ERROR");[m
+[32m+[m[32m        resetActions();[m
+[32m+[m[32m        throw error;[m
+[32m+[m[32m      });[m
+[32m+[m[32m  };[m
+ [m
+[31m-        this.setState({[m
+[31m-          gamesObj: JSON.parse(res),[m
+[31m-          loading: false,[m
+[31m-          totals: temp,[m
+[31m-          gamesArray: allGamesArray,[m
+[31m-          totalGames: allGamesArray.length[m
+[31m-        });[m
+[31m-        console.log("THIS IS ASYNC");[m
+[31m-        console.log(pastGames);[m
+[31m-        console.log(this.state.gamesObj);[m
+[31m-      }[m
+[31m-    })[m
+[31m-    .catch(error => {[m
+[31m-      console.log("HOME SCREEN ERROR");[m
+[31m-      resetActions();[m
+[31m-      throw error;[m
+[32m+[m[32m  //TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m
+[32m+[m[32m  updateActions = action => { };[m
+[32m+[m[32m  //TODO: finish writing this funtion, use validators[m
+[32m+[m[32m  updateTags = tag => { };[m
+[32m+[m
+[32m+[m[32m  updateGames(newGamesObj) {[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      gamesObj: newGamesObj,[m
+[32m+[m[32m      gamesArray: newGamesObj.games[m
+     });[m
+[31m-};[m
+[32m+[m[32m  }[m
+ [m
+[31m-//TODO: create a function to update global actions, remove access to actions storage elsewhere, use validators[m
+[31m-updateActions(action) {}[m
+[31m-//TODO: finish writing this funtion, use validators[m
+[31m-updateTags = tag => {[m
+[32m+[m[32m  //TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m
+[32m+[m[32m  resetActions = () => {[m
+[32m+[m[32m    resetActions();[m
+[32m+[m[32m    this.getActions();[m
+[32m+[m[32m    console.log("actions reset");[m
+[32m+[m[41m    [m
+ [m
+[31m-}[m
+[32m+[m[32m  };[m
+ [m
+[31m-updateGames(newGamesObj) {[m
+[31m-  this.setState({[m
+[31m-    gamesObj: newGamesObj,[m
+[31m-    gamesArray: newGamesObj.games[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  deleteAllTags = () => {[m
+[32m+[m[32m    removeTags();[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      allTags: [][m
+[32m+[m[32m    });[m
+[32m+[m[32m    console.log("tags removed");[m
+[32m+[m[32m  };[m
+ [m
+[31m-//TODO: handle all storage control in context, after you finish these funtions implement them in settings screen[m
+[31m-resetActions = () => {[m
+[31m-  resetActions();[m
+[31m-  console.log("actions reset");[m
+[31m-};[m
+[32m+[m[32m  addTag(tag) {[m
+[32m+[m[32m    if (isValidTag(tag, this.state.allTags)) {[m
+[32m+[m[32m      let updatedTags = this.state.allTags.concat(tag);[m
+[32m+[m[32m      this.setState([m
+[32m+[m[32m        {[m
+[32m+[m[32m          allTags: updatedTags[m
+[32m+[m[32m        },[m
+[32m+[m[32m        () => {[m
+[32m+[m[32m          saveTags(this.state.allTags);[m
+[32m+[m[32m        }[m
+[32m+[m[32m      );[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+ [m
+[31m-deleteAllTags = () => {[m
+[31m-  removeTags();[m
+[31m-  this.setState({[m
+[31m-    allTags: [][m
+[31m-  })[m
+[31m-  console.log("tags removed");[m
+[31m-};[m
+[32m+[m[32m  addAction(action) {[m
+[32m+[m[32m    if (validActionAdd(action, this.state.actions)) {[m
+[32m+[m[32m      let updatedActions = this.state.actions.concat(action);[m
+[32m+[m[32m      this.setState({[m
+[32m+[m[32m        actions: updatedActions[m
+[32m+[m[32m      });[m
+[32m+[m[32m      saveActions(updatedActions);[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+ [m
+[31m-addTag() {[m
+[31m-  if (isValidTag(tag, this.state.tags)) {[m
+[31m-    let updatedTags = this.state.allTags.concat(tag);[m
+[31m-    this.setState({[m
+[31m-        allTags: updatedTags[m
+[31m-      },[m
+[31m-      () => {[m
+[31m-        saveTags(this.state.allTags);[m
+[32m+[m[32m  removeAction = (action) => {[m
+[32m+[m[32m    if (validActionRemove(action, this.state.actions)) {[m
+[32m+[m[32m      let updatedActions = this.state.actions.filter((Oaction) => Oaction != action)[m
+[32m+[m[32m      this.setState({ actions: updatedActions });[m
+[32m+[m[32m      saveActions(updatedActions);[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m      alert('Can not remove base action, or action doesnt exsist')[m
+[32m+[m[32m    }[m
+ [m
+[31m-      }[m
+[31m-    );[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  componentDidUpdate() {[m
+[32m+[m[32m    //checks to see if any new tags are added to our list of overall tags, and updates state if so.[m
+[32m+[m[32m    // retrieveTags().then(res => {[m
+[32m+[m[32m    //   if (res != undefined && res != null) {[m
+[32m+[m[32m    //     if (this.state.allTags.length >= 1) {[m
+[32m+[m[32m    //       //debugger;[m
+[32m+[m[32m    //       if (this.state.allTags.length !== JSON.parse(res).length) {[m
+[32m+[m[32m    //         this.setState({[m
+[32m+[m[32m    //           allTags: JSON.parse(res)[m
+[32m+[m[32m    //         });[m
+[32m+[m[32m    //       }[m
+[32m+[m[32m    //     }[m
+[32m+[m[32m    //   }[m
+[32m+[m[32m    // });[m
+[32m+[m[32m    // storage.retrieveData().then((res) => {[m
+[32m+[m[32m    //     //console.log(JSON.parse(res));[m
+[32m+[m[32m    //     //debugger;[m
+[32m+[m[32m    //     if (res != undefined) {[m
+[32m+[m[32m    //         let pastGames = JSON.parse(res)[m
+[32m+[m[32m    //         console.log("SYNCC ", pastGames)[m
+[32m+[m[32m    //         //let temp = calculation.calculateByPosition(pastGames)[m
+[32m+[m[32m    //         let allGamesArray = [];[m
+[32m+[m[32m    //         if (pastGames.games) {[m
+[32m+[m[32m    //             pastGames.games.forEach(game => {[m
+[32m+[m[32m    //                 allGamesArray.push(game)[m
+[32m+[m[32m    //             })[m
+[32m+[m[32m    //         }[m
+[32m+[m[32m    //         debugger;[m
+[32m+[m[32m    // if (allGamesArray.length !== this.state.totalGames) {[m
+[32m+[m[32m    //    this.getDataFromStorage().then((res) => {[m
+[32m+[m[32m    //        console.log('Update global storage')[m
+[32m+[m[32m    //    })[m
+[32m+[m[32m    // }[m
+[32m+[m[32m    // }[m
+   }[m
+[31m-}[m
+[32m+[m[32m  logTotalsByPosition = () => {[m
+[32m+[m[32m    console.log(calculation.calculateByPosition(this.state.gamesObj));[m
+[32m+[m[32m    return calculation.calculateByPosition(this.state.gamesObj);[m
+[32m+[m[32m  };[m
+ [m
+[31m-addAction(action) {[m
+[31m-  if (validActionAdd(action, this.state.actions)) {[m
+[31m-    let updatedActions = this.state.actions.concat(action);[m
+[32m+[m[32m  incrementPosition() {[m
+     this.setState({[m
+[31m-      actions: updatedActions[m
+[32m+[m[32m      position: this.state.position + 1[m
+     });[m
+[31m-    saveActions(updatedActions);[m
+[31m-    console.l[m
+[32m+[m[32m  }[m
+ [m
+[32m+[m[32m  setPosition(position) {[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      position: position[m
+[32m+[m[32m    });[m
+   }[m
+ [m
+[31m-}[m
+[32m+[m[32m  getGames() {[m
+[32m+[m[32m    return this.state.gamesObj;[m
+ [m
+[31m-componentDidUpdate() {[m
+[31m-  //checks to see if any new tags are added to our list of overall tags, and updates state if so.[m
+[31m-  retrieveTags().then(res => {[m
+[31m-    if (res != undefined && res != null) {[m
+[31m-      if (this.state.allTags.length >= 1) {[m
+[31m-        //debugger;[m
+[31m-        if (this.state.allTags.length !== JSON.parse(res).length) {[m
+[31m-          this.setState({[m
+[31m-            allTags: JSON.parse(res)[m
+[31m-          });[m
+[31m-        }[m
+[31m-      }[m
+[31m-    }[m
+[31m-  });[m
+[31m-  // storage.retrieveData().then((res) => {[m
+[31m-  //     //console.log(JSON.parse(res));[m
+[31m-  //     //debugger;[m
+[31m-  //     if (res != undefined) {[m
+[31m-  //         let pastGames = JSON.parse(res)[m
+[31m-  //         console.log("SYNCC ", pastGames)[m
+[31m-  //         //let temp = calculation.calculateByPosition(pastGames)[m
+[31m-  //         let allGamesArray = [];[m
+[31m-  //         if (pastGames.games) {[m
+[31m-  //             pastGames.games.forEach(game => {[m
+[31m-  //                 allGamesArray.push(game)[m
+[31m-  //             })[m
+[31m-  //         }[m
+[31m-  //         debugger;[m
+[31m-  // if (allGamesArray.length !== this.state.totalGames) {[m
+[31m-  //    this.getDataFromStorage().then((res) => {[m
+[31m-  //        console.log('Update global storage')[m
+[31m-  //    })[m
+[31m-  // }[m
+[31m-  // }[m
+[31m-}[m
+[31m-logTotalsByPosition = () => {[m
+[31m-  console.log(calculation.calculateByPosition(this.state.gamesObj));[m
+[31m-  return calculation.calculateByPosition(this.state.gamesObj);[m
+[31m-};[m
+[31m-[m
+[31m-incrementPosition() {[m
+[31m-  this.setState({[m
+[31m-    position: this.state.position + 1[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  }[m
+ [m
+[31m-setPosition(position) {[m
+[31m-  this.setState({[m
+[31m-    position: position[m
+[31m-  });[m
+[31m-}[m
+[32m+[m[32m  getGamesArray() {[m
+[32m+[m[32m    return this.state.gamesArray;[m
+ [m
+[31m-getGames() {[m
+[31m-  return this.state.gamesObj;[m
+[31m-}[m
+[32m+[m[32m  }[m
+ [m
+[31m-getGamesArray() {[m
+[31m-  return this.state.gamesArray;[m
+[31m-}[m
+[32m+[m[32m  //TODO: remember to add new funtions to context provider[m
+[32m+[m[32m  render() {[m
+[32m+[m[32m    return ([m
+[32m+[m[32m      <MyContext.Provider[m
+[32m+[m[32m        value={{[m
+[32m+[m[32m          state: this.state,[m
+[32m+[m[32m          incrementPosition: () => this.incrementPosition(),[m
+[32m+[m[32m          setPosition: position => this.setPosition(position),[m
+[32m+[m[32m          remount: () => this.componentDidMount(),[m
+ [m
+[31m-//TODO: remember to add new funtions to context provider[m
+[31m-render() {[m
+[31m-  return ( <[m
+[31m-    MyContext.Provider value = {[m
+[31m-      {[m
+[31m-        state: this.state,[m
+[31m-        incrementPosition: () => this.incrementPosition(),[m
+[31m-        setPosition: position => this.setPosition(position),[m
+[31m-        remount: () => this.componentDidMount(),[m
+[31m-        updateGames: gamesObj => {[m
+[31m-          this.updateGames(gamesObj);[m
+[31m-        },[m
+[31m-        getGames: () => this.getGames(),[m
+[31m-        getGamesArray: () => this.getGamesArray()[m
+[31m-      }[m
+[31m-    } >[m
+[31m-    {[m
+[31m-      this.props.children[m
+[31m-    } <[m
+[31m-    /MyContext.Provider>[m
+[31m-  );[m
+[32m+[m[32m          updateGames: gamesObj => {[m
+[32m+[m[32m            this.updateGames(gamesObj);[m
+[32m+[m[32m          },[m
+[32m+[m[32m          getGames: () => this.getGames(),[m
+[32m+[m[32m          getGamesArray: () => this.getGamesArray(),[m
+[32m+[m[32m        }}[m
+[32m+[m[32m      >[m
+[32m+[m[32m        {this.props.children}[m
+[32m+[m[32m      </MyContext.Provider>[m
+[32m+[m[32m    );[m
+[32m+[m[32m  }[m
+ }[m
+[31m-}[m
+\ No newline at end of file[m
+[1mdiff --git a/poker-app/utils/validators.js b/poker-app/utils/validators.js[m
+[1mindex e21e82c..d0b97a2 100644[m
+[1m--- a/poker-app/utils/validators.js[m
+[1m+++ b/poker-app/utils/validators.js[m
+[36m@@ -15,20 +15,25 @@[m [mconst validActionAdd = (action, allActions) => {[m
+     else return false;[m
+ }[m
+ [m
+[31m-const validActionRemove = (action) => {[m
+[32m+[m[32mconst validActionRemove = (action, allActions) => {[m
+     const baseActions = ['call', 'fold', 'raise'];[m
+     if (baseActions.includes(action)) {[m
+         alert('you cannot remove base actions')[m
+         return false;[m
+[31m-    } else {[m
+[31m-        return true;[m
+     }[m
+[32m+[m[32m    if (!allActions.includes(action)) {[m
+[32m+[m[32m        console.log('this action doesnt exsist');[m
+[32m+[m[32m        return false;[m
+[32m+[m[41m        [m
+[32m+[m[32m    }[m
+[32m+[m[32m    return true;[m
+[32m+[m
+ }[m
+ [m
+ //TODO: fix this function[m
+ const correctlyVersionedGames = (allGames) => {[m
+     const currentVersionGames = {};[m
+[31m-    [m
+[32m+[m
+ }[m
+ [m
+ module.exports = {[m

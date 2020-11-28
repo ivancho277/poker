@@ -3,38 +3,51 @@ import { Text, View, Button } from 'react-native'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 let radio_props = [
-    { label: 'Big Blind', value: 0 },
-    { label: 'Small Blind', value: 1 },
-    { label: 'Dealer', value: 2 },
+    { label: 'BB', value: 0 },
+    { label: 'SB', value: 1 },
+    { label: 'D', value: 2 },
     { label: 'D+1', value: 3 },
     { label: 'D+2', value: 4 },
     { label: 'D+3', value: 5 },
     { label: 'D+4', value: 6 },
-    { label: 'D+5', value: 7 }
+    { label: 'D+5', value: 7 },
+    { label: 'D+6', value: 8 }
 ]
 
 class Radio extends Component {
     constructor(props) {
-        super(props);      
+        super(props);
         state = {
             value: 0
         }
-
     }
+
+
+    async componentDidMount() {
+        console.log("Tell me when to Mount!")
+        this.setState({
+            value: this.props.position
+        });
+        console.log("radioProps:", this.props.position)
+    }
+
     positionReturn(position) {
-        // debugger
-        this.props.getPosition(position);
+        this.props.setPosition(position);
     }
 
-    
-    updateIndex = (index) =>{
-        
-        if (index < radio_props.length - 1) {
-            this.radioFormClear.updateIsActiveIndex(++index); // just pass -1 and your radio button should clear
+
+    /**
+     *
+     * @param {Number} - index of the radio_props that should be active. This is the Overall Current Games Position.
+     * @memberof Radio
+     */
+    updateIndex = (currIndex) => {
+        if (currIndex < radio_props.length) {
+            this.radioFormClear.updateIsActiveIndex(currIndex); // just pass -1 and your radio button should clear
             this.setState({
-                value: index
+                value: currIndex
             })
-            this.positionReturn(index);
+            this.positionReturn(currIndex);
         } else {
             this.radioFormClear.updateIsActiveIndex(0); // just pass -1 and your radio button should clear
             this.setState({
@@ -44,34 +57,56 @@ class Radio extends Component {
         }
     }
 
-    componentWillUpdate(){
-        this.props.shouldPositionIncrement(this.updateIndex)
+    async componentDidUpdate(prevProps, prevState) {
+        if (this.state.value != this.props.position) {
+            this.updateIndex(this.props.position)
+        }
+        if (prevState == null) {
+            console.log('IN THE IFFFFF() ()( !!!!>>><<<<<>>>><<<><><><>')
+            this.updateIndex(this.props.position);
+        }
+
+        console.log('prevPOS: ', prevProps);
+        console.log('prevState: ', prevState);
     }
+
 
     render() {
         return (
             <View>
-                <View style={{ flexDirection: 'row' }}>
-                    <RadioForm
-                        ref={ref => this.radioFormClear = ref}
-                        radio_props={radio_props}
-                        initial={0}
-                        formHorizontal={true}
-                        buttonSize={10}
-                        buttonOuterSize={20}
-                        labelHorizontal={false}
-                        onPress={(value) => { this.setState({ value: value }); this.positionReturn(value); }}
-                        
-                    />
-                </View>
+                {this.props.liveLoading ?
+
+                    <Text> Loading Bizzznitch</Text>
+                    :
+                    <View style={{ flexDirection: 'row' }}>
+                        <RadioForm
+                            ref={ref => this.radioFormClear = ref}
+                            radio_props={radio_props}
+                            initial={0}
+                            formHorizontal={true}
+                            buttonSize={10}
+                            buttonOuterSize={20}
+                            labelHorizontal={false}
+                            onPress={(value) => {
+                                //this.setState({value: value});
+                                //debugger;
+                                this.props.setPosition(value)
+                                console.log("I GOT PRESSEED!!:", value)
+                            }}
+
+                        />
+                    </View>
+                }
+
 
                 <View>
-                    <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} />
+                    {/* <Button title="test increment" onPress={() => this.updateIndex(this.state.vlaue)} /> */}
                 </View>
             </View>
         );
     }
 };
+
 
 export default Radio;
 
