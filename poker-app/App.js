@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, AppRegistry } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   createStackNavigator,
   createAppContainer,
@@ -10,8 +10,8 @@ import {
 import HomeScreenNew from "./HomeNew";
 import StatsScreen from "./Stats";
 import { AntDesign } from "@expo/vector-icons";
-import { AppLoading } from "expo";
-import { Provider as PaperProvider, ActivityIndicator, Colors, DefaultTheme } from 'react-native-paper';
+// import { AppLoading } from "expo";
+import { Provider as PaperProvider, ActivityIndicator, DefaultTheme } from 'react-native-paper';
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
