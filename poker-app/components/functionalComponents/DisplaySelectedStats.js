@@ -6,8 +6,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Tables } from '../../constants/tables';
 import * as Utils from '../../utils/objectOps.js';
 import * as Calculate from '../GameCalculations/calculateStats'
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import { keyframes } from 'styled-components';
 
 
 
