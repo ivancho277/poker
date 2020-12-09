@@ -14,7 +14,7 @@ import { LoadCurrentDialog } from './components/functionalComponents/LoadCurrent
 import { LiveGameDisplayTable } from './components/functionalComponents/dataDisplays/Data Table Displays/LiveGameDisplayTable';
 import { GameDataListItem } from './components/functionalComponents/dataDisplays/List Displays/GameDataListItem.js';
 import { GameDataAccordian } from './components/functionalComponents/dataDisplays/List Displays/GameDataAccordian.js';
-
+import TestTable  from './components/testComponents/TestTable';
 
 export default function GameScreenNew(props) {
     const [state, actions] = UseGameStore();
@@ -99,7 +99,7 @@ export default function GameScreenNew(props) {
                         <Card style={{ backgroundColor: '#7FB7BE' }}>
                             <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
                             {isAskLoadVisible ? <View></View> :
-                                (state.liveGame !== null && !state.data.liveGameLoading) ? <GameDataAccordian /> :
+                                (state.liveGame !== null && !state.data.liveGameLoading) ? <TestTable /> :
                                     <View>
                                         <Text>Start to play</Text>
                                     </View>}
