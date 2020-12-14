@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
-import { Table, TableWrapper,Col, Cols, Cell } from 'react-native-table-component';
+import { Table, TableWrapper,Col, Cols, Cell, Header, } from 'react-native-table-component';
 
 export default class ExampleFive extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ export default class ExampleFive extends Component {
     );
 
     this.state = {
+      tableHead: ['Actions', 'current %', 'historical %', 'historical % / Position'],
       tableTitle: ['Call', 'Fold', 'Raise', 'rraise'],
       tableData: [
         [elementButton('1'), 'a', 'b', 'c', 'd'],
@@ -36,7 +37,7 @@ export default class ExampleFive extends Component {
           <TableWrapper style={{width: 80}}>
             <Cell data="" style={styles.singleHead}/>
             <TableWrapper style={{flexDirection: 'row'}}>
-              <Col data={['H1', 'H2']} style={styles.head} heightArr={[60, 60]} textStyle={styles.text} />
+              {/* <Col data={['H1', 'H2']} style={styles.head} heightArr={[60, 60]} textStyle={styles.text} /> */}
               <Col data={state.tableTitle} style={styles.title} heightArr={[30, 30, 30, 30]} textStyle={styles.titleText}></Col>
             </TableWrapper>
           </TableWrapper>

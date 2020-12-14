@@ -15,7 +15,6 @@ import { Provider as PaperProvider, ActivityIndicator, DefaultTheme } from 'reac
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 //import { GameProvider } from './stateContext/contextProvider'
-// import Menu from 'react-native--storage-dev-menu-item';
 import TestScreen from './TestScreen';
 import SettingsNew from './SettingsNew';
 import { UseGameStore, GameSubscriber } from './DataStore/GameStore'
