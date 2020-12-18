@@ -5,10 +5,10 @@ import { Table, TableWrapper,Col, Cols, Cell, Header, } from 'react-native-table
 export default class ExampleFive extends Component {
   constructor(props) {
     super(props);
-    const elementButton = (value) => (
+    const elementButton = (value, bttnText) => (
       <TouchableOpacity onPress={() => this._alertIndex(value)}>
         <View style={styles.btn}>
-          <Text style={styles.btnText}>button</Text>
+          <Text style={styles.btnText}>{bttnText}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -17,9 +17,9 @@ export default class ExampleFive extends Component {
       tableHead: ['Actions', 'current %', 'historical %', 'historical % / Position'],
       tableTitle: ['Call', 'Fold', 'Raise', 'rraise'],
       tableData: [
-        [elementButton('1'), 'a', 'b', 'c', 'd'],
-        [elementButton('2'), '1', '2', '3', '4'],
-        [elementButton('3'), 'a', 'b', 'c', 'd']
+        [elementButton('1', "Current %"), 'a', 'b', 'c', 'd'],
+        [elementButton('2', "Historical %"), '1', '2', '3', '4'],
+        [elementButton('3', 'Historical % at pos'), 'a', 'b', 'c', 'd']
       ]
     }
   }
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
   title: { flex: 2, backgroundColor: '#f6f8fa' },
   titleText: { marginRight: 6, textAlign:'right' },
   text: { textAlign: 'center' },
-  btn: { width: 58, height: 18, marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
+  btn: { width: 'auto', height: 'auto' , marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
   btnText: { textAlign: 'center' }
 });
