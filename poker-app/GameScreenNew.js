@@ -99,7 +99,7 @@ export default function GameScreenNew(props) {
                         <Card style={{ backgroundColor: '#7FB7BE' }}>
                             <Card.Title style={{ alignItems: 'center' }} title="      Track your game!" />
                             {isAskLoadVisible ? <View></View> :
-                                (state.liveGame !== null && !state.data.liveGameLoading) ? <TestTable /> :
+                                (state.liveGame !== null && !state.data.liveGameLoading) ? <TestTable gameState={state} /> :
                                     <View>
                                         <Text>Start to play</Text>
                                     </View>}

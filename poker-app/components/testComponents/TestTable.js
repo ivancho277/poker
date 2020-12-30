@@ -6,22 +6,28 @@ export default class ExampleFive extends Component {
   constructor(props) {
     super(props);
     const elementButton = (value, bttnText) => (
-      <TouchableOpacity onPress={() => this._alertIndex(value)}>
+      <TouchableOpacity onPress={() => {this._alertIndex(value); this._logProps()}}>
         <View style={styles.btn}>
-          <Text style={styles.btnText}>{bttnText}</Text>
+          <Text style={styles.btnText}>{JSON.stringify(bttnText, null, 2)}</Text>
         </View>
       </TouchableOpacity>
     );
-
+    
     this.state = {
       tableHead: ['Actions', 'current %', 'historical %', 'historical % / Position'],
       tableTitle: ['Call', 'Fold', 'Raise', 'rraise'],
       tableData: [
-        [elementButton('1', "Current %"), 'a', 'b', 'c', 'd'],
+        [elementButton(this.props, "Current %"), 'a', 'b', 'c', 'd'],
         [elementButton('2', "Historical %"), '1', '2', '3', '4'],
         [elementButton('3', 'Historical % at pos'), 'a', 'b', 'c', 'd']
       ]
     }
+  }
+
+  _logProps() {
+    console.log("-----------------------------------------------------------------------------------------------------------");
+    console.log(this.props);
+    
   }
 
   _alertIndex(value) {
