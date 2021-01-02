@@ -124,7 +124,7 @@ const items = [
     {
         key: 3,
         name: 'Page 3',
-    },
+    }, 
 ];
 
 
