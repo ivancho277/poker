@@ -81,7 +81,6 @@ export default function HomeScreenNew(props) {
                                 {/* <DisplayStats></DisplayStats> */}
                                 {/* <StatsBox logTotalsByPosition={logTotalsByPosition} height={290} width={200} /> */}
                                 <View style={{ flex: 1, marginTop: 15, justifyContent: 'space-between' }}>
-
                                     <Button title="     Begin Tracking A Game!" icon={{ name: 'play-circle-filled', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Game')} />
                                     <Button title="     Games Config." icon={{ name: 'settings', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Settings')} />
                                     <Button title="     Statistics" icon={{ name: 'pie-chart', size: 40, color: 'white' }} style={{ margin: '10px' }} onPress={() => props.navigation.navigate('Statistics')} />
