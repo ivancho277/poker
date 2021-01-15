@@ -34,6 +34,7 @@ export default class ExampleTwo extends Component {
             <Rows data={state.tableData} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text} />
           </TableWrapper>
         </Table>
+        <Button title={"press to log"} onPress={() => console.log(this.props.gameState.liveGame)}>Press me to see </Button>
       </View>
     )
   }
