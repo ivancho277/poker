@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { Table, TableWrapper, Col, Row, Rows,  Cols, Cell, Header, } from 'react-native-table-component';
+import { Table, TableWrapper, Col, Row, Rows, Cols, Cell, Header, } from 'react-native-table-component';
 import { Dialog, Portal, Button, } from 'react-native-paper';
 
 
@@ -23,6 +23,15 @@ export default class ExampleTwo extends Component {
     }
   }
 
+  filterActionsListFromLiveGame = (liveGame) => {
+    let actions = [];
+    liveGame.actions.forEach((action) => {
+      actions.push(action.actionName);
+    })
+    return actions;
+  }
+
+
   render() {
     const state = this.state;
     return (
@@ -33,12 +42,13 @@ export default class ExampleTwo extends Component {
             <Col data={state.tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
             <Rows data={state.tableData} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text} />
           </TableWrapper>
+          <Button title={"press to log"} onPress={() => console.log(this.filterActionsListFromLiveGame(this.props.gameState.liveGame))}>Press me to see </Button>
         </Table>
-        <Button title={"press to log"} onPress={() => console.log(this.props.gameState.liveGame)}>Press me to see </Button>
       </View>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
