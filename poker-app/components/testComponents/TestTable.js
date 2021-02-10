@@ -13,7 +13,7 @@ export default class ExampleTwo extends Component {
     super(props);
     this.state = {
       tableHead: ['', 'Head1', 'Head2', 'Head3'],
-      tableTitle: ['Title', 'Title2', 'Title3', 'Title4'],
+      tableTitle: this.props.gameState.data.actions,
       tableData: [
         ['1', '2', '3'],
         ['a', 'b', 'c'],
@@ -28,7 +28,8 @@ export default class ExampleTwo extends Component {
     liveGame.actions.forEach((action) => {
       actions.push(action.actionName);
     })
-    return actions;
+    return this.props.gameState.data.actions;
+
   }
 
 
