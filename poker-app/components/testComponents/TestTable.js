@@ -3,16 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import { Table, TableWrapper, Col, Row, Rows, Cols, Cell, Header, } from 'react-native-table-component';
 import { Dialog, Portal, Button, } from 'react-native-paper';
 
-
-
-
-
-
 export default class ExampleTwo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: ['', 'Head1', 'Head2', 'Head3'],
+      tableHead: ['Actions', 'Game %', 'Historic %', 'His. % @ this Pos'],
       tableTitle: this.props.gameState.data.actions,
       tableData: [
         ['1', '2', '3'],
