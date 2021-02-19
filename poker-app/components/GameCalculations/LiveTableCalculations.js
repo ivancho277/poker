@@ -7,6 +7,8 @@
  */
 //NOTE: need to define where this function will be used. and in what component. So I know exactly what data it will be recieving. 
 
+
+
 filterActionsListFromLiveGame = (liveGame) => {
     let actions = [];
     liveGame.actions.forEach((action) => {
@@ -36,22 +38,28 @@ filterActionsListFromLiveGame = (liveGame) => {
  * Export functions under
  */
 
-const getLiveGameActionList = (game) => {
+ /**
+  * description function puts together a matrix or array of data for the display table.
+  */
+const getLiveGameActionList = (livegame) => {
 
 
+  
 }
 
 
-const currentGamePercentage = ( game ) => {
+const currentGamePercentage = ( livegame ) => {
+  
 
+  return livegame.actions;
 }
 
 
-const historicPercentage = ( game ) => {
+const historicPercentage = ( livegame ) => {
 
 }
 
-const historicPercentageAtPosition = ( game ) => {
+const historicPercentageAtPosition = ( livegame ) => {
 
 
 }
