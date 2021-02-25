@@ -192,6 +192,16 @@ const calculatePercentage = (count, total) => {
     return Math.round(count / total * 100)
 }
 
+
+//TODO: need to define these parameters, one is the totals for each position, and the other for each action at that position I think.
+/**
+ *
+ *
+ * @param {*} posTotals
+ * @param {*} posCounts
+ * @param {*} currentPosition
+ * @returns
+ */
 const percentagesPerPositionForEachAction = (posTotals, posCounts, currentPosition) => {
     //console.log('PosTotals::::', posTotals);
     //console.log('PosCounts::::', posCounts);

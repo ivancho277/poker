@@ -158,7 +158,7 @@ export const endLiveLoading = () => ({ setState }) => {
 
 export const endDataLoading = () => ({ setState }) => {
     setState(draft => {
-        draft.data.loading = false;
+        draft.data.loading = false; 
     })
 }
 

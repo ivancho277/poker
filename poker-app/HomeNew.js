@@ -53,12 +53,17 @@ export default function HomeScreenNew(props) {
         await cb().then(res => { console.log(res) })
     }
 
-    testLogger = (data) => {
+     testLogger = (data) => {
         let totalsData = Utils.objToArray(data);
         console.log("DATA: ", totalsData);
         let sum = Calculate.sumAllGameActions(totalsData);
         console.log(sum)
         return sum
+    }
+
+    reviewCalcfunctionsLog = (data) => { 
+        
+
     }
 
 
@@ -73,7 +78,7 @@ export default function HomeScreenNew(props) {
                             <ActivityIndicator animating={true} color={Colors.purple800} />
                             :
                             <View>
-                                {/* <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button> */}
+                                <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button>
                                 <View style={{ height: 150, justifyContent: 'center' }}>
                                     <Image source={require('./assets/noun_statsChip.png')} style={{ width: 70, height: 70, resizeMode: 'contain' }} />
                                     <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
