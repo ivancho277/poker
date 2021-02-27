@@ -53,16 +53,22 @@ export default function HomeScreenNew(props) {
         await cb().then(res => { console.log(res) })
     }
 
+    //REMINDER: FRBRUARY 27th 2021 ---- ----------this is where i finished, I was trying to see if I can just use all the imported functions here in this method and just pop them in an array just to check the output.
      testLogger = (data) => {
         let totalsData = Utils.objToArray(data);
         console.log("DATA: ", totalsData);
         let sum = Calculate.sumAllGameActions(totalsData);
         console.log(sum)
-        return sum
+        let dataarray = [];
+        dataarray.push(sum);
+        dataarray.push(Calculate.sumGamesTotals(data));
+        //dataarray.push(Calculate.sumPositionCount(totalsData));
+        return dataarray;
     }
+//NOTE: ^^^^above function testing to log what my calc funtions are returning and see what input they need
 
     reviewCalcfunctionsLog = (data) => { 
-        
+
 
     }
 
