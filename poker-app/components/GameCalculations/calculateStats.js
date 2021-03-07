@@ -83,7 +83,7 @@ const sumGamesTotals = (games) => {
     if (games === null || games === undefined) {
         return 'no games'
     }
-    //console.log('sumFUNT:', games)
+    console.log('sumFUNT:', games)
     if (games instanceof Array) {
         if (games.length > 0) {
             let accum = 0;

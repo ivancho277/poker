@@ -55,13 +55,15 @@ export default function HomeScreenNew(props) {
 
     //REMINDER: FRBRUARY 27th 2021 ---- ----------this is where i finished, I was trying to see if I can just use all the imported functions here in this method and just pop them in an array just to check the output.
      testLogger = (data) => {
-        let totalsData = Utils.objToArray(data);
+         let {totals} = data;
+        let totalsData = Utils.objToArray(totals);
         console.log("DATA: ", totalsData);
         let sum = Calculate.sumAllGameActions(totalsData);
         console.log(sum)
         let dataarray = [];
         dataarray.push(sum);
-        dataarray.push(Calculate.sumGamesTotals(data));
+        let whatDataIsThis = Calculate.sumGamesTotals(totals);
+        dataarray.push(whatDataIsThis);
         //dataarray.push(Calculate.sumPositionCount(totalsData));
         return dataarray;
     }
@@ -84,7 +86,7 @@ export default function HomeScreenNew(props) {
                             <ActivityIndicator animating={true} color={Colors.purple800} />
                             :
                             <View>
-                                <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData.totals)) }}></Button>
+                                <Button title="test press" onPress={() => { console.log("utils test: ", testLogger(state.calculatedData)) }}></Button>
                                 <View style={{ height: 150, justifyContent: 'center' }}>
                                     <Image source={require('./assets/noun_statsChip.png')} style={{ width: 70, height: 70, resizeMode: 'contain' }} />
                                     <Title style={{ textAlign: 'center', fontWeight: '500' }}>POKER TRACKER</Title>
