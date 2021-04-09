@@ -62,12 +62,18 @@ export default function HomeScreenNew(props) {
         console.log(sum)
         let dataarray = [];
         dataarray.push(sum);
-        let whatDataIsThis = Calculate.sumGamesTotals(totals);
+        let whatDataIsThis = Calculate.sumGamesTotals(totalsData);  //NOTE: here i need to try and have the calculate.findmanygames() function return into this one
         dataarray.push(whatDataIsThis);
         //dataarray.push(Calculate.sumPositionCount(totalsData));
         return dataarray;
     }
 //NOTE: ^^^^above function testing to log what my calc funtions are returning and see what input they need
+//TODO: above where the other note is I need to try to do what it says and use the findmanygames() and then use the returned array from that, check if that works 1st.
+//TODO: after that lets check how we can get an array to each actions stats for the display table.
+
+
+
+
 
     reviewCalcfunctionsLog = (data) => { 
 

@@ -28,6 +28,10 @@ filterActionsListFromLiveGame = (liveGame) => {
     liveGame.actions.forEach((action) => {
       actions.push(action.actionName);
     })
+//TODO: am I even using this anywhere? 
+
+
+    
     return this.props.gameState.data.actions;
 
   }
