@@ -8,6 +8,12 @@ import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
+
+//TODO: Fix this screen so it works and fully renders
+//NOTE: At the moment I am getting an error message so Try to get this working as I use it when Testing, and clearing our data.
+
+
+
 export default function NewSettings() {
     const [{ data, loading }, { load }] = UseGameStore();
     const [action, setAction] = useState('');
