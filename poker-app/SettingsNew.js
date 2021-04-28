@@ -54,7 +54,9 @@ export default function NewSettings() {
     }
 
 
-
+    //TODO: Fix This.... Getting Picker.Item is undefined, as well as its looking like Picker will be depreciated soon.
+    //NOTE: Take a look at what we can use to replace Picker
+    //NOTE: Also handle an undefined input.... should be handled this far in, but do it..
     return (
         <GameSubscriber>
             {({ data, loading }, actions) => (
