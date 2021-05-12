@@ -84,7 +84,7 @@ export default function NewSettings() {
                             <Divider style={{ height: 3, backgroundColor: 'yellow' }} />
                             <View style={{ width: '100%', display: 'flex', position: 'relative', flexDirection: 'row', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
                                 <View style={{ width: '100%', borderWidth: 1, borderColor: 'black', borderStyle: 'solid' }}>
-                                    <Picker
+                                    {/* <Picker
                                         label='choose action to remove'
                                         selectedValue={action}
                                         prompt='Please select action to Remove'
@@ -99,7 +99,7 @@ export default function NewSettings() {
                                                 return <Picker.Item label={action} key={action} value={action} />
                                             })}
 
-                                    </Picker>
+                                    </Picker> */}
                                 </View>
                                 <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeAction(action)}>
                                     <Text style={{ fontSize: 10 }}>Remove Action </Text>
