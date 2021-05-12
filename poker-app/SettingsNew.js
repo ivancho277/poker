@@ -4,7 +4,9 @@ import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList
 const storage = require('./components/storageAPI/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar, } from 'react-native-paper';
-import { GameSubscriber, UseGameStore } from './DataStore/GameStore'
+import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
+import RNPickerSelect from 'react-native-picker-select';
+
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
@@ -35,7 +37,7 @@ export default function NewSettings() {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => { onConfirmFunction(); alert(onConfirmMessage); manualReload().then(res => {console.log('reloaded')}) } },
+                { text: 'OK', onPress: () => { onConfirmFunction(); alert(onConfirmMessage); manualReload().then(res => { console.log('reloaded') }) } },
             ],
             { cancelable: true },
         );
@@ -74,7 +76,7 @@ export default function NewSettings() {
                                 />
 
                                 <IconButton
-                                    style={{ backgroundColor: 'white',position: 'absolute', right: 10, top: 7 }}
+                                    style={{ backgroundColor: 'white', position: 'absolute', right: 10, top: 7 }}
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
@@ -100,6 +102,14 @@ export default function NewSettings() {
                                             })}
 
                                     </Picker> */}
+                                    <RNPickerSelect
+                                        onValueChange={(value) => console.log(value)}
+                                        items={[
+                                            { label: 'Football', value: 'football' },
+                                            { label: 'Baseball', value: 'baseball' },
+                                            { label: 'Hockey', value: 'hockey' },
+                                        ]}
+                                    />
                                 </View>
                                 <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeAction(action)}>
                                     <Text style={{ fontSize: 10 }}>Remove Action </Text>
@@ -120,7 +130,7 @@ export default function NewSettings() {
                                 />
 
                                 <IconButton
-                                    style={{ backgroundColor:'white', position: 'absolute', right: 10, top: 7 }}
+                                    style={{ backgroundColor: 'white', position: 'absolute', right: 10, top: 7 }}
                                     icon="plus"
                                     color={'blue'}
                                     size={28}
