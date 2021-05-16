@@ -1,12 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Picker, View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight, ActionSheetIOS } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert, ScrollView, FlatList, Platform, Modal, TouchableHighlight, ActionSheetIOS } from 'react-native';
 // import { Button } from 'react-native-elements';
 const storage = require('./components/storageAPI/AsyncStorageController.js');
 // import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { Text, Divider, Subheading, IconButton, List, Checkbox, Button, TextInput, Appbar, } from 'react-native-paper';
 import { GameSubscriber, UseGameStore } from './DataStore/GameStore';
-import RNPickerSelect from 'react-native-picker-select';
-
+//import RNPickerSelect from 'react-native-picker-select'; //  TODO:THIS SHOULD PROBABLY BE GONE
+import { Picker } from '@react-native-picker/picker';
 
 const editOptions = ["Edit Actions", 'Edit Tags']
 
@@ -22,6 +22,7 @@ export default function NewSettings() {
     const [tag, setTag] = useState('');
     const [tagVal, setTagVal] = useState('');
     const [actionVal, setActionVal] = useState('');
+    const [selectedLanguage, setSelectedLanguage] = useState();
 
     // useEffect(() => {
     //     load();
@@ -102,14 +103,14 @@ export default function NewSettings() {
                                             })}
 
                                     </Picker> */}
-                                    <RNPickerSelect
-                                        onValueChange={(value) => console.log(value)}
-                                        items={[
-                                            { label: 'Football', value: 'football' },
-                                            { label: 'Baseball', value: 'baseball' },
-                                            { label: 'Hockey', value: 'hockey' },
-                                        ]}
-                                    />
+                                    <Picker
+                                        selectedValue={selectedLanguage}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            setSelectedLanguage(itemValue)
+                                        }>
+                                        <Picker.Item label="Java" value="java" />
+                                        <Picker.Item label="JavaScript" value="js" />
+                                    </Picker>
                                 </View>
                                 <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeAction(action)}>
                                     <Text style={{ fontSize: 10 }}>Remove Action </Text>
