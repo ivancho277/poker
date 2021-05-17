@@ -62,10 +62,12 @@ export default function HomeScreenNew(props) {
         console.log(sum)
         let dataarray = [];
         dataarray.push(sum);
-        let whatDataIsThis = Calculate.sumGamesTotals(totalsData);  //NOTE: here i need to try and have the calculate.findmanygames() function return into this one
-        dataarray.push(whatDataIsThis);
+        //let whatDataIsThis = Calculate.sumGamesTotals(totalsData);  //NOTE: here i need to try and have the calculate.findmanygames() function return into this one
+
+        //dataarray.push(whatDataIsThis);
+
         //dataarray.push(Calculate.sumPositionCount(totalsData));
-        return dataarray;
+        //return dataarray;
     }
 //NOTE: ^^^^above function testing to log what my calc funtions are returning and see what input they need
 //NOTE: type error, game.game.data in not an object.
