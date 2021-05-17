@@ -104,12 +104,15 @@ export default function NewSettings() {
 
                                     </Picker> */}
                                     <Picker
-                                        selectedValue={selectedLanguage}
+                                        selectedValue={action}
                                         onValueChange={(itemValue, itemIndex) =>
-                                            setSelectedLanguage(itemValue)
+                                        setSelectedLanguage(itemValue)
                                         }>
-                                        <Picker.Item label="Java" value="java" />
-                                        <Picker.Item label="JavaScript" value="js" />
+                                        {data.actions.map((action, i) => {
+                                            return <Picker.Item label={action} key={action} value={action} />
+                                        })}    
+                                        {/* <Picker.Item label="Java" value="java" />
+                                        <Picker.Item label="JavaScript" value="js" /> */}
                                     </Picker>
                                 </View>
                                 <Button style={{ padding: 2, width: '40%', position: 'absolute', right: 0, top: 11 }} color='red' mode='contained' backgroundColor="red" onPress={() => actions.removeAction(action)}>
