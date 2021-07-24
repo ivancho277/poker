@@ -55,15 +55,16 @@ export default function HomeScreenNew(props) {
 
     //REMINDER: FRBRUARY 27th 2021 ---- ----------this is where i finished, I was trying to see if I can just use all the imported functions here in this method and just pop them in an array just to check the output.
      testLogger = (data) => {
-         let {totals} = data;
+        let {totals} = data;
         let totalsData = Utils.objToArray(totals);
         console.log("DATA: ", totalsData);
         let sum = Calculate.sumAllGameActions(totalsData);
         console.log(sum)
         let dataarray = [];
         dataarray.push(sum);
+        
         //let whatDataIsThis = Calculate.sumGamesTotals(totalsData);  //NOTE: here i need to try and have the calculate.findmanygames() function return into this one
-
+        
         //dataarray.push(whatDataIsThis);
 
         //dataarray.push(Calculate.sumPositionCount(totalsData));

@@ -24,7 +24,6 @@ export default class ExampleTwo extends Component {
       actions.push(action.actionName);
     })
     return this.props.gameState.data.actions;
-
   }
 
 
