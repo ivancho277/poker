@@ -19,7 +19,7 @@ export default function HomeScreenNew(props) {
     const [testtext, settesttext] = useState('');
     const [showNoDataConfirm, setShowNoDataConfirm] = useState(false);
 
-    const _hideDialog = () => { setShowNoDataConfirm(false) };  
+    const _hideDialog = () => { setShowNoDataConfirm(false) };
 
     manualReload = async () => {
         setLoadingData(true);
@@ -54,39 +54,39 @@ export default function HomeScreenNew(props) {
     }
 
     //REMINDER: FRBRUARY 27th 2021 ---- ----------this is where i finished, I was trying to see if I can just use all the imported functions here in this method and just pop them in an array just to check the output.
-     testLogger = (data) => {
-        let {totals} = data;
+    testLogger = (data) => {
+        let { totals } = data;
         let totalsData = Utils.objToArray(totals);
         console.log("DATA: ", totalsData);
         let sum = Calculate.sumAllGameActions(totalsData);
         console.log(sum)
         let dataarray = [];
         dataarray.push(sum);
-        
+
         //let whatDataIsThis = Calculate.sumGamesTotals(totalsData);  //NOTE: here i need to try and have the calculate.findmanygames() function return into this one
-        
+
         //dataarray.push(whatDataIsThis);
 
         //dataarray.push(Calculate.sumPositionCount(totalsData));
         //return dataarray;
     }
-//NOTE: ^^^^above function testing to log what my calc funtions are returning and see what input they need
-//NOTE: type error, game.game.data in not an object.
-//TODO: above where the other note is I need to try to do what it says and use the findmanygames() and then use the returned array from that, check if that works 1st.
-//TODO: after that lets check how we can get an array to each actions stats for the display table.
+    //NOTE: ^^^^above function testing to log what my calc funtions are returning and see what input they need
+    //NOTE: type error, game.game.data in not an object.
+    //TODO: above where the other note is I need to try to do what it says and use the findmanygames() and then use the returned array from that, check if that works 1st.
+    //TODO: after that lets check how we can get an array to each actions stats for the display table.
 
 
 
-    reviewCalcfunctionsLog = (data) => { 
+    reviewCalcfunctionsLog = (data) => {
 
 
     }
 
 
     return (
-        <GameSubscriber>
-            {(state, actions) => (
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+            <GameSubscriber>
+                {(state, actions) => (
 
 
                     <View>
@@ -125,14 +125,14 @@ export default function HomeScreenNew(props) {
                                         <Text style={{ color: Colors.red400 }}>Press me</Text>
                                     </TouchableOpacity> */}
                                 </View>
-                                    <ConfirmDialog isVisible={showNoDataConfirm} title="Welcome!" message="There is no data currently saved in storage, save your next game to start collecting your Statistics!" hide={_hideDialog}  />
+                                <ConfirmDialog isVisible={showNoDataConfirm} title="Welcome!" message="There is no data currently saved in storage, save your next game to start collecting your Statistics!" hide={_hideDialog} />
                             </View>
                         }
                     </View>
-                </View>
-            )
-            }
-        </GameSubscriber>
+                )
+                }
+            </GameSubscriber>
+        </View>
 
     )
 }
@@ -164,4 +164,4 @@ const styles = StyleSheet.create({
         color: '#3f2949',
         marginTop: 10
     }
-});  
+});

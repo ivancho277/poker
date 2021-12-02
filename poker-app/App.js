@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import {
   createStackNavigator,
   createAppContainer,
@@ -21,7 +21,7 @@ import { UseGameStore, GameSubscriber } from './DataStore/GameStore'
 import GameScreenNew from './GameScreenNew';
 
 
-const theme = {  
+const theme = {
   ...DefaultTheme,
   roundness: 69,
   colors: {
@@ -43,20 +43,23 @@ const App = () => {
 
   return (
     // <GlobalState>
-    <GameSubscriber>
-      {(state, actions) => (
-        <PaperProvider theme={theme}>
-          <AppContainer />
-        </PaperProvider>
+    <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+      <GameSubscriber>
+        {(state, actions) => (
+          <PaperProvider theme={theme}>
+            <AppContainer />
 
-      )
-      }
-    </GameSubscriber>
+          </PaperProvider>
+
+        )
+        }
+      </GameSubscriber>
+    </View>
     // </GlobalState>
 
     //   </Container>
     // </Root>
-  
+
   )
 }
 
@@ -132,6 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignSelf: "center"
   }
 });
