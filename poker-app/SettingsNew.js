@@ -104,6 +104,7 @@ export default function NewSettings() {
                                     </Picker> */}
                                     <Picker
                                         selectedValue={action}
+                                        style={{ margin: 3, height: 50, width: '60%', }}
                                         onValueChange={(itemValue, itemIndex) =>
                                         setSelectedLanguage(itemValue)
                                         }>
